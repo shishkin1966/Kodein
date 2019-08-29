@@ -1,6 +1,6 @@
 package shishkin.sl.kodeinpsb.sl
 
-abstract class AbsSpecialist<T> : ISpecialist<T> {
+abstract class AbsSpecialist : ISpecialist {
     override fun onUnRegister() {}
 
     override fun onRegister() {}

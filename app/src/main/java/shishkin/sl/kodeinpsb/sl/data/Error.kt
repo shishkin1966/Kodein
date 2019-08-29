@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.data
 
-import shishkin.sl.kodeinpsb.common.isNullOrEmpty
-
 class Error {
     private val mErrorText = StringBuilder();
     private var mSender: String? = null;

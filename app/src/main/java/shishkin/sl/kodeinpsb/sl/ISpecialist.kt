@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Интерфейс специалиста - объекта предоставлющий сервис
  */
-interface ISpecialist<T> : ISubscriber, IValidated, Comparable<T> {
+interface ISpecialist : ISubscriber, IValidated, Comparable<ISpecialist> {
     /**
      * Получить тип специалиста
      *

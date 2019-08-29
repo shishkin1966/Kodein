@@ -9,6 +9,6 @@ interface ISubscriber {
      *
      * @return имя подписчика
      */
-    val name: String
+    fun getName() : String
 
 }
