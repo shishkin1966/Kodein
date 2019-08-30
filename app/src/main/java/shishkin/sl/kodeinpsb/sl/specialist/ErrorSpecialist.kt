@@ -92,7 +92,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(source: String, e: Exception) {
         Log.e(source, Log.getStackTraceString(e))
         ApplicationUtils.showToast(
-            ApplicationSpecialistImpl.getInstance(),
+            ApplicationSpecialist.instance,
             e.message,
             Toast.LENGTH_LONG,
             ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -102,7 +102,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(source: String, throwable: Throwable) {
         Log.e(source, Log.getStackTraceString(throwable))
         ApplicationUtils.showToast(
-            ApplicationSpecialistImpl.getInstance(),
+            ApplicationSpecialist.instance,
             throwable.message,
             Toast.LENGTH_LONG,
             ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -113,7 +113,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         Log.e(source, Log.getStackTraceString(e))
         if (!displayMessage.isNullOrEmpty()) {
             ApplicationUtils.showToast(
-                ApplicationSpecialistImpl.getInstance(),
+                ApplicationSpecialist.instance,
                 displayMessage,
                 Toast.LENGTH_LONG,
                 ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -126,7 +126,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
             Log.e(source, message)
             if (isDisplay) {
                 ApplicationUtils.showToast(
-                    ApplicationSpecialistImpl.getInstance(),
+                    ApplicationSpecialist.instance,
                     message,
                     Toast.LENGTH_LONG,
                     ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -138,8 +138,8 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(error: Error) {
         if (error.hasError()) {
             ApplicationUtils.showToast(
-                ApplicationSpecialistImpl.getInstance(),
-                extError!!.getErrorText(),
+                ApplicationSpecialist.instance,
+                error!!.getErrorText(),
                 Toast.LENGTH_LONG,
                 ApplicationUtils.MESSAGE_TYPE_ERROR
             )

@@ -1,18 +1,28 @@
 package shishkin.sl.kodeinpsb.common
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.core.app.ActivityCompat
-import android.content.pm.PackageManager
-import android.app.Activity
-import android.content.Context
+import androidx.core.content.res.ResourcesCompat
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.muddzdev.styleabletoast.StyleableToast
+import shishkin.sl.kodeinpsb.R
 
 
 class ApplicationUtils {
     companion object {
 
         const val REQUEST_PERMISSIONS = 10000
+        const val MESSAGE_TYPE_INFO = 0
+        const val MESSAGE_TYPE_ERROR = 1
+        const val MESSAGE_TYPE_WARNING = 2
+        const val MESSAGE_TYPE_SUCCESS = 3
 
         @JvmStatic
         fun hasHoneycomb(): Boolean {
@@ -80,7 +90,7 @@ class ApplicationUtils {
         }
 
         @JvmStatic
-        fun getPhoneInfo() : String {
+        fun getPhoneInfo(): String {
             val sb = StringBuilder()
             sb.append("\n")
             sb.append("Android version : " + Build.VERSION.RELEASE)
@@ -158,6 +168,86 @@ class ApplicationUtils {
             }
             return false
         }
+
+        @JvmStatic
+        fun getDrawable(context: Context, id: Int): Drawable? {
+            return ResourcesCompat.getDrawable(
+                context.resources,
+                id,
+                if (hasMarshmallow()) context.theme else null
+            )
+        }
+
+        @JvmStatic
+        fun getVectorDrawable(
+            context: Context,
+            id: Int,
+            theme: Resources.Theme
+        ): VectorDrawableCompat? {
+            return VectorDrawableCompat.create(context.resources, id, theme)
+        }
+
+        @JvmStatic
+        fun getColor(context: Context, id: Int): Int {
+            return ResourcesCompat.getColor(
+                context.resources,
+                id,
+                if (hasMarshmallow()) context.theme else null
+            )
+        }
+
+        @JvmStatic
+        fun getDimensionPx(context: Context, resId: Int): Float {
+            return context.resources.getDimension(resId)
+        }
+
+        @JvmStatic
+        fun getDimensionDp(context: Context, resId: Int): Float {
+            return (context.resources.getDimension(resId) / context.resources.displayMetrics.density)
+        }
+
+        @JvmStatic
+        fun getDimensionSp(context: Context, resId: Int): Float {
+            return (context.resources.getDimension(resId) / context.resources.displayMetrics.scaledDensity)
+        }
+
+        @JvmStatic
+        fun showToast(context: Context, text: String?, duration: Int, type: Int) {
+            if (text.isNullOrBlank()) return
+
+            when (type) {
+                MESSAGE_TYPE_ERROR -> StyleableToast.Builder(context)
+                    .text(text)
+                    .textColor(getColor(context, R.color.white))
+                    .backgroundColor(getColor(context, R.color.red))
+                    .textSize(getDimensionSp(context, R.dimen.textsize_subheader))
+                    .cornerRadius(8)
+                    .length(duration)
+                    .show()
+                MESSAGE_TYPE_WARNING -> StyleableToast.Builder(context)
+                    .text(text)
+                    .textColor(getColor(context, R.color.white))
+                    .backgroundColor(getColor(context, R.color.orange))
+                    .textSize(getDimensionSp(context, R.dimen.textsize_subheader))
+                    .cornerRadius(8)
+                    .length(duration)
+                    .show()
+                else -> StyleableToast.Builder(context)
+                    .text(text)
+                    .textColor(getColor(context, R.color.white))
+                    .backgroundColor(getColor(context, R.color.dark_blue))
+                    .textSize(getDimensionSp(context, R.dimen.textsize_subheader))
+                    .cornerRadius(8)
+                    .length(duration)
+                    .show()
+            }
+        }
+
+        @JvmStatic
+        fun showToast(context: Context, resId: Int, duration: Int, type: Int) {
+            showToast(context, context.getString(resId), duration, type)
+        }
+
 
     }
 }

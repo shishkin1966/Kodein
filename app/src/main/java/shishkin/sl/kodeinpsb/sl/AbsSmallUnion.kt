@@ -4,7 +4,7 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 
 
-abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist<T>(), ISmallUnion<T> {
+abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmallUnion<T> {
     private val secretary = createSecretary()
 
     override fun createSecretary(): ISecretary<T> {
@@ -12,7 +12,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist<T>(), IS
     }
 
     override fun checkSubscriber(subscriber: T): Boolean {
-        return validate() && !subscriber.name.isNullOrEmpty()
+        return validate() && !subscriber.getName().isNullOrEmpty()
     }
 
     override fun register(subscriber: T?): Boolean {
@@ -36,7 +36,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist<T>(), IS
 
         val cnt = secretary.size()
 
-        secretary.put(subscriber.name, subscriber)
+        secretary.put(subscriber.getName(), subscriber)
 
         if (cnt == 0 && secretary.size() == 1) {
             onRegisterFirstSubscriber()
@@ -51,9 +51,9 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist<T>(), IS
         }
 
         val cnt = secretary.size()
-        if (secretary.containsKey(subscriber.name)) {
-            if (subscriber.equals(secretary[subscriber.name])) {
-                secretary.remove(subscriber.name)
+        if (secretary.containsKey(subscriber.getName())) {
+            if (subscriber.equals(secretary[subscriber.getName()])) {
+                secretary.remove(subscriber.getName())
             }
         }
 
