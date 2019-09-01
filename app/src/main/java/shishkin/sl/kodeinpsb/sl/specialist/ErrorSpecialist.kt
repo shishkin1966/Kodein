@@ -34,7 +34,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             ) {
-                path = ApplicationSpecialist.instance.getExternalFilesDir(null).absolutePath
+                path = ApplicationSpecialist.instance.getExternalFilesDir(null)?.absolutePath
             }
             if (!path.isNullOrBlank()) {
                 path +=  BuildConfig.APPLICATION_ID + File.pathSeparator
@@ -76,12 +76,12 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
                 }
 
                 if (file.length() > MAX_LOG_LENGTH) {
-                    val new_path = path + ".1"
-                    val new_file = File(new_path)
-                    if (new_file.exists()) {
-                        new_file.delete()
+                    val newPath = path + ".1"
+                    val newFile = File(newPath)
+                    if (newFile.exists()) {
+                        newFile.delete()
                     }
-                    file.renameTo(new_file)
+                    file.renameTo(newFile)
                 }
             }
         } catch (e: Exception) {
@@ -109,7 +109,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         )
     }
 
-    override fun onError(source: String, e: Exception, displayMessage: String) {
+    override fun onError(source: String, e: Exception, displayMessage: String?) {
         Log.e(source, Log.getStackTraceString(e))
         if (!displayMessage.isNullOrEmpty()) {
             ApplicationUtils.showToast(
@@ -121,7 +121,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         }
     }
 
-    override fun onError(source: String, message: String, isDisplay: Boolean) {
+    override fun onError(source: String, message: String?, isDisplay: Boolean) {
         if (!message.isNullOrEmpty()) {
             Log.e(source, message)
             if (isDisplay) {
@@ -139,7 +139,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         if (error.hasError()) {
             ApplicationUtils.showToast(
                 ApplicationSpecialist.instance,
-                error!!.getErrorText(),
+                error.getErrorText(),
                 Toast.LENGTH_LONG,
                 ApplicationUtils.MESSAGE_TYPE_ERROR
             )
@@ -154,8 +154,8 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         return true
     }
 
-    override operator fun compareTo(o: ISpecialist): Int {
-        return if (o is IErrorSpecialist) 0 else 1
+    override operator fun compareTo(other: ISpecialist): Int {
+        return if (other is IErrorSpecialist) 0 else 1
     }
 
 }
