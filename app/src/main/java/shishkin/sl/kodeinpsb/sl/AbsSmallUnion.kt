@@ -12,7 +12,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     }
 
     override fun checkSubscriber(subscriber: T): Boolean {
-        return validate() && !subscriber.getName().isNullOrEmpty()
+        return validate()
     }
 
     override fun register(subscriber: T): Boolean {
@@ -76,7 +76,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun getValidatedSubscribers(): List<T> {
         val subscribers = ArrayList<T>()
         for (subscriber in getSubscribers()) {
-            if (subscriber != null && subscriber.validate()) {
+            if (subscriber.validate()) {
                 subscribers.add(subscriber)
             }
         }
@@ -86,7 +86,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun getReadySubscribers(): List<T> {
         val subscribers = ArrayList<T>()
         for (subscriber in getSubscribers()) {
-            if (subscriber != null && subscriber.validate()) {
+            if (subscriber.validate()) {
                 if (subscriber is IStateable) {
                     val state = (subscriber as IStateable).getState()
                     if (state == State.STATE_READY) {
@@ -99,8 +99,6 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     }
 
     override fun getSubscriber(name: String): T? {
-        if (name.isNullOrEmpty()) return null
-
         return if (!secretary.containsKey(name)) {
             null
         } else secretary.get(name)

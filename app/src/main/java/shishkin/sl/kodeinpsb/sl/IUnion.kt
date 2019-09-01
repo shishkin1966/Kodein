@@ -4,9 +4,9 @@ package shishkin.sl.kodeinpsb.sl
  * Интерфейс объединения подписчиков
  *
  * @param <T> the type parameter
-</T> */
-interface IUnion<T> : ISmallUnion<T> {
+ */
+interface IUnion<T:ISpecialistSubscriber> : ISmallUnion<T> {
 
-    var currentSubscriber: T
+    fun setCurrentSubscriber(subscriber: ISpecialistSubscriber) : Boolean
 
 }

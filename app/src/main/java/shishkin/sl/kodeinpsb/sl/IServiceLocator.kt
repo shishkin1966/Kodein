@@ -32,10 +32,10 @@ interface IServiceLocator : ISubscriber {
     /**
      * Отменить регистрацию специалиста
      *
-     * @param specialist специалист
+     * @param name имя специалиста
      * @return флаг - операция завершена успешно
      */
-    fun unregister(specialist: ISpecialist): Boolean
+    fun unregister(name: String): Boolean
 
     /**
      * Зарегистрировать подписчика специалиста
