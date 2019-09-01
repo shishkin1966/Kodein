@@ -7,7 +7,6 @@ import com.github.snowdream.android.util.Log
 import shishkin.sl.kodeinpsb.BuildConfig
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsSpecialist
-import shishkin.sl.kodeinpsb.sl.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.data.Error
 import java.io.File

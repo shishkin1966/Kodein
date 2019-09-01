@@ -10,6 +10,6 @@ interface ISpecialistSubscriber : ISubscriber, IValidated {
      *
      * @return список имен специалистов
      */
-    val specialistSubscription: List<String>
+    fun getSpecialistSubscription() : List<String>
 
 }

@@ -10,7 +10,7 @@ interface ISecretary<T> {
 
     fun containsKey(key: String): Boolean
 
-    operator fun get(key: String): T?
+    fun get(key: String): T?
 
     fun values(): List<T>
 
