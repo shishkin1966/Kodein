@@ -30,7 +30,7 @@ interface IErrorSpecialist : ISpecialist {
      * @param e              Exception
      * @param displayMessage текст ошибки пользователю
      */
-    fun onError(source: String, e: Exception, displayMessage: String)
+    fun onError(source: String, e: Exception, displayMessage: String?)
 
     /**
      * Событие - ошибка
@@ -39,7 +39,7 @@ interface IErrorSpecialist : ISpecialist {
      * @param message   текст ошибки пользователю
      * @param isDisplay true - отображать на сообщение на дисплее, false - сохранять в журнале
      */
-    fun onError(source: String, message: String, isDisplay: Boolean)
+    fun onError(source: String, message: String?, isDisplay: Boolean)
 
     /**
      * Событие - ошибка

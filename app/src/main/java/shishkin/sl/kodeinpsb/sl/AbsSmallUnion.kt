@@ -15,11 +15,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
         return validate() && !subscriber.getName().isNullOrEmpty()
     }
 
-    override fun register(subscriber: T?): Boolean {
-        if (subscriber == null) {
-            return false
-        }
-
+    override fun register(subscriber: T): Boolean {
         if (!checkSubscriber(subscriber)) {
             //ErrorSpecialistImpl.getInstance()
             //    .onError(NAME, "Suscriber is not authenticated : $subscriber", true)
@@ -45,14 +41,10 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
         return true
     }
 
-    override fun unregister(subscriber: T?) {
-        if (subscriber == null) {
-            return
-        }
-
+    override fun unregister(subscriber: T) {
         val cnt = secretary.size()
         if (secretary.containsKey(subscriber.getName())) {
-            if (subscriber.equals(secretary[subscriber.getName()])) {
+            if (subscriber.equals(secretary.get(subscriber.getName()))) {
                 secretary.remove(subscriber.getName())
             }
         }
@@ -64,7 +56,10 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
 
     override fun unregister(name: String) {
         if (hasSubscriber(name)) {
-            unregister(getSubscriber(name))
+            val subscriber = getSubscriber(name)
+            if (subscriber != null) {
+                unregister(subscriber)
+            }
         }
     }
 
@@ -108,7 +103,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
 
         return if (!secretary.containsKey(name)) {
             null
-        } else secretary[name]
+        } else secretary.get(name)
     }
 
     override fun hasSubscribers(): Boolean {

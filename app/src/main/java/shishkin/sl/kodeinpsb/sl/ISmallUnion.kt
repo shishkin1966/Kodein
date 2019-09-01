@@ -4,7 +4,7 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Интерфейс малого объединения подписчиков
  */
-interface ISmallUnion<T> : ISpecialist {
+interface ISmallUnion<T:ISpecialistSubscriber> : ISpecialist {
     /**
      * Получить секретаря (объект учитывающий подписчиков)
      */
@@ -22,14 +22,14 @@ interface ISmallUnion<T> : ISpecialist {
      *
      * @param subscriber подписчик
      */
-    fun register(subscriber: T?): Boolean
+    fun register(subscriber: T): Boolean
 
     /**
      * Отключить подписчика
      *
      * @param subscriber подписчик
      */
-    fun unregister(subscriber: T?)
+    fun unregister(subscriber: T)
 
     /**
      * Отключить подписчика по его имени
