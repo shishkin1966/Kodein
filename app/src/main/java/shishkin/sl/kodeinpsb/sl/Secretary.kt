@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl
 
-import shishkin.sl.kodeinpsb.common.isNullOrEmpty
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.ArrayList
@@ -10,24 +9,23 @@ class Secretary<T>() : ISecretary<T> {
     private val subscribers = Collections.synchronizedMap(ConcurrentHashMap<String, T>())
 
     override fun remove(key: String): T? {
-        return if (key.isNullOrEmpty()) null else subscribers.remove(key)
+        return subscribers.remove(key)
     }
 
     override fun size(): Int {
         return subscribers.size
     }
 
-    override fun put(key: String, value: T?): T? {
-        if (value == null) return null
-        return if (key.isNullOrEmpty()) null else subscribers.put(key, value)
+    override fun put(key: String, value: T): T? {
+        return subscribers.put(key, value)
     }
 
     override fun containsKey(key: String): Boolean {
-        return if (key.isNullOrEmpty()) false else subscribers.containsKey(key)
+        return subscribers.containsKey(key)
     }
 
     override operator fun get(key: String): T? {
-        return if (key.isNullOrEmpty()) null else subscribers.get(key)
+        return subscribers.get(key)
     }
 
     override fun values(): List<T> {

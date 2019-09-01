@@ -6,7 +6,7 @@ interface ISecretary<T> {
 
     fun size(): Int
 
-    fun put(key: String, value: T?): T?
+    fun put(key: String, value: T): T?
 
     fun containsKey(key: String): Boolean
 

@@ -70,7 +70,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         try {
             val file = File(path)
             if (file.exists()) {
-                if (file.length() === 0L) {
+                if (file.length() == 0L) {
                     Log.i(ApplicationUtils.getPhoneInfo())
                 }
 

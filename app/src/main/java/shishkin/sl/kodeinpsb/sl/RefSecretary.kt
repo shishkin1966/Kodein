@@ -11,8 +11,6 @@ class RefSecretary<T> : ISecretary<T> {
         Collections.synchronizedMap(ConcurrentHashMap<String, WeakReference<T>>())
 
     override fun remove(key: String): T? {
-        if (key.isNullOrEmpty()) return null
-
         checkNull()
         return subscribers.remove(key)?.get()
     }
@@ -22,24 +20,17 @@ class RefSecretary<T> : ISecretary<T> {
         return subscribers.size
     }
 
-    override fun put(key: String, value: T?): T? {
-        if (value == null) return null
-        if (key.isNullOrEmpty()) return null
-
+    override fun put(key: String, value: T): T? {
         subscribers.put(key, WeakReference(value))
         return get(key)
     }
 
     override fun containsKey(key: String): Boolean {
-        if (key.isNullOrEmpty()) return false
-
         checkNull()
         return subscribers.containsKey(key)
     }
 
     override operator fun get(key: String): T? {
-        if (key.isNullOrEmpty()) return null
-
         checkNull()
         return subscribers.get(key)?.get()
     }
