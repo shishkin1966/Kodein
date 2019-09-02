@@ -7,10 +7,10 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 import shishkin.sl.kodeinpsb.sl.state.IStateListener
 import android.os.Build.VERSION_CODES.M
 import shishkin.sl.kodeinpsb.sl.model.IModelView
+import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
-interface IPresenter<M : IModel> : IStateListener, IActionListener, IActionHandler,
-    IMessengerSubscriber {
+interface IPresenter<M : IModel> : IStateListener, IActionListener, IActionHandler, IMessengerSubscriber {
     /**
      * Получить модель презентера
      *

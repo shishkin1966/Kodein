@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.sl.state
 /**
  * Интерфейс слушателя View объекта, имеющего состояния
  */
-interface IStateListener {
+interface IStateListener : IStateable{
     /**
      * Событие - view на этапе создания
      */

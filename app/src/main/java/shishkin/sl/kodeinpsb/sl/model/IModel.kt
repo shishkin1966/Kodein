@@ -2,6 +2,7 @@ package shishkin.sl.kodeinpsb.sl.model
 
 import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
@@ -11,7 +12,7 @@ interface IModel : IValidated {
      *
      * @return View объект модели
      */
-    fun <V : IModelView> getView(): V
+    fun <V : IModelView> getView(): V?
 
     /**
      * Установить View объект модели
@@ -32,14 +33,14 @@ interface IModel : IValidated {
      *
      * @param presenter presenter модели
      */
-    fun setPresenter(presenter: AbsPresenter<*>)
+    fun setPresenter(presenter: IPresenter<IModel>)
 
     /**
      * Получить presenter модели
      *
      * @return презентер модели
      */
-    fun <C> getPresenter(): C
+    fun <C> getPresenter(): C?
 
     /**
      * Установить State Observerable у объектов модели
