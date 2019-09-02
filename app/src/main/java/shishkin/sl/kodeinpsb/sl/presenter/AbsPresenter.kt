@@ -9,6 +9,7 @@ import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
+import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
 import shishkin.sl.kodeinpsb.sl.state.State
 
@@ -56,11 +57,11 @@ abstract class AbsPresenter<M : IModel> : IPresenter<M> {
     }
 
     override fun validate(): Boolean {
-        return lifecycle.getState() != State.STATE_DESTROY && lifecycle.getState() != State.STATE_NOT_READY
+        return lifecycle.getState() != State.STATE_DESTROY
     }
 
     override fun getSpecialistSubscription(): List<String> {
-        return listOf<String>({PresenterUnion.NAME, MessengerUnion.NAME})
+        return listOf(PresenterUnion.NAME, MessengerUnion.NAME)
     }
 
     override fun onStart() {}

@@ -11,9 +11,10 @@ import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.annimon.stream.Stream
+import com.annimon.stream.function.Predicate
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
-
 
 class ApplicationUtils {
     companion object {
@@ -248,6 +249,14 @@ class ApplicationUtils {
             showToast(context, context.getString(resId), duration, type)
         }
 
+        @JvmStatic
+        fun <T> filter(list: Collection<T>, predicate: Predicate<in T>): Stream<T> {
+            return Stream.of(list).filter(predicate)
+        }
 
+        @JvmStatic
+        fun <T> sort(list: Collection<T>, comparator: Comparator<in T>): Stream<T> {
+            return Stream.of(list).sorted(comparator)
+        }
     }
 }
