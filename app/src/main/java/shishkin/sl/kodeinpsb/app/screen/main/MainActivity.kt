@@ -5,16 +5,18 @@ import android.os.Bundle
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
+import shishkin.sl.kodeinpsb.sl.ui.IActivity
 
 
 class MainActivity<MainModel> : AbsActivity<MainModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        setModel(MainModel(this))
+        setModel(MainModel(this as IActivity<IModel<*>>))
 
         setTheme(R.style.AppTheme)
 
