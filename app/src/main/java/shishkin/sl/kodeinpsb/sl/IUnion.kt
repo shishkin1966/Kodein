@@ -7,6 +7,7 @@ package shishkin.sl.kodeinpsb.sl
  */
 interface IUnion<T : ISpecialistSubscriber> : ISmallUnion<T> {
 
-    fun setCurrentSubscriber(subscriber: ISpecialistSubscriber): Boolean
+    fun setCurrentSubscriber(subscriber: T): Boolean
 
+    fun getCurrentSubscriber(): T?
 }
