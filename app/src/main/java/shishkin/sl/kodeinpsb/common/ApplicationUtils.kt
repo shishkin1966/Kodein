@@ -124,7 +124,7 @@ class ApplicationUtils {
         @JvmStatic
         fun getStatusPermission(context: Context?, permission: String): Int {
             return if (context != null) {
-                ActivityCompat.checkSelfPermission(context!!, permission)
+                ActivityCompat.checkSelfPermission(context, permission)
             } else {
                 PackageManager.PERMISSION_DENIED
             }
@@ -154,7 +154,7 @@ class ApplicationUtils {
                     if (!listPermissionsNeeded.isEmpty()) {
                         val arrayPermissionsNeeded =
                             arrayOfNulls<String>(listPermissionsNeeded.size)
-                        listPermissionsNeeded.toTypedArray()
+                        listPermissionsNeeded.toArray(arrayPermissionsNeeded)
                         ActivityCompat.requestPermissions(
                             activity,
                             arrayPermissionsNeeded,

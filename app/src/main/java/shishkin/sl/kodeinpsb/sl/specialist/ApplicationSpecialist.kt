@@ -1,21 +1,23 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
 import android.app.Application
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.singleton
+import android.content.Context
 import shishkin.sl.kodeinpsb.BuildConfig
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 
-class ApplicationSpecialist : Application(), IApplicationSpecialist {
+
+open class ApplicationSpecialist : Application(), IApplicationSpecialist {
     private var isExit = false
-    val kodein = Kodein {
-        bind<IApplicationSpecialist>() with singleton { instance }
-        bind<IErrorSpecialist>() with singleton { ErrorSpecialistSingleton.instance }
-    }
 
     companion object {
         val instance = ApplicationSpecialist()
+        lateinit var appContext: Context
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        appContext = applicationContext
     }
 
     override fun isPersistent(): Boolean {

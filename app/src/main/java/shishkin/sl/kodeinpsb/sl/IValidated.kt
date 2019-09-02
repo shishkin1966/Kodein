@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl
 
-import shishkin.sl.kodeinpsb.sl.data.Result
-
 /**
  * Интерфейс объекта, который может быть проверен на жизнеспособность
  */

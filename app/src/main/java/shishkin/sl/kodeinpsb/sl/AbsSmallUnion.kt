@@ -11,22 +11,8 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
         return RefSecretary()
     }
 
-    override fun checkSubscriber(subscriber: T): Boolean {
-        return validate()
-    }
-
     override fun register(subscriber: T): Boolean {
-        if (!checkSubscriber(subscriber)) {
-            //ErrorSpecialistImpl.getInstance()
-            //    .onError(NAME, "Suscriber is not authenticated : $subscriber", true)
-            return false
-        }
-
         if (!subscriber.validate()) {
-            //ErrorSpecialistImpl.getInstance().onError(
-            //    NAME,
-            //    "Registration not valid subscriber: $subscriber", true
-            //)
             return false
         }
 
@@ -62,12 +48,6 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
             }
         }
     }
-
-    override fun onAddSubscriber(subscriber: T) {}
-
-    override fun onRegisterFirstSubscriber() {}
-
-    override fun onUnRegisterLastSubscriber() {}
 
     override fun getSubscribers(): List<T> {
         return secretary.values()
@@ -113,6 +93,9 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     }
 
     override fun stop() {
+        for (subscriber in getSubscribers()) {
+            subscriber.onStop(this)
+        }
         secretary.clear()
     }
 }

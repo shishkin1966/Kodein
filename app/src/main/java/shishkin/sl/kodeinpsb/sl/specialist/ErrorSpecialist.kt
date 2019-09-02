@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
 import android.Manifest
+import android.content.Context
 import android.widget.Toast
 import com.github.snowdream.android.util.FilePathGenerator
 import com.github.snowdream.android.util.Log
@@ -23,20 +24,23 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
 
     private val MAX_LOG_LENGTH: Long = 2000000//2Mb
 
-    init {
+    override fun onRegister() {
+        checkLog(ApplicationSpecialist.appContext)
+    }
+
+    override fun checkLog(context: Context) {
         try {
             Log.setEnabled(true)
             Log.setLog2FileEnabled(true)
             var path: String? = null
             if (BuildConfig.DEBUG && ApplicationUtils.checkPermission(
-                    ApplicationSpecialist.instance,
+                    context,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             ) {
-                path = ApplicationSpecialist.instance.getExternalFilesDir(null)?.absolutePath
+                path = context.getExternalFilesDir(null)?.absolutePath + File.separator
             }
             if (!path.isNullOrBlank()) {
-                path +=  BuildConfig.APPLICATION_ID + File.pathSeparator
                 val file = File(path)
                 if (!file.exists()) {
                     file.mkdirs()

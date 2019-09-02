@@ -4,18 +4,11 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Интерфейс малого объединения подписчиков
  */
-interface ISmallUnion<T:ISpecialistSubscriber> : ISpecialist {
+interface ISmallUnion<T : ISpecialistSubscriber> : ISpecialist {
     /**
      * Получить секретаря (объект учитывающий подписчиков)
      */
     fun createSecretary(): ISecretary<T>
-
-    /**
-     * Проверить подписчика
-     *
-     * @return результат проверки подписчика
-     */
-    fun checkSubscriber(subscriber: T): Boolean
 
     /**
      * Зарегестрировать подписчика
