@@ -30,7 +30,7 @@ interface IPresenter<M : IModel> : IStateListener, IActionListener, IActionHandl
      *
      * @return the view model
      */
-    fun <V : IModelView> getView(): V?
+    fun <V : IModelView<IModel>> getView(): V?
 
     /**
      * Флаг - регистрировать презентер в объединении презентеров

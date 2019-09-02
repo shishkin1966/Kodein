@@ -68,7 +68,7 @@ abstract class AbsPresenter<M : IModel> : IPresenter<M> {
 
     override fun onStop() {}
 
-    override fun <C : IModelView> getView(): C? {
+    override fun <C : IModelView<IModel>> getView(): C? {
         return if (model != null) {
             model?.getView()
         } else null

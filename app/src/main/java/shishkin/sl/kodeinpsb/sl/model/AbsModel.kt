@@ -1,9 +1,9 @@
 package shishkin.sl.kodeinpsb.sl.model
 
-import shishkin.sl.kodeinpsb.sl.state.IStateListener
-import shishkin.sl.kodeinpsb.sl.state.StateObserver
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
+import shishkin.sl.kodeinpsb.sl.state.IStateListener
 import shishkin.sl.kodeinpsb.sl.state.IStateable
+import shishkin.sl.kodeinpsb.sl.state.StateObserver
 
 
 class AbsModel : IModel, IStateListener {
@@ -11,7 +11,7 @@ class AbsModel : IModel, IStateListener {
     private var presenter: IPresenter<IModel>? = null
     private val lifecycle = StateObserver(this)
 
-    constructor(view:IModelView?) {
+    constructor(view: IModelView) {
         modelView = view
         modelView?.addStateObserver(this)
     }

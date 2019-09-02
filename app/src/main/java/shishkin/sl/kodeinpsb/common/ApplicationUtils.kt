@@ -15,6 +15,9 @@ import com.annimon.stream.Stream
 import com.annimon.stream.function.Predicate
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
+import androidx.annotation.IdRes
+import android.view.View
+
 
 class ApplicationUtils {
     companion object {
@@ -258,5 +261,11 @@ class ApplicationUtils {
         fun <T> sort(list: Collection<T>, comparator: Comparator<in T>): Stream<T> {
             return Stream.of(list).sorted(comparator)
         }
+
+        @JvmStatic
+        fun <V : View> findView(activity: Activity, @IdRes id: Int): V? {
+            return activity.findViewById<View>(id) as V?
+        }
+
     }
 }
