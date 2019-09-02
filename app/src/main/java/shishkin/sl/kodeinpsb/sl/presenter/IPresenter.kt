@@ -10,27 +10,27 @@ import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
-interface IPresenter<M : IModel> : IStateListener, IActionListener, IActionHandler, IMessengerSubscriber {
+interface IPresenter : IStateListener, IActionListener, IActionHandler, IMessengerSubscriber {
     /**
      * Получить модель презентера
      *
      * @return the model
      */
-    fun getModel(): M?
+    fun <M> getModel(): M?
 
     /**
      * Установить модель презентера
      *
      * @param model the model
      */
-    fun setModel(model: M)
+    fun <M> setModel(model: M)
 
     /**
      * Получить View модели
      *
      * @return the view model
      */
-    fun <V : IModelView<IModel>> getView(): V?
+    fun <V> getView(): V?
 
     /**
      * Флаг - регистрировать презентер в объединении презентеров

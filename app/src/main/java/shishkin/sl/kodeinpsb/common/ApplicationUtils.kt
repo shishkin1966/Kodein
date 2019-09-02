@@ -19,6 +19,8 @@ import androidx.annotation.IdRes
 import android.view.View
 
 
+
+
 class ApplicationUtils {
     companion object {
 
@@ -265,6 +267,11 @@ class ApplicationUtils {
         @JvmStatic
         fun <V : View> findView(activity: Activity, @IdRes id: Int): V? {
             return activity.findViewById<View>(id) as V?
+        }
+
+        @JvmStatic
+        fun <V : View> findView(view: View, @IdRes id: Int): V? {
+            return view.findViewById<View>(id) as V?
         }
 
     }

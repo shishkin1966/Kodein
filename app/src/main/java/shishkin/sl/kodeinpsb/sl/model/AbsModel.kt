@@ -6,34 +6,34 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
 
 
-class AbsModel : IModel, IStateListener {
-    private var modelView: IModelView? = null
-    private var presenter: IPresenter<IModel>? = null
+abstract class AbsModel<M> : IModel<M>, IStateListener {
+    private var modelView: M? = null
+    private var presenter: IPresenter? = null
     private val lifecycle = StateObserver(this)
 
-    constructor(view: IModelView) {
-        modelView = view
-        modelView?.addStateObserver(this)
+    constructor(view:IModelView<*>) {
+        modelView = view as M
+        (modelView as IModelView<*>).addStateObserver(this)
     }
 
     override fun addStateObserver() {
         if (modelView != null) {
-            modelView?.addStateObserver(this)
+            (modelView as IModelView<*>).addStateObserver(this)
             if (presenter != null) {
-                modelView?.addStateObserver(presenter as IStateable)
+                (modelView as IModelView<*>).addStateObserver(presenter as IStateable)
             }
         }
     }
 
-    override fun <V : IModelView> getView(): V? {
-        return modelView as V
+    override fun getView(): M? {
+        return modelView as M
     }
 
-    override fun setView(view: IModelView) {
+    override fun setView(view: M) {
         modelView = view
     }
 
-    override fun setPresenter(presenter: IPresenter<IModel>) {
+    override fun setPresenter(presenter: IPresenter) {
         this.presenter = presenter
         if (this.presenter != null) {
             addStateObserver(this.presenter as IStateable)
@@ -46,7 +46,7 @@ class AbsModel : IModel, IStateListener {
 
     override fun validate(): Boolean {
         if (modelView != null) {
-            return modelView!!.validate()
+            return (modelView as IModelView<*>).validate()
         } else {
             return false
         }
@@ -54,7 +54,7 @@ class AbsModel : IModel, IStateListener {
 
     override fun addStateObserver(stateable: IStateable) {
         if (modelView != null) {
-            modelView?.addStateObserver(stateable)
+            (modelView as IModelView<*>)?.addStateObserver(stateable)
         }
     }
 

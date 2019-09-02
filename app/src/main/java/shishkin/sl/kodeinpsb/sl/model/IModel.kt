@@ -6,20 +6,20 @@ import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
-interface IModel : IValidated {
+interface IModel<M> : IValidated {
     /**
      * Получить View объект модели
      *
      * @return View объект модели
      */
-    fun <V : IModelView> getView(): V?
+    fun getView(): M?
 
     /**
      * Установить View объект модели
      *
      * @param view View объект модели
      */
-    fun setView(view: IModelView)
+    fun setView(view: M)
 
     /**
      * Добавить слушателя к модели
@@ -33,7 +33,7 @@ interface IModel : IValidated {
      *
      * @param presenter presenter модели
      */
-    fun setPresenter(presenter: IPresenter<IModel>)
+    fun setPresenter(presenter: IPresenter)
 
     /**
      * Получить presenter модели

@@ -8,7 +8,7 @@ import androidx.annotation.IdRes
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
-interface IModelView<M:IModel> : IValidated {
+interface IModelView<M> : IValidated {
     /**
      * Добавить слушателя к ModelView объекту
      *
@@ -42,7 +42,7 @@ interface IModelView<M:IModel> : IValidated {
      *
      * @return модель
      */
-    fun getModel(): M
+    fun getModel(): M?
 
     /**
      * Установить модель
