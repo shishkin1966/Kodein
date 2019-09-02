@@ -1,14 +1,11 @@
 package shishkin.sl.kodeinpsb.sl
 
 /**
- * Интерфейс объекта - подписчика.
+ * Интерфейс объекта - подписчика у специалиста.
  */
-interface ISubscriber {
+interface ISubscriber : INamed {
     /**
-     * Получить имя подписчика
-     *
-     * @return имя подписчика
+     * Событие - специалист прекратил работу
      */
-    fun getName() : String
-
+    fun onStop(specialist: ISpecialist)
 }

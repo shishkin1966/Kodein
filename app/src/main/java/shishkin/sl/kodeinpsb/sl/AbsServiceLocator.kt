@@ -106,4 +106,9 @@ abstract class AbsServiceLocator : IServiceLocator {
         return secretary.values()
     }
 
+    override fun stop() {
+        for (specialist in getSpecialists()) {
+            specialist.stop()
+        }
+    }
 }

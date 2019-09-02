@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Итерфейс администратора(Service Locator)
  */
-interface IServiceLocator : ISubscriber {
+interface IServiceLocator : INamed {
     /**
      * Проверить существование специалиста
      *
@@ -19,7 +19,7 @@ interface IServiceLocator : ISubscriber {
      * @param name имя специалиста
      * @return специалист
     </ */
-    fun <C:ISpecialist> get(name: String): C?
+    fun <C : ISpecialist> get(name: String): C?
 
     /**
      * Зарегистрировать специалиста
@@ -62,14 +62,14 @@ interface IServiceLocator : ISubscriber {
     fun setCurrentSubscriber(subscriber: ISpecialistSubscriber): Boolean
 
     /**
-     * Событие - остановка service locator
+     * Остановитить работу service locator
      */
-    fun onStop()
+    fun stop()
 
     /**
-     * Событие - старт service locator
+     * Запустить работу service locator
      */
-    fun onStart()
+    fun start()
 
     /**
      * Получить список специалистов

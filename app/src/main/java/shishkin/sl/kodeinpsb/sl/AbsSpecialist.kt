@@ -1,10 +1,6 @@
 package shishkin.sl.kodeinpsb.sl
 
 abstract class AbsSpecialist : ISpecialist {
-    override fun onUnRegister() {}
-
-    override fun onRegister() {}
-
     override fun isPersistent(): Boolean {
         return false
     }
@@ -13,6 +9,12 @@ abstract class AbsSpecialist : ISpecialist {
         return true
     }
 
-    override fun stop() {}
+    override fun onUnRegister() {
+    }
 
+    override fun onRegister() {
+    }
+
+    override fun stop() {
+    }
 }

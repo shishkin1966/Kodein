@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
+import android.content.Context
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.data.Error
 
@@ -55,4 +56,5 @@ interface IErrorSpecialist : ISpecialist {
      */
     fun getPath(): String
 
+    fun checkLog(context: Context)
 }
