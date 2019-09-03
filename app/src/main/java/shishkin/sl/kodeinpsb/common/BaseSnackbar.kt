@@ -44,11 +44,11 @@ class BaseSnackbar {
         textView.setTextColor(ApplicationUtils.getColor(view.context, R.color.white))
         textView.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
-            ApplicationUtils.getDimensionPx(view.context, R.dimen.textsize_subheader)
+            ApplicationUtils.getDimensionPx(view.context, R.dimen.text_size_large)
         )
         actionView.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
-            ApplicationUtils.getDimensionPx(view.context, R.dimen.textsize_subheader)
+            ApplicationUtils.getDimensionPx(view.context, R.dimen.text_size_large)
         )
         if (ApplicationUtils.hasJellyBeanMR1()) {
             textView.textAlignment = View.TEXT_ALIGNMENT_CENTER

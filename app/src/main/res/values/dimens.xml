@@ -19,14 +19,14 @@
     <dimen name="dimen_128dp">128dp</dimen>
     <dimen name="dimen_256dp">256dp</dimen>
 
-    <dimen name="textsize_display">32sp</dimen>
-    <dimen name="textsize_headline">24sp</dimen>
-    <dimen name="textsize_title">20sp</dimen>
-    <dimen name="textsize_subheader">16sp</dimen>
-    <dimen name="textsize_menu">14sp</dimen>
-    <dimen name="textsize_body">14sp</dimen>
-    <dimen name="textsize_caption">12sp</dimen>
-    <dimen name="textsize_button">14sp</dimen>
+    <dimen name="text_size_extra_small">10sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size">13sp</dimen>
+    <dimen name="text_size_large">15sp</dimen>
+    <dimen name="text_size_xlarge">18sp</dimen>
+    <dimen name="text_size_xxlarge">21sp</dimen>
+    <dimen name="text_size_xxxlarge">26sp</dimen>
+
 
     <dimen name="thumb_size">@dimen/dimen_48dp</dimen>
 

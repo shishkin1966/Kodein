@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import shishkin.sl.kodeinpsb.R;
+
 
 public class RippleTextView extends AppCompatTextView {
 
