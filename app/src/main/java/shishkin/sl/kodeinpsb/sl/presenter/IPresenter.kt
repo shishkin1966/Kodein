@@ -16,21 +16,14 @@ interface IPresenter : IStateListener, IActionListener, IActionHandler, IMesseng
      *
      * @return the model
      */
-    fun <M> getModel(): M?
-
-    /**
-     * Установить модель презентера
-     *
-     * @param model the model
-     */
-    fun <M> setModel(model: M)
+    fun <M:IModel> getModel(): M?
 
     /**
      * Получить View модели
      *
      * @return the view model
      */
-    fun <V> getView(): V?
+    fun <V:IModelView> getView(): V?
 
     /**
      * Флаг - регистрировать презентер в объединении презентеров

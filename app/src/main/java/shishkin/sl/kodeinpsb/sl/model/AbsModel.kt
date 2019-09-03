@@ -6,31 +6,27 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
 
 
-abstract class AbsModel<M> : IModel<M>, IStateListener {
-    private var modelView: M? = null
+abstract class AbsModel : IModel, IStateListener {
+    private val modelView: IModelView
     private var presenter: IPresenter? = null
     private val lifecycle = StateObserver(this)
 
-    constructor(view:IModelView<*>) {
-        modelView = view as M
-        (modelView as IModelView<*>).addStateObserver(this)
+    constructor(view:IModelView) {
+        modelView = view
+        (modelView as IModelView).addStateObserver(this)
     }
 
     override fun addStateObserver() {
         if (modelView != null) {
-            (modelView as IModelView<*>).addStateObserver(this)
+            (modelView as IModelView).addStateObserver(this)
             if (presenter != null) {
-                (modelView as IModelView<*>).addStateObserver(presenter as IStateable)
+                (modelView as IModelView).addStateObserver(presenter as IStateable)
             }
         }
     }
 
-    override fun getView(): M? {
+    override fun <M:IModelView> getView(): M? {
         return modelView as M
-    }
-
-    override fun setView(view: M) {
-        modelView = view
     }
 
     override fun setPresenter(presenter: IPresenter) {
@@ -46,7 +42,7 @@ abstract class AbsModel<M> : IModel<M>, IStateListener {
 
     override fun validate(): Boolean {
         if (modelView != null) {
-            return (modelView as IModelView<*>).validate()
+            return (modelView as IModelView).validate()
         } else {
             return false
         }
@@ -54,7 +50,7 @@ abstract class AbsModel<M> : IModel<M>, IStateListener {
 
     override fun addStateObserver(stateable: IStateable) {
         if (modelView != null) {
-            (modelView as IModelView<*>)?.addStateObserver(stateable)
+            (modelView as IModelView)?.addStateObserver(stateable)
         }
     }
 

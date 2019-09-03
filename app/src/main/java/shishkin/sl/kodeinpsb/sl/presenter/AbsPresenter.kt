@@ -14,13 +14,13 @@ import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
 import shishkin.sl.kodeinpsb.sl.state.State
 
 
-abstract class AbsPresenter<M : IModel> : IPresenter<M> {
-    private var model: M? = null
+abstract class AbsPresenter : IPresenter {
+    private val model: IModel
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
     private val actionHandler = PresenterActionHandler(this)
 
-    constructor(model: M) {
+    constructor(model: IModel) {
         this.model = model
     }
 
@@ -48,12 +48,8 @@ abstract class AbsPresenter<M : IModel> : IPresenter<M> {
         onStop()
     }
 
-    override fun getModel(): M? {
-        return model
-    }
-
-    override fun setModel(model: M) {
-        this.model = model
+    override fun <M:IModel> getModel(): M? {
+        return model as M
     }
 
     override fun validate(): Boolean {
@@ -68,7 +64,7 @@ abstract class AbsPresenter<M : IModel> : IPresenter<M> {
 
     override fun onStop() {}
 
-    override fun <C : IModelView<IModel>> getView(): C? {
+    override fun <C : IModelView> getView(): C? {
         return if (model != null) {
             model?.getView()
         } else null

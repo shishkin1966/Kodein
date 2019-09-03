@@ -1,33 +1,24 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
+import android.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsUnion
+import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.action.IAction
+import shishkin.sl.kodeinpsb.sl.state.State
+import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
+import shishkin.sl.kodeinpsb.sl.ui.BackStack
 import shishkin.sl.kodeinpsb.sl.ui.IActivity
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
-import shishkin.sl.kodeinpsb.sl.ui.IActivity
-import shishkin.sl.kodeinpsb.sl.ui.IActivity
-import androidx.annotation.NonNull
-import androidx.core.app.ActivityCompat
-import android.app.Activity
-import com.sun.deploy.model.Resource.STATE_READY
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import android.R
-import androidx.appcompat.app.AppCompatActivity
-import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
-import shishkin.sl.kodeinpsb.sl.state.State
-import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
-import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
 
-
-
-
-
-
-
-class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
+class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     companion object {
         const val NAME = "ActivityUnion"
     }
@@ -183,7 +174,7 @@ class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
     override fun back() {
         val subscriber = getCurrentSubscriber()
         if (subscriber != null) {
-            if (subscriber is AbsActivity<*>) {
+            if (subscriber is AbsActivity) {
                 subscriber.onBackPressed()
             }
         }
@@ -193,10 +184,10 @@ class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
         if (ApplicationUtils.hasMarshmallow()) {
             val subscriber = getCurrentSubscriber()
             if (subscriber != null && subscriber.validate() && subscriber.getState() == State.STATE_READY) {
-                val activity = SafeUtils.cast(subscriber)
+                val activity = subscriber  as AppCompatActivity
                 if (activity != null) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            activity!!,
+                            activity,
                             permission
                         )
                     ) {
@@ -212,9 +203,9 @@ class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
                         )
                     } else {
                         ActivityCompat.requestPermissions(
-                            activity!!,
+                            activity,
                             arrayOf(permission),
-                            Constant.REQUEST_PERMISSIONS
+                            ApplicationUtils.REQUEST_PERMISSIONS
                         )
                     }
                 }
@@ -226,17 +217,17 @@ class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
         if (ApplicationUtils.hasMarshmallow()) {
             val subscriber = getCurrentSubscriber()
             if (subscriber != null && subscriber.validate() && subscriber.getState() == State.STATE_READY) {
-                val activity = SafeUtils.cast(subscriber)
+                val activity = subscriber as AppCompatActivity
                 if (activity != null) {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                            activity!!,
+                            activity,
                             permission
                         )
                     ) {
                         ActivityCompat.requestPermissions(
-                            activity!!,
+                            activity,
                             arrayOf(permission),
-                            Constant.REQUEST_PERMISSIONS
+                            ApplicationUtils.REQUEST_PERMISSIONS
                         )
                     }
                 }
@@ -244,11 +235,11 @@ class ActivityUnion : AbsUnion<IActivity>() , IActivityUnion {
         }
     }
 
-    operator fun compareTo(o: Any): Int {
-        return if (ActivityUnionImpl::class.java!!.isInstance(o)) 0 else 1
+    override operator fun compareTo(other: ISpecialist): Int {
+        return if (other is IActivityUnion) 0 else 1
     }
 
-    fun addAction(action: Action) {
+    override fun addAction(action: IAction) {
         val subscriber = getCurrentSubscriber()
         if (subscriber != null && subscriber.validate()) {
             subscriber.addAction(action)

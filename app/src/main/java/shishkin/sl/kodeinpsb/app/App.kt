@@ -18,4 +18,8 @@ class App : ApplicationSpecialist() {
 
         ServiceLocatorSingleton.instance.stop()
     }
+
+    override fun isKillOnFinish(): Boolean {
+        return true
+    }
 }

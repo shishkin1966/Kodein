@@ -10,8 +10,8 @@ import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
 
 
-interface IActivity<M> : ISpecialistSubscriber, IStateable, IActionListener, IPermissionListener, IActionHandler,
-    IModelView<M> {
+interface IActivity : ISpecialistSubscriber, IStateable, IActionListener, IPermissionListener, IActionHandler,
+    IModelView {
     /**
      * очистить Back Stack
      */
