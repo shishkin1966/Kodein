@@ -8,11 +8,19 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.util.DisplayMetrics
+import android.view.View
+import android.view.WindowManager
+import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.annimon.stream.Stream
+import com.annimon.stream.function.Predicate
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
+
+
 
 
 class ApplicationUtils {
@@ -246,6 +254,113 @@ class ApplicationUtils {
         @JvmStatic
         fun showToast(context: Context, resId: Int, duration: Int, type: Int) {
             showToast(context, context.getString(resId), duration, type)
+        }
+
+        @JvmStatic
+        fun <T> filter(list: Collection<T>, predicate: Predicate<in T>): Stream<T> {
+            return Stream.of(list).filter(predicate)
+        }
+
+        @JvmStatic
+        fun <T> sort(list: Collection<T>, comparator: Comparator<in T>): Stream<T> {
+            return Stream.of(list).sorted(comparator)
+        }
+
+        @JvmStatic
+        fun <V : View> findView(activity: Activity, @IdRes id: Int): V? {
+            return activity.findViewById<View>(id) as V?
+        }
+
+        @JvmStatic
+        fun <V : View> findView(view: View, @IdRes id: Int): V? {
+            return view.findViewById<View>(id) as V?
+        }
+
+        @JvmStatic
+        fun dp2px(context: Context, dpValue: Float): Float {
+            val scale = context.resources.displayMetrics.density
+            return (dpValue * scale + 0.5f)
+        }
+
+        @JvmStatic
+        fun px2dp(context: Context, pxValue: Float): Float {
+            val scale = context.resources.displayMetrics.density
+            return (pxValue / scale + 0.5f)
+        }
+
+        @JvmStatic
+        fun sp2px(context: Context, spValue: Float): Float {
+            val fontScale = context.resources.displayMetrics.scaledDensity
+            return (spValue * fontScale + 0.5f)
+        }
+
+        @JvmStatic
+        fun px2sp(context: Context, pxValue: Float): Float {
+            val fontScale = context.resources.displayMetrics.scaledDensity
+            return (pxValue / fontScale + 0.5f)
+        }
+
+        @JvmStatic
+        fun getScreenWidth(context: Context): Int {
+            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = wm.defaultDisplay
+            val metrics = DisplayMetrics()
+            display.getMetrics(metrics)
+            return metrics.widthPixels
+        }
+
+        @JvmStatic
+        fun getScreenHeight(context: Context): Int {
+            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = wm.defaultDisplay
+            val metrics = DisplayMetrics()
+            display.getMetrics(metrics)
+            return metrics.heightPixels
+        }
+
+        /**
+         * Get Smartphone screen size in inch
+         *
+         * @return The smartphone screen size
+         */
+        @JvmStatic
+        fun diagonalInch(context: Context): Double {
+            val widthPixels = context.resources.displayMetrics.widthPixels
+            val heightPixels = context.resources.displayMetrics.heightPixels
+
+            val widthDpi = context.resources.displayMetrics.xdpi
+            val heightDpi = context.resources.displayMetrics.ydpi
+
+            val widthInches = widthPixels / widthDpi
+            val heightInches = heightPixels / heightDpi
+
+            val diagonal =
+                Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+            return Math.floor(diagonal + 0.5)
+        }
+
+        @JvmStatic
+        fun isPhone(context: Context): Boolean {
+            val diagonalInches = diagonalInch(context)
+            return diagonalInches < 7
+        }
+
+        @JvmStatic
+        fun is6inchPhone(context: Context): Boolean {
+            val diagonalInches = diagonalInch(context)
+            return diagonalInches >= 6 && diagonalInches < 7
+        }
+
+        @JvmStatic
+        fun is7inchTablet(context: Context): Boolean {
+            val diagonalInches = diagonalInch(context)
+            return diagonalInches >= 7 && diagonalInches < 9
+        }
+
+        @JvmStatic
+        fun is10inchTablet(context: Context): Boolean {
+            val diagonalInches = diagonalInch(context)
+            return diagonalInches >= 9
         }
 
 

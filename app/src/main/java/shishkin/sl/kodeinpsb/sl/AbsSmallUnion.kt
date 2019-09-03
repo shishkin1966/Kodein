@@ -1,5 +1,7 @@
 package shishkin.sl.kodeinpsb.sl
 
+import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 
@@ -94,8 +96,19 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
 
     override fun stop() {
         for (subscriber in getSubscribers()) {
+            unregister(subscriber)
             subscriber.onStop(this)
         }
         secretary.clear()
     }
+
+    override fun onRegisterFirstSubscriber() {
+    }
+
+    override fun onUnRegisterLastSubscriber() {
+    }
+
+    override fun onAddSubscriber(subscriber : T) {
+    }
+
 }

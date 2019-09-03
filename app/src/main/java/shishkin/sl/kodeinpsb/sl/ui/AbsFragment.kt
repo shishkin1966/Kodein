@@ -3,17 +3,14 @@ package shishkin.sl.kodeinpsb.sl.ui
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -22,7 +19,10 @@ import java.util.*
 
 
 
- abstract class AbsActivity : AppCompatActivity(), IActivity {
+
+
+abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
+
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
     private var model: IModel? = null
@@ -39,22 +39,25 @@ import java.util.*
         this.model = model
     }
 
-     abstract fun createModel(): IModel
+    abstract fun createModel(): M
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun <V : View> findView(@IdRes id: Int): V? {
+        val root = view
+        return if (root != null) {
+            ApplicationUtils.findView(root, id)
+        } else null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setModel(createModel())
 
         stateObservable.setState(State.STATE_CREATE)
 
-        ServiceLocatorSingleton.instance.register(this)
-    }
-
-    override fun <V : View> findView(@IdRes id: Int): V? {
-        return ApplicationUtils.findView(this, id)
+        if (this is ISpecialistSubscriber) {
+            ServiceLocatorSingleton.instance.register(this)
+        }
     }
 
     override fun onStart() {
@@ -62,9 +65,9 @@ import java.util.*
 
         doActions()
 
-        (getModel<IModel>() as IModel).addStateObserver();
+        (getModel<IModel>() as IModel).addStateObserver()
 
-        stateObservable.setState(State.STATE_READY);
+        stateObservable.setState(State.STATE_READY)
     }
 
     override fun onDestroy() {
@@ -73,21 +76,38 @@ import java.util.*
         stateObservable.setState(State.STATE_DESTROY)
         stateObservable.clear()
 
-        ServiceLocatorSingleton.instance.unregister(this)
+        if (this is ISpecialistSubscriber) {
+            ServiceLocatorSingleton.instance.unregister(this)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-        ServiceLocatorSingleton.instance.setCurrentSubscriber(this)
+        stateObservable.setState(State.STATE_NOT_READY)
     }
 
-    override fun getSpecialistSubscription(): List<String> {
-        return listOf(ActivityUnion.NAME)
+    override fun getState(): Int {
+        return stateObservable.getState()
     }
 
-    override fun clearBackStack() {
-        BackStack.clearBackStack(this)
+    override fun setState(state: Int) {}
+
+    override fun exit() {}
+
+    override fun validate(): Boolean {
+        return getState() != State.STATE_DESTROY
+    }
+
+    override fun getRootView(): View? {
+        val view = findView<View>(R.id.root)
+        return if (view != null) {
+            view
+        } else getView()
+    }
+
+    override fun addStateObserver(stateable: IStateable) {
+        stateObservable.addObserver(stateable)
     }
 
     override fun onRequestPermissionsResult(
@@ -106,46 +126,9 @@ import java.util.*
         }
     }
 
-    override fun getState(): Int {
-        return stateObservable.getState()
-    }
-
-    override fun setState(state: Int) {}
-override fun validate(): Boolean {
-        return getState() !== State.STATE_DESTROY && !isFinishing
-    }
-
-    override fun exit() {
-        if (ApplicationUtils.hasJellyBean()) {
-            super.finishAffinity()
-        } else {
-            super.finish()
-        }
-    }
-
     override fun onPermissionGranted(permission: String) {}
 
     override fun onPermissionDenied(permission: String) {}
-
-    override fun getRootView(): View? {
-        val view = findView<View>(R.id.root)
-        return if (view != null) {
-            return view
-        } else (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
-    }
-
-    /**
-     * Called when the activity has detected the user's press of the back
-     * key. The default implementation simply finishes the current activity,
-     * but you can override this to do whatever you want.
-     */
-    fun onActivityBackPressed() {
-        super.onBackPressed()
-    }
-
-    override fun addStateObserver(stateable: IStateable) {
-        stateObservable.addObserver(stateable)
-    }
 
     override fun addAction(action: IAction) {
         val state = getState()
@@ -173,11 +156,9 @@ override fun validate(): Boolean {
             onAction(actions[i])
             deleted.add(actions[i])
         }
-        for (action in deleted) {
-            actions.remove(action)
+        for (event in deleted) {
+            actions.remove(event)
         }
     }
 
-    override fun onStop(specialist: ISpecialist) {
-    }
 }
