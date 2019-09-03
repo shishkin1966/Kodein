@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="textsize_display">40sp</dimen>
-    <dimen name="textsize_headline">30sp</dimen>
-    <dimen name="textsize_title">26sp</dimen>
-    <dimen name="textsize_subheader">20sp</dimen>
-    <dimen name="textsize_menu">18sp</dimen>
-    <dimen name="textsize_body">18sp</dimen>
-    <dimen name="textsize_caption">14sp</dimen>
-    <dimen name="textsize_button">18sp</dimen>
+    <dimen name="text_size_extra_small">12sp</dimen>
+    <dimen name="text_size_small">13sp</dimen>
+    <dimen name="text_size">15sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_xlarge">21sp</dimen>
+    <dimen name="text_size_xxlarge">26sp</dimen>
+    <dimen name="text_size_xxxlarge">31sp</dimen>
 
     <dimen name="thumb_size">@dimen/dimen_56dp</dimen>
 

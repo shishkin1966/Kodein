@@ -1,9 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.message
 
+import shishkin.sl.kodeinpsb.sl.IDialogResultListener
 import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
-import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
-
 
 
 class DialogResultMessage : AbsMessage {
@@ -11,13 +10,13 @@ class DialogResultMessage : AbsMessage {
         const val NAME = "DialogResultMessage"
     }
 
-    private var action: DialogResultAction? = null
+    private val action: DialogResultAction
 
-    constructor(address: String, action: DialogResultAction): super(address) {
+    constructor(address: String, action: DialogResultAction) : super(address) {
         this.action = action
     }
 
-    constructor(message: DialogResultMessage, action: DialogResultAction?) : super(message) {
+    constructor(message: DialogResultMessage, action: DialogResultAction) : super(message) {
         this.action = action
     }
 
@@ -31,8 +30,8 @@ class DialogResultMessage : AbsMessage {
     }
 
     override fun read(subscriber: IMessengerSubscriber) {
-        if (DialogResultListener::class.java!!.isInstance(subscriber)) {
-            (subscriber as DialogResultListener).onDialogResult(action)
+        if (subscriber is IDialogResultListener) {
+            (subscriber as IDialogResultListener).onDialogResult(action)
         }
     }
 

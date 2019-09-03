@@ -20,8 +20,8 @@ import java.util.ArrayList
 class MaterialDialogExt {
 
     private var id: Int = 0
-    private var materialDialog: MaterialDialog? = null
-    private var listener: String? = null
+    private val materialDialog: MaterialDialog
+    private val listener: String
 
     constructor(
         context: Context, listener: String, id: Int,
@@ -211,8 +211,8 @@ class MaterialDialogExt {
                     val list = ArrayList<String>()
                     val itemsCharSequence = dialog.getItems()
                     val selected1 = dialog.getSelectedIndices()
-                    for (i in selected1) {
-                        list.add(itemsCharSequence.get(i!!).toString())
+                    for (i in selected1!!) {
+                        list.add(itemsCharSequence!!.get(i!!).toString())
                     }
                     bundle.putStringArrayList("list", list)
                     if (!this.listener.isNullOrEmpty()) {
