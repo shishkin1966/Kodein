@@ -25,21 +25,21 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
 
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
-    private var model: M? = null
+    private var model: IModel? = null
     private val actions = LinkedList<IAction>()
 
-    override fun getModel(): M {
+    override fun <T:IModel> getModel(): T? {
         if (model == null) {
-            model = createModel()
+            model = createModel();
         }
-        return model!!
+        return model as T
+    }
+
+    override fun <T:IModel> setModel(model: T) {
+        this.model = model
     }
 
     abstract fun createModel(): M
-
-    override fun setModel(model: M) {
-        this.model = model
-    }
 
     override fun <V : View> findView(@IdRes id: Int): V? {
         val root = view
@@ -65,7 +65,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
 
         doActions()
 
-        getModel().addStateObserver()
+        (getModel<IModel>() as IModel).addStateObserver()
 
         stateObservable.setState(State.STATE_READY)
     }

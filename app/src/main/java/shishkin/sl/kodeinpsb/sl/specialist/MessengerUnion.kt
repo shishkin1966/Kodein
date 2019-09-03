@@ -87,7 +87,9 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun addMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        list.add(message.getAddress())
+        if (!message.getAddress().isNullOrBlank()) {
+            list.add(message.getAddress()!!)
+        }
         val addresses = ArrayList<String>()
         for (address in list) {
             addresses.addAll(getAddresses(address))
@@ -162,7 +164,9 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun addNotMandatoryMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        list.add(message.getAddress())
+        if (!message.getAddress().isNullOrBlank()) {
+            list.add(message.getAddress()!!)
+        }
         val addresses = ArrayList<String>()
         for (address in list) {
             addresses.addAll(getAddresses(address))
@@ -178,7 +182,9 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun replaceMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        list.add(message.getAddress())
+        if (!message.getAddress().isNullOrBlank()) {
+            list.add(message.getAddress()!!)
+        }
         val addresses = ArrayList<String>()
         for (address in list) {
             addresses.addAll(getAddresses(address))

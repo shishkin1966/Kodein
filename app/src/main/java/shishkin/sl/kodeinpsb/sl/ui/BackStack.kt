@@ -89,7 +89,7 @@ class BackStack {
          * Отработать нажатие на BackPressed
          */
         @JvmStatic
-        fun onBackPressed(activity: AbsActivity<IModel>) {
+        fun onBackPressed(activity: AbsActivity) {
             val fm = activity.supportFragmentManager
             val backStackEntryCount = fm.backStackEntryCount
             if (backStackEntryCount > 0) {

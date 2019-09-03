@@ -55,4 +55,9 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
     override fun exit() {
         stop()
     }
+
+    override fun isKillOnFinish(): Boolean {
+        return true
+    }
+
 }

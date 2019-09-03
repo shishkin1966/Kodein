@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-import android.R
-
+import microservices.shishkin.sl.ui.MaterialDialogExt
+import shishkin.sl.kodeinpsb.R
 
 
 class ShowDialogAction() : AbsAction(){
@@ -19,7 +19,7 @@ class ShowDialogAction() : AbsAction(){
         this.listener = listener
     }
 
-    constructor(id: Int, listener: String, title: String, message: String): this(id, listener) {
+    constructor(id: Int, listener: String, title: String?, message: String): this(id, listener) {
         this.title = title
         this.message = message
     }
@@ -44,7 +44,7 @@ class ShowDialogAction() : AbsAction(){
         return cancelable
     }
 
-    fun getListener(): String {
+    fun getListener(): String? {
         return listener
     }
 

@@ -4,7 +4,7 @@ import shishkin.sl.kodeinpsb.sl.ISmallUnion
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
-interface IPresenterUnion: ISmallUnion<IPresenter<IModel>> {
+interface IPresenterUnion: ISmallUnion<IPresenter> {
     /**
      * Получить presenter
      *

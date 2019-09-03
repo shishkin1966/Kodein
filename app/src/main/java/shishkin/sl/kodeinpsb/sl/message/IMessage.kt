@@ -62,7 +62,7 @@ interface IMessage : ISubscriber, IAction {
      *
      * @return адрес
      */
-    fun getAddress(): String
+    fun getAddress(): String?
 
     /**
      * Установить адрес получателя

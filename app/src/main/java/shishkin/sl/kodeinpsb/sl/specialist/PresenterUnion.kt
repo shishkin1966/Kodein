@@ -6,15 +6,14 @@ import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 
-class PresenterUnion : AbsSmallUnion<IPresenter<IModel>>(), IPresenterUnion {
+class PresenterUnion : AbsSmallUnion<IPresenter>(), IPresenterUnion {
     companion object {
         const val NAME = "PresenterUnion"
     }
-
-    override fun register(subscriber: IPresenter<IModel>): Boolean {
+    override fun register(subscriber: IPresenter): Boolean {
         return if (subscriber.validate()) {
             if (subscriber.isRegister()) {
-                super.register(subscriber!!)
+                super.register(subscriber)
             } else true
         } else false
     }
@@ -30,6 +29,4 @@ class PresenterUnion : AbsSmallUnion<IPresenter<IModel>>(), IPresenterUnion {
     override operator fun compareTo(other: ISpecialist): Int {
         return if (other is IPresenterUnion) 0 else 1
     }
-
-
 }
