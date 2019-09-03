@@ -11,6 +11,7 @@ import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 import shishkin.sl.kodeinpsb.sl.ui.BackStack
 import shishkin.sl.kodeinpsb.sl.ui.IActivity
 import java.lang.ref.WeakReference
@@ -167,7 +168,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun switchToFragment(name: String) {
         val subscriber = getCurrentSubscriber()
         if (subscriber is AbsContentActivity) {
-            (subscriber as AbsContentActivity).switchToFragment(name)
+            subscriber.switchToFragment(name)
         }
     }
 
