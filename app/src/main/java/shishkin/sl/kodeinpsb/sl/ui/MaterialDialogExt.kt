@@ -8,6 +8,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
+import shishkin.sl.kodeinpsb.sl.message.DialogResultMessage
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 

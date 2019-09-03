@@ -1,10 +1,11 @@
 package shishkin.sl.kodeinpsb.sl.message
 
+import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
-interface IMessage : ISubscriber, IAction {
+interface IMessage : INamed, IAction {
     /**
      * Получить id действия
      *

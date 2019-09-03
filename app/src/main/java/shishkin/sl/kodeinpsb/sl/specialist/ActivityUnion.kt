@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
-import android.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
