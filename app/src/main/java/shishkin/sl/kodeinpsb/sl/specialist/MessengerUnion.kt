@@ -6,13 +6,11 @@ import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.message.IMessage
+import shishkin.sl.kodeinpsb.sl.state.State
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
-import shishkin.sl.kodeinpsb.sl.state.State
-
-
 
 
 class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
@@ -154,7 +152,9 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
 
     private fun removeDublicate(message: IMessage) {
         for (tmpMessage in messages.values) {
-            if (message.getName().equals(tmpMessage.getName()) && message.getAddress().equals(tmpMessage.getAddress())
+            if (message.getName().equals(tmpMessage.getName()) && message.getAddress().equals(
+                    tmpMessage.getAddress()
+                )
             ) {
                 removeMessage(tmpMessage)
             }

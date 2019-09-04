@@ -1,7 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.model
 
 import shishkin.sl.kodeinpsb.sl.IValidated
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
@@ -12,7 +11,7 @@ interface IModel : IValidated {
      *
      * @return View объект модели
      */
-    fun <M:IModelView> getView(): M?
+    fun <M : IModelView> getView(): M?
 
     /**
      * Добавить слушателя к модели

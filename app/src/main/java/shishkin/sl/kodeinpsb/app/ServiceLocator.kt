@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.app
 
 import shishkin.sl.kodeinpsb.sl.AbsServiceLocator
+import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 
 object ServiceLocatorSingleton {
@@ -19,6 +20,10 @@ class ServiceLocator : AbsServiceLocator() {
     override fun start() {
         register(ErrorSpecialistSingleton.instance)
         register(ApplicationSingleton.instance)
+    }
+
+    override fun getSpecialistFactory(): ISpecialistFactory {
+        return SpecialistFactorySingleton.instance
     }
 
 }

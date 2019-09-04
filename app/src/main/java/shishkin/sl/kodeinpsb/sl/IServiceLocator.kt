@@ -30,6 +30,14 @@ interface IServiceLocator : INamed {
     fun register(specialist: ISpecialist): Boolean
 
     /**
+     * Зарегистрировать специалиста
+     *
+     * @param specialist имя специалиста
+     * @return флаг - операция завершена успешно
+     */
+    fun register(specialist: String): Boolean
+
+    /**
      * Отменить регистрацию специалиста
      *
      * @param name имя специалиста
@@ -77,4 +85,11 @@ interface IServiceLocator : INamed {
      * @return список специалистов
      */
     fun getSpecialists(): List<ISpecialist>
+
+    /**
+     * Получить фабрику специалистов
+     *
+     * @return фабрика специалистов
+     */
+    fun getSpecialistFactory(): ISpecialistFactory
 }

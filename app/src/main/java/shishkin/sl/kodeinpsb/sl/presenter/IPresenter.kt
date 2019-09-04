@@ -3,11 +3,9 @@ package shishkin.sl.kodeinpsb.sl.presenter
 import shishkin.sl.kodeinpsb.sl.action.IActionHandler
 import shishkin.sl.kodeinpsb.sl.action.IActionListener
 import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 import shishkin.sl.kodeinpsb.sl.state.IStateListener
-import android.os.Build.VERSION_CODES.M
-import shishkin.sl.kodeinpsb.sl.model.IModelView
-import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
 interface IPresenter : IStateListener, IActionListener, IActionHandler, IMessengerSubscriber {
@@ -16,14 +14,14 @@ interface IPresenter : IStateListener, IActionListener, IActionHandler, IMesseng
      *
      * @return the model
      */
-    fun <M:IModel> getModel(): M?
+    fun <M : IModel> getModel(): M?
 
     /**
      * Получить View модели
      *
      * @return the view model
      */
-    fun <V:IModelView> getView(): V?
+    fun <V : IModelView> getView(): V?
 
     /**
      * Флаг - регистрировать презентер в объединении презентеров

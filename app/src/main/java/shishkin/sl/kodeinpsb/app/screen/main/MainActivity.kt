@@ -10,7 +10,6 @@ import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
-import shishkin.sl.kodeinpsb.sl.ui.IActivity
 
 
 class MainActivity : AbsActivity() {
@@ -59,7 +58,8 @@ class MainActivity : AbsActivity() {
         if (requestCode == ApplicationUtils.REQUEST_PERMISSIONS) {
             for (permition in permissions) {
                 if (permition.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    ServiceLocatorSingleton.instance.get<IErrorSpecialist>(ErrorSpecialist.NAME)?.checkLog(applicationContext)
+                    ServiceLocatorSingleton.instance.get<IErrorSpecialist>(ErrorSpecialist.NAME)
+                        ?.checkLog(applicationContext)
                 }
             }
         }

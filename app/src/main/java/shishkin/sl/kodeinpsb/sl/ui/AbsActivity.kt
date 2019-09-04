@@ -20,28 +20,26 @@ import shishkin.sl.kodeinpsb.sl.state.StateObservable
 import java.util.*
 
 
-
-
- abstract class AbsActivity : AppCompatActivity(), IActivity {
+abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
     private var model: IModel? = null
     private val actions = LinkedList<IAction>()
 
-    override fun <T:IModel> getModel(): T? {
+    override fun <T : IModel> getModel(): T? {
         if (model == null) {
             model = createModel();
         }
         return model as T
     }
 
-    override fun <T:IModel> setModel(model: T) {
+    override fun <T : IModel> setModel(model: T) {
         this.model = model
     }
 
-     abstract fun createModel(): IModel
+    abstract fun createModel(): IModel
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -111,7 +109,7 @@ import java.util.*
     }
 
     override fun setState(state: Int) {}
-override fun validate(): Boolean {
+    override fun validate(): Boolean {
         return getState() !== State.STATE_DESTROY && !isFinishing
     }
 

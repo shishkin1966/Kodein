@@ -17,10 +17,6 @@ import shishkin.sl.kodeinpsb.sl.state.StateObservable
 import java.util.*
 
 
-
-
-
-
 abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
 
 
@@ -28,14 +24,14 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
     private var model: IModel? = null
     private val actions = LinkedList<IAction>()
 
-    override fun <T:IModel> getModel(): T? {
+    override fun <T : IModel> getModel(): T? {
         if (model == null) {
             model = createModel();
         }
         return model as T
     }
 
-    override fun <T:IModel> setModel(model: T) {
+    override fun <T : IModel> setModel(model: T) {
         this.model = model
     }
 

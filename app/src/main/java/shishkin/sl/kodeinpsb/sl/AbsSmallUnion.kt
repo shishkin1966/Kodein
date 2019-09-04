@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl
 
-import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 
@@ -108,7 +106,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun onUnRegisterLastSubscriber() {
     }
 
-    override fun onAddSubscriber(subscriber : T) {
+    override fun onAddSubscriber(subscriber: T) {
     }
 
 }

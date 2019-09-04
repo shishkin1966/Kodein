@@ -11,7 +11,7 @@ abstract class AbsModel : IModel, IStateListener {
     private var presenter: IPresenter? = null
     private val lifecycle = StateObserver(this)
 
-    constructor(view:IModelView) {
+    constructor(view: IModelView) {
         modelView = view
         (modelView as IModelView).addStateObserver(this)
     }
@@ -25,7 +25,7 @@ abstract class AbsModel : IModel, IStateListener {
         }
     }
 
-    override fun <M:IModelView> getView(): M? {
+    override fun <M : IModelView> getView(): M? {
         return modelView as M
     }
 

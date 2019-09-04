@@ -2,7 +2,6 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
 import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 
@@ -10,6 +9,7 @@ class PresenterUnion : AbsSmallUnion<IPresenter>(), IPresenterUnion {
     companion object {
         const val NAME = "PresenterUnion"
     }
+
     override fun register(subscriber: IPresenter): Boolean {
         return if (subscriber.validate()) {
             if (subscriber.isRegister()) {

@@ -1,7 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.action
 
 import shishkin.sl.kodeinpsb.sl.message.IMessage
-import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 class PresenterActionHandler : IActionHandler {
