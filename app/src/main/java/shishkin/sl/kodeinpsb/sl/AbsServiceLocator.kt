@@ -1,5 +1,7 @@
 package shishkin.sl.kodeinpsb.sl
 
+import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
+
 
 /**
  * Абстрактный администратор
@@ -84,6 +86,16 @@ abstract class AbsServiceLocator : IServiceLocator {
                 if (specialist is ISmallUnion<*>) {
                     (specialist as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
                 }
+            } else {
+                register(type)
+                if (secretary.containsKey(type)) {
+                    (secretary.get(type) as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
+                } else {
+                    ErrorSpecialistSingleton.instance
+                        .onError(NAME, "Not found subscriber type: $type", false)
+                    return false
+                }
+
             }
         }
         return true
