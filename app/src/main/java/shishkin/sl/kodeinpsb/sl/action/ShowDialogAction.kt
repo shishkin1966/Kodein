@@ -4,7 +4,7 @@ import microservices.shishkin.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 
 
-class ShowDialogAction() : AbsAction(){
+class ShowDialogAction() : AbsAction() {
     private var id = -1
     private var title: String? = null
     private var message: String? = null
@@ -14,12 +14,12 @@ class ShowDialogAction() : AbsAction(){
     private var listener: String? = null
 
 
-    constructor(id: Int, listener: String): this() {
+    constructor(id: Int, listener: String) : this() {
         this.id = id
         this.listener = listener
     }
 
-    constructor(id: Int, listener: String, title: String?, message: String): this(id, listener) {
+    constructor(id: Int, listener: String, title: String?, message: String) : this(id, listener) {
         this.title = title
         this.message = message
     }

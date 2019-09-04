@@ -1,8 +1,8 @@
 package microservices.shishkin.sl.ui
 
+
 import android.content.Context
 import android.os.Bundle
-
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import shishkin.sl.kodeinpsb.R
@@ -12,9 +12,7 @@ import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
 import shishkin.sl.kodeinpsb.sl.message.DialogResultMessage
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
-
-
-import java.util.ArrayList
+import java.util.*
 
 
 class MaterialDialogExt {
@@ -81,7 +79,8 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, POSITIVE)
                     if (!this.listener.isNullOrEmpty()) {
-                        val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                        val union =
+                            ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -102,7 +101,8 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEGATIVE)
                     if (!this.listener.isNullOrEmpty()) {
-                        val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                        val union =
+                            ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -123,7 +123,8 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEUTRAL)
                     if (!this.listener.isNullOrEmpty()) {
-                        val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                        val union =
+                            ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -179,7 +180,8 @@ class MaterialDialogExt {
                     list.add(text.toString())
                     bundle.putStringArrayList("list", list)
                     if (!this.listener.isNullOrEmpty()) {
-                        val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                        val union =
+                            ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -216,7 +218,8 @@ class MaterialDialogExt {
                     }
                     bundle.putStringArrayList("list", list)
                     if (!this.listener.isNullOrEmpty()) {
-                        val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                        val union =
+                            ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -235,7 +238,8 @@ class MaterialDialogExt {
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, NEGATIVE)
                 if (!this.listener.isNullOrEmpty()) {
-                    val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                    val union =
+                        ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
                         union.addMessage(
                             DialogResultMessage(
@@ -293,7 +297,8 @@ class MaterialDialogExt {
                 bundle.putString(BUTTON, POSITIVE)
                 bundle.putString("object", dialog.getInputEditText()?.getText().toString())
                 if (!this.listener.isNullOrEmpty()) {
-                    val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                    val union =
+                        ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
                         union.addMessage(
                             DialogResultMessage(
@@ -311,7 +316,8 @@ class MaterialDialogExt {
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, NEGATIVE)
                 if (!this.listener.isNullOrEmpty()) {
-                    val union = ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
+                    val union =
+                        ServiceLocatorSingleton.instance.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
                         union.addMessage(
                             DialogResultMessage(
@@ -336,13 +342,28 @@ class MaterialDialogExt {
             )
             materialDialog!!.getActionButton(DialogAction.POSITIVE).setTextSize(size)
             materialDialog!!.getActionButton(DialogAction.POSITIVE)
-                .setTextColor(ApplicationUtils.getColor(materialDialog!!.getContext(), R.color.blue))
+                .setTextColor(
+                    ApplicationUtils.getColor(
+                        materialDialog!!.getContext(),
+                        R.color.blue
+                    )
+                )
             materialDialog!!.getActionButton(DialogAction.NEGATIVE).setTextSize(size)
             materialDialog!!.getActionButton(DialogAction.NEGATIVE)
-                .setTextColor(ApplicationUtils.getColor(materialDialog!!.getContext(), R.color.blue))
+                .setTextColor(
+                    ApplicationUtils.getColor(
+                        materialDialog!!.getContext(),
+                        R.color.blue
+                    )
+                )
             materialDialog!!.getActionButton(DialogAction.NEUTRAL).setTextSize(size)
             materialDialog!!.getActionButton(DialogAction.NEUTRAL)
-                .setTextColor(ApplicationUtils.getColor(materialDialog!!.getContext(), R.color.blue))
+                .setTextColor(
+                    ApplicationUtils.getColor(
+                        materialDialog!!.getContext(),
+                        R.color.blue
+                    )
+                )
             materialDialog!!.getContentView()?.setTextSize(size)
             size = ApplicationUtils.px2sp(
                 materialDialog!!.getContext(),

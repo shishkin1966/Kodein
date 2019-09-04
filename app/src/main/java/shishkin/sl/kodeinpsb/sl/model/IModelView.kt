@@ -1,10 +1,9 @@
 package shishkin.sl.kodeinpsb.sl.model
 
-import shishkin.sl.kodeinpsb.sl.IValidated
-import androidx.lifecycle.Lifecycle
-import android.graphics.ColorSpace.Model
 import android.view.View
 import androidx.annotation.IdRes
+import androidx.lifecycle.Lifecycle
+import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
@@ -42,14 +41,14 @@ interface IModelView : IValidated {
      *
      * @return модель
      */
-    fun <M:IModel> getModel(): M?
+    fun <M : IModel> getModel(): M?
 
     /**
      * Установить модель
      *
      * @param model модель
      */
-    fun <M:IModel> setModel(model: M)
+    fun <M : IModel> setModel(model: M)
 
     /**
      * Получить Lifecycle модели

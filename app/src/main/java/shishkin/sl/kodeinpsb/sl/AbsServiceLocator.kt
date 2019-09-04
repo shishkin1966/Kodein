@@ -13,6 +13,12 @@ abstract class AbsServiceLocator : IServiceLocator {
     }
 
     override fun <C : ISpecialist> get(name: String): C? {
+        if (!exists(name)) {
+            if (!register(name)) {
+                return null;
+            }
+        }
+
         if (secretary.get(name) != null) {
             return secretary.get(name) as C
         } else {
@@ -39,6 +45,13 @@ abstract class AbsServiceLocator : IServiceLocator {
         secretary.put(specialist.getName(), specialist)
         specialist.onRegister()
         return true
+    }
+
+    override fun register(name: String): Boolean {
+        val specialist = getSpecialistFactory().create(name)
+        return if (specialist != null) {
+            register(specialist)
+        } else false
     }
 
     override fun unregister(name: String): Boolean {

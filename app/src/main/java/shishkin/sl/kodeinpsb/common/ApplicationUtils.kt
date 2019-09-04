@@ -21,8 +21,6 @@ import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
 
 
-
-
 class ApplicationUtils {
     companion object {
 

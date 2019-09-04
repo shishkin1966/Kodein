@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.ui
 
-import shishkin.sl.kodeinpsb.sl.IRouter
 import androidx.fragment.app.Fragment
+import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.HideKeyboardAction
 
 

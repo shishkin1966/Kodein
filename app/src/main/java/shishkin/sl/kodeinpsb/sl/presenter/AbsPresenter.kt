@@ -1,17 +1,17 @@
 package shishkin.sl.kodeinpsb.sl.presenter
 
+import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PresenterActionHandler
-import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.state.StateObserver
-import java.util.*
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.sl.message.IMessage
+import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
 import shishkin.sl.kodeinpsb.sl.state.State
+import shishkin.sl.kodeinpsb.sl.state.StateObserver
+import java.util.*
 
 
 abstract class AbsPresenter : IPresenter {
@@ -48,7 +48,7 @@ abstract class AbsPresenter : IPresenter {
         onStop()
     }
 
-    override fun <M:IModel> getModel(): M? {
+    override fun <M : IModel> getModel(): M? {
         return model as M
     }
 
@@ -109,7 +109,11 @@ abstract class AbsPresenter : IPresenter {
         if (actionHandler.onAction(action)) {
             return true
         }
-        ErrorSpecialistSingleton.instance.onError(getName(), "Unknown action:" + action.toString(), true)
+        ErrorSpecialistSingleton.instance.onError(
+            getName(),
+            "Unknown action:" + action.toString(),
+            true
+        )
         return false
     }
 

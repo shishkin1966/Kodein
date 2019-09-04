@@ -10,15 +10,15 @@ abstract class AbsMessage() : AbsAction(), IMessage {
     private var copyTo: LinkedList<String> = LinkedList()
     private var endTime: Long = -1
 
-    constructor(address: String): this() {
+    constructor(address: String) : this() {
         this.address = address
     }
 
     constructor(message: IMessage) : this() {
-            address = message.getAddress()
-            copyTo.addAll(message.getCopyTo())
-            setMessageId(message.getMessageId())
-            endTime = message.getEndTime()
+        address = message.getAddress()
+        copyTo.addAll(message.getCopyTo())
+        setMessageId(message.getMessageId())
+        endTime = message.getEndTime()
     }
 
     override fun getMessageId(): Int {

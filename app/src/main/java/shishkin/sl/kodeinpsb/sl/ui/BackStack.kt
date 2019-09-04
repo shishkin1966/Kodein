@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISubscriber
-import shishkin.sl.kodeinpsb.sl.model.IModel
 
 
 class BackStack {
