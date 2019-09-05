@@ -22,6 +22,8 @@ class SpecialistFactory : ISpecialistFactory {
                 PresenterUnion()
             } else if (name.equals(MessengerUnion.NAME)) {
                 MessengerUnion()
+            } else if (name.equals(ObservableUnion.NAME)) {
+                ObservableUnion()
             } else {
                 Class.forName(name).newInstance() as ISpecialist
             }

@@ -3,10 +3,10 @@ package shishkin.sl.kodeinpsb.sl.observe
 import shishkin.sl.kodeinpsb.sl.ISubscriber
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 
 
-
-interface IObservable<T:IObservableSubscriber> : ISubscriber {
+interface IObservable<T:IObservableSubscriber> : ISpecialistSubscriber {
     /**
      * Добавить слушателя к слушаемому объекту
      *
