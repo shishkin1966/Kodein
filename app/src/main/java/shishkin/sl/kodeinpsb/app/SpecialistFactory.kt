@@ -3,10 +3,7 @@ package shishkin.sl.kodeinpsb.app
 import com.github.snowdream.android.util.Log
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
-import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
+import shishkin.sl.kodeinpsb.sl.specialist.*
 
 object SpecialistFactorySingleton {
     val instance = SpecialistFactory()
@@ -23,6 +20,8 @@ class SpecialistFactory : ISpecialistFactory {
                 ActivityUnion()
             } else if (name.equals(PresenterUnion.NAME)) {
                 PresenterUnion()
+            } else if (name.equals(MessengerUnion.NAME)) {
+                MessengerUnion()
             } else {
                 Class.forName(name).newInstance() as ISpecialist
             }
