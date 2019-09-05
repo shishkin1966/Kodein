@@ -1,6 +1,9 @@
 package shishkin.sl.kodeinpsb.sl
 
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
+import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
+import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
 /**
@@ -136,4 +139,21 @@ abstract class AbsServiceLocator : IServiceLocator {
             specialist.stop()
         }
     }
+
+    override fun register(subscriber: IObservableSubscriber): Boolean {
+        val specialist = get<IObservableUnion>(ObservableUnion.NAME)
+        if (specialist != null) {
+            return specialist.register(subscriber)
+        }
+        return false
+    }
+
+    override fun unregister(subscriber: IObservableSubscriber): Boolean {
+        val specialist = get<IObservableUnion>(ObservableUnion.NAME)
+        if (specialist != null) {
+            return specialist.unregister(subscriber)
+        }
+        return false
+    }
+
 }
