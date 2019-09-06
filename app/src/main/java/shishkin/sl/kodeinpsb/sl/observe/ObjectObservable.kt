@@ -1,10 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
 import shishkin.sl.kodeinpsb.sl.INamed
-import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
 class ObjectObservable : AbsObservable() {
@@ -57,23 +55,9 @@ class ObjectObservable : AbsObservable() {
             if (observers != null) {
                 for (name in observers) {
                     val observer = getObserver(name)
-                    observer?.onChange(this, obj)
+                    observer?.onChange(getName(), obj)
                 }
             }
         }
     }
-
-    override fun getSpecialistSubscription(): List<String> {
-        return listOf(ObservableUnion.NAME)
-    }
-
-    override fun onStop(specialist: ISpecialist) {
-        objects.clear()
-    }
-
-    override fun validate(): Boolean {
-        return true
-    }
-
-
 }

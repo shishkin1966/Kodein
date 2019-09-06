@@ -31,7 +31,7 @@ abstract class AbsObservable : IObservable {
     override fun onChange(obj: Any) {
         for (subscriber in secretary.values()) {
             if (subscriber.validate()) {
-                subscriber.onChange(this, obj)
+                subscriber.onChange(getName(), obj)
             }
         }
     }

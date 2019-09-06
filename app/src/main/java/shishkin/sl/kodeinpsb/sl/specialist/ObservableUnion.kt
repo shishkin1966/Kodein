@@ -6,13 +6,13 @@ import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
 
 
-class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
+
+
+class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion {
+    private val secretary = Secretary<IObservable>()
+
     companion object {
         const val NAME = "ObservableUnion"
-    }
-
-    override fun createSecretary(): Secretary<IObservable> {
-        return Secretary()
     }
 
     override fun getName(): String {
@@ -24,10 +24,12 @@ class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
     }
 
     override fun getObservables(): List<IObservable> {
-        return getSubscribers()
+        return secretary.values()
     }
 
     override fun register(subscriber: IObservableSubscriber): Boolean {
+        super.register(subscriber)
+
         val list = subscriber.getObservable()
         for (observable in getObservables()) {
             val name = observable.getName()
@@ -38,14 +40,15 @@ class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
         return true
     }
 
-    override fun unregister(subscriber: IObservableSubscriber): Boolean {
+    override fun unregister(subscriber: IObservableSubscriber) {
+        super.unregister(subscriber)
+
         val list = subscriber.getObservable()
         for (observable in getObservables()) {
             if (list.contains(observable.getName())) {
                 observable.removeObserver(subscriber)
             }
         }
-        return true
     }
 
     override fun onUnRegister() {
@@ -55,8 +58,27 @@ class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
     }
 
     override fun onChange(name: String, obj: Any) {
-        val observable = getSubscriber(name)
+        val observable = getObservable(name)
         observable?.onChange(obj)
+    }
+
+    override fun getObservable(name: String): IObservable? {
+        return secretary.get(name)
+    }
+
+    override fun register(observable: IObservable): Boolean {
+        secretary.put(observable.getName(), observable)
+        return true
+    }
+
+    override fun unregister(observable: IObservable) : Boolean {
+        if (secretary.containsKey(observable.getName())) {
+            if (observable == secretary.get(observable.getName())) {
+                secretary.remove(observable.getName())
+                return true
+            }
+        }
+        return false
     }
 
 }
