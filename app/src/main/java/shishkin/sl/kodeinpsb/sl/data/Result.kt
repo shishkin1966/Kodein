@@ -20,7 +20,7 @@ class Result<T> {
         return data
     }
 
-    fun setData(data: T?): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setData(data: T?): Result<T> {
         this.data = data
         return this;
     }
@@ -29,12 +29,12 @@ class Result<T> {
         return error
     }
 
-    fun setError(error: Error): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setError(error: Error): Result<T> {
         this.error = error;
         return this;
     }
 
-    fun setError(sender: String, error: String): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setError(sender: String, error: String): Result<T> {
         if (error == null) {
             this.error = Error()
         }
@@ -42,7 +42,7 @@ class Result<T> {
         return this
     }
 
-    fun setError(sender: String, e: Exception): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setError(sender: String, e: Exception): Result<T> {
         if (error == null) {
             error = Error()
         }
@@ -50,7 +50,7 @@ class Result<T> {
         return this
     }
 
-    fun setError(sender: String, t: Throwable): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setError(sender: String, t: Throwable): Result<T> {
         if (error == null) {
             error = Error()
         }
@@ -84,7 +84,7 @@ class Result<T> {
         return order
     }
 
-    fun setOrder(order: Int): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setOrder(order: Int): Result<T> {
         this.order = order
         return this
     }
@@ -99,7 +99,7 @@ class Result<T> {
         return name
     }
 
-    fun setName(name: String): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setName(name: String): Result<T> {
         this.name = name
         return this
     }
@@ -108,7 +108,7 @@ class Result<T> {
         return id
     }
 
-    fun setId(id: Int): shishkin.sl.kodeinpsb.sl.data.Result<T> {
+    fun setId(id: Int): Result<T> {
         this.id = id
         return this
     }

@@ -4,11 +4,11 @@ import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 
 
-abstract class AbsObservable<T : IObservableSubscriber> : IObservable<T> {
+abstract class AbsObservable : IObservable {
 
-    private val secretary = Secretary<T>()
+    private val secretary = Secretary<IObservableSubscriber>()
 
-    override fun addObserver(subscriber: T) {
+    override fun addObserver(subscriber: IObservableSubscriber) {
         secretary.put(subscriber.getName(), subscriber);
 
         if (secretary.size() == 1) {
@@ -16,9 +16,9 @@ abstract class AbsObservable<T : IObservableSubscriber> : IObservable<T> {
         }
     }
 
-    override fun removeObserver(subscriber: T) {
+    override fun removeObserver(subscriber: IObservableSubscriber) {
         if (secretary.containsKey(subscriber.getName())) {
-            if (subscriber.equals(secretary.get(subscriber.getName()))) {
+            if (subscriber == secretary.get(subscriber.getName())) {
                 secretary.remove(subscriber.getName())
             }
 
@@ -28,15 +28,15 @@ abstract class AbsObservable<T : IObservableSubscriber> : IObservable<T> {
         }
     }
 
-    override fun onChange(obj: Any) {
-        for (observableSubscriber in secretary.values()) {
-            if (observableSubscriber.validate()) {
-                observableSubscriber.onChange(obj)
+    override fun onChange(observable: IObservable, obj: Any) {
+        for (subscriber in secretary.values()) {
+            if (subscriber.validate()) {
+                subscriber.onChange(this, obj)
             }
         }
     }
 
-    override fun getObserver(): List<T> {
+    override fun getObserver(): List<IObservableSubscriber> {
         return secretary.values()
     }
 }

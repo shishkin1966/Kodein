@@ -2,11 +2,9 @@ package shishkin.sl.kodeinpsb.sl.observe
 
 import android.net.Uri
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 
 
-abstract class AbsContentObservable<T : IObservableSubscriber>() :
-    AbsObservable<T>() {
+abstract class AbsContentObservable() : AbsObservable() {
 
     private val observer = BaseContentObserver(this)
     private val uris = ArrayList<Uri>()

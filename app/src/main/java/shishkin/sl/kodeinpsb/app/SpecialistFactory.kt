@@ -11,25 +11,19 @@ object SpecialistFactorySingleton {
 
 class SpecialistFactory : ISpecialistFactory {
     override fun create(name: String): ISpecialist? {
-        try {
-            return if (name.equals(ErrorSpecialist.NAME)) {
-                ErrorSpecialistSingleton.instance
-            } else if (name.equals(ApplicationSingleton.instance.getName())) {
-                ApplicationSingleton.instance
-            } else if (name.equals(ActivityUnion.NAME)) {
-                ActivityUnion()
-            } else if (name.equals(PresenterUnion.NAME)) {
-                PresenterUnion()
-            } else if (name.equals(MessengerUnion.NAME)) {
-                MessengerUnion()
-            } else if (name.equals(ObservableUnion.NAME)) {
-                ObservableUnion()
-            } else {
-                Class.forName(name).newInstance() as ISpecialist
+        return try {
+            when (name) {
+                ErrorSpecialist.NAME -> ErrorSpecialistSingleton.instance
+                ApplicationSingleton.instance.getName() -> ApplicationSingleton.instance
+                ActivityUnion.NAME -> ActivityUnion()
+                PresenterUnion.NAME -> PresenterUnion()
+                MessengerUnion.NAME -> MessengerUnion()
+                ObservableUnion.NAME -> ObservableUnion()
+                else -> Class.forName(name).newInstance() as ISpecialist
             }
         } catch (e: Exception) {
             Log.e("Can't create specialist with name \"name\":" + e.message)
-            return null
+            null
         }
     }
 }

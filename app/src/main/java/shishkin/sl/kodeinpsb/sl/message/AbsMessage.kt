@@ -54,12 +54,12 @@ abstract class AbsMessage() : AbsAction(), IMessage {
             return false
         }
 
-        if (address.equals(this.address)) {
+        if (address == this.address) {
             return true
         }
 
         for (copyto in copyTo) {
-            if (copyto.equals(address)) {
+            if (copyto == address) {
                 return true
             }
         }

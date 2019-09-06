@@ -6,25 +6,24 @@ import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
 
 
-class ObservableUnion : AbsSmallUnion<IObservable<IObservableSubscriber>>(),
-    IObservableUnion {
+class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
     companion object {
         const val NAME = "ObservableUnion"
     }
 
-    override fun createSecretary(): Secretary<IObservable<IObservableSubscriber>> {
+    override fun createSecretary(): Secretary<IObservable> {
         return Secretary()
     }
 
     override fun getName(): String {
-        return PresenterUnion.NAME
+        return NAME
     }
 
     override operator fun compareTo(other: ISpecialist): Int {
         return if (other is IObservableUnion) 0 else 1
     }
 
-    override fun getObservables(): List<IObservable<IObservableSubscriber>> {
+    override fun getObservables(): List<IObservable> {
         return getSubscribers()
     }
 
@@ -39,7 +38,7 @@ class ObservableUnion : AbsSmallUnion<IObservable<IObservableSubscriber>>(),
         return true
     }
 
-    override fun unregister(subscriber: IObservableSubscriber) : Boolean {
+    override fun unregister(subscriber: IObservableSubscriber): Boolean {
         val list = subscriber.getObservable()
         for (observable in getObservables()) {
             if (list.contains(observable.getName())) {

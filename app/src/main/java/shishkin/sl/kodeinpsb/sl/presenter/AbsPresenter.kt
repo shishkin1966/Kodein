@@ -14,15 +14,10 @@ import shishkin.sl.kodeinpsb.sl.state.StateObserver
 import java.util.*
 
 
-abstract class AbsPresenter : IPresenter {
-    private val model: IModel
+abstract class AbsPresenter(private val model: IModel) : IPresenter {
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
     private val actionHandler = PresenterActionHandler(this)
-
-    constructor(model: IModel) {
-        this.model = model
-    }
 
     override fun getState(): Int {
         return lifecycle.getState()
