@@ -17,6 +17,6 @@ interface IObservableSubscriber : IStateable, ISubscriber, IValidated {
     /**
      * Событие - объект изменен
      */
-    fun onChange(obj: IObservable<*>)
+    fun onChange(obj: Any)
 
 }

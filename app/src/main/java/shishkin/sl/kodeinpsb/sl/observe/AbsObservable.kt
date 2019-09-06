@@ -28,7 +28,7 @@ abstract class AbsObservable<T : IObservableSubscriber> : IObservable<T> {
         }
     }
 
-    override fun onChange(obj: IObservable<T>) {
+    override fun onChange(obj: Any) {
         for (observableSubscriber in secretary.values()) {
             if (observableSubscriber.validate()) {
                 observableSubscriber.onChange(obj)

@@ -38,7 +38,7 @@ interface IObservable<T:IObservableSubscriber> : ISpecialistSubscriber {
      *
      * @param object объект изменения
      */
-    fun onChange(obj: IObservable<T>)
+    fun onChange(obj: Any)
 
     /**
      * Получить список слушателей
