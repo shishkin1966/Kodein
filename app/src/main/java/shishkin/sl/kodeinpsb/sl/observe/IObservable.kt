@@ -34,15 +34,22 @@ interface IObservable : ISpecialistSubscriber {
     /**
      * Событие - в слушаемом объекте произошли изменения
      *
-     * @param object объект изменения
+     * @param obj объект изменения
      */
-    fun onChange(observable: IObservable, obj: Any)
+    fun onChange(obj: Any)
 
     /**
      * Получить список слушателей
      *
      * @return список слушателей
      */
-    fun getObserver(): List<IObservableSubscriber>
+    fun getObservers(): List<IObservableSubscriber>
 
+    /**
+     * Получить слушателя
+     *
+     * @param name имя слушателя
+     * @return слушатель
+     */
+    fun getObserver(name: String): IObservableSubscriber?
 }

@@ -2,6 +2,7 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import shishkin.sl.kodeinpsb.sl.ISmallUnion
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
+import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 
 
 interface IObservableUnion : ISmallUnion<IObservable> {
@@ -25,5 +26,13 @@ interface IObservableUnion : ISmallUnion<IObservable> {
      * @param subscriber слушатель
      */
     fun unregister(subscriber: IObservableSubscriber): Boolean
+
+    /**
+     * Событие - изменился слушаемый объект
+     *
+     * @param name имя слушаемого объекта
+     * @param obj новое значение
+     */
+    fun onChange(name: String, obj: Any)
 
 }
