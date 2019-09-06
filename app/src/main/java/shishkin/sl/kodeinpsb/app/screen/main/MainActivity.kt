@@ -6,7 +6,6 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
-import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
@@ -21,7 +20,7 @@ class MainActivity : AbsActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun createModel(): IModel {
+    override fun createModel(): MainModel {
         return MainModel(this)
     }
 
@@ -57,7 +56,7 @@ class MainActivity : AbsActivity() {
 
         if (requestCode == ApplicationUtils.REQUEST_PERMISSIONS) {
             for (permition in permissions) {
-                if (permition.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (permition == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
                     ServiceLocatorSingleton.instance.get<IErrorSpecialist>(ErrorSpecialist.NAME)
                         ?.checkLog(applicationContext)
                 }

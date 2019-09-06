@@ -1,4 +1,4 @@
-package psbank.ru.uikit;
+package shishkin.sl.kodeinpsb.common;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

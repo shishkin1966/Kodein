@@ -8,7 +8,7 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 interface IObservableSubscriber : IStateable, ISubscriber, IValidated {
     /**
-     * Получить список Observable объектов
+     * Получить список имен Observable объектов
      *
      * @return список имен Observable объектов
      */
@@ -17,6 +17,6 @@ interface IObservableSubscriber : IStateable, ISubscriber, IValidated {
     /**
      * Событие - объект изменен
      */
-    fun onChange(obj: Any)
+    fun onChange(observable: IObservable, obj: Any)
 
 }

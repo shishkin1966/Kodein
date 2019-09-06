@@ -4,13 +4,13 @@ import shishkin.sl.kodeinpsb.sl.ISmallUnion
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
 
 
-interface IObservableUnion : ISmallUnion<IObservable<IObservableSubscriber>> {
+interface IObservableUnion : ISmallUnion<IObservable> {
     /**
      * Получить список слушаемых объектов
      *
      * @return список слушаемых(IObservable) объектов
      */
-    fun getObservables(): List<IObservable<IObservableSubscriber>>
+    fun getObservables(): List<IObservable>
 
     /**
      * Зарегестрировать слушателя слушаемего объекта
@@ -24,6 +24,6 @@ interface IObservableUnion : ISmallUnion<IObservable<IObservableSubscriber>> {
      *
      * @param subscriber слушатель
      */
-    fun unregister(subscriber: IObservableSubscriber) : Boolean
+    fun unregister(subscriber: IObservableSubscriber): Boolean
 
 }

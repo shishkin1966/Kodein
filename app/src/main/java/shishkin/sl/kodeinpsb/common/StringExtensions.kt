@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.common
 
-//fun String.isNullOrEmpty(cs: CharSequence?): Boolean {
-//    return (cs == null || cs.toString().trim().length < 1);
-//}
+fun String.isNullOrEmpty(cs: CharSequence?): Boolean {
+    return (cs == null || cs.toString().trim().length < 1);
+}
 
 fun String.pos(initialString: String?, which: String?, start: Int): Int {
     if (initialString == null || which == null) {

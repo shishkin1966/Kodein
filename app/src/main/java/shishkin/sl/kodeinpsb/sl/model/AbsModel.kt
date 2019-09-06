@@ -6,22 +6,19 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
 
 
-abstract class AbsModel : IModel, IStateListener {
-    private val modelView: IModelView
+abstract class AbsModel(view: IModelView) : IModel, IStateListener {
+    private val modelView: IModelView = view
     private var presenter: IPresenter? = null
     private val lifecycle = StateObserver(this)
 
-    constructor(view: IModelView) {
-        modelView = view
-        (modelView as IModelView).addStateObserver(this)
+    init {
+        modelView.addStateObserver(this)
     }
 
     override fun addStateObserver() {
-        if (modelView != null) {
-            (modelView as IModelView).addStateObserver(this)
-            if (presenter != null) {
-                (modelView as IModelView).addStateObserver(presenter as IStateable)
-            }
+        modelView.addStateObserver(this)
+        if (presenter != null) {
+            modelView.addStateObserver(presenter as IStateable)
         }
     }
 
@@ -31,27 +28,22 @@ abstract class AbsModel : IModel, IStateListener {
 
     override fun setPresenter(presenter: IPresenter) {
         this.presenter = presenter
-        if (this.presenter != null) {
-            addStateObserver(this.presenter as IStateable)
-        }
+        addStateObserver(this.presenter as IStateable)
     }
 
     override fun <C> getPresenter(): C? {
-        return presenter as C
+        if (presenter != null) {
+            return presenter as C
+        }
+        return null
     }
 
     override fun validate(): Boolean {
-        if (modelView != null) {
-            return (modelView as IModelView).validate()
-        } else {
-            return false
-        }
+        return modelView.validate()
     }
 
     override fun addStateObserver(stateable: IStateable) {
-        if (modelView != null) {
-            (modelView as IModelView)?.addStateObserver(stateable)
-        }
+        modelView.addStateObserver(stateable)
     }
 
     override fun getState(): Int {
