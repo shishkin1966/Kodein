@@ -9,7 +9,7 @@ class BaseContentObserver(private val observable: IObservable) : ContentObserver
     override fun onChange(selfChange: Boolean) {
         super.onChange(selfChange)
 
-        observable.onChange(observable, selfChange)
+        observable.onChange(selfChange)
     }
 
 }

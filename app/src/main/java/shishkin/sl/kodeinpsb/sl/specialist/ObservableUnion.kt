@@ -54,4 +54,9 @@ class ObservableUnion : AbsSmallUnion<IObservable>(), IObservableUnion {
         }
     }
 
+    override fun onChange(name: String, obj: Any) {
+        val observable = getSubscriber(name)
+        observable?.onChange(obj)
+    }
+
 }

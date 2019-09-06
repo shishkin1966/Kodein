@@ -28,7 +28,7 @@ abstract class AbsObservable : IObservable {
         }
     }
 
-    override fun onChange(observable: IObservable, obj: Any) {
+    override fun onChange(obj: Any) {
         for (subscriber in secretary.values()) {
             if (subscriber.validate()) {
                 subscriber.onChange(this, obj)
@@ -36,7 +36,17 @@ abstract class AbsObservable : IObservable {
         }
     }
 
-    override fun getObserver(): List<IObservableSubscriber> {
+    override fun getObservers(): List<IObservableSubscriber> {
         return secretary.values()
+    }
+
+    override fun getObserver(name: String): IObservableSubscriber? {
+        return secretary.get(name)
+    }
+
+    override fun register() {
+    }
+
+    override fun unregister() {
     }
 }
