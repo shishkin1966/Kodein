@@ -52,7 +52,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         stateObservable.setState(State.STATE_CREATE)
 
         if (this is ISpecialistSubscriber) {
-            ServiceLocatorSingleton.instance.register(this)
+            ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
         }
     }
 

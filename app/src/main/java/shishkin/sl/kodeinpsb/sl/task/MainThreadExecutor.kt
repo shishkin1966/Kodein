@@ -1,9 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.task
 
 import android.os.Handler
-import java.util.concurrent.Executor
 import android.os.Looper
-
+import java.util.concurrent.Executor
 
 
 class MainThreadExecutor : Executor {

@@ -1,7 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
 import shishkin.sl.kodeinpsb.sl.INamed
-import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 
 

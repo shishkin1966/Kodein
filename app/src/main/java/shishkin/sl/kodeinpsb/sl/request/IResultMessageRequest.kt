@@ -1,8 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.request
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 interface IResultMessageRequest<T> : IRequest {
     /**

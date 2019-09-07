@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl
 
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-
 /**
  * Итерфейс администратора(Service Locator)
  */
@@ -29,7 +27,7 @@ interface IServiceLocator : INamed {
      * @param specialist специалист
      * @return флаг - операция завершена успешно
      */
-    fun register(specialist: ISpecialist): Boolean
+    fun registerSpecialist(specialist: ISpecialist): Boolean
 
     /**
      * Зарегистрировать специалиста
@@ -37,7 +35,7 @@ interface IServiceLocator : INamed {
      * @param specialist имя специалиста
      * @return флаг - операция завершена успешно
      */
-    fun register(specialist: String): Boolean
+    fun registerSpecialist(specialist: String): Boolean
 
     /**
      * Отменить регистрацию специалиста
@@ -53,7 +51,7 @@ interface IServiceLocator : INamed {
      * @param subscriber подписчик специалиста
      * @return флаг - операция завершена успешно
      */
-    fun register(subscriber: ISpecialistSubscriber): Boolean
+    fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean
 
     /**
      * Отменить регистрацию подписчика специалиста
@@ -94,21 +92,5 @@ interface IServiceLocator : INamed {
      * @return фабрика специалистов
      */
     fun getSpecialistFactory(): ISpecialistFactory
-
-    /**
-     * Зарегистрировать подписчика у IObservable специалиста
-     *
-     * @param subscriber подписчик IObservable специалиста
-     * @return флаг - операция завершена успешно
-     */
-    fun register(subscriber: IObservableSubscriber): Boolean
-
-    /**
-     * Отменить регистрацию у IObservable специалиста
-     *
-     * @param subscriber подписчик IObservable специалиста
-     * @return флаг - операция завершена успешно
-     */
-    fun unregister(subscriber: IObservableSubscriber): Boolean
 
 }

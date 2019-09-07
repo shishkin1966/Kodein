@@ -6,8 +6,6 @@ import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
 
 
-
-
 class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion {
     private val secretary = Secretary<IObservable>()
 
@@ -71,7 +69,7 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion
         return true
     }
 
-    override fun unregister(observable: IObservable) : Boolean {
+    override fun unregister(observable: IObservable): Boolean {
         if (secretary.containsKey(observable.getName())) {
             if (observable == secretary.get(observable.getName())) {
                 secretary.remove(observable.getName())

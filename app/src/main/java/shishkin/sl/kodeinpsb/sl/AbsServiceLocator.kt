@@ -1,9 +1,6 @@
 package shishkin.sl.kodeinpsb.sl
 
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
 /**
@@ -19,7 +16,7 @@ abstract class AbsServiceLocator : IServiceLocator {
 
     override fun <C : ISpecialist> get(name: String): C? {
         if (!exists(name)) {
-            if (!register(name)) {
+            if (!registerSpecialist(name)) {
                 return null;
             }
         }
@@ -36,7 +33,7 @@ abstract class AbsServiceLocator : IServiceLocator {
         return secretary.containsKey(name)
     }
 
-    override fun register(specialist: ISpecialist): Boolean {
+    override fun registerSpecialist(specialist: ISpecialist): Boolean {
         if (secretary.containsKey(specialist.getName())) {
             val oldSpecialist = get<ISpecialist>(specialist.getName())
             if (oldSpecialist != null && oldSpecialist.compareTo(specialist) != 0) {
@@ -52,10 +49,10 @@ abstract class AbsServiceLocator : IServiceLocator {
         return true
     }
 
-    override fun register(name: String): Boolean {
+    override fun registerSpecialist(name: String): Boolean {
         val specialist = getSpecialistFactory().create(name)
         return if (specialist != null) {
-            register(specialist)
+            registerSpecialist(specialist)
         } else false
     }
 
@@ -80,7 +77,7 @@ abstract class AbsServiceLocator : IServiceLocator {
         return true
     }
 
-    override fun register(subscriber: ISpecialistSubscriber): Boolean {
+    override fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
         val types = subscriber.getSpecialistSubscription()
         // регистрируемся subscriber у специалистов
         for (type in types) {
@@ -90,7 +87,7 @@ abstract class AbsServiceLocator : IServiceLocator {
                     (specialist as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
                 }
             } else {
-                register(type)
+                registerSpecialist(type)
                 if (secretary.containsKey(type)) {
                     (secretary.get(type) as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
                 } else {
@@ -138,22 +135,6 @@ abstract class AbsServiceLocator : IServiceLocator {
         for (specialist in getSpecialists()) {
             specialist.stop()
         }
-    }
-
-    override fun register(subscriber: IObservableSubscriber): Boolean {
-        val specialist = get<IObservableUnion>(ObservableUnion.NAME)
-        if (specialist != null) {
-            return specialist.register(subscriber)
-        }
-        return false
-    }
-
-    override fun unregister(subscriber: IObservableSubscriber): Boolean {
-        val specialist = get<IObservableUnion>(ObservableUnion.NAME)
-        if (specialist != null) {
-            return specialist.unregister(subscriber)
-        }
-        return false
     }
 
 }

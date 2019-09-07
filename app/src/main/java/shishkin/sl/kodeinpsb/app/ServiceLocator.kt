@@ -18,8 +18,8 @@ class ServiceLocator : AbsServiceLocator() {
     }
 
     override fun start() {
-        register(ErrorSpecialistSingleton.instance)
-        register(ApplicationSingleton.instance)
+        registerSpecialist(ErrorSpecialistSingleton.instance)
+        registerSpecialist(ApplicationSingleton.instance)
     }
 
     override fun getSpecialistFactory(): ISpecialistFactory {

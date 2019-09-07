@@ -361,6 +361,13 @@ class ApplicationUtils {
             return diagonalInches >= 9
         }
 
-
+        /**
+         * Return the handle to a system-level service by name. The class of the
+         * returned object varies by the requested name.
+         */
+        @JvmStatic
+        fun <S> getSystemService(context: Context, serviceName: String): S {
+            return context.getSystemService(serviceName) as S
+        }
     }
 }

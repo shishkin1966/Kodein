@@ -9,7 +9,7 @@ abstract class AbsRequest() : IRequest {
     private var isCanceled = false
     private var id = 0
 
-    constructor(rank: Int): this() {
+    constructor(rank: Int) : this() {
         this.rank = rank
     }
 
@@ -17,7 +17,7 @@ abstract class AbsRequest() : IRequest {
         return rank
     }
 
-    override fun setRank(rank: Int) : IRequest {
+    override fun setRank(rank: Int): IRequest {
         this.rank = rank
         return this
     }

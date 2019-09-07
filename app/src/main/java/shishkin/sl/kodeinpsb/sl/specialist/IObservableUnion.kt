@@ -2,8 +2,6 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import shishkin.sl.kodeinpsb.sl.ISmallUnion
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
-import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
-import java.util.*
 
 
 interface IObservableUnion : ISmallUnion<IObservableSubscriber> {
@@ -42,5 +40,5 @@ interface IObservableUnion : ISmallUnion<IObservableSubscriber> {
      * @param name имя слушаемого объекта
      * @return слушаемый объект
      */
-    fun getObservable(name: String) : IObservable?
+    fun getObservable(name: String): IObservable?
 }

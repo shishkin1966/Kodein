@@ -1,8 +1,13 @@
 package shishkin.sl.kodeinpsb.sl.task
 
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.telephony.TelephonyManager
+import shishkin.sl.kodeinpsb.common.Connectivity
 import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.observe.NetworkBroadcastReceiverObservable
+import shishkin.sl.kodeinpsb.sl.observe.NetObservable
 import shishkin.sl.kodeinpsb.sl.request.IRequest
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.state.State
@@ -17,8 +22,8 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     }
 
     private val QUEUE_CAPACITY = 1024
-    private val threadCount = 2
-    private val maxThreadCount = 2
+    private var threadCount = 2
+    private var maxThreadCount = 2
     private val keepAliveTime: Long = 10 // 10 мин
     private val unit = TimeUnit.MINUTES
     private val queue = PriorityBlockingQueue<IRequest>(QUEUE_CAPACITY)
@@ -39,11 +44,11 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     }
 
     override fun getObservable(): List<String> {
-        return listOf(NetworkBroadcastReceiverObservable.NAME);
+        return listOf(NetObservable.NAME);
     }
 
     override fun onChange(name: String, obj: Any) {
-        if (name == NetworkBroadcastReceiverObservable.NAME) {
+        if (name == NetObservable.NAME) {
             setThreadCount();
         }
     }
@@ -61,4 +66,64 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     override fun getSpecialistSubscription(): List<String> {
         return listOf(ObservableUnion.NAME)
     }
+
+    fun setThreadCount() {
+        val context = ApplicationSpecialist.instance.applicationContext
+        if (context != null) {
+            setThreadCount(Connectivity.getActiveNetworkInfo(context))
+        }
+    }
+
+    private fun setThreadCount(info: NetworkInfo) {
+        if (!info.isConnectedOrConnecting) {
+            threadCount = 2
+            maxThreadCount = 2
+            return
+        }
+
+        when (info.type) {
+            ConnectivityManager.TYPE_WIFI, ConnectivityManager.TYPE_WIMAX, ConnectivityManager.TYPE_ETHERNET -> {
+                threadCount = 6
+                maxThreadCount = 6
+                return
+            }
+
+            ConnectivityManager.TYPE_MOBILE -> when (info.subtype) {
+                TelephonyManager.NETWORK_TYPE_LTE  // 4G
+                    , TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyManager.NETWORK_TYPE_EHRPD -> {
+                    threadCount = 4
+                    maxThreadCount = 4
+                    return
+                }
+
+                TelephonyManager.NETWORK_TYPE_UMTS // 3G
+                    , TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_EVDO_B -> {
+                    threadCount = 2
+                    maxThreadCount = 2
+                    return
+                }
+
+                TelephonyManager.NETWORK_TYPE_GPRS // 2G
+                    , TelephonyManager.NETWORK_TYPE_EDGE -> {
+                    threadCount = 1
+                    maxThreadCount = 1
+                    return
+                }
+
+                else -> {
+                    threadCount = 2
+                    maxThreadCount = 2
+                    return
+                }
+            }
+
+            else -> {
+                threadCount = 2
+                maxThreadCount = 2
+                return
+            }
+        }
+    }
+
+
 }

@@ -32,7 +32,7 @@ interface IRequest : Runnable, INamed, Comparable<IRequest> {
      * @param rank ранг запроса
      * @return запрос
      */
-    fun setRank(rank: Int) : IRequest
+    fun setRank(rank: Int): IRequest
 
     /**
      * Установить флаг - запрос прерван
