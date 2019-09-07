@@ -67,11 +67,9 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
         return listOf(ObservableUnion.NAME)
     }
 
-    fun setThreadCount() {
-        val context = ApplicationSpecialist.instance.applicationContext
-        if (context != null) {
-            setThreadCount(Connectivity.getActiveNetworkInfo(context))
-        }
+    private fun setThreadCount() {
+        val context = ApplicationSpecialist.appContext
+        setThreadCount(Connectivity.getActiveNetworkInfo(context))
     }
 
     private fun setThreadCount(info: NetworkInfo) {

@@ -8,9 +8,7 @@ import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
 
 
@@ -98,6 +96,13 @@ class MainActivity : AbsActivity(), IObservableSubscriber {
             snackbar = null
         }
         snackbar = ApplicationUtils.showSnackbar(getRootView(),getString(R.string.network_disconnected), Snackbar.LENGTH_INDEFINITE, ApplicationUtils.MESSAGE_TYPE_WARNING)
+    }
+
+    override fun getSpecialistSubscription(): List<String> {
+        val list = ArrayList<String>()
+        list.addAll(super.getSpecialistSubscription())
+        list.add(ObservableUnion.NAME)
+        return list
     }
 
 }

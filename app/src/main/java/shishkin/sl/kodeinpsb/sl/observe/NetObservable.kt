@@ -11,6 +11,7 @@ import android.net.NetworkRequest
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.Connectivity
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 
 
 class NetObservable : AbsObservable() {
@@ -21,6 +22,7 @@ class NetObservable : AbsObservable() {
     private var broadcastReceiver: BroadcastReceiver? = null
 
     init {
+        val context = ApplicationSpecialist.appContext
         if (ApplicationUtils.hasLollipop()) {
             val builder = NetworkRequest.Builder()
             builder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -43,15 +45,15 @@ class NetObservable : AbsObservable() {
                 }
             }
 
-            val connectivityManager = ApplicationUtils.getSystemService<ConnectivityManager>(
-                ApplicationSpecialist.instance.applicationContext,
-                Context.CONNECTIVITY_SERVICE
-            )
+            val connectivityManager =
+                ApplicationUtils.getSystemService<ConnectivityManager>(
+                    context,
+                    Context.CONNECTIVITY_SERVICE
+                )
             connectivityManager.registerNetworkCallback(builder.build(), callback)
         } else {
             val intentFilter = IntentFilter()
             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-            val context = ApplicationSpecialist.instance.applicationContext
             broadcastReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (Connectivity.isNetworkConnected(context)) {
@@ -69,5 +71,17 @@ class NetObservable : AbsObservable() {
     override fun getName(): String {
         return NAME
     }
+
+    override fun addObserver(subscriber: IObservableSubscriber) {
+        super.addObserver(subscriber)
+
+        val context = ApplicationSpecialist.appContext
+        if (Connectivity.isNetworkConnected(context)) {
+            onChange(true)
+        } else {
+            onChange(false)
+        }
+    }
+
 
 }
