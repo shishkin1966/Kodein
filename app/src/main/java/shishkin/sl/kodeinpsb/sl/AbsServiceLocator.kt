@@ -119,7 +119,7 @@ abstract class AbsServiceLocator : IServiceLocator {
         for (type in types) {
             if (secretary.containsKey(type)) {
                 val specialist = secretary.get(type)
-                if (specialist is ISmallUnion<*>) {
+                if (specialist is IUnion<*>) {
                     (specialist as IUnion<ISpecialistSubscriber>).setCurrentSubscriber(subscriber)
                 }
             }
