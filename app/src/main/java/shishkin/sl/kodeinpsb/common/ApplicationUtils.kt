@@ -17,11 +17,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.annimon.stream.Stream
 import com.annimon.stream.function.Predicate
+import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
-import com.google.android.material.snackbar.Snackbar
-
-
 
 
 class ApplicationUtils {

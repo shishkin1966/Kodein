@@ -39,7 +39,7 @@ abstract class AbsServiceLocator : IServiceLocator {
             if (oldSpecialist != null && oldSpecialist.compareTo(specialist) != 0) {
                 return false
             }
-            if (!unregister(specialist.getName())) {
+            if (!unregisterSpecialist(specialist.getName())) {
                 return false
             }
         }
@@ -56,7 +56,7 @@ abstract class AbsServiceLocator : IServiceLocator {
         } else false
     }
 
-    override fun unregister(name: String): Boolean {
+    override fun unregisterSpecialist(name: String): Boolean {
         if (secretary.containsKey(name)) {
             val specialist = secretary.get(name)
             if (specialist != null) {
@@ -101,7 +101,7 @@ abstract class AbsServiceLocator : IServiceLocator {
         return true
     }
 
-    override fun unregister(subscriber: ISpecialistSubscriber): Boolean {
+    override fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
         val types = subscriber.getSpecialistSubscription()
         for (type in types) {
             if (secretary.containsKey(type)) {

@@ -71,7 +71,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         stateObservable.setState(State.STATE_DESTROY)
         stateObservable.clear()
 
-        ServiceLocatorSingleton.instance.unregister(this)
+        ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
     }
 
     override fun onResume() {
