@@ -18,14 +18,14 @@ abstract class AbsContentObservable() : AbsObservable() {
     }
 
     override fun register() {
-        val context = ApplicationSpecialist.instance
+        val context = ApplicationSpecialist.appContext
         for (uri in uris) {
             context.getContentResolver().registerContentObserver(uri, true, observer)
         }
     }
 
     override fun unregister() {
-        val context = ApplicationSpecialist.instance;
+        val context = ApplicationSpecialist.appContext;
         context.contentResolver.unregisterContentObserver(observer);
     }
 }

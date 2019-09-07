@@ -14,7 +14,6 @@ import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -49,10 +48,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         stateObservable.setState(State.STATE_CREATE)
 
-        ServiceLocatorSingleton.instance.register(this)
-        if (this is IObservableSubscriber) {
-            ServiceLocatorSingleton.instance.register(this as IObservableSubscriber)
-        }
+        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
     }
 
     override fun <V : View> findView(@IdRes id: Int): V? {
@@ -76,10 +72,6 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         stateObservable.clear()
 
         ServiceLocatorSingleton.instance.unregister(this)
-        if (this is IObservableSubscriber) {
-            ServiceLocatorSingleton.instance.unregister(this as IObservableSubscriber)
-        }
-
     }
 
     override fun onResume() {
@@ -133,7 +125,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     override fun onPermissionDenied(permission: String) {}
 
-    override fun getRootView(): View? {
+    override fun getRootView(): View {
         val view = findView<View>(R.id.root)
         return if (view != null) {
             return view

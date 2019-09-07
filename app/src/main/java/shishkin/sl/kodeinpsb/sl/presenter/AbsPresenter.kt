@@ -30,7 +30,7 @@ abstract class AbsPresenter(private val model: IModel) : IPresenter {
     override fun onCreateView() {}
 
     override fun onReadyView() {
-        ServiceLocatorSingleton.instance.register(this)
+        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
 
         doActions()
 

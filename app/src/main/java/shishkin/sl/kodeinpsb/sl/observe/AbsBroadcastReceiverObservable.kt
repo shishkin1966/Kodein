@@ -14,7 +14,7 @@ abstract class AbsBroadcastReceiverObservable : AbsObservable() {
     abstract fun getIntentFilter(): IntentFilter
 
     override fun register() {
-        val context = ApplicationSpecialist.instance
+        val context = ApplicationSpecialist.appContext
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 onChange(intent)
@@ -25,7 +25,7 @@ abstract class AbsBroadcastReceiverObservable : AbsObservable() {
 
     override fun unregister() {
         if (broadcastReceiver != null) {
-            val context = ApplicationSpecialist.instance;
+            val context = ApplicationSpecialist.appContext;
             if (broadcastReceiver != null) {
                 context.unregisterReceiver(broadcastReceiver);
                 broadcastReceiver = null;

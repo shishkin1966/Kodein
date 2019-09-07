@@ -2,10 +2,9 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import shishkin.sl.kodeinpsb.sl.ISmallUnion
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
-import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 
 
-interface IObservableUnion : ISmallUnion<IObservable> {
+interface IObservableUnion : ISmallUnion<IObservableSubscriber> {
     /**
      * Получить список слушаемых объектов
      *
@@ -14,18 +13,18 @@ interface IObservableUnion : ISmallUnion<IObservable> {
     fun getObservables(): List<IObservable>
 
     /**
-     * Зарегестрировать слушателя слушаемего объекта
+     * Зарегестрировать слушаемый объект
      *
-     * @param subscriber слушатель
+     * @param observable слушаемый объект
      */
-    fun register(subscriber: IObservableSubscriber): Boolean
+    fun register(observable: IObservable): Boolean
 
     /**
-     * Отменить регистрацию слушателя слушаемего объекта
+     * Отменить регистрацию слушаемего объекта
      *
-     * @param subscriber слушатель
+     * @param observable слушаемый объект
      */
-    fun unregister(subscriber: IObservableSubscriber): Boolean
+    fun unregister(observable: IObservable): Boolean
 
     /**
      * Событие - изменился слушаемый объект
@@ -35,4 +34,11 @@ interface IObservableUnion : ISmallUnion<IObservable> {
      */
     fun onChange(name: String, obj: Any)
 
+    /**
+     * Получить слушаемый объект
+     *
+     * @param name имя слушаемого объекта
+     * @return слушаемый объект
+     */
+    fun getObservable(name: String): IObservable?
 }
