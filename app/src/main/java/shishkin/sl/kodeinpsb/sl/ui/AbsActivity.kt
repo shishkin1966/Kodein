@@ -125,7 +125,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     override fun onPermissionDenied(permission: String) {}
 
-    override fun getRootView(): View? {
+    override fun getRootView(): View {
         val view = findView<View>(R.id.root)
         return if (view != null) {
             return view

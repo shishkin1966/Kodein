@@ -11,5 +11,7 @@
     <string name="db_backuped">Резервная копия БД сохранена</string>
     <string name="db_restored">БД восстановлена из резервной копии</string>
     <string name="timeout_exit">Приложение вышло по таймауту</string>
+    <string name="network_disconnected">Сеть недоступна</string>
+
 
 </resources>

@@ -19,6 +19,9 @@ import com.annimon.stream.Stream
 import com.annimon.stream.function.Predicate
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
+import com.google.android.material.snackbar.Snackbar
+
+
 
 
 class ApplicationUtils {
@@ -368,6 +371,13 @@ class ApplicationUtils {
         @JvmStatic
         fun <S> getSystemService(context: Context, serviceName: String): S {
             return context.getSystemService(serviceName) as S
+        }
+
+        @JvmStatic
+        fun showSnackbar(view: View, message: String, duration: Int, type: Int): Snackbar {
+            val snackbar = BaseSnackbar().make(view, message, duration, type)
+            snackbar.show()
+            return snackbar
         }
     }
 }
