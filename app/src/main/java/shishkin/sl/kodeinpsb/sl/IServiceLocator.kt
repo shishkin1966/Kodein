@@ -43,7 +43,7 @@ interface IServiceLocator : INamed {
      * @param name имя специалиста
      * @return флаг - операция завершена успешно
      */
-    fun unregister(name: String): Boolean
+    fun unregisterSpecialist(name: String): Boolean
 
     /**
      * Зарегистрировать подписчика специалиста
@@ -59,7 +59,7 @@ interface IServiceLocator : INamed {
      * @param subscriber подписчик специалиста
      * @return флаг - операция завершена успешно
      */
-    fun unregister(subscriber: ISpecialistSubscriber): Boolean
+    fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean
 
     /**
      * Установить подписчика текущим

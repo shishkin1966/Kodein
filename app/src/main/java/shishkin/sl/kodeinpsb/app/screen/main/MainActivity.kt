@@ -8,13 +8,16 @@ import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
-import shishkin.sl.kodeinpsb.sl.specialist.*
+import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
+import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
+import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
 
 
 class MainActivity : AbsActivity(), IObservableSubscriber {
 
-    private var snackbar : Snackbar? = null
+    private var snackbar: Snackbar? = null
 
     override fun getName(): String {
         return MainActivity::class.java.simpleName
@@ -95,7 +98,12 @@ class MainActivity : AbsActivity(), IObservableSubscriber {
             snackbar?.dismiss()
             snackbar = null
         }
-        snackbar = ApplicationUtils.showSnackbar(getRootView(),getString(R.string.network_disconnected), Snackbar.LENGTH_INDEFINITE, ApplicationUtils.MESSAGE_TYPE_WARNING)
+        snackbar = ApplicationUtils.showSnackbar(
+            getRootView(),
+            getString(R.string.network_disconnected),
+            Snackbar.LENGTH_INDEFINITE,
+            ApplicationUtils.MESSAGE_TYPE_WARNING
+        )
     }
 
     override fun getSpecialistSubscription(): List<String> {

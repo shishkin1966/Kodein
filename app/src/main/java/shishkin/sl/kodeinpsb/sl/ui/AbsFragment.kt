@@ -73,7 +73,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         stateObservable.clear()
 
         if (this is ISpecialistSubscriber) {
-            ServiceLocatorSingleton.instance.unregister(this)
+            ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
         }
     }
 

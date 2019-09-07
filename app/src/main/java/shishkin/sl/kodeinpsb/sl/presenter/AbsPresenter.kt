@@ -38,7 +38,7 @@ abstract class AbsPresenter(private val model: IModel) : IPresenter {
     }
 
     override fun onDestroyView() {
-        ServiceLocatorSingleton.instance.unregister(this)
+        ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
 
         onStop()
     }
