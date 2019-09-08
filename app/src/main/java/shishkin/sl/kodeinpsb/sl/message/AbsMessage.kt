@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.message
 
-import shishkin.sl.kodeinpsb.sl.action.AbsAction
 import java.util.*
 
 
