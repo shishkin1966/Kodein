@@ -26,10 +26,13 @@ abstract class AbsBroadcastReceiverObservable : AbsObservable() {
     override fun unregister() {
         if (broadcastReceiver != null) {
             val context = ApplicationSpecialist.appContext;
-            if (broadcastReceiver != null) {
-                context.unregisterReceiver(broadcastReceiver);
-                broadcastReceiver = null;
-            }
+            context.unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
         }
     }
+
+    override fun stop() {
+        unregister()
+    }
+
 }

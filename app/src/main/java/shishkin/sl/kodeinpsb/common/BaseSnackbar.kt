@@ -13,13 +13,11 @@ import shishkin.sl.kodeinpsb.R
 
 
 class BaseSnackbar {
-    @CheckResult
     fun make(view: View, @StringRes titleRes: Int, duration: Int, type: Int): Snackbar {
         val context = view.context
         return make(view, context.getText(titleRes), duration, type)
     }
 
-    @CheckResult
     fun make(
         view: View, title: CharSequence, duration: Int,
         type: Int

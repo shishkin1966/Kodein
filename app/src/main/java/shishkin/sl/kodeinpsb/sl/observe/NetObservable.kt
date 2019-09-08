@@ -20,6 +20,7 @@ class NetObservable : AbsObservable() {
     }
 
     private var broadcastReceiver: BroadcastReceiver? = null
+    private var callback: ConnectivityManager.NetworkCallback? = null
 
     init {
         val context = ApplicationSpecialist.appContext
@@ -30,7 +31,7 @@ class NetObservable : AbsObservable() {
             builder.addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             builder.addTransportType(NetworkCapabilities.TRANSPORT_VPN)
 
-            val callback = object : ConnectivityManager.NetworkCallback() {
+            callback = object : ConnectivityManager.NetworkCallback() {
 
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
@@ -83,5 +84,23 @@ class NetObservable : AbsObservable() {
         }
     }
 
+    override fun stop() {
+        super.stop()
+
+        if (broadcastReceiver != null) {
+            val context = ApplicationSpecialist.appContext;
+            context.unregisterReceiver(broadcastReceiver);
+        }
+
+        if (callback != null) {
+            val context = ApplicationSpecialist.appContext
+            val connectivityManager =
+                ApplicationUtils.getSystemService<ConnectivityManager>(
+                    context,
+                    Context.CONNECTIVITY_SERVICE
+                )
+            connectivityManager.unregisterNetworkCallback(callback)
+        }
+    }
 
 }

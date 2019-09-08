@@ -4,7 +4,7 @@ import microservices.shishkin.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 
 
-class ShowDialogAction() : AbsAction() {
+class ShowDialogAction() : IAction {
     private var id = -1
     private var title: String? = null
     private var message: String? = null
@@ -12,7 +12,6 @@ class ShowDialogAction() : AbsAction() {
     private var buttonNegative = MaterialDialogExt.NO_BUTTON
     private var cancelable = false
     private var listener: String? = null
-
 
     constructor(id: Int, listener: String) : this() {
         this.id = id

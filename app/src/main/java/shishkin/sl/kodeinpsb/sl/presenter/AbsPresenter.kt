@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.presenter
 
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
+import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PresenterActionHandler
 import shishkin.sl.kodeinpsb.sl.message.IMessage
@@ -14,10 +15,15 @@ import shishkin.sl.kodeinpsb.sl.state.StateObserver
 import java.util.*
 
 
-abstract class AbsPresenter(private val model: IModel) : IPresenter {
+abstract class AbsPresenter() : IPresenter {
+    private var model: IModel? = null
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
     private val actionHandler = PresenterActionHandler(this)
+
+    constructor(model: IModel) : this() {
+        this.model = model
+    }
 
     override fun getState(): Int {
         return lifecycle.getState()
@@ -33,14 +39,10 @@ abstract class AbsPresenter(private val model: IModel) : IPresenter {
         ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
 
         doActions()
-
-        onStart()
     }
 
     override fun onDestroyView() {
         ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
-
-        onStop()
     }
 
     override fun <M : IModel> getModel(): M? {
@@ -55,9 +57,8 @@ abstract class AbsPresenter(private val model: IModel) : IPresenter {
         return listOf(PresenterUnion.NAME, MessengerUnion.NAME)
     }
 
-    override fun onStart() {}
-
-    override fun onStop() {}
+    override fun onStop(specialist: ISpecialist) {
+    }
 
     override fun <C : IModelView> getView(): C? {
         return if (model != null) {

@@ -1,7 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
 import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
-import shishkin.sl.kodeinpsb.sl.ISecretary
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.observe.IObservable
@@ -12,10 +11,6 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion
 
     companion object {
         const val NAME = "ObservableUnion"
-    }
-
-    override fun createSecretary(): ISecretary<IObservableSubscriber> {
-        return Secretary()
     }
 
     override fun getName(): String {
@@ -82,6 +77,14 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion
             }
         }
         return false
+    }
+
+    override fun stop() {
+        super.stop()
+
+        for (observable in getObservables()) {
+            observable.stop()
+        }
     }
 
 }

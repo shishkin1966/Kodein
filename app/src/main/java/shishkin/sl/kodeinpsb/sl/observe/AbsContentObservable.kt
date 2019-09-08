@@ -28,4 +28,9 @@ abstract class AbsContentObservable() : AbsObservable() {
         val context = ApplicationSpecialist.appContext;
         context.contentResolver.unregisterContentObserver(observer);
     }
+
+    override fun stop() {
+        unregister()
+    }
+
 }

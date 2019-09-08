@@ -4,7 +4,6 @@ import shishkin.sl.kodeinpsb.sl.AbsServiceLocator
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
 import shishkin.sl.kodeinpsb.sl.observe.ScreenBroadcastReceiverObservable
-import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
@@ -18,6 +17,7 @@ class ServiceLocator : AbsServiceLocator() {
         const val NAME = "ServiceLocator"
     }
 
+
     override fun getName(): String {
         return NAME
     }
@@ -30,7 +30,6 @@ class ServiceLocator : AbsServiceLocator() {
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
         union?.register(ScreenBroadcastReceiverObservable())
-        registerSpecialistSubscriber(ScreenObservableSubscriber())
     }
 
     override fun getSpecialistFactory(): ISpecialistFactory {

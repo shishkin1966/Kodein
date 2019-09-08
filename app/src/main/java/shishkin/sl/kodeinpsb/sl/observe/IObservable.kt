@@ -52,4 +52,9 @@ interface IObservable : INamed {
      * @return слушатель
      */
     fun getObserver(name: String): IObservableSubscriber?
+
+    /**
+     * Остановить слушателя
+     */
+    fun stop()
 }

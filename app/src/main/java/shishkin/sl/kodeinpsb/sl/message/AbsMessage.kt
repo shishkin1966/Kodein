@@ -1,10 +1,10 @@
 package shishkin.sl.kodeinpsb.sl.message
 
-import shishkin.sl.kodeinpsb.sl.action.AbsAction
+import shishkin.sl.kodeinpsb.sl.action.IAction
 import java.util.*
 
 
-abstract class AbsMessage() : AbsAction(), IMessage {
+abstract class AbsMessage() : IAction, IMessage {
     private var id = -1
     private var address: String? = null
     private var copyTo: LinkedList<String> = LinkedList()

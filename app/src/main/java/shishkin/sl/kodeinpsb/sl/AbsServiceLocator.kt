@@ -1,5 +1,7 @@
 package shishkin.sl.kodeinpsb.sl
 
+import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 
 
@@ -132,8 +134,11 @@ abstract class AbsServiceLocator : IServiceLocator {
     }
 
     override fun stop() {
-        for (specialist in getSpecialists()) {
-            specialist.stop()
+        if (ApplicationSpecialist.instance.isExit()) {
+            val union = get<ActivityUnion>(ActivityUnion.NAME)
+            if (union != null) {
+                union.stop()
+            }
         }
     }
 

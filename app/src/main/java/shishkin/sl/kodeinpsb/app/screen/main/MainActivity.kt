@@ -6,6 +6,8 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
+import shishkin.sl.kodeinpsb.sl.action.handler.ActivityActionHandler
+import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
@@ -13,12 +15,15 @@ import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 class MainActivity : AbsContentActivity() {
 
+    private val onBackPressedPresenter = OnBackPressedPresenter()
+    private val actionHandler = ActivityActionHandler(this)
+
     override fun getName(): String {
         return MainActivity::class.java.simpleName
     }
 
     override fun onAction(action: IAction): Boolean {
-        return true
+        return actionHandler.onAction(action)
     }
 
     override fun createModel(): MainModel {
@@ -36,16 +41,12 @@ class MainActivity : AbsContentActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (!ApplicationUtils.checkPermission(
-                context = applicationContext,
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        ) {
-            ApplicationUtils.grantPermisions(
-                permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                activity = this
-            )
-        }
+        ApplicationUtils.grantPermisions(
+            permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            activity = this
+        )
+
+        addStateObserver(onBackPressedPresenter)
     }
 
     override fun onRequestPermissionsResult(
@@ -56,14 +57,18 @@ class MainActivity : AbsContentActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == ApplicationUtils.REQUEST_PERMISSIONS) {
-            for (permition in permissions) {
-                if (permition == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
+            for (permission in permissions) {
+                if (permission == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
                     val union =
                         ServiceLocatorSingleton.instance.get<IErrorSpecialist>(ErrorSpecialist.NAME)
                     union?.checkLog(applicationContext)
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        onBackPressedPresenter.onClick()
     }
 
 }

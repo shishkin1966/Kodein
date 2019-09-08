@@ -3,5 +3,5 @@ package shishkin.sl.kodeinpsb.sl.action
 /**
  * Действие - скрыть клавиатуру
  */
-class HideKeyboardAction : AbsAction() {
+class HideKeyboardAction : IAction {
 }
