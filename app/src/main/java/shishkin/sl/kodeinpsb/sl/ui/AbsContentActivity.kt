@@ -1,11 +1,18 @@
 package shishkin.sl.kodeinpsb.sl.ui
 
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.HideKeyboardAction
+import shishkin.sl.kodeinpsb.sl.observe.NetObservable
+import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
-abstract class AbsContentActivity : AbsActivity(), IRouter {
+abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscriber {
+    private var snackbar: Snackbar? = null
 
     override fun onPause() {
         super.onPause()
@@ -89,5 +96,51 @@ abstract class AbsContentActivity : AbsActivity(), IRouter {
         val fragment = getContentFragment(AbsFragment::class.java)
         fragment?.onPermissionDenied(permission)
     }
+
+    override fun getSpecialistSubscription(): List<String> {
+        val list = ArrayList<String>()
+        list.addAll(super.getSpecialistSubscription())
+        list.add(ObservableUnion.NAME)
+        return list
+    }
+
+    override fun getObservable(): List<String> {
+        return listOf(NetObservable.NAME)
+    }
+
+    override fun onChange(name: String, obj: Any) {
+        if (name == NetObservable.NAME) {
+            if (obj == true) {
+                onConnected()
+            } else if (obj == false) {
+                onDisConnected()
+            }
+        }
+    }
+
+    private fun onConnected() {
+        if (snackbar?.isShown == true) {
+            snackbar?.dismiss()
+            snackbar = null
+        }
+    }
+
+    private fun onDisConnected() {
+        if (snackbar != null) {
+            snackbar?.dismiss()
+            snackbar = null
+        }
+        snackbar = ApplicationUtils.showSnackbar(
+            getRootView(),
+            getString(R.string.network_disconnected),
+            Snackbar.LENGTH_INDEFINITE,
+            ApplicationUtils.MESSAGE_TYPE_WARNING
+        )
+    }
+
+    override fun getContentResId(): Int {
+        return R.id.content
+    }
+
 
 }
