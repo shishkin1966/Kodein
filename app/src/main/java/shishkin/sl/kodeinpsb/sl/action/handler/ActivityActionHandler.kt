@@ -101,20 +101,6 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
             }
             return true
         }
-        if (action is ShowFragmentAction) {
-            if (activity is AbsActivity) {
-                BackStack.showFragment(
-                    activity,
-                    action.getIdRes(),
-                    (action as ShowFragmentAction).getFragment(),
-                    (action as ShowFragmentAction).isAddToBackStack(),
-                    (action as ShowFragmentAction).isClearBackStack(),
-                    (action as ShowFragmentAction).isAnimate(),
-                    (action as ShowFragmentAction).isAllowingStateLoss()
-                )
-                return true
-            }
-        }
         if (action is PermissionAction) {
             if (action.getListener().isNullOrEmpty()) {
                 grantPermission(action.getPermission())

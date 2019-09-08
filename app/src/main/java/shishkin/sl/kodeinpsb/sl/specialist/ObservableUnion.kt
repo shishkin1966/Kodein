@@ -14,10 +14,6 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion
         const val NAME = "ObservableUnion"
     }
 
-    override fun createSecretary(): ISecretary<IObservableSubscriber> {
-        return Secretary()
-    }
-
     override fun getName(): String {
         return NAME
     }

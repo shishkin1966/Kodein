@@ -18,6 +18,7 @@ class ServiceLocator : AbsServiceLocator() {
         const val NAME = "ServiceLocator"
     }
 
+
     override fun getName(): String {
         return NAME
     }
@@ -30,7 +31,6 @@ class ServiceLocator : AbsServiceLocator() {
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
         union?.register(ScreenBroadcastReceiverObservable())
-        registerSpecialistSubscriber(ScreenObservableSubscriber())
     }
 
     override fun getSpecialistFactory(): ISpecialistFactory {

@@ -19,11 +19,11 @@ class MaterialDialogExt {
 
     private var id: Int = 0
     private val materialDialog: MaterialDialog
-    private val listener: String
+    private val listener: String?
 
     constructor(
-        context: Context, listener: String, id: Int,
-        title: String, message: String, positiveButton: Int,
+        context: Context, listener: String?, id: Int,
+        title: String?, message: String?, positiveButton: Int,
         setCancelable: Boolean
     ) : this(
         context,
@@ -39,8 +39,8 @@ class MaterialDialogExt {
     }
 
     constructor(
-        context: Context, listener: String, id: Int,
-        title: String, message: String, positiveButton: Int,
+        context: Context, listener: String?, id: Int,
+        title: String?, message: String?, positiveButton: Int,
         negativeButton: Int, setCancelable: Boolean
     ) : this(
         context,
@@ -56,8 +56,8 @@ class MaterialDialogExt {
     }
 
     constructor(
-        context: Context, listener: String, id: Int,
-        title: String, message: String, positiveButton: Int,
+        context: Context, listener: String?, id: Int,
+        title: String?, message: String?, positiveButton: Int,
         negativeButton: Int, neutralButton: Int, setCancelable: Boolean
     ) {
 
@@ -144,10 +144,10 @@ class MaterialDialogExt {
 
     constructor(
         context: Context,
-        listener: String,
+        listener: String?,
         id: Int,
-        title: String,
-        message: String,
+        title: String?,
+        message: String?,
         items: List<String>,
         selected: Array<Int>?,
         multiselect: Boolean,
