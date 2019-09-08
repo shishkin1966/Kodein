@@ -3,6 +3,7 @@ package shishkin.sl.kodeinpsb.sl.specialist
 import android.app.Application
 import android.content.Context
 import shishkin.sl.kodeinpsb.BuildConfig
+import shishkin.sl.kodeinpsb.sl.IServiceLocator
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 
 
@@ -12,6 +13,7 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
     companion object {
         val instance = ApplicationSpecialist()
         lateinit var appContext: Context
+        var serviceLocator: IServiceLocator? = null
     }
 
     override fun onCreate() {
@@ -31,6 +33,11 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
     }
 
     override fun stop() {
+        isExit = true
+
+        if (serviceLocator != null) {
+            serviceLocator?.stop()
+        }
     }
 
     override fun getName(): String {
@@ -47,13 +54,6 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
 
     override fun isExit(): Boolean {
         return isExit
-    }
-
-    /**
-     * выйти из приложеня
-     */
-    override fun exit() {
-        stop()
     }
 
     override fun isKillOnFinish(): Boolean {

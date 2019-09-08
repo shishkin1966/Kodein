@@ -1,8 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import com.google.android.material.snackbar.Snackbar
-
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 
 
 class ShowSnackbarAction(private val message: String) : IAction {

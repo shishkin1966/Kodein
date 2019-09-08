@@ -19,13 +19,9 @@ class App : ApplicationSpecialist() {
 
         ServiceLocatorSingleton.instance.start()
 
+        serviceLocator = ServiceLocatorSingleton.instance
+
         ServiceLocatorSingleton.instance.registerSpecialistSubscriber(screenObservableSubscriber)
-    }
-
-    override fun exit() {
-        super.exit()
-
-        ServiceLocatorSingleton.instance.stop()
     }
 
     fun onScreenOn() {

@@ -30,13 +30,4 @@ interface IPresenter : IStateListener, IActionListener, IActionHandler, IMesseng
      */
     fun isRegister(): Boolean
 
-    /**
-     * Событие - презентер перешел в состояние STATE_RESUME
-     */
-    fun onStart()
-
-    /**
-     * Событие - презентер перешел в состояние STATE_DESTROY
-     */
-    fun onStop()
 }

@@ -49,4 +49,7 @@ abstract class AbsObservable : IObservable {
 
     override fun unregister() {
     }
+
+    override fun stop() {
+    }
 }

@@ -3,8 +3,6 @@ package shishkin.sl.kodeinpsb.sl.specialist
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsUnion
 import shishkin.sl.kodeinpsb.sl.ISpecialist
@@ -78,18 +76,21 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
 
     override fun stop() {
         for (ref in activities) {
-            if (ref != null && ref!!.get() != null) {
-                ref!!.get()!!.exit()
+            if (ref != null && ref.get() != null) {
+                ref.get()!!.exit()
             }
         }
     }
 
     override fun onUnRegisterLastSubscriber() {
-        if (ApplicationSingleton.instance.isExit()) {
-            if (ApplicationSingleton.instance.isKillOnFinish()) {
-                for (specialist in ServiceLocatorSingleton.instance.getSpecialists()) {
-                    if (specialist !is IActivityUnion && specialist !is IApplicationSpecialist) {
-                        specialist.stop()
+        if (ApplicationSpecialist.instance.isExit()) {
+            if (ApplicationSpecialist.instance.isKillOnFinish()) {
+                val serviceLocator = ApplicationSpecialist.serviceLocator
+                if (serviceLocator != null) {
+                    for (specialist in serviceLocator.getSpecialists()) {
+                        if (specialist !is IActivityUnion && specialist !is IApplicationSpecialist) {
+                            specialist.stop()
+                        }
                     }
                 }
                 android.os.Process.killProcess(android.os.Process.myPid())

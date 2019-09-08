@@ -2,7 +2,6 @@ package shishkin.sl.kodeinpsb.sl.action.handler
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
-import microservices.shishkin.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -25,8 +23,6 @@ import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
 import shishkin.sl.kodeinpsb.sl.specialist.IActivityUnion
-import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
-import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
 
 class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler() {
@@ -39,14 +35,6 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
 
         if (super.onAction(action)) return true
 
-        if (action is ShowProgressBarAction) {
-            showProgressBar()
-            return true
-        }
-        if (action is HideProgressBarAction) {
-            hideProgressBar()
-            return true
-        }
         if (action is ShowKeyboardAction) {
             showKeyboard(action)
             return true
@@ -55,24 +43,12 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
             hideKeyboard()
             return true
         }
-        if (action is LockOrientationAction) {
-            lockOrientation(action)
-            return true
-        }
-        if (action is UnLockOrientationAction) {
-            unlockOrientation()
-            return true
-        }
         if (action is ShowSnackbarAction) {
             showSnackbar(action)
             return true
         }
         if (action is HideSnackbarAction) {
             hideSnackbar()
-            return true
-        }
-        if (action is ShowDialogAction) {
-            showDialog(action)
             return true
         }
         if (action is StartActivityAction) {
@@ -116,20 +92,6 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         return false
     }
 
-    private fun showProgressBar() {
-        val view = activity.findViewById<View>(R.id.progressBar)
-        if (view != null) {
-            view.setVisibility(View.VISIBLE)
-        }
-    }
-
-    private fun hideProgressBar() {
-        val view = activity.findViewById<View>(R.id.progressBar)
-        if (view != null) {
-            view.setVisibility(View.INVISIBLE)
-        }
-    }
-
     private fun showKeyboard(action: ShowKeyboardAction) {
         KeyboardRunnable(activity, action.getView()).run()
     }
@@ -151,14 +113,6 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         return if (activity.findViewById<View>(R.id.root) != null) {
             activity.findViewById(R.id.root)
         } else (activity.findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
-    }
-
-    private fun lockOrientation(action: LockOrientationAction) {
-        activity.requestedOrientation = action.getOrientation()
-    }
-
-    private fun unlockOrientation() {
-        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
     private fun showSnackbar(action: ShowSnackbarAction) {
@@ -198,19 +152,6 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         if (snackbar != null) {
             snackbar?.dismiss()
         }
-    }
-
-    private fun showDialog(action: ShowDialogAction) {
-        MaterialDialogExt(
-            activity,
-            action.getListener()!!,
-            action.getId(),
-            action.getTitle()!!,
-            action.getMessage()!!,
-            action.getButtonPositive(),
-            action.getButtonNegative(),
-            action.isCancelable()
-        ).show()
     }
 
     private fun grantPermission(permission: String) {

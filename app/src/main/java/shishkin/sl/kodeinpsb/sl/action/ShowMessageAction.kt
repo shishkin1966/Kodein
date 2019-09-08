@@ -1,8 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import android.widget.Toast
-
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 
 
 class ShowMessageAction(private val message: String) : IAction {
@@ -11,11 +10,11 @@ class ShowMessageAction(private val message: String) : IAction {
     private var duration = Toast.LENGTH_SHORT
     private var type = ApplicationUtils.MESSAGE_TYPE_INFO
 
-    constructor(message: String, type: Int): this(message) {
+    constructor(message: String, type: Int) : this(message) {
         this.type = type
     }
 
-    constructor(title: String, message: String, type: Int): this(message, type) {
+    constructor(title: String, message: String, type: Int) : this(message, type) {
         this.title = title
     }
 
