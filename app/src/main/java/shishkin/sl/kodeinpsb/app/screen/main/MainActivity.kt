@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.app.screen.main
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
@@ -11,7 +12,6 @@ import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
-
 
 class MainActivity : AbsContentActivity() {
 
@@ -36,6 +36,12 @@ class MainActivity : AbsContentActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+        onNewIntent(getIntent())
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        this.intent = intent
     }
 
     override fun onStart() {
@@ -47,7 +53,25 @@ class MainActivity : AbsContentActivity() {
         )
 
         addStateObserver(onBackPressedPresenter)
+
+        if (intent != null) {
+            val action = intent.getAction();
+            if ("android.intent.action.MAIN" == action) {
+                showHomeFragment();
+            } else {
+                showHomeFragment();
+            }
+            intent = null;
+        } else {
+            showHomeFragment();
+        }
     }
+
+    fun showHomeFragment() {
+        clearBackStack()
+        //showFragment(AccountsFragment.newInstance(), true)
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
