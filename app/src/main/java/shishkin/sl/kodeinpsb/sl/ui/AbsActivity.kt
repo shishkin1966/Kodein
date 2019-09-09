@@ -46,9 +46,9 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         setModel(createModel())
 
-        stateObservable.setState(State.STATE_CREATE)
+        (getModel<IModel>() as IModel).addStateObserver();
 
-        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
+        stateObservable.setState(State.STATE_CREATE)
     }
 
     override fun <V : View> findView(@IdRes id: Int): V? {
@@ -60,7 +60,9 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         doActions()
 
-        (getModel<IModel>() as IModel).addStateObserver();
+        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
+
+        //(getModel<IModel>() as IModel).addStateObserver();
 
         stateObservable.setState(State.STATE_READY);
     }

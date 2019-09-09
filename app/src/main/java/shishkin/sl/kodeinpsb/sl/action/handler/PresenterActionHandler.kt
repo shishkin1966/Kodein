@@ -1,5 +1,7 @@
-package shishkin.sl.kodeinpsb.sl.action
+package shishkin.sl.kodeinpsb.sl.action.handler
 
+import shishkin.sl.kodeinpsb.sl.action.IAction
+import shishkin.sl.kodeinpsb.sl.action.IActionHandler
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 

@@ -37,7 +37,7 @@ class OnBackPressedPresenter : AbsPresenter() {
                         activity.addAction(
                             ShowSnackbarAction(context.getString(R.string.double_back_pressed)).setDuration(
                                 Snackbar.LENGTH_SHORT
-                            )
+                            ).setAction(ApplicationSpecialist.appContext.getString(R.string.exit))
                         )
                     }
                 }

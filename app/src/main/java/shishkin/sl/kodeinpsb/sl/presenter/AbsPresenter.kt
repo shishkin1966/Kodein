@@ -3,11 +3,10 @@ package shishkin.sl.kodeinpsb.sl.presenter
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
-import shishkin.sl.kodeinpsb.sl.action.PresenterActionHandler
+import shishkin.sl.kodeinpsb.sl.action.handler.PresenterActionHandler
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
 import shishkin.sl.kodeinpsb.sl.state.State
@@ -100,17 +99,7 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun onAction(action: IAction): Boolean {
-        if (!validate()) return false
-
-        if (actionHandler.onAction(action)) {
-            return true
-        }
-        ErrorSpecialistSingleton.instance.onError(
-            getName(),
-            "Unknown action:" + action.toString(),
-            true
-        )
-        return false
+        return true
     }
 
 }

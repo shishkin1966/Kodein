@@ -72,8 +72,8 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
         setThreadCount(Connectivity.getActiveNetworkInfo(context))
     }
 
-    private fun setThreadCount(info: NetworkInfo) {
-        if (!info.isConnectedOrConnecting) {
+    private fun setThreadCount(info: NetworkInfo?) {
+        if (info == null) {
             threadCount = 2
             maxThreadCount = 2
             return
@@ -115,11 +115,6 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
                 }
             }
 
-            else -> {
-                threadCount = 2
-                maxThreadCount = 2
-                return
-            }
         }
     }
 

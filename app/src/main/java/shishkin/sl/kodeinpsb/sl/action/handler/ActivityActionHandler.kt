@@ -144,7 +144,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         }
         if (activity is IModelView && !action.isNullOrBlank()) {
             val model = activity.getModel<IModel>()
-            model?.getPresenter<IPresenter>()?.addAction(ApplicationAction(action))
+            model?.getPresenter<IPresenter>()?.addAction(SnackBarAction(action))
         }
     }
 

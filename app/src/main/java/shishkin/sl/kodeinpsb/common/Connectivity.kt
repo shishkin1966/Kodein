@@ -19,7 +19,11 @@ class Connectivity {
         @JvmStatic
         fun isNetworkConnected(context: Context): Boolean {
             val activeNetwork = getActiveNetworkInfo(context)
-            return isNetworkConnected(activeNetwork)
+            if (activeNetwork != null) {
+                return isNetworkConnected(activeNetwork)
+            } else {
+                return false
+            }
         }
 
         /**
@@ -31,8 +35,12 @@ class Connectivity {
          * @return `true` if network connectivity exists, `false` otherwise.
          */
         @JvmStatic
-        fun isNetworkConnected(activeNetwork: NetworkInfo): Boolean {
-            return activeNetwork.isConnected
+        fun isNetworkConnected(activeNetwork: NetworkInfo?): Boolean {
+            if (activeNetwork != null) {
+                return activeNetwork.isConnected
+            } else {
+                return false
+            }
         }
 
         /**
@@ -46,7 +54,11 @@ class Connectivity {
         @JvmStatic
         fun isNetworkConnectedOrConnecting(context: Context): Boolean {
             val activeNetwork = getActiveNetworkInfo(context)
-            return isNetworkConnectedOrConnecting(activeNetwork)
+            if (activeNetwork != null) {
+                return isNetworkConnectedOrConnecting(activeNetwork)
+            } else {
+                return false
+            }
         }
 
         /**
@@ -58,8 +70,12 @@ class Connectivity {
          * of being established, `false` otherwise.
          */
         @JvmStatic
-        fun isNetworkConnectedOrConnecting(activeNetwork: NetworkInfo): Boolean {
-            return activeNetwork.isConnectedOrConnecting
+        fun isNetworkConnectedOrConnecting(activeNetwork: NetworkInfo?): Boolean {
+            if (activeNetwork != null) {
+                return activeNetwork.isConnected
+            } else {
+                return false
+            }
         }
 
         /**
@@ -76,7 +92,7 @@ class Connectivity {
          * or `null` if no default network is currently active
          */
         @JvmStatic
-        fun getActiveNetworkInfo(context: Context): NetworkInfo {
+        fun getActiveNetworkInfo(context: Context): NetworkInfo? {
             val connectivityManager = getConnectivityManager(context)
             return connectivityManager.activeNetworkInfo
         }
