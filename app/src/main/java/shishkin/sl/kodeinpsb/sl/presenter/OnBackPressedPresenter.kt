@@ -2,7 +2,6 @@ package shishkin.sl.kodeinpsb.sl.presenter
 
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
@@ -30,7 +29,8 @@ class OnBackPressedPresenter : AbsPresenter() {
             if (!doubleBackPressedOnce) {
                 val context = ApplicationSpecialist.appContext
                 doubleBackPressedOnce = true
-                val union = ServiceLocatorSingleton.instance.get<ActivityUnion>(ActivityUnion.NAME)
+                val union =
+                    ApplicationSpecialist.serviceLocator?.get<ActivityUnion>(ActivityUnion.NAME)
                 if (union != null) {
                     val activity = union.getCurrentSubscriber()
                     if (activity != null) {

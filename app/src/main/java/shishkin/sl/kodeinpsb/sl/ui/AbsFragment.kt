@@ -6,11 +6,11 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -48,12 +48,9 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         super.onCreate(savedInstanceState)
 
         setModel(createModel())
+        (getModel<IModel>() as IModel).addStateObserver();
 
         stateObservable.setState(State.STATE_CREATE)
-
-        if (this is ISpecialistSubscriber) {
-            ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
-        }
     }
 
     override fun onStart() {
@@ -61,7 +58,9 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
 
         doActions()
 
-        (getModel<IModel>() as IModel).addStateObserver()
+        if (this is ISpecialistSubscriber) {
+            ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
+        }
 
         stateObservable.setState(State.STATE_READY)
     }
@@ -73,7 +72,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         stateObservable.clear()
 
         if (this is ISpecialistSubscriber) {
-            ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
+            ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
         }
     }
 
@@ -89,7 +88,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
 
     override fun setState(state: Int) {}
 
-    override fun exit() {}
+    override fun stop() {}
 
     override fun validate(): Boolean {
         return getState() != State.STATE_DESTROY

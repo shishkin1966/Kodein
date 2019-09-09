@@ -8,12 +8,12 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -45,7 +45,6 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setModel(createModel())
-
         (getModel<IModel>() as IModel).addStateObserver();
 
         stateObservable.setState(State.STATE_CREATE)
@@ -60,9 +59,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         doActions()
 
-        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(this)
-
-        //(getModel<IModel>() as IModel).addStateObserver();
+        ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
 
         stateObservable.setState(State.STATE_READY);
     }
@@ -73,13 +70,13 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         stateObservable.setState(State.STATE_DESTROY)
         stateObservable.clear()
 
-        ServiceLocatorSingleton.instance.unregisterSpecialistSubscriber(this)
+        ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
     }
 
     override fun onResume() {
         super.onResume()
 
-        ServiceLocatorSingleton.instance.setCurrentSubscriber(this)
+        ApplicationSpecialist.serviceLocator?.setCurrentSubscriber(this)
     }
 
     override fun getSpecialistSubscription(): List<String> {
@@ -111,11 +108,12 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     }
 
     override fun setState(state: Int) {}
+
     override fun validate(): Boolean {
         return getState() !== State.STATE_DESTROY && !isFinishing
     }
 
-    override fun exit() {
+    override fun stop() {
         if (ApplicationUtils.hasJellyBean()) {
             super.finishAffinity()
         } else {
@@ -167,7 +165,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     private fun doActions() {
         val deleted = ArrayList<IAction>()
         for (i in actions.indices) {
-            if (getState() !== State.STATE_READY) {
+            if (getState() != State.STATE_READY) {
                 break
             }
             onAction(actions[i])
@@ -178,6 +176,6 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         }
     }
 
-    override fun onStop(specialist: ISpecialist) {
+    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 }

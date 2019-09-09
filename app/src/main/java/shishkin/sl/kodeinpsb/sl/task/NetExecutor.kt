@@ -60,7 +60,7 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     override fun setState(state: Int) {
     }
 
-    override fun onStop(specialist: ISpecialist) {
+    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 
     override fun getSpecialistSubscription(): List<String> {

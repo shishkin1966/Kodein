@@ -95,7 +95,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun stop() {
         for (subscriber in getSubscribers()) {
             unregister(subscriber)
-            subscriber.onStop(this)
+            subscriber.onStopSpecialist(this)
         }
         secretary.clear()
     }
@@ -109,4 +109,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun onAddSubscriber(subscriber: T) {
     }
 
+    override fun contains(subscriber: T): Boolean {
+        return secretary.containsKey(subscriber.getName())
+    }
 }

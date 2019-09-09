@@ -34,7 +34,7 @@ interface IModelView : IValidated {
     /**
      * Закрыть ModelView объект
      */
-    fun exit()
+    fun stop()
 
     /**
      * Получить модель
