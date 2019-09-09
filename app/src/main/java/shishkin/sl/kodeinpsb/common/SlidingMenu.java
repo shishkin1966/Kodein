@@ -1,4 +1,4 @@
-package microservices.shishkin.common.slidingmenu;
+package shishkin.sl.kodeinpsb.common;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -26,9 +26,9 @@ import android.widget.RelativeLayout;
 
 
 import java.lang.reflect.Method;
+import shishkin.sl.kodeinpsb.R;
 
 
-import microservices.shishkin.common.R;
 
 
 public class SlidingMenu extends RelativeLayout {
