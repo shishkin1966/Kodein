@@ -12,6 +12,10 @@
     <string name="db_restored">БД восстановлена из резервной копии</string>
     <string name="timeout_exit">Приложение вышло по таймауту</string>
     <string name="network_disconnected">Сеть недоступна</string>
+    <string name="exchange_cryptorates">Курсы\nкрипто\nвалют</string>
+    <string name="exchange_rates">Курсы\nвалют</string>
+    <string name="contact_bank">Связь с\nбанком</string>
+    <string name="address">Адреса</string>
 
 
 </resources>

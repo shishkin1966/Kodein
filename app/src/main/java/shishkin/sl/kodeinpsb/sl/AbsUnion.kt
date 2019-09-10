@@ -34,6 +34,12 @@ abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<
     override fun setCurrentSubscriber(subscriber: T): Boolean {
         if (!subscriber.validate()) return false
 
+        if (!contains(subscriber)) {
+            register(subscriber)
+        }
+        if (!contains(subscriber)) {
+            return false
+        }
         currentSubscriber = WeakReference(subscriber)
         return true
     }

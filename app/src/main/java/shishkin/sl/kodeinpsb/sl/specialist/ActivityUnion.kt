@@ -39,7 +39,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
 
                 if (activities.get(i).get()!!.getName().equals(subscriber.getName())) {
                     if (!activities.get(i).get()!!.equals(subscriber)) {
-                        activities.get(i).get()!!.exit()
+                        activities.get(i).get()!!.stop()
                     }
                     activities.removeAt(i)
                 }
@@ -77,7 +77,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun stop() {
         for (ref in activities) {
             if (ref != null && ref.get() != null) {
-                ref.get()!!.exit()
+                ref.get()!!.stop()
             }
         }
     }

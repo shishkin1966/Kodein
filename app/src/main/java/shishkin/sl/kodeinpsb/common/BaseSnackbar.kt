@@ -65,7 +65,7 @@ class BaseSnackbar {
 
             else -> {
                 snackbar.setActionTextColor(ApplicationUtils.getColor(view.context, R.color.green))
-                backgroundColor = R.color.dark_blue
+                backgroundColor = R.color.blue_dark
             }
         }
         snackbarView.setBackgroundColor(ApplicationUtils.getColor(view.context, backgroundColor))

@@ -60,7 +60,7 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     override fun setState(state: Int) {
     }
 
-    override fun onStop(specialist: ISpecialist) {
+    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 
     override fun getSpecialistSubscription(): List<String> {
@@ -72,8 +72,8 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
         setThreadCount(Connectivity.getActiveNetworkInfo(context))
     }
 
-    private fun setThreadCount(info: NetworkInfo) {
-        if (!info.isConnectedOrConnecting) {
+    private fun setThreadCount(info: NetworkInfo?) {
+        if (info == null) {
             threadCount = 2
             maxThreadCount = 2
             return
@@ -115,11 +115,6 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
                 }
             }
 
-            else -> {
-                threadCount = 2
-                maxThreadCount = 2
-                return
-            }
         }
     }
 

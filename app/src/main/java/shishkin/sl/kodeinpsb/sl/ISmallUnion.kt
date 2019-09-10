@@ -92,5 +92,13 @@ interface ISmallUnion<T : ISpecialistSubscriber> : ISpecialist {
      */
     fun onAddSubscriber(subscriber: T)
 
+    /**
+     * Проверить регистрацию подписчика
+     *
+     * @param subscriber подписчик
+     * @return true подписчик зарегистрирован
+     */
+    fun contains(subscriber: T) : Boolean
+
 
 }

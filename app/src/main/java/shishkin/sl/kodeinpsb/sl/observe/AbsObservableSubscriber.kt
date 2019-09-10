@@ -21,6 +21,6 @@ abstract class AbsObservableSubscriber : IObservableSubscriber {
         return true
     }
 
-    override fun onStop(specialist: ISpecialist) {
+    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 }

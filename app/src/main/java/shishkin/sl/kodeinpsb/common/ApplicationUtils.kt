@@ -242,7 +242,7 @@ class ApplicationUtils {
                 else -> StyleableToast.Builder(context)
                     .text(text)
                     .textColor(getColor(context, R.color.white))
-                    .backgroundColor(getColor(context, R.color.dark_blue))
+                    .backgroundColor(getColor(context, R.color.blue_dark))
                     .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
                     .cornerRadius(8)
                     .length(duration)

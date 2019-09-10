@@ -12,7 +12,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.BaseSnackbar
 import shishkin.sl.kodeinpsb.common.KeyboardRunnable
@@ -22,6 +21,7 @@ import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IActivityUnion
 
 
@@ -97,8 +97,10 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun hideKeyboard() {
+        if (activity.isFinishing()) return
+
         val imm = ApplicationUtils.getSystemService<InputMethodManager>(
-            this.activity,
+            activity,
             Activity.INPUT_METHOD_SERVICE
         )
         var view = activity.currentFocus
@@ -144,7 +146,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         }
         if (activity is IModelView && !action.isNullOrBlank()) {
             val model = activity.getModel<IModel>()
-            model?.getPresenter<IPresenter>()?.addAction(ApplicationAction(action))
+            model?.getPresenter<IPresenter>()?.addAction(SnackBarAction(action))
         }
     }
 
@@ -168,7 +170,8 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     private fun grantPermission(permission: String, listener: String?, helpMessage: String?) {
         if (ApplicationUtils.hasMarshmallow()) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                val union = ServiceLocatorSingleton.instance.get<IActivityUnion>(ActivityUnion.NAME)
+                val union =
+                    ApplicationSpecialist.serviceLocator?.get<IActivityUnion>(ActivityUnion.NAME)
                 if (union != null) {
                     union.addAction(
                         ShowDialogAction(

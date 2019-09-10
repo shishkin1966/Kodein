@@ -110,7 +110,7 @@ class BackStack {
                     }
                 }
             } else {
-                activity.exit()
+                activity.stop()
             }
         }
 

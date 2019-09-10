@@ -7,5 +7,5 @@ interface ISubscriber : INamed {
     /**
      * Событие - специалист прекратил работу
      */
-    fun onStop(specialist: ISpecialist)
+    fun onStopSpecialist(specialist: ISpecialist)
 }
