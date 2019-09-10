@@ -178,4 +178,9 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     override fun onStopSpecialist(specialist: ISpecialist) {
     }
+
+    override fun getName(): String {
+        return this::class.java.simpleName
+    }
+
 }

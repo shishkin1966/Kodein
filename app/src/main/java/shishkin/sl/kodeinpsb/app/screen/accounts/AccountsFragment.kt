@@ -25,11 +25,7 @@ class AccountsFragment : AbsFragment() {
         return AccountsModel(this)
     }
 
-    override fun getName(): String {
-        return this::class.java.simpleName
-    }
-
-    override fun onAction(action: IAction): Boolean {
+     override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
 
         if (actionHandler.onAction(action)) return true

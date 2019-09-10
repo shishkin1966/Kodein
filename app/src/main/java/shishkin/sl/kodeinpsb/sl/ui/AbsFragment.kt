@@ -160,4 +160,8 @@ abstract class AbsFragment : Fragment(), IFragment {
     override fun onStopSpecialist(specialist: ISpecialist) {
     }
 
+    override fun getName(): String {
+        return this::class.java.simpleName
+    }
+
 }

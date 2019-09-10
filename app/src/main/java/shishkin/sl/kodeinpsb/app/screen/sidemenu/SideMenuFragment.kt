@@ -25,10 +25,6 @@ class SideMenuFragment : AbsFragment() {
         return SideMenuModel(this)
     }
 
-    override fun getName(): String {
-        return this::class.java.simpleName
-    }
-
     override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
 

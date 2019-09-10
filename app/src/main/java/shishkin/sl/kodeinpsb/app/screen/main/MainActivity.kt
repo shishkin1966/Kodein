@@ -25,10 +25,6 @@ class MainActivity : AbsContentActivity() {
     private val actionHandler = ActivityActionHandler(this)
     private var menu: SlidingMenu? = null
 
-    override fun getName(): String {
-        return this::class.java.simpleName
-    }
-
     override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
 
