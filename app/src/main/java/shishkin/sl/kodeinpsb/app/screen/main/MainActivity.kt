@@ -6,6 +6,7 @@ import android.os.Bundle
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
+import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.sidemenu.SideMenuFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.SlidingMenu
@@ -25,7 +26,7 @@ class MainActivity : AbsContentActivity() {
     private var menu: SlidingMenu? = null
 
     override fun getName(): String {
-        return MainActivity::class.java.simpleName
+        return this::class.java.simpleName
     }
 
     override fun onAction(action: IAction): Boolean {
@@ -86,7 +87,7 @@ class MainActivity : AbsContentActivity() {
 
     fun showHomeFragment() {
         clearBackStack()
-        //showFragment(AccountsFragment.newInstance(), true)
+        showFragment(AccountsFragment.newInstance(), true)
     }
 
 

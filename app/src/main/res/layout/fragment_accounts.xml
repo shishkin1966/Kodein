@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_light"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="44dp">
+
+        <LinearLayout
+            android:id="@+id/balance_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_dark"
+                android:minHeight="@dimen/menu_header_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_16dp"
+                    android:layout_marginRight="@dimen/dimen_8dp"
+                    android:layout_weight="1"
+                    android:text="Баланс"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_xlarge"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/balance_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_8dp"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:layout_marginRight="@dimen/dimen_16dp"
+                    android:layout_marginBottom="@dimen/dimen_4dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@color/blue_light">
+
+                <shishkin.sl.kodeinpsb.common.RippleTextView
+                    android:id="@+id/message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/rectangle_gray"
+                    android:minHeight="@dimen/dimen_56dp"
+                    android:paddingLeft="@dimen/dimen_16dp"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingRight="@dimen/dimen_16dp"
+                    android:paddingBottom="@dimen/dimen_8dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_large"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:background="@drawable/below_shadow"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/balance_ll"
+            android:background="@color/white"
+            android:scrollbars="vertical"/>
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-6dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:mpb_indeterminateTint="@color/orange"
+            app:mpb_progressStyle="horizontal"
+            app:mpb_showProgressBackground="false"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:behavior_peekHeight="@dimen/menu_peek_height"
+        app:layout_behavior=".common.LinearLayoutBehavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/create_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/menu_height"
+                    android:background="@drawable/side_menu_panel_corner_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_12dp"
+                    android:paddingRight="@dimen/dimen_8dp"
+                    android:text="@string/fragment_open_account_transaction_action_button"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_large"/>
+
+                <View
+                    style="@style/HorizontalGradientDivider"/>
+
+                <TextView
+                    android:id="@+id/sort_accounts"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/menu_height"
+                    android:background="@drawable/side_menu_panel_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_12dp"
+                    android:paddingRight="@dimen/dimen_8dp"
+                    android:text="Сортировать по ..."
+                    android:textColor="@color/white_text_selector"
+                    android:textSize="@dimen/text_size_large"/>
+
+                <View
+                    style="@style/HorizontalGradientDivider"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/select_accounts"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/menu_height"
+                        android:layout_weight="1"
+                        android:background="@drawable/side_menu_panel_selector"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dimen_12dp"
+                        android:paddingRight="@dimen/dimen_8dp"
+                        android:text="Выбрать ..."
+                        android:textColor="@color/white_text_selector"
+                        android:textSize="@dimen/text_size_large"/>
+
+                    <LinearLayout
+                        android:id="@+id/select_accounts_all_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            style="@style/VerticalDivider"
+                            android:background="@color/white_light"/>
+
+                        <TextView
+                            android:id="@+id/select_accounts_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/menu_height"
+                            android:background="@drawable/side_menu_panel_selector"
+                            android:clickable="true"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dimen_16dp"
+                            android:paddingRight="@dimen/dimen_16dp"
+                            android:text="@string/all"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_large"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <View
+                    style="@style/HorizontalThinDivider"
+                    android:background="@color/white_light"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
