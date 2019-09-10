@@ -97,8 +97,10 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun hideKeyboard() {
+        if (activity.isFinishing()) return
+
         val imm = ApplicationUtils.getSystemService<InputMethodManager>(
-            this.activity,
+            activity,
             Activity.INPUT_METHOD_SERVICE
         )
         var view = activity.currentFocus

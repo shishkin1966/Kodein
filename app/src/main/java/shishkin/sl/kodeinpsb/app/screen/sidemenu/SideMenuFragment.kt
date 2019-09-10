@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
@@ -18,7 +19,7 @@ class SideMenuFragment : AbsFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler()
+    private val actionHandler = FragmentActionHandler(this)
 
     override fun createModel(): IModel {
         return SideMenuModel(this)
@@ -29,8 +30,11 @@ class SideMenuFragment : AbsFragment() {
     }
 
     override fun onAction(action: IAction): Boolean {
+        if (!validate()) return false
+
         if (actionHandler.onAction(action)) return true
 
+        ApplicationSingleton.instance.onError(getName(), "Unknown action:" + action.toString(), true);
         return false
     }
 
