@@ -8,7 +8,7 @@ import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
-interface IFragment<M : IModel> : ISubscriber, IModelView, IStateable, IActionListener,
+interface IFragment : ISubscriber, IModelView, IStateable, IActionListener,
     IPermissionListener,
     IActionHandler {
 }

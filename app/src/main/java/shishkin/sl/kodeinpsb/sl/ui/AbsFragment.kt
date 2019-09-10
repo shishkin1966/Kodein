@@ -7,6 +7,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
@@ -17,7 +18,7 @@ import shishkin.sl.kodeinpsb.sl.state.StateObservable
 import java.util.*
 
 
-abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
+abstract class AbsFragment : Fragment(), IFragment {
 
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
@@ -35,7 +36,7 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         this.model = model
     }
 
-    abstract fun createModel(): M
+    abstract fun createModel(): IModel
 
     override fun <V : View> findView(@IdRes id: Int): V? {
         val root = view
@@ -154,6 +155,9 @@ abstract class AbsFragment<M : IModel> : Fragment(), IFragment<M> {
         for (event in deleted) {
             actions.remove(event)
         }
+    }
+
+    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 
 }

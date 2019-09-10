@@ -10,4 +10,10 @@
 
     <dimen name="thumb_size">@dimen/dimen_56dp</dimen>
 
+    <dimen name="slidingmenu_offset">240dp</dimen>
+    <dimen name="slidingmenu_offset_land">600dp</dimen>
+    <dimen name="menu_height">48dp</dimen>
+    <dimen name="menu_header_height">56dp</dimen>
+    <dimen name="button_min_height">48dp</dimen>
+
 </resources>
