@@ -1,15 +1,13 @@
 package shishkin.sl.kodeinpsb.common
 
+
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
-
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 class LinearLayoutBehavior(context: Context, attrs: AttributeSet) :
     BottomSheetBehavior<LinearLayout>(context, attrs) {

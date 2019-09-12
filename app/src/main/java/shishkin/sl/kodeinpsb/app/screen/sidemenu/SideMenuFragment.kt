@@ -30,7 +30,11 @@ class SideMenuFragment : AbsFragment() {
 
         if (actionHandler.onAction(action)) return true
 
-        ApplicationSingleton.instance.onError(getName(), "Unknown action:" + action.toString(), true);
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:" + action.toString(),
+            true
+        );
         return false
     }
 

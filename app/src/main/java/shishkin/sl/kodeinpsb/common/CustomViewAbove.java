@@ -17,15 +17,13 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 import androidx.core.view.MotionEventCompat;
 import androidx.core.view.VelocityTrackerCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewConfigurationCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomViewAbove extends ViewGroup {
 

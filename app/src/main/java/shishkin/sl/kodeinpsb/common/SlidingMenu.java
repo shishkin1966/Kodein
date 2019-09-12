@@ -24,11 +24,9 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-
 import java.lang.reflect.Method;
+
 import shishkin.sl.kodeinpsb.R;
-
-
 
 
 public class SlidingMenu extends RelativeLayout {

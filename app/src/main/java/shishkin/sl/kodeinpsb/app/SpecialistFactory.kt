@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.app
 
+import shishkin.sl.kodeinpsb.app.provider.DbProvider
 import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
@@ -29,6 +30,7 @@ class SpecialistFactory : ISpecialistFactory, INamed {
                 CommonExecutor.NAME -> CommonExecutor()
                 DbExecutor.NAME -> DbExecutor()
                 NetExecutor.NAME -> NetExecutor()
+                DbProvider.NAME -> DbProvider()
                 else -> Class.forName(name).newInstance() as ISpecialist
             }
         } catch (e: Exception) {

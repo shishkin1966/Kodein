@@ -25,12 +25,16 @@ class AccountsFragment : AbsFragment() {
         return AccountsModel(this)
     }
 
-     override fun onAction(action: IAction): Boolean {
+    override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
 
         if (actionHandler.onAction(action)) return true
 
-        ApplicationSingleton.instance.onError(getName(), "Unknown action:" + action.toString(), true);
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:" + action.toString(),
+            true
+        );
         return false
     }
 

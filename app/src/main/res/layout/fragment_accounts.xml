@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
@@ -38,7 +37,7 @@
                     android:layout_weight="1"
                     android:text="Баланс"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_xlarge"/>
+                    android:textSize="@dimen/text_size_xlarge" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/balance_list"
@@ -48,7 +47,7 @@
                     android:layout_marginLeft="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_4dp"
                     android:layout_marginRight="@dimen/dimen_16dp"
-                    android:layout_marginBottom="@dimen/dimen_4dp"/>
+                    android:layout_marginBottom="@dimen/dimen_4dp" />
 
             </LinearLayout>
 
@@ -71,14 +70,14 @@
                     android:paddingRight="@dimen/dimen_16dp"
                     android:paddingBottom="@dimen/dimen_8dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_large"/>
+                    android:textSize="@dimen/text_size_large" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
-                android:background="@drawable/below_shadow"/>
+                android:background="@drawable/below_shadow" />
 
         </LinearLayout>
 
@@ -88,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/balance_ll"
             android:background="@color/white"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"
@@ -101,7 +100,7 @@
             android:visibility="invisible"
             app:mpb_indeterminateTint="@color/orange"
             app:mpb_progressStyle="horizontal"
-            app:mpb_showProgressBackground="false"/>
+            app:mpb_showProgressBackground="false" />
 
     </RelativeLayout>
 
@@ -137,10 +136,9 @@
                     android:paddingRight="@dimen/dimen_8dp"
                     android:text="@string/fragment_open_account_transaction_action_button"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_large"/>
+                    android:textSize="@dimen/text_size_large" />
 
-                <View
-                    style="@style/HorizontalGradientDivider"/>
+                <View style="@style/HorizontalGradientDivider" />
 
                 <TextView
                     android:id="@+id/sort_accounts"
@@ -153,10 +151,9 @@
                     android:paddingRight="@dimen/dimen_8dp"
                     android:text="Сортировать по ..."
                     android:textColor="@color/white_text_selector"
-                    android:textSize="@dimen/text_size_large"/>
+                    android:textSize="@dimen/text_size_large" />
 
-                <View
-                    style="@style/HorizontalGradientDivider"/>
+                <View style="@style/HorizontalGradientDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,7 +172,7 @@
                         android:paddingRight="@dimen/dimen_8dp"
                         android:text="Выбрать ..."
                         android:textColor="@color/white_text_selector"
-                        android:textSize="@dimen/text_size_large"/>
+                        android:textSize="@dimen/text_size_large" />
 
                     <LinearLayout
                         android:id="@+id/select_accounts_all_ll"
@@ -186,7 +183,7 @@
 
                         <View
                             style="@style/VerticalDivider"
-                            android:background="@color/white_light"/>
+                            android:background="@color/white_light" />
 
                         <TextView
                             android:id="@+id/select_accounts_all"
@@ -199,14 +196,14 @@
                             android:paddingRight="@dimen/dimen_16dp"
                             android:text="@string/all"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_large"/>
+                            android:textSize="@dimen/text_size_large" />
                     </LinearLayout>
                 </LinearLayout>
 
 
                 <View
                     style="@style/HorizontalThinDivider"
-                    android:background="@color/white_light"/>
+                    android:background="@color/white_light" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
