@@ -3,13 +3,13 @@ package shishkin.sl.kodeinpsb.sl.request
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 
 
-interface IResultMessageRequest : IRequest {
+interface IResultRequest : IRequest {
     /**
      * Получить собственника запроса
      *
-     * @return String - собственник запроса
+     * @return IResponseListener - собственник запроса
      */
-    fun getOwner(): String?
+    fun getOwner(): IResponseListener?
 
     /**
      * Получить список получателей запроса
@@ -43,5 +43,6 @@ interface IResultMessageRequest : IRequest {
      * Разослать результаты запроса
      */
     fun response()
+
 
 }

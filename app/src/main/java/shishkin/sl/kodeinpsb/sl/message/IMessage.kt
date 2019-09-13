@@ -62,7 +62,7 @@ interface IMessage : INamed, IAction {
      *
      * @return адрес
      */
-    fun getAddress(): String?
+    fun getAddress(): String
 
     /**
      * Установить адрес получателя
@@ -102,6 +102,14 @@ interface IMessage : INamed, IAction {
      * @return письмо
      */
     fun setEndTime(keepAliveTime: Long): IMessage
+
+    /**
+     * Установить наименование письма
+     *
+     * @param name наименование письма
+     * @return письмо
+     */
+    fun setName(name : String) : IMessage
 
 
 }

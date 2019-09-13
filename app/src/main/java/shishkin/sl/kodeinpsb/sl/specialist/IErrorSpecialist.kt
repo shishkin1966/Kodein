@@ -2,7 +2,7 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import android.content.Context
 import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.data.Error
+import shishkin.sl.kodeinpsb.sl.data.ExtError
 
 /**
  * Интерфейс специалиста обработки ошибок
@@ -47,7 +47,7 @@ interface IErrorSpecialist : ISpecialist {
      *
      * @param extError ошибка
      */
-    fun onError(error: Error)
+    fun onError(error: ExtError)
 
     /**
      * Получить путь к файлу лога ошибок

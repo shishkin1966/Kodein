@@ -5,30 +5,30 @@ import shishkin.sl.kodeinpsb.sl.task.RequestThreadPoolExecutor
 
 abstract class AbsRequest() : IRequest {
 
-    private var rank = Rank.MIDDLE_RANK
-    private var isCanceled = false
-    private var id = 0
+    private var _rank = Rank.MIDDLE_RANK
+    private var _isCanceled = false
+    private var _id = 0
 
     constructor(rank: Int) : this() {
-        this.rank = rank
+        this._rank = rank
     }
 
     override fun getRank(): Int {
-        return rank
+        return _rank
     }
 
     override fun setRank(rank: Int): IRequest {
-        this.rank = rank
+        this._rank = rank
         return this
     }
 
 
     override fun isCancelled(): Boolean {
-        return isCanceled
+        return _isCanceled
     }
 
     override fun setCanceled() {
-        isCanceled = true
+        _isCanceled = true
     }
 
     override fun validate(): Boolean {
@@ -36,20 +36,16 @@ abstract class AbsRequest() : IRequest {
     }
 
     override fun getId(): Int {
-        return id
+        return _id
     }
 
     override fun setId(id: Int): IRequest {
-        this.id = id
+        this._id = id
         return this
     }
 
     override operator fun compareTo(o: IRequest): Int {
         return o.getRank() - this.getRank()
-    }
-
-    override fun getName(): String {
-        return this.javaClass.name
     }
 
     override fun getAction(oldRequest: IRequest): Int {

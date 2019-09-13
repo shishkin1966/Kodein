@@ -82,8 +82,8 @@ class RequestThreadPoolExecutor(
 
     override fun cancelRequests(listener: String) {
         for (request in requests.values()) {
-            if (request is IResultMessageRequest<*>) {
-                if (request.validate() && request.getOwnerName() == listener) {
+            if (request is IResultMessageRequest) {
+                if (request.validate() && request.getOwner() == listener) {
                     request.setCanceled()
                 }
             }
@@ -92,8 +92,8 @@ class RequestThreadPoolExecutor(
 
     override fun cancelRequests(listener: String, taskName: String) {
         for (request in requests.values()) {
-            if (request is IResultMessageRequest<*>) {
-                if (request.validate() && request.getOwnerName() == listener && taskName == request.getName()) {
+            if (request is IResultMessageRequest) {
+                if (request.validate() && request.getOwner() == listener && taskName == request.getName()) {
                     request.setCanceled()
                 }
             }

@@ -9,7 +9,7 @@ import shishkin.sl.kodeinpsb.BuildConfig
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.data.Error
+import shishkin.sl.kodeinpsb.sl.data.ExtError
 import java.io.File
 
 
@@ -138,7 +138,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         }
     }
 
-    override fun onError(error: Error) {
+    override fun onError(error: ExtError) {
         if (error.hasError()) {
             ApplicationUtils.showToast(
                 ApplicationSpecialist.instance,
