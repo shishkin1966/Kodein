@@ -98,7 +98,7 @@ interface ISmallUnion<T : ISpecialistSubscriber> : ISpecialist {
      * @param subscriber подписчик
      * @return true подписчик зарегистрирован
      */
-    fun contains(subscriber: T) : Boolean
+    fun contains(subscriber: T): Boolean
 
 
 }

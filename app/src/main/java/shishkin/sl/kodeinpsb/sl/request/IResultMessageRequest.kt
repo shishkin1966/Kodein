@@ -1,13 +1,15 @@
 package shishkin.sl.kodeinpsb.sl.request
 
+import shishkin.sl.kodeinpsb.sl.data.ExtError
 
-interface IResultMessageRequest<T> : IRequest {
+
+interface IResultMessageRequest : IRequest {
     /**
-     * Получить имя собственника запроса
+     * Получить собственника запроса
      *
-     * @return имя собственника запроса
+     * @return String - собственник запроса
      */
-    fun getOwnerName(): String
+    fun getOwner(): String?
 
     /**
      * Получить список получателей запроса
@@ -23,33 +25,19 @@ interface IResultMessageRequest<T> : IRequest {
      */
     fun setCopyTo(copyTo: List<String>)
 
-    /**
-     * Получить результат запроса
-     *
-     * @return результат запроса
-     */
-    fun getData(): T
-
-    /**
-     * Установить результат запроса
-     *
-     * @param data результат запроса
-     */
-    fun setData(data: T)
-
-    /**
+     /**
      * Получить ошибку запроса
      *
      * @return ошибка запроса
      */
-    fun getError(): Error
+    fun getError(): ExtError?
 
     /**
      * Установить ошибку запроса
      *
      * @param error ошибка запроса
      */
-    fun setError(error: Error)
+    fun setError(error: ExtError?)
 
     /**
      * Разослать результаты запроса

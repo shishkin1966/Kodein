@@ -7,6 +7,7 @@
     <string name="error">Ошибка</string>
     <string name="exit">Выход</string>
     <string name="double_back_pressed">Для выхода нажмите ещё раз</string>
+    <string name="all">Все</string>
 
     <string name="db_backuped">Резервная копия БД сохранена</string>
     <string name="db_restored">БД восстановлена из резервной копии</string>
@@ -16,6 +17,12 @@
     <string name="exchange_rates">Курсы\nвалют</string>
     <string name="contact_bank">Связь с\nбанком</string>
     <string name="address">Адреса</string>
+
+    <string name="fragment_open_account_transaction_action_button">Открыть счет</string>
+    <string name="fragment_open_account_transaction_friendly_name_subtitle">Наименование счета</string>
+    <string name="fragment_open_account_transaction_friendly_name_hint">Например: "Текущий счет"</string>
+    <string name="fragment_open_account_transaction_balance_subtitle">Баланс по счету</string>
+    <string name="fragment_open_account_transaction_balance_value_hint">Например: 100000</string>
 
 
 </resources>

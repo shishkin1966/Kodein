@@ -80,7 +80,9 @@ class MaterialDialogExt {
                     bundle.putString(BUTTON, POSITIVE)
                     if (!this.listener.isNullOrEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                                MessengerUnion.NAME
+                            )
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -102,7 +104,9 @@ class MaterialDialogExt {
                     bundle.putString(BUTTON, NEGATIVE)
                     if (!this.listener.isNullOrEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                                MessengerUnion.NAME
+                            )
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -124,7 +128,9 @@ class MaterialDialogExt {
                     bundle.putString(BUTTON, NEUTRAL)
                     if (!this.listener.isNullOrEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                                MessengerUnion.NAME
+                            )
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -181,7 +187,9 @@ class MaterialDialogExt {
                     bundle.putStringArrayList("list", list)
                     if (!this.listener.isNullOrEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                                MessengerUnion.NAME
+                            )
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(
@@ -219,7 +227,9 @@ class MaterialDialogExt {
                     bundle.putStringArrayList("list", list)
                     if (!this.listener.isNullOrEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                                MessengerUnion.NAME
+                            )
                         if (union != null) {
                             union.addMessage(
                                 DialogResultMessage(

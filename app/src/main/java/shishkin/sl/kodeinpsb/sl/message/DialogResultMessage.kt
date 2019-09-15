@@ -10,20 +10,19 @@ class DialogResultMessage : AbsMessage {
         const val NAME = "DialogResultMessage"
     }
 
-    private val action: DialogResultAction
+    private lateinit var _action: DialogResultAction
 
     constructor(address: String, action: DialogResultAction) : super(address) {
-        this.action = action
+        _action = action
     }
 
     constructor(message: DialogResultMessage, action: DialogResultAction) : super(message) {
-        this.action = action
+        _action = action
     }
 
     override fun copy(): IMessage {
-        return DialogResultMessage(this, action)
+        return DialogResultMessage(this, _action)
     }
-
 
     override fun getName(): String {
         return NAME
@@ -31,7 +30,7 @@ class DialogResultMessage : AbsMessage {
 
     override fun read(subscriber: IMessengerSubscriber) {
         if (subscriber is IDialogResultListener) {
-            (subscriber as IDialogResultListener).onDialogResult(action)
+            (subscriber as IDialogResultListener).onDialogResult(_action)
         }
     }
 

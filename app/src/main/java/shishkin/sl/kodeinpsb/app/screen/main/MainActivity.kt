@@ -6,6 +6,7 @@ import android.os.Bundle
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
+import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.sidemenu.SideMenuFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.SlidingMenu
@@ -13,7 +14,6 @@ import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.ActivityActionHandler
 import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 import shishkin.sl.kodeinpsb.sl.ui.BackStack
@@ -24,16 +24,16 @@ class MainActivity : AbsContentActivity() {
     private val actionHandler = ActivityActionHandler(this)
     private var menu: SlidingMenu? = null
 
-    override fun getName(): String {
-        return MainActivity::class.java.simpleName
-    }
-
     override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
 
         if (actionHandler.onAction(action)) return true
 
-        ApplicationSingleton.instance.onError(getName(), "Unknown action:" + action.toString(), true);
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:" + action.toString(),
+            true
+        );
         return false
     }
 
@@ -86,7 +86,7 @@ class MainActivity : AbsContentActivity() {
 
     fun showHomeFragment() {
         clearBackStack()
-        //showFragment(AccountsFragment.newInstance(), true)
+        showFragment(AccountsFragment.newInstance(), true)
     }
 
 

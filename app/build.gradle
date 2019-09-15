@@ -1,6 +1,10 @@
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+
+def room = "2.0.0"
 
 android {
     compileSdkVersion 28
@@ -28,6 +32,14 @@ dependencies {
     //implementation "androidx.core:core:1.0.2"
     implementation "com.google.android.material:material:1.0.0"
 
+    // БД ROOM
+    implementation "androidx.room:room-runtime:$room";
+    annotationProcessor "androidx.room:room-compiler:$room";
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$room"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$room"
+    kapt "androidx.room:room-compiler:$room"
+
     // логирование приложениия
     implementation 'com.github.snowdream.android.util:log:1.2.0'
 
@@ -42,6 +54,35 @@ dependencies {
 
     // Circular Image View
     implementation 'com.pkmmte.view:circularimageview:1.1'
+
+    // Progress Bar
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+
+    // сериализация
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Кэш памяти и доп функции
+    implementation 'com.google.guava:guava:27.1-android'
+
+    // Tasks
+    implementation 'com.parse.bolts:bolts-tasks:1.4.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation('com.squareup.retrofit2:converter-simplexml:2.6.1') {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
+
+    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
+
+    //Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    //implementation 'com.uber.autodispose:autodispose:1.2.0'
+    //implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.2.0'
 
     //testImplementation 'junit:junit:4.12'
     //androidTestImplementation 'androidx.test:runner:1.1.1'

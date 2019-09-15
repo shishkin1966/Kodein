@@ -6,9 +6,10 @@ import java.util.*
 
 abstract class AbsMessage() : IAction, IMessage {
     private var id = -1
-    private var address: String? = null
+    private lateinit var address: String
     private var copyTo: LinkedList<String> = LinkedList()
     private var endTime: Long = -1
+    private var _name: String? = null
 
     constructor(address: String) : this() {
         this.address = address
@@ -30,7 +31,7 @@ abstract class AbsMessage() : IAction, IMessage {
         return this
     }
 
-    override fun getAddress(): String? {
+    override fun getAddress(): String {
         return address
     }
 
@@ -83,4 +84,16 @@ abstract class AbsMessage() : IAction, IMessage {
         return false
     }
 
+    override fun setName(name: String): IMessage {
+        _name = name
+        return this
+    }
+
+    override fun getName(): String {
+        if (_name.isNullOrEmpty()) {
+            return this::class.java.simpleName
+        } else {
+            return _name!!
+        }
+    }
 }
