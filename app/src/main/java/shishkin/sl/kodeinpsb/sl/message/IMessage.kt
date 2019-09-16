@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.message
 
-import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
@@ -109,13 +108,13 @@ interface IMessage : IAction {
      * @param name тема письма
      * @return письмо
      */
-    fun setSubj(subj : String) : IMessage
+    fun setSubj(subj: String): IMessage
 
     /**
      * Получить тему письма
      *
      * @return тема письма
      */
-    fun getSubj() : String
+    fun getSubj(): String
 
 }

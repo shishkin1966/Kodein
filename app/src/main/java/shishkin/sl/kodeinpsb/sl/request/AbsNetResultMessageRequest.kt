@@ -1,8 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.request
 
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.message.ResultMessage
@@ -24,7 +22,6 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
 
         getData()
             .map({ t: T -> ExtResult(t) })
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result: ExtResult ->
                     if (validate() && result.getData() != null) {

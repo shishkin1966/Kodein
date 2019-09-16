@@ -86,28 +86,30 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
         if (!message.getAddress().isNullOrBlank()) {
-            list.add(message.getAddress()!!)
+            list.add(message.getAddress())
         }
         val addresses = ArrayList<String>()
         for (address in list) {
             addresses.addAll(getAddresses(address))
         }
-        for (address in addresses) {
-            val id = atomicId.incrementAndGet()
-            val newMessage = message.copy()
-            newMessage.setMessageId(id)
-            newMessage.setAddress(address)
-            newMessage.setCopyTo(ArrayList())
+        ApplicationUtils.runOnUiThread(Runnable {
+            for (address in addresses) {
+                val id = atomicId.incrementAndGet()
+                val newMessage = message.copy()
+                newMessage.setMessageId(id)
+                newMessage.setAddress(address)
+                newMessage.setCopyTo(ArrayList())
 
-            if (!message.isCheckDublicate()) {
-                messages.put(id, newMessage)
-            } else {
-                removeDublicate(newMessage)
-                messages.put(id, newMessage)
+                if (!message.isCheckDublicate()) {
+                    messages.put(id, newMessage)
+                } else {
+                    removeDublicate(newMessage)
+                    messages.put(id, newMessage)
+                }
+
+                checkAndReadMessagesSubscriber(address)
             }
-
-            checkAndReadMessagesSubscriber(address)
-        }
+        })
     }
 
     private fun checkAndReadMessagesSubscriber(address: String) {
@@ -152,7 +154,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
 
     private fun removeDublicate(message: IMessage) {
         for (tmpMessage in messages.values) {
-            if (message.getSubj() == tmpMessage.getSubj() && message.getAddress() ==  tmpMessage.getAddress()) {
+            if (message.getSubj() == tmpMessage.getSubj() && message.getAddress() == tmpMessage.getAddress()) {
                 removeMessage(tmpMessage)
             }
         }
@@ -168,12 +170,14 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
         for (address in list) {
             addresses.addAll(getAddresses(address))
         }
-        for (address in addresses) {
-            val subscriber = checkSubscriber(address)
-            if (subscriber != null) {
-                message.read(subscriber)
+        ApplicationUtils.runOnUiThread(Runnable {
+            for (address in addresses) {
+                val subscriber = checkSubscriber(address)
+                if (subscriber != null) {
+                    message.read(subscriber)
+                }
             }
-        }
+        })
     }
 
     override fun replaceMessage(message: IMessage) {

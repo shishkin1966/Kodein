@@ -49,6 +49,6 @@ class Account() : AbsEntity() {
 
     @ColumnInfo(name = COLUMNS.currency)
     @SerializedName(COLUMNS.currency)
-    var currency: String? = Currency.RUR
+    var currency: String = Currency.RUR
 
 }

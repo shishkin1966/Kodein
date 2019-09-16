@@ -25,7 +25,7 @@ interface IResultRequest : IRequest {
      */
     fun setCopyTo(copyTo: List<String>)
 
-     /**
+    /**
      * Получить ошибку запроса
      *
      * @return ошибка запроса

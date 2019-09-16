@@ -42,6 +42,11 @@ abstract class AbsPresenter() : IPresenter {
         if (union != null) {
             union.readMessages(this)
         }
+
+        onStart()
+    }
+
+    open fun onStart() {
     }
 
     override fun onDestroyView() {

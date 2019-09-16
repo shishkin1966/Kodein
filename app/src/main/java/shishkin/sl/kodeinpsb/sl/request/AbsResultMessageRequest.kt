@@ -44,9 +44,19 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
         _error = error
     }
 
-    override fun response() {
+    override fun run() {
         if (validate()) {
-            val result = ExtResult().setName(getName()).setData(getData()).setError(getError())
+            lateinit var result: ExtResult
+            try {
+                result = ExtResult().setName(getName()).setData(getData()).setError(getError())
+            } catch (e: Exception) {
+                result = ExtResult().setName(getName()).setError(
+                    ExtError().addError(
+                        getName(),
+                        e.getLocalizedMessage()
+                    )
+                )
+            }
             val union =
                 ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME);
             union?.addNotMandatoryMessage(
@@ -60,5 +70,5 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
         }
     }
 
-    abstract fun getData() : T
+    abstract fun getData(): T
 }
