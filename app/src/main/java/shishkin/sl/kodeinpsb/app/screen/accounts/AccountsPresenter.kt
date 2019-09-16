@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.app.screen.accounts
 
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
@@ -53,6 +54,25 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             getModel<AccountsModel>()?.getView<AccountsFragment>()
                 ?.addAction(ShowMessageAction(result.getErrorText()!!).setType(ApplicationUtils.MESSAGE_TYPE_ERROR))
         }
+    }
+
+    override fun onAction(action: IAction): Boolean {
+        if (!validate()) return false
+
+        if (action is DataAction<*>) {
+            when (action.getName()) {
+                Actions.OnClick -> {
+                    return true
+                }
+            }
+        }
+
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:" + action.toString(),
+            true
+        );
+        return false
     }
 
 }

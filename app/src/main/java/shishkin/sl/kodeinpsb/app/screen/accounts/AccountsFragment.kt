@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.adapter.AccountsRecyclerViewAdapter
+import shishkin.sl.kodeinpsb.sl.action.Actions
+import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
 
 
-class AccountsFragment : AbsFragment() {
+class AccountsFragment : AbsFragment(), View.OnClickListener {
     companion object {
         fun newInstance(): AccountsFragment {
             return AccountsFragment()
@@ -20,13 +26,39 @@ class AccountsFragment : AbsFragment() {
     }
 
     private val actionHandler = FragmentActionHandler(this)
+    private var accountsAdapter: AccountsRecyclerViewAdapter = AccountsRecyclerViewAdapter()
+    private var accountsView: RecyclerView? = null
 
     override fun createModel(): IModel {
         return AccountsModel(this)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        findView<View>(R.id.create_account)?.setOnClickListener(this)
+        findView<View>(R.id.sort_accounts)?.setOnClickListener(this)
+        findView<View>(R.id.select_accounts)?.setOnClickListener(this)
+        findView<View>(R.id.select_accounts_all)?.setOnClickListener(this)
+
+        accountsView = findView(R.id.list)
+        accountsView?.setLayoutManager(LinearLayoutManager(activity))
+        accountsView?.setItemAnimator(DefaultItemAnimator())
+        accountsView?.setAdapter(accountsAdapter)
+    }
+
+
     override fun onAction(action: IAction): Boolean {
         if (!validate()) return false
+
+        if (action is DataAction<*>) {
+            when (action.getName()) {
+                Actions.RefreshViews -> {
+                    refreshViews(action.getData() as AccountsData?)
+                    return true
+                }
+            }
+        }
 
         if (actionHandler.onAction(action)) return true
 
@@ -44,6 +76,30 @@ class AccountsFragment : AbsFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_accounts, container, false)
+    }
+
+    private fun refreshViews(viewData: AccountsData?) {
+        if (viewData == null) return
+
+        accountsAdapter.setItems(viewData.getData())
+        findView<View>(R.id.sort_accounts)?.setEnabled(viewData.isSortMenuEnabled())
+        findView<View>(R.id.select_accounts)?.setEnabled(viewData.isFilterMenuEnabled())
+        if (viewData.isFilterMenuEnabled() && !viewData.filter.isNullOrBlank()) {
+            findView<View>(R.id.select_accounts_all_ll)?.setVisibility(View.VISIBLE)
+        } else {
+            findView<View>(R.id.select_accounts_all_ll)?.setVisibility(View.GONE)
+        }
+        //showAccountsBalance(viewData.balance)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        accountsView?.setAdapter(null)
+    }
+
+    override fun onClick(v: View?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

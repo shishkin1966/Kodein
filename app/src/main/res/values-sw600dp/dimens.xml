@@ -8,13 +8,12 @@
     <dimen name="text_size_xxlarge">26sp</dimen>
     <dimen name="text_size_xxxlarge">31sp</dimen>
 
-    <dimen name="thumb_size">@dimen/dimen_56dp</dimen>
-
     <dimen name="slidingmenu_offset">240dp</dimen>
     <dimen name="slidingmenu_offset_land">600dp</dimen>
     <dimen name="menu_height">48dp</dimen>
     <dimen name="menu_header_height">56dp</dimen>
     <dimen name="button_min_height">48dp</dimen>
     <dimen name="menu_peek_height">52dp</dimen>
+    <dimen name="menu_item_height">56dp</dimen>
 
 </resources>

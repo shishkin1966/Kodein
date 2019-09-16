@@ -29,7 +29,7 @@ class AccountsData {
         return balance.size > 1
     }
 
-    fun getData(): List<Account>? {
+    fun getData(): List<Account> {
         val list = ArrayList<Account>()
         if (filter.isNullOrBlank()) {
             list.addAll(accounts)
