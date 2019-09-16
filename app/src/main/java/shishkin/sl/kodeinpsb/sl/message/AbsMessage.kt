@@ -5,61 +5,61 @@ import java.util.*
 
 
 abstract class AbsMessage() : IAction, IMessage {
-    private var id = -1
-    private lateinit var address: String
-    private var copyTo: LinkedList<String> = LinkedList()
-    private var endTime: Long = -1
-    private var _name: String? = null
+    private var _id = -1
+    private lateinit var _address: String
+    private var _copyTo: LinkedList<String> = LinkedList()
+    private var _keepAliveTime: Long = -1
+    private var _subj: String? = null
 
     constructor(address: String) : this() {
-        this.address = address
+        _address = address
     }
 
     constructor(message: IMessage) : this() {
-        address = message.getAddress()
-        copyTo.addAll(message.getCopyTo())
+        _address = message.getAddress()
+        _copyTo.addAll(message.getCopyTo())
         setMessageId(message.getMessageId())
-        endTime = message.getEndTime()
+        _keepAliveTime = message.getEndTime()
     }
 
     override fun getMessageId(): Int {
-        return id
+        return _id
     }
 
     override fun setMessageId(id: Int): IMessage {
-        this.id = id
+        _id = id
         return this
     }
 
     override fun getAddress(): String {
-        return address
+        return _address
     }
 
     override fun setAddress(address: String): IMessage {
-        this.address = address
+        _address = address
         return this
     }
 
     override fun getCopyTo(): List<String> {
-        return copyTo
+        return _copyTo
     }
 
     override fun setCopyTo(copyTo: List<String>): IMessage {
-        this.copyTo.clear()
-        this.copyTo.addAll(copyTo)
+        _copyTo.clear()
+        _copyTo.addAll(copyTo)
         return this
     }
 
     override fun contains(address: String): Boolean {
-        if (address.isNullOrEmpty()) {
+        if (address.isBlank()) {
             return false
         }
 
-        if (address == this.address) {
+        if (address == _address) {
             return true
         }
 
-        for (copyto in copyTo) {
+        for (copyto in _copyTo) {
             if (copyto == address) {
                 return true
             }
@@ -68,11 +68,11 @@ abstract class AbsMessage() : IAction, IMessage {
     }
 
     override fun getEndTime(): Long {
-        return endTime
+        return _keepAliveTime
     }
 
-    override fun setEndTime(endTime: Long): IMessage {
-        this.endTime = endTime
+    override fun setEndTime(keepAliveTime: Long): IMessage {
+        _keepAliveTime = keepAliveTime
         return this
     }
 
@@ -84,16 +84,16 @@ abstract class AbsMessage() : IAction, IMessage {
         return false
     }
 
-    override fun setName(name: String): IMessage {
-        _name = name
+    override fun setSubj(subj: String): IMessage {
+        _subj = subj
         return this
     }
 
-    override fun getName(): String {
-        if (_name.isNullOrEmpty()) {
+    override fun getSubj(): String {
+        if (_subj.isNullOrEmpty()) {
             return this::class.java.simpleName
         } else {
-            return _name!!
+            return _subj!!
         }
     }
 }

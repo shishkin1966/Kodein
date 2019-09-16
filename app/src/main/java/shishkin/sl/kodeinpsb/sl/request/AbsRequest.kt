@@ -10,7 +10,7 @@ abstract class AbsRequest() : IRequest {
     private var _id = 0
 
     constructor(rank: Int) : this() {
-        this._rank = rank
+        _rank = rank
     }
 
     override fun getRank(): Int {
@@ -18,7 +18,7 @@ abstract class AbsRequest() : IRequest {
     }
 
     override fun setRank(rank: Int): IRequest {
-        this._rank = rank
+        _rank = rank
         return this
     }
 
@@ -40,12 +40,12 @@ abstract class AbsRequest() : IRequest {
     }
 
     override fun setId(id: Int): IRequest {
-        this._id = id
+        _id = id
         return this
     }
 
     override operator fun compareTo(o: IRequest): Int {
-        return o.getRank() - this.getRank()
+        return o.getRank() - getRank()
     }
 
     override fun getAction(oldRequest: IRequest): Int {

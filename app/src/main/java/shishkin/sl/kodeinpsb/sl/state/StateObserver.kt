@@ -3,12 +3,12 @@ package shishkin.sl.kodeinpsb.sl.state
 import java.lang.ref.WeakReference
 
 class StateObserver : IStateable {
-    private var state = State.STATE_CREATE
-    private var listener: WeakReference<IStateListener>? = null
+    private var _state = State.STATE_CREATE
+    private var _listener: WeakReference<IStateListener>? = null
 
     constructor(listener: IStateListener?) {
         if (listener != null) {
-            this.listener = WeakReference(listener)
+            _listener = WeakReference(listener)
         }
         setState(State.STATE_CREATE)
     }
@@ -19,7 +19,7 @@ class StateObserver : IStateable {
      * @return состояние объекта
      */
     override fun getState(): Int {
-        return state
+        return _state
     }
 
     /**
@@ -28,7 +28,7 @@ class StateObserver : IStateable {
      * @param state состояние объекта
      */
     override fun setState(state: Int) {
-        this.state = state
+        this._state = state
         when (state) {
             State.STATE_CREATE -> onCreateView()
 
@@ -42,20 +42,20 @@ class StateObserver : IStateable {
     }
 
     private fun onCreateView() {
-        if (listener != null && listener!!.get() != null) {
-            listener!!.get()!!.onCreateView()
+        if (_listener != null && _listener!!.get() != null) {
+            _listener!!.get()!!.onCreateView()
         }
     }
 
     private fun onReadyView() {
-        if (listener != null && listener!!.get() != null) {
-            listener!!.get()!!.onReadyView()
+        if (_listener != null && _listener!!.get() != null) {
+            _listener!!.get()!!.onReadyView()
         }
     }
 
     private fun onDestroyView() {
-        if (listener != null && listener!!.get() != null) {
-            listener!!.get()!!.onDestroyView()
+        if (_listener != null && _listener!!.get() != null) {
+            _listener!!.get()!!.onDestroyView()
         }
     }
 

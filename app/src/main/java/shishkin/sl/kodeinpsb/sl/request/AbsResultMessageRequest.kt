@@ -33,7 +33,7 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
     }
 
     override fun setCopyTo(copyTo: List<String>) {
-        this._copyTo = copyTo
+        _copyTo = copyTo
     }
 
     override fun getError(): ExtError? {
@@ -53,7 +53,9 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
                 ResultMessage(
                     getOwner(),
                     result
-                ).setCopyTo(getCopyTo())
+                )
+                    .setSubj(getName())
+                    .setCopyTo(getCopyTo())
             );
         }
     }

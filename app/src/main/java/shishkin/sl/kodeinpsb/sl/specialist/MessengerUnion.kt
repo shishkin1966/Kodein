@@ -152,10 +152,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
 
     private fun removeDublicate(message: IMessage) {
         for (tmpMessage in messages.values) {
-            if (message.getName().equals(tmpMessage.getName()) && message.getAddress().equals(
-                    tmpMessage.getAddress()
-                )
-            ) {
+            if (message.getSubj() == tmpMessage.getSubj() && message.getAddress() ==  tmpMessage.getAddress()) {
                 removeMessage(tmpMessage)
             }
         }

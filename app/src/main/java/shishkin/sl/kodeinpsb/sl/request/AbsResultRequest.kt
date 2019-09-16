@@ -46,7 +46,7 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
     }
 
     override fun setCopyTo(copyTo: List<String>) {
-        this._copyTo = copyTo
+        _copyTo = copyTo
     }
 
     abstract fun getData(): T?
