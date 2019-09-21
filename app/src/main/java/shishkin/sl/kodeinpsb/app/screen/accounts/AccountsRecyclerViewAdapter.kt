@@ -1,4 +1,4 @@
-package shishkin.sl.kodeinpsb.app.adapter
+package shishkin.sl.kodeinpsb.app.screen.accounts
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
-import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsPresenter
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.DataAction
+import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 
 class AccountsRecyclerViewAdapter : RecyclerView.Adapter<ViewHolder>() {
@@ -60,8 +60,8 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         balanceView?.setText("${item.balance}  ${item.currency}")
         layout?.setOnClickListener(View.OnClickListener {
             val presenter =
-                ApplicationSingleton.instance.getPresenter<AccountsPresenter>(AccountsPresenter.NAME)
-            presenter?.addAction(DataAction(Actions.OnClick, item))
+                ApplicationSingleton.instance.getPresenter<IPresenter>(AccountsPresenter.NAME)
+            presenter?.addAction(DataAction(AccountsPresenter.OnClickAccount, item))
         })
     }
 

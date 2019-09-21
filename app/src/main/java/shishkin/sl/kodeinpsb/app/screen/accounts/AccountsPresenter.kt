@@ -14,6 +14,8 @@ import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener {
     companion object {
         const val NAME = "AccountsPresenter"
+        const val OnClickCreateAccount = "OnClickCreateAccount"
+        const val OnClickAccount = "OnClickAccount"
     }
 
     private var data: AccountsData? = null
@@ -61,7 +63,16 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
 
         if (action is DataAction<*>) {
             when (action.getName()) {
-                Actions.OnClick -> {
+                OnClickAccount -> {
+                    return true
+                }
+            }
+        }
+
+        if (action is ApplicationAction) {
+            when (action.getName()) {
+                OnClickCreateAccount -> {
+                    createAccount()
                     return true
                 }
             }
@@ -73,6 +84,10 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             true
         );
         return false
+    }
+
+    private fun createAccount() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

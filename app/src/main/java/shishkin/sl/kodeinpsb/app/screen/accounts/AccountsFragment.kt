@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.adapter.AccountsRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.sl.action.Actions
+import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
@@ -26,7 +26,8 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
     }
 
     private val actionHandler = FragmentActionHandler(this)
-    private var accountsAdapter: AccountsRecyclerViewAdapter = AccountsRecyclerViewAdapter()
+    private var accountsAdapter: AccountsRecyclerViewAdapter =
+        AccountsRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
 
     override fun createModel(): IModel {
@@ -99,7 +100,13 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val presenter = getModel<AccountsModel>()?.getPresenter<AccountsPresenter>()
+
+        when (v?.id) {
+            R.id.create_account -> {
+                presenter?.addAction(ApplicationAction(AccountsPresenter.OnClickCreateAccount))
+            }
+        }
     }
 
 }
