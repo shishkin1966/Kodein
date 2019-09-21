@@ -15,10 +15,11 @@ import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
 
 
-class CreateAccountFragment : AbsFragment() {
+class CreateAccountFragment : AbsContentFragment() {
     companion object {
         fun newInstance(): CreateAccountFragment {
             return CreateAccountFragment()

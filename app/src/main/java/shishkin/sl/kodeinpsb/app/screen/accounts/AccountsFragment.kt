@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.app.screen.accounts
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
 
 
-class AccountsFragment : AbsFragment(), View.OnClickListener {
+class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
         fun newInstance(): AccountsFragment {
             return AccountsFragment()
@@ -29,6 +33,7 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
     private var accountsAdapter: AccountsRecyclerViewAdapter =
         AccountsRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
+    private val onBackPressedPresenter = OnBackPressedPresenter()
 
     override fun createModel(): IModel {
         return AccountsModel(this)
@@ -48,6 +53,11 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
         accountsView?.setAdapter(accountsAdapter)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        addStateObserver(onBackPressedPresenter)
+    }
 
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
@@ -108,5 +118,15 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
             }
         }
     }
+
+    override fun onBackPressed() : Boolean  {
+        onBackPressedPresenter.onClick()
+        return true
+    }
+
+    override fun isTop(): Boolean {
+        return true
+    }
+
 
 }

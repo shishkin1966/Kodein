@@ -20,7 +20,6 @@ import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
 class MainActivity : AbsContentActivity() {
 
-    private val onBackPressedPresenter = OnBackPressedPresenter()
     private val actionHandler = ActivityActionHandler(this)
     private var menu: SlidingMenu? = null
 
@@ -58,6 +57,8 @@ class MainActivity : AbsContentActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+
         this.intent = intent
     }
 
@@ -68,8 +69,6 @@ class MainActivity : AbsContentActivity() {
             permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
             activity = this
         )
-
-        addStateObserver(onBackPressedPresenter)
 
         if (intent != null) {
             val action = intent.getAction();
@@ -106,10 +105,6 @@ class MainActivity : AbsContentActivity() {
                 }
             }
         }
-    }
-
-    override fun onBackPressed() {
-        onBackPressedPresenter.onClick()
     }
 
     private fun setMenu() {
