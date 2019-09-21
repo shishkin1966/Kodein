@@ -15,12 +15,12 @@ import java.util.*
 
 
 abstract class AbsPresenter() : IPresenter {
-    private var model: IModel? = null
+    private var _model: IModel? = null
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
 
     constructor(model: IModel) : this() {
-        this.model = model
+        _model = model
     }
 
     override fun getState(): Int {
@@ -42,6 +42,11 @@ abstract class AbsPresenter() : IPresenter {
         if (union != null) {
             union.readMessages(this)
         }
+
+        onStart()
+    }
+
+    open fun onStart() {
     }
 
     override fun onDestroyView() {
@@ -49,14 +54,14 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun <M : IModel> getModel(): M? {
-        if (model == null) {
+        if (_model == null) {
             return null
         } else {
-            return model as M
+            return _model as M
         }
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return lifecycle.getState() != State.STATE_DESTROY
     }
 
@@ -68,8 +73,8 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun <C : IModelView> getView(): C? {
-        return if (model != null) {
-            model?.getView()
+        return if (_model != null) {
+            _model?.getView()
         } else null
     }
 

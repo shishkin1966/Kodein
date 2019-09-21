@@ -7,23 +7,23 @@ import kotlin.collections.ArrayList
 
 class StateObservable : IStateable {
     private val list = Collections.synchronizedList(ArrayList<WeakReference<IStateable>>())
-    private var state = State.STATE_CREATE
+    private var _state = State.STATE_CREATE
 
     constructor (state: Int) {
         setState(state)
     }
 
     override fun setState(state: Int) {
-        this.state = state
+        _state = state
         for (stateable in list) {
-            if (stateable != null && stateable!!.get() != null) {
-                stateable!!.get()!!.setState(this.state)
+            if (stateable != null && stateable.get() != null) {
+                stateable.get()!!.setState(_state)
             }
         }
     }
 
     override fun getState(): Int {
-        return state
+        return _state
     }
 
     /**
@@ -34,14 +34,14 @@ class StateObservable : IStateable {
     fun addObserver(stateable: IStateable?) {
         if (stateable != null) {
             for (ref in list) {
-                if (ref != null && ref!!.get() != null) {
-                    if (ref!!.get() === stateable) {
+                if (ref != null && ref.get() != null) {
+                    if (ref.get() === stateable) {
                         return
                     }
                 }
             }
 
-            stateable!!.setState(state)
+            stateable.setState(_state)
             list.add(WeakReference(stateable))
         }
     }
@@ -53,8 +53,8 @@ class StateObservable : IStateable {
      */
     fun removeObserver(stateable: IStateable) {
         for (ref in list) {
-            if (ref != null && ref!!.get() != null) {
-                if (ref!!.get() === stateable) {
+            if (ref != null && ref.get() != null) {
+                if (ref.get() === stateable) {
                     list.remove(ref)
                     return
                 }

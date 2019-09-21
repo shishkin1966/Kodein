@@ -73,5 +73,16 @@
         <item name="android:background">@drawable/orange_text_button_background</item>
     </style>
 
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textColorHint">@color/hint</item>
+    </style>
 
 </resources>

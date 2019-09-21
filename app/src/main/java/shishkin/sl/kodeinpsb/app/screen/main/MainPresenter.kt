@@ -20,7 +20,7 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
     }
 
     override fun onAction(action: IAction): Boolean {
-        if (!validate()) return false
+        if (!isValid()) return false
 
         if (action is SnackBarAction) {
             if (action.getName() == ApplicationSpecialist.appContext.getString(R.string.exit)) {

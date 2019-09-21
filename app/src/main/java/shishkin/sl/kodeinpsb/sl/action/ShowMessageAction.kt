@@ -6,16 +6,16 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 
 class ShowMessageAction(private val message: String) : IAction {
 
-    private var title: String? = null
-    private var duration = Toast.LENGTH_SHORT
-    private var type = ApplicationUtils.MESSAGE_TYPE_INFO
+    private var _title: String? = null
+    private var _duration = Toast.LENGTH_SHORT
+    private var _type = ApplicationUtils.MESSAGE_TYPE_INFO
 
     constructor(message: String, type: Int) : this(message) {
-        this.type = type
+        _type = type
     }
 
     constructor(title: String, message: String, type: Int) : this(message, type) {
-        this.title = title
+        _title = title
     }
 
     fun getMessage(): String {
@@ -23,29 +23,29 @@ class ShowMessageAction(private val message: String) : IAction {
     }
 
     fun getTitle(): String? {
-        return title
+        return _title
     }
 
     fun setTitle(title: String): ShowMessageAction {
-        this.title = title
+        _title = title
         return this
     }
 
     fun getDuration(): Int {
-        return duration
+        return _duration
     }
 
     fun setDuration(duration: Int): ShowMessageAction {
-        this.duration = duration
+        _duration = duration
         return this
     }
 
     fun getType(): Int {
-        return type
+        return _type
     }
 
     fun setType(type: Int): ShowMessageAction {
-        this.type = type
+        _type = type
         return this
     }
 }

@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.request
 
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import java.lang.ref.WeakReference
@@ -10,7 +9,7 @@ import java.util.*
 abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
 
     private lateinit var _ref: WeakReference<IResponseListener>
-    private var _copyTo: List<String> = ArrayList<String>()
+    private var _copyTo: List<String> = ArrayList()
     private var _error: ExtError? = null
 
     private constructor() : super()
@@ -24,20 +23,27 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
     }
 
     override fun validate(): Boolean {
-        return _ref.get() != null && _ref.get()!!.validate() && !isCancelled()
+        return _ref.get() != null && _ref.get()!!.isValid() && !isCancelled()
     }
 
-    override fun response() {
+    override fun run() {
         if (validate()) {
-            ApplicationUtils.runOnUiThread(
-                Runnable {
-                    getOwner()?.response(
-                        ExtResult().setName(getName()).setData(
-                            getData()
-                        ).setError(getError())
+            try {
+                getOwner()?.response(
+                    ExtResult().setName(getName()).setData(
+                        getData()
+                    ).setError(getError())
+                )
+            } catch (e: Exception) {
+                getOwner()?.response(
+                    ExtResult().setName(getName()).setError(
+                        ExtError().addError(
+                            getName(),
+                            e.getLocalizedMessage()
+                        )
                     )
-                }
-            )
+                )
+            }
         }
     }
 
@@ -46,7 +52,7 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
     }
 
     override fun setCopyTo(copyTo: List<String>) {
-        this._copyTo = copyTo
+        _copyTo = copyTo
     }
 
     abstract fun getData(): T?

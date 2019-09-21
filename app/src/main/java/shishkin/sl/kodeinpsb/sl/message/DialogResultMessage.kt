@@ -7,7 +7,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
 class DialogResultMessage : AbsMessage {
     companion object {
-        const val NAME = "DialogResultMessage"
+        const val SUBJ = "DialogResultMessage"
     }
 
     private lateinit var _action: DialogResultAction
@@ -24,8 +24,8 @@ class DialogResultMessage : AbsMessage {
         return DialogResultMessage(this, _action)
     }
 
-    override fun getName(): String {
-        return NAME
+    override fun getSubj(): String {
+        return SUBJ
     }
 
     override fun read(subscriber: IMessengerSubscriber) {

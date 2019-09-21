@@ -7,17 +7,17 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
 
 class ResultMessage : AbsMessage {
-     private lateinit var _result: ExtResult
+    private lateinit var _result: ExtResult
 
     private constructor(address: String) : super(address)
 
-    constructor(address: String, result: ExtResult): this(address) {
+    constructor(address: String, result: ExtResult) : this(address) {
         _result = result
     }
 
     private constructor(message: ResultMessage) : super(message)
 
-    constructor(message: ResultMessage, result: ExtResult) : this(message){
+    constructor(message: ResultMessage, result: ExtResult) : this(message) {
         _result = result
     }
 

@@ -22,18 +22,18 @@ abstract class AbsFragment : Fragment(), IFragment {
 
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
-    private var model: IModel? = null
+    private var _model: IModel? = null
     private val actions = LinkedList<IAction>()
 
     override fun <T : IModel> getModel(): T? {
-        if (model == null) {
-            model = createModel();
+        if (_model == null) {
+            _model = createModel();
         }
-        return model as T
+        return _model as T
     }
 
     override fun <T : IModel> setModel(model: T) {
-        this.model = model
+        _model = model
     }
 
     abstract fun createModel(): IModel
@@ -91,7 +91,7 @@ abstract class AbsFragment : Fragment(), IFragment {
 
     override fun stop() {}
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return getState() != State.STATE_DESTROY
     }
 

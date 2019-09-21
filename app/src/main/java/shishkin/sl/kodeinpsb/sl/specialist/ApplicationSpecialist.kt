@@ -44,7 +44,7 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
         return BuildConfig.APPLICATION_ID
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return !isExit
     }
 

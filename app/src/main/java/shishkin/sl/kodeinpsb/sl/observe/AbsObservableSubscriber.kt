@@ -17,7 +17,7 @@ abstract class AbsObservableSubscriber : IObservableSubscriber {
         return listOf(ObservableUnion.NAME)
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return true
     }
 

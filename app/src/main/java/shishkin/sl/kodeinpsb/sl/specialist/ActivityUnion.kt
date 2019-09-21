@@ -160,7 +160,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun <C> getActivity(name: String, validate: Boolean): C? {
         val subscriber = getSubscriber(name)
         if (subscriber != null) {
-            if (!validate || validate && subscriber.validate()) {
+            if (!validate || validate && subscriber.isValid()) {
                 return subscriber as C?
             }
         }
@@ -186,7 +186,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun grantPermission(listener: String, permission: String, helpMessage: String) {
         if (ApplicationUtils.hasMarshmallow()) {
             val subscriber = getCurrentSubscriber()
-            if (subscriber != null && subscriber.validate() && subscriber.getState() == State.STATE_READY) {
+            if (subscriber != null && subscriber.isValid() && subscriber.getState() == State.STATE_READY) {
                 val activity = subscriber as AppCompatActivity
                 if (activity != null) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -219,7 +219,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun grantPermission(permission: String) {
         if (ApplicationUtils.hasMarshmallow()) {
             val subscriber = getCurrentSubscriber()
-            if (subscriber != null && subscriber.validate() && subscriber.getState() == State.STATE_READY) {
+            if (subscriber != null && subscriber.isValid() && subscriber.getState() == State.STATE_READY) {
                 val activity = subscriber as AppCompatActivity
                 if (activity != null) {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(
@@ -244,7 +244,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
 
     override fun addAction(action: IAction) {
         val subscriber = getCurrentSubscriber()
-        if (subscriber != null && subscriber.validate()) {
+        if (subscriber != null && subscriber.isValid()) {
             subscriber.addAction(action)
         }
     }

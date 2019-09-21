@@ -5,15 +5,10 @@ import shishkin.sl.kodeinpsb.sl.action.IActionHandler
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
-class PresenterActionHandler : IActionHandler {
-    private val presenter: IPresenter
-
-    constructor(presenter: IPresenter) {
-        this.presenter = presenter
-    }
+class PresenterActionHandler(private val presenter: IPresenter) : IActionHandler {
 
     override fun onAction(action: IAction): Boolean {
-        if (!presenter.validate()) return false
+        if (!presenter.isValid()) return false
 
         if (action is IMessage) {
             action.read(presenter)

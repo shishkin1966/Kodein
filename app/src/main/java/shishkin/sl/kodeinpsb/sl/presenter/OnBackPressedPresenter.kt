@@ -25,7 +25,7 @@ class OnBackPressedPresenter : AbsPresenter() {
     }
 
     fun onClick(): Boolean {
-        if (validate()) {
+        if (isValid()) {
             if (!doubleBackPressedOnce) {
                 val context = ApplicationSpecialist.appContext
                 doubleBackPressedOnce = true

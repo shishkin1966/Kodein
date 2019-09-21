@@ -1,10 +1,9 @@
 package shishkin.sl.kodeinpsb.sl.message
 
-import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
-interface IMessage : INamed, IAction {
+interface IMessage : IAction {
     /**
      * Получить id действия
      *
@@ -104,12 +103,18 @@ interface IMessage : INamed, IAction {
     fun setEndTime(keepAliveTime: Long): IMessage
 
     /**
-     * Установить наименование письма
+     * Установить тему письма
      *
-     * @param name наименование письма
+     * @param name тема письма
      * @return письмо
      */
-    fun setName(name : String) : IMessage
+    fun setSubj(subj: String): IMessage
 
+    /**
+     * Получить тему письма
+     *
+     * @return тема письма
+     */
+    fun getSubj(): String
 
 }

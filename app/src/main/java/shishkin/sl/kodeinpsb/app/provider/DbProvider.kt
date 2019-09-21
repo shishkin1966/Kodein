@@ -13,7 +13,7 @@ class DbProvider : AbsDbProvider() {
     }
 
     override fun request(request: IRequest) {
-        if (!validate()) return
+        if (!isValid()) return
 
         val executor = ApplicationSingleton.instance.get<DbExecutor>(DbExecutor.NAME);
         executor?.execute(request);

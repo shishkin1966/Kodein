@@ -1,8 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.request
 
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.message.ResultMessage
@@ -24,18 +22,19 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
 
         getData()
             .map({ t: T -> ExtResult(t) })
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                Consumer { result: ExtResult ->
+                { result: ExtResult ->
                     if (validate() && result.getData() != null) {
                         union.addNotMandatoryMessage(
                             ResultMessage(
                                 getOwner(),
                                 result.setOrder(ExtResult.LAST).setName(getName())
-                            ).setName(getName()).setCopyTo(getCopyTo())
+                            )
+                                .setSubj(getName())
+                                .setCopyTo(getCopyTo())
                         )
                     }
-                }, Consumer { throwable: Throwable ->
+                }, { throwable: Throwable ->
                     if (validate()) {
                         val result = ExtResult().setError(
                             ExtError().addError(
@@ -44,9 +43,9 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
                             )
                         ).setName(getName()).setOrder(ExtResult.LAST)
                         union.addNotMandatoryMessage(
-                            ResultMessage(getOwner(), result).setName(
-                                getName()
-                            ).setCopyTo(getCopyTo())
+                            ResultMessage(getOwner(), result)
+                                .setSubj(getName())
+                                .setCopyTo(getCopyTo())
                         )
                     }
                 }

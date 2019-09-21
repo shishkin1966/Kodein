@@ -33,7 +33,7 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
     }
 
     override fun setCopyTo(copyTo: List<String>) {
-        this._copyTo = copyTo
+        _copyTo = copyTo
     }
 
     override fun getError(): ExtError? {
@@ -44,19 +44,31 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
         _error = error
     }
 
-    override fun response() {
+    override fun run() {
         if (validate()) {
-            val result = ExtResult().setName(getName()).setData(getData()).setError(getError())
+            lateinit var result: ExtResult
+            try {
+                result = ExtResult().setName(getName()).setData(getData()).setError(getError())
+            } catch (e: Exception) {
+                result = ExtResult().setName(getName()).setError(
+                    ExtError().addError(
+                        getName(),
+                        e.getLocalizedMessage()
+                    )
+                )
+            }
             val union =
                 ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME);
             union?.addNotMandatoryMessage(
                 ResultMessage(
                     getOwner(),
                     result
-                ).setCopyTo(getCopyTo())
+                )
+                    .setSubj(getName())
+                    .setCopyTo(getCopyTo())
             );
         }
     }
 
-    abstract fun getData() : T
+    abstract fun getData(): T
 }

@@ -25,7 +25,7 @@ interface IResultMessageRequest : IRequest {
      */
     fun setCopyTo(copyTo: List<String>)
 
-     /**
+    /**
      * Получить ошибку запроса
      *
      * @return ошибка запроса
@@ -38,10 +38,5 @@ interface IResultMessageRequest : IRequest {
      * @param error ошибка запроса
      */
     fun setError(error: ExtError?)
-
-    /**
-     * Разослать результаты запроса
-     */
-    fun response()
 
 }
