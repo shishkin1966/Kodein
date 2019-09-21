@@ -61,7 +61,7 @@ abstract class AbsPresenter() : IPresenter {
         }
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return lifecycle.getState() != State.STATE_DESTROY
     }
 

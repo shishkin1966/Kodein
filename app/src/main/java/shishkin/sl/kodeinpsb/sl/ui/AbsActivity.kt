@@ -109,7 +109,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     override fun setState(state: Int) {}
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return getState() !== State.STATE_DESTROY && !isFinishing
     }
 

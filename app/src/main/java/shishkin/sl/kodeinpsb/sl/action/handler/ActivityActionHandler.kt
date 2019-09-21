@@ -30,7 +30,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
 
     override fun onAction(action: IAction): Boolean {
         if (activity is IValidated) {
-            if (!activity.validate()) return false
+            if (!activity.isValid()) return false
         }
 
         if (super.onAction(action)) return true

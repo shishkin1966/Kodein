@@ -32,7 +32,7 @@ abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<
     }
 
     override fun setCurrentSubscriber(subscriber: T): Boolean {
-        if (!subscriber.validate()) return false
+        if (!subscriber.isValid()) return false
 
         if (!contains(subscriber)) {
             register(subscriber)

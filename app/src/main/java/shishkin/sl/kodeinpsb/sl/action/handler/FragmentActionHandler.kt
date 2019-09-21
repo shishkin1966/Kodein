@@ -14,7 +14,7 @@ import shishkin.sl.kodeinpsb.sl.action.*
 
 class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler() {
     override fun onAction(action: IAction): Boolean {
-        if (fragment is IValidated && !fragment.validate()) return false
+        if (fragment is IValidated && !fragment.isValid()) return false
 
         if (super.onAction(action)) return true
 

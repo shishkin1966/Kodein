@@ -42,7 +42,7 @@ abstract class AbsRequestExecutor : IRequestExecutor, ISpecialist {
 
     override fun onRegister() {}
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return !getExecutor().isShutdown
     }
 

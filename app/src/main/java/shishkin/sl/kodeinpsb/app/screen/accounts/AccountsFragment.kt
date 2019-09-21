@@ -50,7 +50,7 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
 
 
     override fun onAction(action: IAction): Boolean {
-        if (!validate()) return false
+        if (!isValid()) return false
 
         if (action is DataAction<*>) {
             when (action.getName()) {

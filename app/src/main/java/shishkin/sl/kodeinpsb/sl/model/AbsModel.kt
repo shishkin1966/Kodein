@@ -37,8 +37,8 @@ abstract class AbsModel(private val modelView: IModelView) : IModel, IStateListe
         return null
     }
 
-    override fun validate(): Boolean {
-        return modelView.validate()
+    override fun isValid(): Boolean {
+        return modelView.isValid()
     }
 
     override fun addStateObserver(stateable: IStateable) {

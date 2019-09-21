@@ -5,7 +5,7 @@ abstract class AbsSpecialist : ISpecialist {
         return false
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return true
     }
 

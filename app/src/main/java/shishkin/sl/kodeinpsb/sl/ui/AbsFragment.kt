@@ -91,7 +91,7 @@ abstract class AbsFragment : Fragment(), IFragment {
 
     override fun stop() {}
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return getState() != State.STATE_DESTROY
     }
 

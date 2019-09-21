@@ -9,5 +9,5 @@ interface IValidated {
      *
      * @return true - объект может обеспечивать свою функциональность
      */
-    fun validate(): Boolean
+    fun isValid(): Boolean
 }

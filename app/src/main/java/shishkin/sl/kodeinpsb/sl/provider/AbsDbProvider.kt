@@ -123,7 +123,7 @@ abstract class AbsDbProvider : IDbProvider {
         stop()
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return true
     }
 

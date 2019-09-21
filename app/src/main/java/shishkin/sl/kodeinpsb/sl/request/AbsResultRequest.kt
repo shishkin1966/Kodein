@@ -23,7 +23,7 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
     }
 
     override fun validate(): Boolean {
-        return _ref.get() != null && _ref.get()!!.validate() && !isCancelled()
+        return _ref.get() != null && _ref.get()!!.isValid() && !isCancelled()
     }
 
     override fun run() {

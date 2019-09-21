@@ -8,7 +8,7 @@ import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 class PresenterActionHandler(private val presenter: IPresenter) : IActionHandler {
 
     override fun onAction(action: IAction): Boolean {
-        if (!presenter.validate()) return false
+        if (!presenter.isValid()) return false
 
         if (action is IMessage) {
             action.read(presenter)

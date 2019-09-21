@@ -25,7 +25,7 @@ class MainActivity : AbsContentActivity() {
     private var menu: SlidingMenu? = null
 
     override fun onAction(action: IAction): Boolean {
-        if (!validate()) return false
+        if (!isValid()) return false
 
         if (actionHandler.onAction(action)) return true
 

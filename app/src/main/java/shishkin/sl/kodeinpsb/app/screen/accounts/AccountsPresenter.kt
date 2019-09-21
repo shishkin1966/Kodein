@@ -4,11 +4,15 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
+import shishkin.sl.kodeinpsb.app.screen.create_account.CreateAccountFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.IRouter
+import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
+import shishkin.sl.kodeinpsb.sl.ui.IActivity
 
 
 class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener {
@@ -32,18 +36,18 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
         if (data == null) {
             getData()
         } else {
-            getModel<AccountsModel>()?.getView<AccountsFragment>()
+            getView<AccountsFragment>()
                 ?.addAction(DataAction(Actions.RefreshViews, data))
         }
     }
 
     private fun getData() {
-        getModel<AccountsModel>()?.getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
+        getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
         Provider.getAccounts(NAME)
     }
 
     override fun response(result: ExtResult) {
-        getModel<AccountsModel>()?.getView<AccountsFragment>()?.addAction(HideProgressBarAction());
+        getView<AccountsFragment>()?.addAction(HideProgressBarAction());
         if (!result.hasError()) {
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
@@ -53,13 +57,13 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
                 }
             }
         } else {
-            getModel<AccountsModel>()?.getView<AccountsFragment>()
+            getView<AccountsFragment>()
                 ?.addAction(ShowMessageAction(result.getErrorText()!!).setType(ApplicationUtils.MESSAGE_TYPE_ERROR))
         }
     }
 
     override fun onAction(action: IAction): Boolean {
-        if (!validate()) return false
+        if (!isValid()) return false
 
         if (action is DataAction<*>) {
             when (action.getName()) {
@@ -87,7 +91,10 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     private fun createAccount() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val activity = getView<AccountsFragment>()?.activity
+        if (activity != null && activity is IRouter && activity.isValid()) {
+            activity.showFragment(CreateAccountFragment.newInstance())
+        }
     }
 
 }
