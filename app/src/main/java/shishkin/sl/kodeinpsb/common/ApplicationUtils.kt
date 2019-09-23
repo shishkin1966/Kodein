@@ -222,32 +222,34 @@ class ApplicationUtils {
         fun showToast(context: Context, text: String?, duration: Int, type: Int) {
             if (text.isNullOrBlank()) return
 
-            when (type) {
-                MESSAGE_TYPE_ERROR -> StyleableToast.Builder(context)
-                    .text(text)
-                    .textColor(getColor(context, R.color.white))
-                    .backgroundColor(getColor(context, R.color.red))
-                    .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
-                    .cornerRadius(8)
-                    .length(duration)
-                    .show()
-                MESSAGE_TYPE_WARNING -> StyleableToast.Builder(context)
-                    .text(text)
-                    .textColor(getColor(context, R.color.white))
-                    .backgroundColor(getColor(context, R.color.orange))
-                    .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
-                    .cornerRadius(8)
-                    .length(duration)
-                    .show()
-                else -> StyleableToast.Builder(context)
-                    .text(text)
-                    .textColor(getColor(context, R.color.white))
-                    .backgroundColor(getColor(context, R.color.blue_dark))
-                    .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
-                    .cornerRadius(8)
-                    .length(duration)
-                    .show()
-            }
+            runOnUiThread(Runnable {
+                when (type) {
+                    MESSAGE_TYPE_ERROR -> StyleableToast.Builder(context)
+                        .text(text)
+                        .textColor(getColor(context, R.color.white))
+                        .backgroundColor(getColor(context, R.color.red))
+                        .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
+                        .cornerRadius(8)
+                        .length(duration)
+                        .show()
+                    MESSAGE_TYPE_WARNING -> StyleableToast.Builder(context)
+                        .text(text)
+                        .textColor(getColor(context, R.color.white))
+                        .backgroundColor(getColor(context, R.color.orange))
+                        .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
+                        .cornerRadius(8)
+                        .length(duration)
+                        .show()
+                    else -> StyleableToast.Builder(context)
+                        .text(text)
+                        .textColor(getColor(context, R.color.white))
+                        .backgroundColor(getColor(context, R.color.blue_dark))
+                        .textSize(getDimensionSp(context, R.dimen.text_size_xlarge))
+                        .cornerRadius(8)
+                        .length(duration)
+                        .show()
+                }
+            })
         }
 
         @JvmStatic

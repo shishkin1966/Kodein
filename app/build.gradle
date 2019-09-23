@@ -33,12 +33,13 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
 
     // БД ROOM
-    implementation "androidx.room:room-runtime:$room";
-    annotationProcessor "androidx.room:room-compiler:$room";
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
+    annotationProcessor "androidx.room:room-compiler:$room"
+    kapt "androidx.room:room-compiler:$room"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$room"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$room"
-    kapt "androidx.room:room-compiler:$room"
 
     // добавление ripple эффекта
     implementation 'com.balysv:material-ripple:1.0.2'

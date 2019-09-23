@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -32,6 +33,13 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         }
         if (action is HideKeyboardAction) {
             hideKeyboard()
+            return true
+        }
+        if (action is StopAction) {
+            if (fragment.activity != null) {
+                val activity = fragment.activity as AppCompatActivity
+                activity.onBackPressed()
+            }
             return true
         }
 

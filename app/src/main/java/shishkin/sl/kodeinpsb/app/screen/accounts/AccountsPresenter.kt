@@ -7,15 +7,18 @@ import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
 import shishkin.sl.kodeinpsb.app.screen.create_account.CreateAccountFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
-import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
+import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
-import shishkin.sl.kodeinpsb.sl.ui.IActivity
+import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
-class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener {
+class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener,
+    IObjectObservableSubscriber {
+
     companion object {
         const val NAME = "AccountsPresenter"
         const val OnClickCreateAccount = "OnClickCreateAccount"
@@ -34,6 +37,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
 
     override fun onStart() {
         if (data == null) {
+            data = AccountsData()
             getData()
         } else {
             getView<AccountsFragment>()
@@ -52,7 +56,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
                     data?.accounts = result.getData() as List<Account>
-                    getModel<AccountsModel>()?.getView<AccountsFragment>()
+                    getView<AccountsFragment>()
                         ?.addAction(DataAction(Actions.RefreshViews, data))
                 }
             }
@@ -68,6 +72,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
         if (action is DataAction<*>) {
             when (action.getName()) {
                 OnClickAccount -> {
+                    viewAccount(action.getData() as Account)
                     return true
                 }
             }
@@ -84,7 +89,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
 
         ApplicationSingleton.instance.onError(
             getName(),
-            "Unknown action:" + action.toString(),
+            "Unknown action:$action",
             true
         );
         return false
@@ -95,6 +100,35 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
         if (activity != null && activity is IRouter && activity.isValid()) {
             activity.showFragment(CreateAccountFragment.newInstance())
         }
+    }
+
+    override fun getListenObjects(): List<String> {
+        return listOf(Account.TABLE)
+    }
+
+    override fun getObservable(): List<String> {
+        return listOf(ObjectObservable.NAME)
+    }
+
+    override fun onChange(name: String, obj: Any) {
+        if (name == ObjectObservable.NAME) {
+            when (obj.toString()) {
+                Account.TABLE -> {
+                    getData()
+                }
+            }
+        }
+    }
+
+    override fun getSpecialistSubscription(): List<String> {
+        val list = ArrayList<String>()
+        list.addAll(super.getSpecialistSubscription())
+        list.add(ObservableUnion.NAME)
+        return list
+    }
+
+    private fun viewAccount(account: Account) {
+
     }
 
 }

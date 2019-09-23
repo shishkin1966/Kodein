@@ -46,7 +46,7 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
 
     override fun run() {
         if (validate()) {
-            lateinit var result: ExtResult
+            var result: ExtResult
             try {
                 result = ExtResult().setName(getName()).setData(getData()).setError(getError())
             } catch (e: Exception) {

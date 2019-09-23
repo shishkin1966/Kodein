@@ -33,7 +33,7 @@ class Account() : AbsEntity() {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    var id: Long? = 0
+    var id: Int? = null
 
     @ColumnInfo(name = COLUMNS.openDate)
     @SerializedName(COLUMNS.openDate)

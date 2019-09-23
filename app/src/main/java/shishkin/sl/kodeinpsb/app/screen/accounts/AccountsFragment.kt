@@ -15,10 +15,11 @@ import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
+import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
-class AccountsFragment : AbsFragment(), View.OnClickListener {
+class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
         fun newInstance(): AccountsFragment {
             return AccountsFragment()
@@ -29,6 +30,7 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
     private var accountsAdapter: AccountsRecyclerViewAdapter =
         AccountsRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
+    private val onBackPressedPresenter = OnBackPressedPresenter()
 
     override fun createModel(): IModel {
         return AccountsModel(this)
@@ -48,6 +50,11 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
         accountsView?.setAdapter(accountsAdapter)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        addStateObserver(onBackPressedPresenter)
+    }
 
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
@@ -108,5 +115,15 @@ class AccountsFragment : AbsFragment(), View.OnClickListener {
             }
         }
     }
+
+    override fun onBackPressed(): Boolean {
+        onBackPressedPresenter.onClick()
+        return true
+    }
+
+    override fun isTop(): Boolean {
+        return true
+    }
+
 
 }
