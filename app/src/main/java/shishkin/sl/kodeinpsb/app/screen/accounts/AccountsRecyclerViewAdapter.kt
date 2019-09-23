@@ -34,7 +34,7 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(_items.get(position))
+        holder.bind(_items[position])
     }
 
     fun setItems(items: List<Account>) {

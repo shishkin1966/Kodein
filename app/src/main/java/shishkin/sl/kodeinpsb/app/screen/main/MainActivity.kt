@@ -29,9 +29,9 @@ class MainActivity : AbsContentActivity() {
 
         ApplicationSingleton.instance.onError(
             getName(),
-            "Unknown action:" + action.toString(),
+            "Unknown action:$action",
             true
-        );
+        )
         return false
     }
 
@@ -46,7 +46,7 @@ class MainActivity : AbsContentActivity() {
 
         setContentView(R.layout.activity_main)
 
-        setMenu();
+        setMenu()
 
         onNewIntent(getIntent())
     }
@@ -70,19 +70,19 @@ class MainActivity : AbsContentActivity() {
         )
 
         if (intent != null) {
-            val action = intent.getAction();
+            val action = intent.getAction()
             if ("android.intent.action.MAIN" == action) {
                 showHomeFragment();
             } else {
                 showHomeFragment();
             }
-            intent = null;
+            intent = null
         } else {
-            showHomeFragment();
+            showHomeFragment()
         }
     }
 
-    fun showHomeFragment() {
+    private fun showHomeFragment() {
         clearBackStack()
         showFragment(AccountsFragment.newInstance(), true)
     }

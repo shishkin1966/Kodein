@@ -19,5 +19,4 @@ abstract class AbsEntity {
         }
         return null
     }
-
 }

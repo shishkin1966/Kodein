@@ -54,7 +54,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     override fun response(result: ExtResult) {
-        getView<AccountsFragment>()?.addAction(HideProgressBarAction());
+        getView<AccountsFragment>()?.addAction(HideProgressBarAction())
         if (!result.hasError()) {
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
@@ -99,7 +99,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             getName(),
             "Unknown action:$action",
             true
-        );
+        )
         return false
     }
 

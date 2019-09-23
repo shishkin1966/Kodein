@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.common.double2String
 import shishkin.sl.kodeinpsb.common.trimZero

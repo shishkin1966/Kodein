@@ -51,12 +51,12 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
 
         accountsView = findView(R.id.list)
         accountsView?.layoutManager = LinearLayoutManager(activity)
-        accountsView?.setItemAnimator(DefaultItemAnimator())
+        accountsView?.itemAnimator = DefaultItemAnimator()
         accountsView?.adapter = accountsAdapter
 
-        balanceView = findView(R.id.balance_list);
-        balanceView?.layoutManager = LinearLayoutManager(activity);
-        balanceView?.adapter = balanceAdapter;
+        balanceView = findView(R.id.balance_list)
+        balanceView?.layoutManager = LinearLayoutManager(activity)
+        balanceView?.adapter = balanceAdapter
 
     }
 
@@ -82,9 +82,9 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
 
         ApplicationSingleton.instance.onError(
             getName(),
-            "Unknown action:" + action.toString(),
+            "Unknown action:$action",
             true
-        );
+        )
         return false
     }
 
@@ -100,12 +100,12 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         if (viewData == null) return
 
         accountsAdapter.setItems(viewData.getData())
-        findView<View>(R.id.sort_accounts)?.setEnabled(viewData.isSortMenuEnabled())
-        findView<View>(R.id.select_accounts)?.setEnabled(viewData.isFilterMenuEnabled())
+        findView<View>(R.id.sort_accounts)?.isEnabled = viewData.isSortMenuEnabled()
+        findView<View>(R.id.select_accounts)?.isEnabled = viewData.isFilterMenuEnabled()
         if (viewData.isFilterMenuEnabled() && !viewData.filter.isNullOrBlank()) {
-            findView<View>(R.id.select_accounts_all_ll)?.setVisibility(View.VISIBLE)
+            findView<View>(R.id.select_accounts_all_ll)?.visibility = View.VISIBLE
         } else {
-            findView<View>(R.id.select_accounts_all_ll)?.setVisibility(View.GONE)
+            findView<View>(R.id.select_accounts_all_ll)?.visibility = View.GONE
         }
         showAccountsBalance(viewData.balance)
     }
