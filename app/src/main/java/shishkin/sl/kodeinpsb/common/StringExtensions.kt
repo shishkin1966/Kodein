@@ -1,5 +1,13 @@
 package shishkin.sl.kodeinpsb.common
 
+import java.math.BigDecimal
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import com.google.common.base.Strings.isNullOrEmpty
+
+
+
+
 fun CharSequence.isNullOrEmpty(): Boolean {
     return this == null || this.toString().trim { it <= ' ' }.length < 1
 }
@@ -178,8 +186,8 @@ fun String.replace(
     return temp
 }
 
-fun String.mid(first: Int, len: Int): String {
-    var len = len
+fun String.mid(first: Int, lenString: Int): String {
+    var len = lenString
     if (this == null) {
         return ""
     }
@@ -207,4 +215,67 @@ fun String.mid(first: Int): String {
     } else this.substring(first, this.length)
 }
 
+fun Double.double2String(): String {
+    if (this == null) return ""
+    val format = DecimalFormat("###,##0.00")
+    val customSymbol = DecimalFormatSymbols()
+    customSymbol.setDecimalSeparator('.')
+    customSymbol.setGroupingSeparator(' ')
+    format.setDecimalFormatSymbols(customSymbol)
+    return format.format(this)
+}
 
+fun BigDecimal.decimal2String(): String {
+    if (this == null) return ""
+    val format = DecimalFormat("###,##0.00")
+    val customSymbol = DecimalFormatSymbols()
+    customSymbol.decimalSeparator = '.'
+    customSymbol.groupingSeparator = ' '
+    format.decimalFormatSymbols = customSymbol
+    return format.format(this)
+}
+
+fun String.trimZero(): String? {
+    if (this == null) return null
+    if (!this.contains(".")) return this
+    if (this == ".") return this
+
+    var length = this.length
+    val cnt = length - 1
+    for (i in cnt downTo 0) {
+        val chr = this.mid(i, 1)
+        if ("0" == chr) {
+            length--
+        } else if ("." == chr) {
+            length--
+            break
+        } else {
+            break
+        }
+    }
+    return if (length == 0) {
+        ""
+    } else this.mid( 0, length)
+}
+
+fun String.trimAllZero(): String? {
+    if (this == null) return null
+    if (!this.contains(".")) return this
+    if (this == ".") return this
+
+    val arr = this.split(" ".toRegex()).toTypedArray()
+    val sb = StringBuilder()
+    for (i in arr.indices) {
+        if (!arr[i].isNullOrEmpty()) {
+            sb.append(arr[i].trimZero())
+            sb.append(" ")
+        }
+    }
+    return sb.toString().allTrim()
+}
+
+fun String.allTrim(): String {
+    return if (this.isNullOrEmpty()) {
+        ""
+    } else this.trim()
+}

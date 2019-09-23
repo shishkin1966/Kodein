@@ -2,8 +2,10 @@ package shishkin.sl.kodeinpsb.app.screen.accounts
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
+import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
+import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.create_account.CreateAccountFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
@@ -48,6 +50,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     private fun getData() {
         getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
         Provider.getAccounts(NAME)
+        Provider.getBalance(NAME)
     }
 
     override fun response(result: ExtResult) {
@@ -56,6 +59,11 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
                     data?.accounts = result.getData() as List<Account>
+                    getView<AccountsFragment>()
+                        ?.addAction(DataAction(Actions.RefreshViews, data))
+                }
+                GetBalanceRequest.NAME -> {
+                    data?.balance = result.getData() as List<Balance>
                     getView<AccountsFragment>()
                         ?.addAction(DataAction(Actions.RefreshViews, data))
                 }

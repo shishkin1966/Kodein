@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
+import shishkin.sl.kodeinpsb.common.double2String
+import shishkin.sl.kodeinpsb.common.trimZero
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 
-class AccountsRecyclerViewAdapter : RecyclerView.Adapter<ViewHolder>() {
+class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAdapter.ViewHolder>() {
 
     private var _items: ArrayList<Account> = ArrayList()
 
@@ -41,27 +43,27 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var friendlyNameView: TextView? = null
+        private var balanceView: TextView? = null
+        private var layout: LinearLayout? = null
+
+        init {
+            friendlyNameView = itemView.findViewById(R.id.friendlyNameView)
+            balanceView = itemView.findViewById(R.id.balanceView)
+            layout = itemView.findViewById(R.id.layout)
+        }
+
+        fun bind(item: Account) {
+            friendlyNameView?.text  = item.friendlyName
+            balanceView?.text = "${item.balance?.double2String()?.trimZero()} ${item.currency}"
+            layout?.setOnClickListener {
+                val presenter =
+                    ApplicationSingleton.instance.getPresenter<IPresenter>(AccountsPresenter.NAME)
+                presenter?.addAction(DataAction(AccountsPresenter.OnClickAccount, item))
+            }
+        }
+
+    }
 }
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private var friendlyNameView: TextView? = null
-    private var balanceView: TextView? = null
-    private var layout: LinearLayout? = null
-
-    init {
-        friendlyNameView = itemView.findViewById(R.id.friendlyNameView)
-        balanceView = itemView.findViewById(R.id.balanceView)
-        layout = itemView.findViewById(R.id.layout)
-    }
-
-    fun bind(item: Account) {
-        friendlyNameView?.setText(item.friendlyName)
-        balanceView?.setText("${item.balance}  ${item.currency}")
-        layout?.setOnClickListener(View.OnClickListener {
-            val presenter =
-                ApplicationSingleton.instance.getPresenter<IPresenter>(AccountsPresenter.NAME)
-            presenter?.addAction(DataAction(AccountsPresenter.OnClickAccount, item))
-        })
-    }
-
-}

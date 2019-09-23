@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -19,6 +20,8 @@ import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
+
+
 class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
         fun newInstance(): AccountsFragment {
@@ -27,9 +30,11 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     }
 
     private val actionHandler = FragmentActionHandler(this)
-    private var accountsAdapter: AccountsRecyclerViewAdapter =
+    private val accountsAdapter: AccountsRecyclerViewAdapter =
         AccountsRecyclerViewAdapter()
+    private val balanceAdapter: BalanceRecyclerViewAdapter = BalanceRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
+    private var balanceView: RecyclerView? = null
     private val onBackPressedPresenter = OnBackPressedPresenter()
 
     override fun createModel(): IModel {
@@ -45,9 +50,14 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         findView<View>(R.id.select_accounts_all)?.setOnClickListener(this)
 
         accountsView = findView(R.id.list)
-        accountsView?.setLayoutManager(LinearLayoutManager(activity))
+        accountsView?.layoutManager = LinearLayoutManager(activity)
         accountsView?.setItemAnimator(DefaultItemAnimator())
-        accountsView?.setAdapter(accountsAdapter)
+        accountsView?.adapter = accountsAdapter
+
+        balanceView = findView(R.id.balance_list);
+        balanceView?.layoutManager = LinearLayoutManager(activity);
+        balanceView?.adapter = balanceAdapter;
+
     }
 
     override fun onStart() {
@@ -97,13 +107,14 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         } else {
             findView<View>(R.id.select_accounts_all_ll)?.setVisibility(View.GONE)
         }
-        //showAccountsBalance(viewData.balance)
+        showAccountsBalance(viewData.balance)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
-        accountsView?.setAdapter(null)
+        accountsView?.adapter = null
+        balanceView?.adapter = null
     }
 
     override fun onClick(v: View?) {
@@ -125,5 +136,10 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         return true
     }
 
+    private fun showAccountsBalance(list: List<Balance>?) {
+        if (list == null) return
+
+        balanceAdapter.setItems(list)
+    }
 
 }
