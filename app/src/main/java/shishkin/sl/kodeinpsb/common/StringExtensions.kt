@@ -105,7 +105,7 @@ fun String.toInt(): Int {
 }
 
 fun String.toDouble(): Double {
-    var s : String? = this
+    var s: String? = this
     var d = 0.0
     if (!s.isNullOrEmpty()) {
         s = s.replace(",", ".")
@@ -120,7 +120,7 @@ fun String.toDouble(): Double {
 }
 
 fun String.toFloat(): Float {
-    var s : String?  = this
+    var s: String? = this
     var f = 0f
     if (!s.isNullOrEmpty()) {
         s = s.replace(",", ".")

@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -89,7 +90,11 @@ abstract class AbsFragment : Fragment(), IFragment {
 
     override fun setState(state: Int) {}
 
-    override fun stop() {}
+    override fun stop() {
+        if (activity != null) {
+            (activity as AppCompatActivity).onBackPressed()
+        }
+    }
 
     override fun isValid(): Boolean {
         return getState() != State.STATE_DESTROY

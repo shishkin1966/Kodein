@@ -12,7 +12,6 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.SlidingMenu
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.ActivityActionHandler
-import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity

@@ -105,7 +105,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(source: String, throwable: Throwable) {
         Log.e(source, Log.getStackTraceString(throwable))
         ApplicationUtils.showToast(
-            ApplicationSpecialist.instance,
+            ApplicationSpecialist.appContext,
             throwable.message,
             Toast.LENGTH_LONG,
             ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -116,7 +116,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
         Log.e(source, Log.getStackTraceString(e))
         if (!displayMessage.isNullOrEmpty()) {
             ApplicationUtils.showToast(
-                ApplicationSpecialist.instance,
+                ApplicationSpecialist.appContext,
                 displayMessage,
                 Toast.LENGTH_LONG,
                 ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -129,7 +129,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
             Log.e(source, message)
             if (isDisplay) {
                 ApplicationUtils.showToast(
-                    ApplicationSpecialist.instance,
+                    ApplicationSpecialist.appContext,
                     message,
                     Toast.LENGTH_LONG,
                     ApplicationUtils.MESSAGE_TYPE_ERROR
@@ -141,7 +141,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(error: ExtError) {
         if (error.hasError()) {
             ApplicationUtils.showToast(
-                ApplicationSpecialist.instance,
+                ApplicationSpecialist.appContext,
                 error.getErrorText(),
                 Toast.LENGTH_LONG,
                 ApplicationUtils.MESSAGE_TYPE_ERROR

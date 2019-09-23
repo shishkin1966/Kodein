@@ -8,7 +8,7 @@ import android.os.Handler
  * @param delay задержка, после которой запустится действие
  * @param skip  количество событий, которое будет пропущено перед запуском задержки
  */
-open class Debounce (delay: Long, skip: Int = 0) : Runnable {
+open class Debounce(delay: Long, skip: Int = 0) : Runnable {
 
     private var _delay: Long = 5000 //5 sec
     private var _skip = 0

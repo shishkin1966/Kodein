@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
-import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.Secretary
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
 
@@ -48,10 +47,9 @@ class ObjectObservable : AbsObservable() {
         }
     }
 
-
     override fun onChange(obj: Any) {
-        if (obj is INamed) {
-            val observers = objects[obj.getName()]
+        if (obj is String) {
+            val observers = objects[obj]
             if (observers != null) {
                 for (name in observers) {
                     val observer = getObserver(name)

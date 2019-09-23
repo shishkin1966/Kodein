@@ -13,11 +13,11 @@ import java.util.*
 
 class EditTextDecimalObservable(observer: Observer, view: EditText, delay: Long = 500) :
     EditTextObservable(observer, view, delay) {
-    private var isEditing = false
+    private var _isEditing = false
 
     override fun afterTextChanged(s: Editable) {
-        if (isEditing) return
-        isEditing = true
+        if (_isEditing) return
+        _isEditing = true
 
         var str: String? = s.toString().replace(",", ".")
         str = str?.getNumbers()?.left(13)
@@ -37,7 +37,7 @@ class EditTextDecimalObservable(observer: Observer, view: EditText, delay: Long 
         }
         super.afterTextChanged(s)
 
-        isEditing = false
+        _isEditing = false
     }
 
 }

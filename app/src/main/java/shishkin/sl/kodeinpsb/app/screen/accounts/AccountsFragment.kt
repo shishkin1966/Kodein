@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.app.screen.accounts
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -19,7 +17,6 @@ import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
-import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
 
 
 class AccountsFragment : AbsContentFragment(), View.OnClickListener {
@@ -119,7 +116,7 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         }
     }
 
-    override fun onBackPressed() : Boolean  {
+    override fun onBackPressed(): Boolean {
         onBackPressedPresenter.onClick()
         return true
     }

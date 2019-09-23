@@ -78,4 +78,8 @@ class App : ApplicationSpecialist() {
     fun getDbProvider(): IDbProvider? {
         return get<IDbProvider>(DbProvider.NAME)
     }
+
+    fun getObservableUnion(): IObservableUnion? {
+        return get<IObservableUnion>(ObservableUnion.NAME)
+    }
 }

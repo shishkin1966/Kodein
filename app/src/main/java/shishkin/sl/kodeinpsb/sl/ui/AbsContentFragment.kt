@@ -10,12 +10,12 @@ abstract class AbsContentFragment : AbsFragment(), OnBackPressListener {
 
         val fragmentManager = childFragmentManager
         val children = fragmentManager.fragments
-            for (child in children) {
-                if (child != null && (child is OnBackPressListener)) {
-                    backPressedHandled =
-                        backPressedHandled or (child as OnBackPressListener).onBackPressed()
-                }
+        for (child in children) {
+            if (child != null && (child is OnBackPressListener)) {
+                backPressedHandled =
+                    backPressedHandled or (child as OnBackPressListener).onBackPressed()
             }
+        }
         return backPressedHandled
     }
 
