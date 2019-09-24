@@ -4,8 +4,8 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import com.google.common.base.Strings.isNullOrEmpty
-
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun CharSequence.isNullOrEmpty(): Boolean {
@@ -278,4 +278,10 @@ fun String.allTrim(): String {
     return if (this.isNullOrEmpty()) {
         ""
     } else this.trim()
+}
+
+fun Long.formatDateShortRu(): String {
+    val date = Date(this)
+    val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    return formatter.format(date)
 }

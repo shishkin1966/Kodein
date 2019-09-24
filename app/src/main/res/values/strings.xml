@@ -24,5 +24,7 @@
     <string name="fragment_open_account_transaction_balance_subtitle">Баланс по счету</string>
     <string name="fragment_open_account_transaction_balance_value_hint">Например: 100000</string>
 
+    <string name="fragment_account_open_date_format">Открыт</string>
+    <string name="fragment_account_balance">Баланс</string>
 
 </resources>

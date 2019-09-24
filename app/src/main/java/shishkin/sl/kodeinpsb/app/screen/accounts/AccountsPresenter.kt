@@ -7,6 +7,7 @@ import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
 import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.create_account.CreateAccountFragment
+import shishkin.sl.kodeinpsb.app.screen.view_account.ViewAccountFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.*
@@ -16,6 +17,8 @@ import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 
 class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener,
@@ -136,7 +139,10 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     private fun viewAccount(account: Account) {
-
+        val activity = getView<AccountsFragment>()?.activity
+        if (activity != null) {
+            (activity as AbsContentActivity).showFragment(ViewAccountFragment.newInstance(account), true)
+        }
     }
 
 }
