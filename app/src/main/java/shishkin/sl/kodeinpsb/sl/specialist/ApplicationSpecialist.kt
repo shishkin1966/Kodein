@@ -36,7 +36,15 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
         isExit = true
 
         if (serviceLocator != null) {
+            toBackground()
             serviceLocator?.stop()
+        }
+    }
+
+    override fun toBackground() {
+        val union = serviceLocator?.get<ActivityUnion>(ActivityUnion.NAME)
+        if (union != null) {
+            union.getRouter()?.toBackground()
         }
     }
 
@@ -54,10 +62,6 @@ open class ApplicationSpecialist : Application(), IApplicationSpecialist {
 
     override fun isExit(): Boolean {
         return isExit
-    }
-
-    override fun isKillOnFinish(): Boolean {
-        return true
     }
 
 }

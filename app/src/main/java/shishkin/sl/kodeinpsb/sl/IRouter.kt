@@ -109,4 +109,10 @@ interface IRouter : ISpecialistSubscriber {
      */
     fun isCurrentFragment(name: String): Boolean
 
+    /**
+     * Отправить приложение в фон
+     *
+     */
+    fun toBackground()
+
 }

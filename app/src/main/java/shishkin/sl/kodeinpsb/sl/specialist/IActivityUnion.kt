@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
+import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.IUnion
 import shishkin.sl.kodeinpsb.sl.action.IActionListener
 import shishkin.sl.kodeinpsb.sl.ui.IActivity
@@ -101,4 +102,11 @@ interface IActivityUnion : IUnion<IActivity>, IActionListener {
      */
     fun grantPermission(listener: String, permission: String, helpMessage: String)
 
+
+    /**
+     * Получить роутер
+     *
+     * @return роутер
+     */
+    fun getRouter() : IRouter?
 }

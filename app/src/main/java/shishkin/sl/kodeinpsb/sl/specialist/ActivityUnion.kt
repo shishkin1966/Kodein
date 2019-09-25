@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsUnion
+import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.ShowDialogAction
@@ -84,17 +85,15 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
 
     override fun onUnRegisterLastSubscriber() {
         if (ApplicationSpecialist.instance.isExit()) {
-            if (ApplicationSpecialist.instance.isKillOnFinish()) {
-                val serviceLocator = ApplicationSpecialist.serviceLocator
-                if (serviceLocator != null) {
-                    for (specialist in serviceLocator.getSpecialists()) {
-                        if (specialist !is IActivityUnion && specialist !is IApplicationSpecialist) {
-                            specialist.stop()
-                        }
+            val serviceLocator = ApplicationSpecialist.serviceLocator
+            if (serviceLocator != null) {
+                for (specialist in serviceLocator.getSpecialists()) {
+                    if (specialist !is IActivityUnion && specialist !is IApplicationSpecialist) {
+                        specialist.stop()
                     }
                 }
-                android.os.Process.killProcess(android.os.Process.myPid())
             }
+            android.os.Process.killProcess(android.os.Process.myPid())
         }
     }
 
@@ -249,5 +248,17 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
         }
     }
 
+    override fun getRouter(): IRouter? {
+        val subscriber = getCurrentSubscriber()
+        if (subscriber is IRouter) {
+            return subscriber
+        }
+        for (activity in getSubscribers()) {
+            if (activity is IRouter) {
+                return activity
+            }
+        }
+        return null
+    }
 
 }

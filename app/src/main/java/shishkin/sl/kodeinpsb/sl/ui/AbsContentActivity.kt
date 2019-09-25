@@ -146,5 +146,9 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
         return BackStack.isCurrentFragment(this, name)
     }
 
+    override fun toBackground() {
+        moveTaskToBack(true);
+    }
+
 
 }
