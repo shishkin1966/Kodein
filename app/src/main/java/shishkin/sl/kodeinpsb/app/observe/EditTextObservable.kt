@@ -34,9 +34,10 @@ open class EditTextObservable(observer: Observer, val view: EditText, delay: Lon
         this.debounce = object : Debounce(delay) {
             override fun run() {
                 if (this@EditTextObservable.observer.get() != null) {
-                    this@EditTextObservable.observer.get()?.update(this@EditTextObservable, view.text.toString());
+                    this@EditTextObservable.observer.get()
+                        ?.update(this@EditTextObservable, view.text.toString())
                 } else {
-                    finish();
+                    finish()
                 }
             }
         }

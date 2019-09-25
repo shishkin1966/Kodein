@@ -33,14 +33,12 @@ class RequestThreadPoolExecutor(
 
     fun addRequest(request: IRequest) {
         var action = ACTION_NOTHING
-        if (request.isDistinct()) {
-            if (requests.containsKey(request.getName())) {
-                val oldRequest = requests.get(request.getName())
-                if (oldRequest != null) {
-                    action = request.getAction(oldRequest)
-                    if (action == ACTION_DELETE) {
-                        oldRequest.setCanceled()
-                    }
+        if (request.isDistinct() && requests.containsKey(request.getName())) {
+            val oldRequest = requests.get(request.getName())
+            if (oldRequest != null) {
+                action = request.getAction(oldRequest)
+                if (action == ACTION_DELETE) {
+                    oldRequest.setCanceled()
                 }
             }
         }
@@ -83,7 +81,7 @@ class RequestThreadPoolExecutor(
     override fun cancelRequests(listener: String) {
         for (request in requests.values()) {
             if (request is IResultMessageRequest) {
-                if (request.validate() && request.getOwner() == listener) {
+                if (request.isValid() && request.getOwner() == listener) {
                     request.setCanceled()
                 }
             }
@@ -93,7 +91,7 @@ class RequestThreadPoolExecutor(
     override fun cancelRequests(listener: String, taskName: String) {
         for (request in requests.values()) {
             if (request is IResultMessageRequest) {
-                if (request.validate() && request.getOwner() == listener && taskName == request.getName()) {
+                if (request.isValid() && request.getOwner() == listener && taskName == request.getName()) {
                     request.setCanceled()
                 }
             }

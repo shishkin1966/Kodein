@@ -25,8 +25,9 @@ import java.util.*
 
 class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelectedListener<String>,
     View.OnClickListener, Observer {
-
     companion object {
+        const val NAME = "CreateAccountFragment"
+
         fun newInstance(): CreateAccountFragment {
             return CreateAccountFragment()
         }
@@ -146,5 +147,10 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
             openAccountButton?.isEnabled = false
         }
     }
+
+    override fun getName(): String {
+        return NAME
+    }
+
 }
 

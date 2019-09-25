@@ -25,7 +25,7 @@ class CreateAccountRequest(private val account: Account) : AbsRequest() {
         val db = ApplicationSingleton.instance.getDbProvider()!!.getDb<Db>()
         if (db != null) {
             try {
-                db.getDao().insertAccount(account);
+                db.getDao().insertAccount(account)
                 val observable =
                     ApplicationSingleton.instance.getObservableUnion()?.getObservable(
                         ObjectObservable.NAME

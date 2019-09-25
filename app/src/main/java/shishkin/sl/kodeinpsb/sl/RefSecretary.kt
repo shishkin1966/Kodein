@@ -21,7 +21,7 @@ class RefSecretary<T> : ISecretary<T> {
     }
 
     override fun put(key: String, value: T): T? {
-        subscribers.put(key, WeakReference(value))
+        subscribers[key] = WeakReference(value)
         return get(key)
     }
 
@@ -32,7 +32,7 @@ class RefSecretary<T> : ISecretary<T> {
 
     override operator fun get(key: String): T? {
         checkNull()
-        return subscribers.get(key)?.get()
+        return subscribers[key]?.get()
     }
 
     override fun values(): List<T> {

@@ -2,11 +2,11 @@ package shishkin.sl.kodeinpsb.sl.state
 
 import java.lang.ref.WeakReference
 
-class StateObserver : IStateable {
+class StateObserver(listener: IStateListener?) : IStateable {
     private var _state = State.STATE_CREATE
     private var _listener: WeakReference<IStateListener>? = null
 
-    constructor(listener: IStateListener?) {
+    init {
         if (listener != null) {
             _listener = WeakReference(listener)
         }
@@ -35,9 +35,6 @@ class StateObserver : IStateable {
             State.STATE_READY -> onReadyView()
 
             State.STATE_DESTROY -> onDestroyView()
-
-            else -> {
-            }
         }
     }
 

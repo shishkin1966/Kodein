@@ -22,12 +22,12 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
         return _ref.get()
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return _ref.get() != null && _ref.get()!!.isValid() && !isCancelled()
     }
 
     override fun run() {
-        if (validate()) {
+        if (isValid()) {
             try {
                 getOwner()?.response(
                     ExtResult().setName(getName()).setData(

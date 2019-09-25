@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 
 
 class AccountsData {
-    var sort = 0
+    private var sort = 0
     var filter: String? = null
     var accounts: List<Account> = ArrayList<Account>()
     var currencies: List<String> = ArrayList<String>()

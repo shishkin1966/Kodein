@@ -2,9 +2,12 @@ package shishkin.sl.kodeinpsb.app.screen.accounts
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
+import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
+import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.create_account.CreateAccountFragment
+import shishkin.sl.kodeinpsb.app.screen.view_account.ViewAccountFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.*
@@ -14,6 +17,7 @@ import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 
 class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener,
@@ -48,14 +52,20 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     private fun getData() {
         getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
         Provider.getAccounts(NAME)
+        Provider.getBalance(NAME)
     }
 
     override fun response(result: ExtResult) {
-        getView<AccountsFragment>()?.addAction(HideProgressBarAction());
+        getView<AccountsFragment>()?.addAction(HideProgressBarAction())
         if (!result.hasError()) {
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
                     data?.accounts = result.getData() as List<Account>
+                    getView<AccountsFragment>()
+                        ?.addAction(DataAction(Actions.RefreshViews, data))
+                }
+                GetBalanceRequest.NAME -> {
+                    data?.balance = result.getData() as List<Balance>
                     getView<AccountsFragment>()
                         ?.addAction(DataAction(Actions.RefreshViews, data))
                 }
@@ -91,7 +101,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             getName(),
             "Unknown action:$action",
             true
-        );
+        )
         return false
     }
 
@@ -128,7 +138,13 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     private fun viewAccount(account: Account) {
-
+        val activity = getView<AccountsFragment>()?.activity
+        if (activity != null) {
+            (activity as AbsContentActivity).showFragment(
+                ViewAccountFragment.newInstance(account),
+                true
+            )
+        }
     }
 
 }

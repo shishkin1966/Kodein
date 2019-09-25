@@ -10,10 +10,10 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 
 @Dao
 interface Dao {
-    @Query("SELECT * FROM " + Account.TABLE + " ORDER BY " + Account.Companion.COLUMNS.friendlyName + " ASC")
+    @Query("SELECT * FROM " + Account.TABLE + " ORDER BY " + Account.CREATOR.COLUMNS.friendlyName + " ASC")
     fun getAccounts(): List<Account>
 
-    @Query("SELECT " + Account.Companion.COLUMNS.currency + " as currency, sum(" + Account.Companion.COLUMNS.balance + ") as balance FROM " + Account.TABLE + " GROUP BY " + Account.Companion.COLUMNS.currency)
+    @Query("SELECT " + Account.CREATOR.COLUMNS.currency + " as currency, sum(" + Account.CREATOR.COLUMNS.balance + ") as balance FROM " + Account.TABLE + " GROUP BY " + Account.CREATOR.COLUMNS.currency)
     fun getBalance(): List<Balance>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)

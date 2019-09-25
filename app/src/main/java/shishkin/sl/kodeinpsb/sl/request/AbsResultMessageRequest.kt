@@ -20,7 +20,7 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
         _owner = owner
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return !isCancelled()
     }
 
@@ -45,7 +45,7 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
     }
 
     override fun run() {
-        if (validate()) {
+        if (isValid()) {
             var result: ExtResult
             try {
                 result = ExtResult().setName(getName()).setData(getData()).setError(getError())

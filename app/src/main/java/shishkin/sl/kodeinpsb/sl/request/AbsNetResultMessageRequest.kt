@@ -16,7 +16,7 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
     constructor(owner: String) : super(owner)
 
     override fun run() {
-        if (!validate()) return
+        if (!isValid()) return
         val union = ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         if (union == null) return
 
@@ -24,7 +24,7 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
             .map({ t: T -> ExtResult(t) })
             .subscribe(
                 { result: ExtResult ->
-                    if (validate() && result.getData() != null) {
+                    if (isValid() && result.getData() != null) {
                         union.addNotMandatoryMessage(
                             ResultMessage(
                                 getOwner(),
@@ -35,7 +35,7 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
                         )
                     }
                 }, { throwable: Throwable ->
-                    if (validate()) {
+                    if (isValid()) {
                         val result = ExtResult().setError(
                             ExtError().addError(
                                 getName(),
