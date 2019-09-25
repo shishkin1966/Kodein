@@ -27,4 +27,7 @@
     <string name="fragment_account_open_date_format">Открыт</string>
     <string name="fragment_account_balance">Баланс</string>
 
+    <string name="location_error">Ошибка геолокации. Попробуйте еще раз</string>
+    <string name="restart_location">Перегрузите устройство. Не работатает служба получения адреса</string>
+
 </resources>
