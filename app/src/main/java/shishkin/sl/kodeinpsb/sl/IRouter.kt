@@ -101,4 +101,12 @@ interface IRouter : ISpecialistSubscriber {
      */
     fun getContentResId(): Int
 
+    /**
+     * Проверить является ли фрагмент текущим
+     *
+     * @param name имя фрагмента
+     * @return true - фрагмент является текущим
+     */
+    fun isCurrentFragment(name: String): Boolean
+
 }

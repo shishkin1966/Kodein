@@ -142,5 +142,9 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
         return R.id.content
     }
 
+    override fun isCurrentFragment(name: String): Boolean {
+        return BackStack.isCurrentFragment(this, name)
+    }
+
 
 }

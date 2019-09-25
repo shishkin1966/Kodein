@@ -51,7 +51,7 @@ interface IRequest : Runnable, INamed, Comparable<IRequest> {
      *
      * @return true - запрос может обеспечивать свою функциональность
      */
-    fun validate(): Boolean
+    fun isValid(): Boolean
 
     /**
      * Проверить является ли запрос уникальным

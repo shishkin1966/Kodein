@@ -18,8 +18,8 @@ import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
 class ViewAccountFragment : AbsContentFragment() {
-
     companion object {
+        const val NAME = "ViewAccountFragment"
         const val ACCOUNT = "ACCOUNT"
 
         fun newInstance(account: Account): ViewAccountFragment {
@@ -44,7 +44,8 @@ class ViewAccountFragment : AbsContentFragment() {
         account = arguments?.getParcelable(ACCOUNT)
         if (account != null) {
             findView<TextView>(R.id.title)?.text = account?.friendlyName
-            findView<TextView>(R.id.balanceView)?.text = "${account?.balance?.double2String()?.trimZero()} ${account?.currency}"
+            findView<TextView>(R.id.balanceView)?.text =
+                "${account?.balance?.double2String()?.trimZero()} ${account?.currency}"
             findView<TextView>(R.id.openDateView)?.text =
                 "${getString(R.string.fragment_account_open_date_format)}  ${account?.openDate?.formatDateShortRu()}"
         }
@@ -69,6 +70,10 @@ class ViewAccountFragment : AbsContentFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_view_account, container, false)
+    }
+
+    override fun getName(): String {
+        return NAME
     }
 
 }

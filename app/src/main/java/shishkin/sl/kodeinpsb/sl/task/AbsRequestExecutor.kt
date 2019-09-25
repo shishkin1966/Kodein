@@ -50,8 +50,8 @@ abstract class AbsRequestExecutor : IRequestExecutor, ISpecialist {
         return false
     }
 
-    override operator fun compareTo(o: ISpecialist): Int {
-        return if (o is IExecutor) 0 else 1
+    override operator fun compareTo(other: ISpecialist): Int {
+        return if (other is IExecutor) 0 else 1
     }
 
 

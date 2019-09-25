@@ -20,10 +20,10 @@ import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
-
-
 class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
+        const val NAME = "AccountsFragment"
+
         fun newInstance(): AccountsFragment {
             return AccountsFragment()
         }
@@ -140,6 +140,10 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         if (list == null) return
 
         balanceAdapter.setItems(list)
+    }
+
+    override fun getName(): String {
+        return NAME
     }
 
 }

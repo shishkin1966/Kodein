@@ -3,7 +3,6 @@ package shishkin.sl.kodeinpsb.common
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import com.google.common.base.Strings.isNullOrEmpty
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -255,7 +254,7 @@ fun String.trimZero(): String? {
     }
     return if (length == 0) {
         ""
-    } else this.mid( 0, length)
+    } else this.mid(0, length)
 }
 
 fun String.trimAllZero(): String? {

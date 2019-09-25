@@ -6,6 +6,7 @@ import android.os.Bundle
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
+import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.sidemenu.SideMenuFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -18,7 +19,6 @@ import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
 class MainActivity : AbsContentActivity() {
-
     private val actionHandler = ActivityActionHandler(this)
     private var menu: SlidingMenu? = null
 
@@ -26,6 +26,15 @@ class MainActivity : AbsContentActivity() {
         if (!isValid()) return false
 
         if (actionHandler.onAction(action)) return true
+
+        if (action is HideSideMenuAction) {
+            if (menu != null) {
+                if (menu!!.isMenuShowing) {
+                    menu?.showContent();
+                }
+            }
+            return true
+        }
 
         ApplicationSingleton.instance.onError(
             getName(),

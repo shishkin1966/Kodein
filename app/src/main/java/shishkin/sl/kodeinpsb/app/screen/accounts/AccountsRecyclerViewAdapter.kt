@@ -55,7 +55,7 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAda
         }
 
         fun bind(item: Account) {
-            friendlyNameView?.text  = item.friendlyName
+            friendlyNameView?.text = item.friendlyName
             balanceView?.text = "${item.balance?.double2String()?.trimZero()} ${item.currency}"
             layout?.setOnClickListener {
                 val presenter =

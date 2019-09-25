@@ -38,10 +38,9 @@ abstract class AbsPresenter() : IPresenter {
 
         doActions()
 
-        val union = ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-        if (union != null) {
-            union.readMessages(this)
-        }
+        ApplicationSpecialist.serviceLocator?.
+            get<IMessengerUnion>(MessengerUnion.NAME)?.
+            readMessages(this)
 
         onStart()
     }
@@ -54,10 +53,10 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun <M : IModel> getModel(): M? {
-        if (_model == null) {
-            return null
+        return if (_model == null) {
+            null
         } else {
-            return _model as M
+            _model as M
         }
     }
 

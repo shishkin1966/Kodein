@@ -29,10 +29,8 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
 
     override fun unregister(subscriber: T) {
         val cnt = secretary.size()
-        if (secretary.containsKey(subscriber.getName())) {
-            if (subscriber.equals(secretary.get(subscriber.getName()))) {
-                secretary.remove(subscriber.getName())
-            }
+        if (secretary.containsKey(subscriber.getName()) && subscriber == secretary.get(subscriber.getName())) {
+            secretary.remove(subscriber.getName())
         }
 
         if (cnt == 1 && secretary.size() == 0) {
@@ -66,12 +64,10 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun getReadySubscribers(): List<T> {
         val subscribers = ArrayList<T>()
         for (subscriber in getSubscribers()) {
-            if (subscriber.isValid()) {
-                if (subscriber is IStateable) {
-                    val state = (subscriber as IStateable).getState()
-                    if (state == State.STATE_READY) {
-                        subscribers.add(subscriber)
-                    }
+            if (subscriber.isValid() && subscriber is IStateable) {
+                val state = (subscriber as IStateable).getState()
+                if (state == State.STATE_READY) {
+                    subscribers.add(subscriber)
                 }
             }
         }

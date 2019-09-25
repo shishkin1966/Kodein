@@ -1,14 +1,16 @@
 package shishkin.sl.kodeinpsb.app.screen.sidemenu
 
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
+import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.Actions
+import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
-import shishkin.sl.kodeinpsb.sl.action.HideProgressBarAction
-import shishkin.sl.kodeinpsb.sl.action.ShowMessageAction
+import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
@@ -22,6 +24,12 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
 
     companion object {
         const val NAME = "SideMenuPresenter"
+        const val ShowAccounts = "ShowAccounts"
+        const val ShowSetting = "ShowSetting"
+        const val ShowAddress = "ShowAddress"
+        const val ShowExchangeRates = "ShowExchangeRates"
+        const val ShowDigitalRates = "ShowDigitalRates"
+        const val ShowContact = "ShowContact"
     }
 
     private var data: SideMenuData? = null
@@ -85,4 +93,68 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
         return list
     }
 
+    override fun onAction(action: IAction): Boolean {
+        if (!isValid()) return false
+
+        if (action is ApplicationAction) {
+            val router = getView<SideMenuFragment>()?.activity as IRouter
+            when (action.getName()) {
+                ShowAccounts -> {
+                    if (!router.isCurrentFragment(AccountsFragment.NAME)) {
+                        router.switchToTopFragment()
+                    }
+                    return true
+                }
+
+                /*
+                ShowSetting -> {
+                    if (!router.isCurrentFragment(SettingFragment.NAME)) {
+                        router.showFragment(SettingFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowAddress -> {
+                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), MapFragment.NAME)) {
+                        router.showFragment(MapFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowExchangeRates -> {
+                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), ValCursFragment.NAME)) {
+                        router.showFragment(ValCursFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowDigitalsRates -> {
+                    if (!BackStack.isCurrentFragment(
+                            SLUtil.getActivity(),
+                            DigitalCurrenciesFragment.NAME
+                        )
+                    ) {
+                        router.showFragment(DigitalCurrenciesFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowContact -> {
+                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), ContactFragment.NAME)) {
+                        router.showFragment(ContactFragment.newInstance())
+                    }
+                    return true
+                }
+                 */
+            }
+        }
+
+
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:$action",
+            true
+        )
+        return false
+    }
 }

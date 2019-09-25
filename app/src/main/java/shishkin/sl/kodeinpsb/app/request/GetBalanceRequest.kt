@@ -1,7 +1,6 @@
 package shishkin.sl.kodeinpsb.app.request
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.db.Db
 import shishkin.sl.kodeinpsb.sl.request.AbsResultMessageRequest

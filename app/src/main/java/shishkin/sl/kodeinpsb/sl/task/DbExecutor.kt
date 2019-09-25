@@ -23,7 +23,7 @@ class DbExecutor : AbsRequestExecutor() {
         keepAliveTime,
         unit,
         queue as BlockingQueue<Runnable>
-    );
+    )
 
     override fun getExecutor(): RequestThreadPoolExecutor {
         return executor

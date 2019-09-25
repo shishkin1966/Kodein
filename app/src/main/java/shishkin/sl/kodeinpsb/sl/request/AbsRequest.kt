@@ -31,7 +31,7 @@ abstract class AbsRequest() : IRequest {
         _isCanceled = true
     }
 
-    override fun validate(): Boolean {
+    override fun isValid(): Boolean {
         return !isCancelled()
     }
 

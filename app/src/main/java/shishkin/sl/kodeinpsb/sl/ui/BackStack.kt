@@ -74,7 +74,7 @@ class BackStack {
             for (fragment in list) {
                 if (fragment is INamed) {
                     val abstractFragment = fragment as INamed
-                    if (name.equals(abstractFragment.getName())) {
+                    if (name == abstractFragment.getName()) {
                         if (fm.popBackStackImmediate(abstractFragment.getName(), 0)) {
                             return true
                         }
@@ -97,7 +97,7 @@ class BackStack {
                 val fragment = fm.findFragmentByTag(backStackEntry.name)
                 val onBackPressListener: OnBackPressListener?
                 if (fragment is OnBackPressListener) {
-                    onBackPressListener = fragment as OnBackPressListener
+                    onBackPressListener = fragment
                 } else {
                     onBackPressListener = null
                 }
@@ -179,7 +179,7 @@ class BackStack {
                 } else {
                     tag = fragment!!::class.simpleName
                 }
-                if (name.equals(tag)) {
+                if (name == tag) {
                     return true
                 }
             }

@@ -2,6 +2,7 @@ package shishkin.sl.kodeinpsb.sl.specialist
 
 import com.annimon.stream.function.Predicate
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.common.isNullOrEmpty
 import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.Secretary
@@ -59,15 +60,15 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
             .sorted(byId).toList()
     }
 
-    override fun clearMessages(name: String) {
+    override fun clearMessages(subscriber: String) {
         if (messages.isEmpty()) {
             return
         }
 
         val list = ApplicationUtils.filter(
             messages.values,
-            Predicate { message -> message.contains(name) }).toList()
-        if (!list.isEmpty()) {
+            Predicate { message -> message.contains(subscriber) }).toList()
+        if (list.isNotEmpty()) {
             for (message in list) {
                 messages.remove(message.getMessageId())
             }
@@ -75,7 +76,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     }
 
     override fun clearMessages() {
-        messages.clear();
+        messages.clear()
     }
 
     override operator fun compareTo(other: ISpecialist): Int {
@@ -85,7 +86,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun addMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        if (!message.getAddress().isNullOrBlank()) {
+        if (!message.getAddress().isNullOrEmpty()) {
             list.add(message.getAddress())
         }
         val addresses = ArrayList<String>()
@@ -101,10 +102,10 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
                 newMessage.setCopyTo(ArrayList())
 
                 if (!message.isCheckDublicate()) {
-                    messages.put(id, newMessage)
+                    messages[id] = newMessage
                 } else {
                     removeDublicate(newMessage)
-                    messages.put(id, newMessage)
+                    messages[id] = newMessage
                 }
 
                 checkAndReadMessagesSubscriber(address)
@@ -114,24 +115,20 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
 
     private fun checkAndReadMessagesSubscriber(address: String) {
         val subscriber = getSubscriber(address)
-        if (subscriber != null) {
-            if (address.equals(subscriber.getName())) {
-                val state = subscriber.getState()
-                if (state == State.STATE_READY) {
-                    readMessages(subscriber)
-                }
+        if (subscriber != null && address == subscriber.getName()) {
+            val state = subscriber.getState()
+            if (state == State.STATE_READY) {
+                readMessages(subscriber)
             }
         }
     }
 
     private fun checkSubscriber(address: String): IMessengerSubscriber? {
         val subscriber = getSubscriber(address)
-        if (subscriber != null) {
-            if (address.equals(subscriber.getName())) {
-                val state = subscriber.getState()
-                if (state == State.STATE_READY || state == State.STATE_NOT_READY) {
-                    return subscriber
-                }
+        if (subscriber != null && address == subscriber.getName()) {
+            val state = subscriber.getState()
+            if (state == State.STATE_READY || state == State.STATE_NOT_READY) {
+                return subscriber
             }
         }
         return null
@@ -163,8 +160,8 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun addNotMandatoryMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        if (!message.getAddress().isNullOrBlank()) {
-            list.add(message.getAddress()!!)
+        if (!message.getAddress().isNullOrEmpty()) {
+            list.add(message.getAddress())
         }
         val addresses = ArrayList<String>()
         for (address in list) {
@@ -183,8 +180,8 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun replaceMessage(message: IMessage) {
         val list = ArrayList<String>()
         list.addAll(message.getCopyTo())
-        if (!message.getAddress().isNullOrBlank()) {
-            list.add(message.getAddress()!!)
+        if (!message.getAddress().isNullOrEmpty()) {
+            list.add(message.getAddress())
         }
         val addresses = ArrayList<String>()
         for (address in list) {
@@ -198,14 +195,14 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
             newMessage.setCopyTo(ArrayList())
 
             removeDublicate(newMessage)
-            messages.put(id, newMessage)
+            messages[id] = newMessage
 
-            checkAndReadMessagesSubscriber(address);
+            checkAndReadMessagesSubscriber(address)
         }
     }
 
     override fun removeMessage(message: IMessage) {
-        messages.remove(message.getMessageId());
+        messages.remove(message.getMessageId())
     }
 
     override fun readMessages(subscriber: IMessengerSubscriber) {
@@ -220,22 +217,22 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     }
 
     override fun addMessagingList(name: String, addresses: List<String>) {
-        messagingList.put(name, addresses);
+        messagingList.put(name, addresses)
     }
 
     override fun addMessagingList(name: String, addresses: Array<String>) {
-        messagingList.put(name, addresses.toList());
+        messagingList.put(name, addresses.toList())
     }
 
     override fun removeMessagingList(name: String) {
-        messagingList.remove(name);
+        messagingList.remove(name)
     }
 
     override fun getMessagingList(name: String): List<String>? {
-        if (messagingList.containsKey(name)) {
-            return messagingList.get(name)
+        return if (messagingList.containsKey(name)) {
+            messagingList.get(name)
         } else {
-            return null
+            null
         }
     }
 

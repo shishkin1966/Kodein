@@ -1,8 +1,10 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-open class ApplicationAction(private val name: String) : IAction {
+import shishkin.sl.kodeinpsb.sl.INamed
 
-    fun getName(): String {
+open class ApplicationAction(private val name: String) : IAction, INamed {
+
+    override fun getName(): String {
         return name
     }
 }

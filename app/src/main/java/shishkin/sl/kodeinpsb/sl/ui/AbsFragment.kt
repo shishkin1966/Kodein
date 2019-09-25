@@ -102,9 +102,7 @@ abstract class AbsFragment : Fragment(), IFragment {
 
     override fun getRootView(): View? {
         val view = findView<View>(R.id.root)
-        return if (view != null) {
-            view
-        } else getView()
+        return view ?: getView()
     }
 
     override fun addStateObserver(stateable: IStateable) {
@@ -114,7 +112,7 @@ abstract class AbsFragment : Fragment(), IFragment {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: kotlin.IntArray
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -132,8 +130,7 @@ abstract class AbsFragment : Fragment(), IFragment {
     override fun onPermissionDenied(permission: String) {}
 
     override fun addAction(action: IAction) {
-        val state = getState()
-        when (state) {
+        when (getState()) {
             State.STATE_DESTROY -> return
 
             State.STATE_CREATE, State.STATE_NOT_READY -> {
@@ -151,7 +148,7 @@ abstract class AbsFragment : Fragment(), IFragment {
     private fun doActions() {
         val deleted = ArrayList<IAction>()
         for (i in actions.indices) {
-            if (getState() !== State.STATE_READY) {
+            if (getState() != State.STATE_READY) {
                 break
             }
             onAction(actions[i])
@@ -163,10 +160,6 @@ abstract class AbsFragment : Fragment(), IFragment {
     }
 
     override fun onStopSpecialist(specialist: ISpecialist) {
-    }
-
-    override fun getName(): String {
-        return this::class.java.simpleName
     }
 
 }

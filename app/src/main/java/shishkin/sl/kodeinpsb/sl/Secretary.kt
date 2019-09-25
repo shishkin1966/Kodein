@@ -25,7 +25,7 @@ class Secretary<T>() : ISecretary<T> {
     }
 
     override operator fun get(key: String): T? {
-        return subscribers.get(key)
+        return subscribers[key]
     }
 
     override fun values(): List<T> {

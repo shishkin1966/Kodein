@@ -70,11 +70,9 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(), IObservableUnion
     }
 
     override fun unregister(observable: IObservable): Boolean {
-        if (secretary.containsKey(observable.getName())) {
-            if (observable == secretary.get(observable.getName())) {
-                secretary.remove(observable.getName())
-                return true
-            }
+        if (secretary.containsKey(observable.getName()) && observable == secretary.get(observable.getName())) {
+            secretary.remove(observable.getName())
+            return true
         }
         return false
     }

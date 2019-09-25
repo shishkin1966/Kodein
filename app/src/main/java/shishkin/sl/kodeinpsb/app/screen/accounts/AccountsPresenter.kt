@@ -17,7 +17,6 @@ import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
-import shishkin.sl.kodeinpsb.sl.ui.AbsActivity
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 
@@ -141,7 +140,10 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     private fun viewAccount(account: Account) {
         val activity = getView<AccountsFragment>()?.activity
         if (activity != null) {
-            (activity as AbsContentActivity).showFragment(ViewAccountFragment.newInstance(account), true)
+            (activity as AbsContentActivity).showFragment(
+                ViewAccountFragment.newInstance(account),
+                true
+            )
         }
     }
 

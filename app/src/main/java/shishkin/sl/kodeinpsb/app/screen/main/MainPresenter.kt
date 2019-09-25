@@ -1,6 +1,8 @@
 package shishkin.sl.kodeinpsb.app.screen.main
 
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.SnackBarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
@@ -28,8 +30,17 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
             }
             return true
         }
+        if (action is HideSideMenuAction) {
+            getView<MainActivity>()?.addAction(action)
+            return true
+        }
 
-        return true
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:$action",
+            true
+        )
+        return false
     }
 
 }
