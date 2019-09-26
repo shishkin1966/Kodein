@@ -64,7 +64,9 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun response(result: ExtResult) {
         getView<DigitalCurrenciesFragment>()?.addAction(HideProgressBarAction())
         if (!result.hasError()) {
-            data?.tickers = result.getData() as List<Ticker>
+            val list = ArrayList<Ticker>()
+            list.addAll(result.getData() as List<Ticker>)
+            data?.tickers = list
             getView<DigitalCurrenciesFragment>()
                 ?.addAction(DataAction(Actions.RefreshViews, data))
         } else {

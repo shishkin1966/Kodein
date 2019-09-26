@@ -5,50 +5,50 @@ import com.google.gson.annotations.SerializedName
 
 class Ticker {
     @SerializedName("id")
-    private val id: String? = null
+    var id: String? = null
 
     @SerializedName("name")
-    private val name: String? = null
+    var name: String? = null
 
     @SerializedName("symbol")
-    private val symbol: String? = null
+    var symbol: String? = null
 
     @SerializedName("rank")
-    private val rank: String? = null
+    var rank: String? = null
 
     @SerializedName("price_usd")
-    private val priceUsd: String? = null
+    var priceUsd: String? = null
 
     @SerializedName("price_btc")
-    private val priceBtc: String? = null
+    var priceBtc: String? = null
 
     @SerializedName("24h_volume_usd")
-    private val volumeUsd: String? = null
+    var volumeUsd: String? = null
 
     @SerializedName("market_cap_usd")
-    private val marketCapUsd: String? = null
+    var marketCapUsd: String? = null
 
     @SerializedName("available_supply")
-    private val availableSupply: String? = null
+    var availableSupply: String? = null
 
     @SerializedName("total_supply")
-    private val totalSupply: String? = null
+    var totalSupply: String? = null
 
     @SerializedName("max_supply")
-    private val maxSupply: String? = null
+    var maxSupply: String? = null
 
     @SerializedName("percent_change_1h")
-    private val percentChange1h: String? = null
+    var percentChange1h: String? = null
 
     @SerializedName("percent_change_24h")
-    private val percentChange24h: String? = null
+    var percentChange24h: String? = null
 
     @SerializedName("percent_change_7d")
-    private val percentChange7d: String? = null
+    var percentChange7d: String? = null
 
     @SerializedName("last_updated")
-    private val lastUpdated: String? = null
+    var lastUpdated: String? = null
 
     @SerializedName("favorite")
-    private val favorite: Int = 0
+    var favorite: Int = 0
 }

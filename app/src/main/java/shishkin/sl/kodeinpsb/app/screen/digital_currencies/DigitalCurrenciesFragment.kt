@@ -13,6 +13,11 @@ import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import shishkin.sl.kodeinpsb.sl.action.DataAction
+import microservices.shishkin.example.data.Ticker
 
 
 class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -26,6 +31,8 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
 
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private val actionHandler = FragmentActionHandler(this)
+    private var recyclerView: RecyclerView? = null
+    private val adapter: TickerRecyclerViewAdapter = TickerRecyclerViewAdapter()
 
     override fun createModel(): IModel {
         return DigitalCurrenciesModel(this)
@@ -51,6 +58,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         swipeRefreshLayout?.setProgressBackgroundColorSchemeResource(R.color.gray_light);
         swipeRefreshLayout?.setOnRefreshListener(this);
 
+        recyclerView = findView(R.id.list)
+        recyclerView?.layoutManager = LinearLayoutManager(activity)
+        recyclerView?.itemAnimator = DefaultItemAnimator()
+        recyclerView?.adapter = adapter
     }
 
     override fun onRefresh() {
@@ -64,6 +75,15 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
 
+        if (action is DataAction<*>) {
+            when (action.getName()) {
+                Actions.RefreshViews -> {
+                    refreshViews(action.getData() as TickerData?)
+                    return true
+                }
+            }
+        }
+
         if (actionHandler.onAction(action)) return true
 
         ApplicationSingleton.instance.onError(
@@ -73,4 +93,17 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         )
         return false
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        //observable.finish()
+        recyclerView?.adapter = null
+    }
+
+    private fun refreshViews(viewData: TickerData?) {
+        if (viewData == null) return
+        adapter.setItems(viewData.getData())
+    }
+
 }
