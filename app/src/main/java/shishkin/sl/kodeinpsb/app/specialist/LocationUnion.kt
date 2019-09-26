@@ -2,31 +2,22 @@ package shishkin.sl.kodeinpsb.app.specialist
 
 import android.Manifest
 import android.location.Address
-import android.location.Location
-import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
-import shishkin.sl.kodeinpsb.sl.ISpecialist
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationAvailability
-import com.google.android.gms.location.LocationCallback
 import android.location.Geocoder
-import android.os.Bundle
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.FusedLocationProviderClient
+import android.location.Location
+import android.os.Looper
+import com.google.android.gms.location.*
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.common.Connectivity
+import shishkin.sl.kodeinpsb.sl.AbsSmallUnion
+import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.ShowMessageAction
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import java.util.concurrent.TimeUnit
-import android.os.Looper
 import java.util.*
-import shishkin.sl.kodeinpsb.common.Connectivity
+import java.util.concurrent.TimeUnit
 
-class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
 
     companion object {
         const val NAME = "LocationUnion"
@@ -36,7 +27,6 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
         private val SMALLEST_DISPLACEMENT = 20f
     }
 
-    private var googleApiClient: GoogleApiClient? = null
     private var locationProviderClient: FusedLocationProviderClient? = null
     private var location: Location? = null
     private var locationCallback: LocationCallback? = null
@@ -58,8 +48,12 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
             override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
                 if (!locationAvailability!!.isLocationAvailable) {
                     val context = ApplicationSpecialist.appContext
-                    ApplicationSingleton.instance.getActivityUnion()?.
-                        addAction(ShowMessageAction(context.getString(R.string.location_error),ApplicationUtils.MESSAGE_TYPE_WARNING))
+                    ApplicationSingleton.instance.getActivityUnion()?.addAction(
+                        ShowMessageAction(
+                            context.getString(R.string.location_error),
+                            ApplicationUtils.MESSAGE_TYPE_WARNING
+                        )
+                    )
                 }
             }
 
@@ -68,22 +62,15 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
             }
         }
 
-        googleApiClient = GoogleApiClient.Builder(ApplicationSpecialist.appContext)
-            .addApi(LocationServices.API)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .build()
-        googleApiClient?.connect()
+        locationRequest = LocationRequest.create()
+        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        locationRequest?.interval = POLLING_FREQ
+        locationRequest?.fastestInterval = FASTEST_UPDATE_FREQ
+        locationRequest?.smallestDisplacement = SMALLEST_DISPLACEMENT
     }
 
     override fun onRegisterFirstSubscriber() {
-        if (ApplicationUtils.checkPermission(
-                ApplicationSpecialist.appContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            startLocation()
-        }
+        startLocation()
     }
 
     override fun onUnRegisterLastSubscriber() {
@@ -103,27 +90,26 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
 
         isRuning = true
 
-        ApplicationUtils.runOnUiThread(Runnable{
+        ApplicationUtils.runOnUiThread(Runnable {
             val context = ApplicationSpecialist.appContext
-            if (ApplicationUtils.checkPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+            if (locationRequest != null && locationCallback != null) {
+                isGetLocation = false
+                locationProviderClient =
+                    LocationServices.getFusedLocationProviderClient(context)
+                locationProviderClient?.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    Looper.myLooper()
                 )
-            ) {
-                if (locationRequest != null && locationCallback != null) {
-                    isGetLocation = false
-                    locationProviderClient =
-                        LocationServices.getFusedLocationProviderClient(context)
-                    locationProviderClient?.requestLocationUpdates(
-                        locationRequest,
-                        locationCallback,
-                        Looper.myLooper()
-                    )
-                        ?.addOnFailureListener { e -> ApplicationSingleton.instance.onError(NAME, e) }
-
-                    if (geocoder == null) {
-                        geocoder = Geocoder(context, Locale.getDefault())
+                    ?.addOnFailureListener { e ->
+                        ApplicationSingleton.instance.onError(
+                            NAME,
+                            e
+                        )
                     }
+
+                if (geocoder == null) {
+                    geocoder = Geocoder(context, Locale.getDefault())
                 }
             }
         })
@@ -135,8 +121,8 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
 
     override fun stopLocation() {
         isRuning = false
-            locationProviderClient?.removeLocationUpdates(locationCallback)
-            locationProviderClient = null
+        locationProviderClient?.removeLocationUpdates(locationCallback)
+        locationProviderClient = null
     }
 
     override fun getLocation(): Location? {
@@ -158,16 +144,20 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
         val list = ArrayList<Address>()
         if (Connectivity.isNetworkConnectedOrConnecting(ApplicationSpecialist.appContext) && geocoder != null && Geocoder.isPresent()) {
             try {
-                    val adr = geocoder?.getFromLocation(
-                        location.latitude,
-                        location.longitude,
-                        cnt
-                    )
+                val adr = geocoder?.getFromLocation(
+                    location.latitude,
+                    location.longitude,
+                    cnt
+                )
                 if (adr != null) {
                     list.addAll(adr)
                 }
             } catch (e: Exception) {
-                ApplicationSingleton.instance.onError(NAME, ApplicationSpecialist.appContext.getString(R.string.restart_location), true)
+                ApplicationSingleton.instance.onError(
+                    NAME,
+                    ApplicationSpecialist.appContext.getString(R.string.restart_location),
+                    true
+                )
             }
         }
         return list
@@ -190,28 +180,12 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
         this.location = location
 
         if (location != null) {
-            ApplicationUtils.runOnUiThread(Runnable{
+            ApplicationUtils.runOnUiThread(Runnable {
                 for (subscriber in getReadySubscribers()) {
                     subscriber.setLocation(this.location!!)
                 }
             })
         }
-    }
-
-    override fun onConnected(p0: Bundle?) {
-        locationRequest = LocationRequest.create()
-        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        locationRequest?.interval = POLLING_FREQ
-        locationRequest?.fastestInterval = FASTEST_UPDATE_FREQ
-        locationRequest?.smallestDisplacement = SMALLEST_DISPLACEMENT
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        ApplicationSingleton.instance.onError(NAME, "Connection failed", true)
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-        ApplicationSingleton.instance.onError(NAME, "Connection suspended", true)
     }
 
     override fun stop() {
@@ -221,21 +195,21 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
 
     override fun isValid(): Boolean {
         val context = ApplicationSpecialist.appContext
-            if (!ApplicationUtils.isGooglePlayServices(context)) {
-                return false
-            }
+        if (!ApplicationUtils.isGooglePlayServices(context)) {
+            return false
+        }
 
-            if (!ApplicationUtils.checkPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            ) {
-                return false
-            }
+        if (!ApplicationUtils.checkPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        ) {
+            return false
+        }
 
-            if (!ApplicationUtils.isLocationEnabled(context)) {
-                return false
-            }
+        if (!ApplicationUtils.isLocationEnabled(context)) {
+            return false
+        }
         return true
     }
 
