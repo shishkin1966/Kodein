@@ -51,8 +51,8 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
 
     private fun getData() {
         getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
-        Provider.getAccounts(NAME)
-        Provider.getBalance(NAME)
+        Provider.getAccounts(getName())
+        Provider.getBalance(getName())
     }
 
     override fun response(result: ExtResult) {

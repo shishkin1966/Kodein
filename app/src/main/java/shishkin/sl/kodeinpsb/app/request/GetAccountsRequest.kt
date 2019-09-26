@@ -5,7 +5,7 @@ import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.db.Db
 import shishkin.sl.kodeinpsb.sl.request.AbsResultMessageRequest
 
-class GetAccountsRequest(subscriber: String) : AbsResultMessageRequest<List<Account>>(subscriber) {
+class GetAccountsRequest(subscriber: String) : AbsResultMessageRequest(subscriber) {
     companion object {
         const val NAME = "GetAccountsRequest"
     }

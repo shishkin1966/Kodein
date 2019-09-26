@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.common.double2String
 import shishkin.sl.kodeinpsb.common.formatDateShortRu
 import shishkin.sl.kodeinpsb.common.trimZero
-import shishkin.sl.kodeinpsb.sl.action.IAction
-import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 

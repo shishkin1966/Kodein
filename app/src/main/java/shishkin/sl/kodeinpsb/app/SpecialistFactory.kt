@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.app
 
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
+import shishkin.sl.kodeinpsb.app.provider.NetProvider
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISpecialist
@@ -30,8 +31,9 @@ class SpecialistFactory : ISpecialistFactory, INamed {
                 ObservableUnion.NAME -> ObservableUnion()
                 CommonExecutor.NAME -> CommonExecutor()
                 DbExecutor.NAME -> DbExecutor()
-                NetExecutor.NAME -> NetExecutor()
                 DbProvider.NAME -> DbProvider()
+                NetExecutor.NAME -> NetExecutor()
+                NetProvider.NAME -> NetProvider()
                 LocationUnion.NAME -> LocationUnion()
                 else -> Class.forName(name).newInstance() as ISpecialist
             }

@@ -9,7 +9,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import java.util.*
 
 
-abstract class AbsResultMessageRequest<T>() : AbsRequest(),
+abstract class AbsResultMessageRequest() : AbsRequest(),
     IResultMessageRequest {
 
     private lateinit var _owner: String
@@ -70,5 +70,6 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
         }
     }
 
-    abstract fun getData(): T
+    abstract fun getData(): Any?
+
 }

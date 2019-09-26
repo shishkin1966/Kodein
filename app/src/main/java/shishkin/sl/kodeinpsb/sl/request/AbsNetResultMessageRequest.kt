@@ -9,7 +9,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 
 
-abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageRequest<T> {
+abstract class AbsNetResultMessageRequest : AbsResultMessageRequest {
 
     private constructor() : super()
 
@@ -20,9 +20,9 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
         val union = ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         if (union == null) return
 
-        getData()
-            .map({ t: T -> ExtResult(t) })
-            .subscribe(
+        (getData() as Single<*>)
+            ?.map({ t: Any -> ExtResult(t) })
+            ?.subscribe(
                 { result: ExtResult ->
                     if (isValid() && result.getData() != null) {
                         union.addNotMandatoryMessage(
@@ -51,6 +51,5 @@ abstract class AbsNetResultMessageRequest<T : Single<T>> : AbsResultMessageReque
                 }
             )
     }
-
 
 }

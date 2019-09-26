@@ -2,7 +2,7 @@ package shishkin.sl.kodeinpsb.app.screen.val_curs
 
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 
-class ValCursPresenter(model:ValCursModel) : AbsPresenter(model) {
+class ValCursPresenter(model: ValCursModel) : AbsPresenter(model) {
     companion object {
         const val NAME = "ValCursPresenter"
     }
