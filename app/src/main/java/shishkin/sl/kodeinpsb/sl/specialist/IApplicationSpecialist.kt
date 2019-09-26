@@ -11,8 +11,8 @@ interface IApplicationSpecialist : ISpecialist {
     fun isExit(): Boolean
 
     /**
-     * Флаг -  выгружать(kill) приложение при остановке(finish)
+     * Отправить приложение в фон
+     *
      */
-    fun isKillOnFinish(): Boolean
-
+    fun toBackground()
 }

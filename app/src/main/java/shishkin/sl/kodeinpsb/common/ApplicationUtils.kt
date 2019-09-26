@@ -20,6 +20,12 @@ import com.annimon.stream.function.Predicate
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GooglePlayServicesUtil
+import android.provider.Settings
+import androidx.fragment.app.Fragment
+import com.google.android.gms.common.ErrorDialogFragment
+import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
 class ApplicationUtils {
@@ -164,6 +170,39 @@ class ApplicationUtils {
                         listPermissionsNeeded.toArray(arrayPermissionsNeeded)
                         ActivityCompat.requestPermissions(
                             activity,
+                            arrayPermissionsNeeded,
+                            REQUEST_PERMISSIONS
+                        )
+                        return false
+                    }
+                } else {
+                    return true
+                }
+            }
+            return false
+        }
+
+        @JvmStatic
+        fun grantPermisions(permissions: Array<String>?, fragment: Fragment): Boolean {
+            if (fragment != null && permissions != null) {
+                if (hasMarshmallow()) {
+                    val listPermissionsNeeded = ArrayList<String>()
+
+                    for (permission in permissions) {
+                        if (ActivityCompat.checkSelfPermission(
+                                ApplicationSpecialist.appContext,
+                                permission
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            listPermissionsNeeded.add(permission)
+                        }
+                    }
+
+                    if (!listPermissionsNeeded.isEmpty()) {
+                        val arrayPermissionsNeeded =
+                            arrayOfNulls<String>(listPermissionsNeeded.size)
+                        listPermissionsNeeded.toArray(arrayPermissionsNeeded)
+                        fragment.requestPermissions(
                             arrayPermissionsNeeded,
                             REQUEST_PERMISSIONS
                         )
@@ -379,5 +418,39 @@ class ApplicationUtils {
             snackbar.show()
             return snackbar
         }
+
+        /**
+         * Контролировать наличие и версию Google Play Services
+         */
+        @JvmStatic
+        fun isGooglePlayServices(context: Context?): Boolean {
+            if (context != null) {
+                val resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context)
+                if (ConnectionResult.SUCCESS == resultCode) {
+                    return true
+                }
+            }
+            return false
+        }
+
+    /**
+     * Получить возможность службы геолокации
+     */
+     fun isLocationEnabled(context : Context) : Boolean {
+        if (hasKitKat()) {
+            var locationMode = 0;
+            try {
+                locationMode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE);
+            } catch (e : Settings.SettingNotFoundException) {
+                return false
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+        } else {
+            val locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !locationProviders.isNullOrEmpty();
+        }
     }
+
+    }
+
 }

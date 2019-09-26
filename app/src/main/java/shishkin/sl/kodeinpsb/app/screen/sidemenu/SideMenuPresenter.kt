@@ -6,6 +6,7 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
+import shishkin.sl.kodeinpsb.app.screen.map.MapFragment
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
@@ -102,6 +103,13 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
                 ShowAccounts -> {
                     if (!router.isCurrentFragment(AccountsFragment.NAME)) {
                         router.switchToTopFragment()
+                    }
+                    return true
+                }
+
+                ShowAddress -> {
+                    if (!router.isCurrentFragment(MapFragment.NAME)) {
+                        router.showFragment(MapFragment.newInstance())
                     }
                     return true
                 }

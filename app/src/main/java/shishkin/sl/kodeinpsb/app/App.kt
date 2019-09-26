@@ -2,6 +2,8 @@ package shishkin.sl.kodeinpsb.app
 
 import android.widget.Toast
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
+import shishkin.sl.kodeinpsb.app.specialist.ILocationUnion
+import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.message.IMessage
@@ -81,5 +83,13 @@ class App : ApplicationSpecialist() {
 
     fun getObservableUnion(): IObservableUnion? {
         return get<IObservableUnion>(ObservableUnion.NAME)
+    }
+
+    fun getActivityUnion() : IActivityUnion? {
+        return get<IActivityUnion>(ActivityUnion.NAME)
+    }
+
+    fun getLocationUnion() : ILocationUnion? {
+        return get<ILocationUnion>(LocationUnion.NAME)
     }
 }

@@ -29,7 +29,6 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
-    //implementation "androidx.core:core:1.0.2"
     implementation "com.google.android.material:material:1.0.0"
 
     // БД ROOM
@@ -40,6 +39,11 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$room"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$room"
+
+    implementation "com.google.android.gms:play-services-base:17.1.0"
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     // добавление ripple эффекта
     implementation 'com.balysv:material-ripple:1.0.2'
