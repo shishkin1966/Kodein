@@ -1,5 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.ui
 
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.sl.action.IAction
+
 abstract class AbsContentFragment : AbsFragment(), OnBackPressListener {
 
     /**
@@ -20,6 +23,17 @@ abstract class AbsContentFragment : AbsFragment(), OnBackPressListener {
     }
 
     override fun isTop(): Boolean {
+        return false
+    }
+
+    override fun onAction(action: IAction): Boolean {
+        if (!isValid()) return false
+
+        ApplicationSingleton.instance.onError(
+            getName(),
+            "Unknown action:$action",
+            true
+        )
         return false
     }
 

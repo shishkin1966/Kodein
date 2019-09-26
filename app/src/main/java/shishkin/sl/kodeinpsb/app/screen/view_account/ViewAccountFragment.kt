@@ -31,7 +31,6 @@ class ViewAccountFragment : AbsContentFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private var account: Account? = null
 
     override fun createModel(): IModel {
@@ -49,19 +48,6 @@ class ViewAccountFragment : AbsContentFragment() {
             findView<TextView>(R.id.openDateView)?.text =
                 "${getString(R.string.fragment_account_open_date_format)}  ${account?.openDate?.formatDateShortRu()}"
         }
-    }
-
-    override fun onAction(action: IAction): Boolean {
-        if (!isValid()) return false
-
-        if (actionHandler.onAction(action)) return true
-
-        ApplicationSingleton.instance.onError(
-            getName(),
-            "Unknown action:$action",
-            true
-        )
-        return false
     }
 
     override fun onCreateView(

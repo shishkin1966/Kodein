@@ -38,9 +38,8 @@ abstract class AbsPresenter() : IPresenter {
 
         doActions()
 
-        ApplicationSpecialist.serviceLocator?.
-            get<IMessengerUnion>(MessengerUnion.NAME)?.
-            readMessages(this)
+        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+            ?.readMessages(this)
 
         onStart()
     }

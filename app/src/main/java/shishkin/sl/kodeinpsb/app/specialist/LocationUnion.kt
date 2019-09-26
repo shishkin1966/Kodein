@@ -69,10 +69,6 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
         locationRequest?.smallestDisplacement = SMALLEST_DISPLACEMENT
     }
 
-    override fun onRegisterFirstSubscriber() {
-        startLocation()
-    }
-
     override fun onUnRegisterLastSubscriber() {
         stopLocation()
     }

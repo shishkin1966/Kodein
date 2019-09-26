@@ -8,23 +8,22 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.annimon.stream.Stream
 import com.annimon.stream.function.Predicate
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GooglePlayServicesUtil
-import android.provider.Settings
-import androidx.fragment.app.Fragment
-import com.google.android.gms.common.ErrorDialogFragment
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
@@ -433,23 +432,29 @@ class ApplicationUtils {
             return false
         }
 
-    /**
-     * Получить возможность службы геолокации
-     */
-     fun isLocationEnabled(context : Context) : Boolean {
-        if (hasKitKat()) {
-            var locationMode = 0;
-            try {
-                locationMode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE);
-            } catch (e : Settings.SettingNotFoundException) {
-                return false
+        /**
+         * Получить возможность службы геолокации
+         */
+        fun isLocationEnabled(context: Context): Boolean {
+            if (hasKitKat()) {
+                var locationMode = 0;
+                try {
+                    locationMode = Settings.Secure.getInt(
+                        context.contentResolver,
+                        Settings.Secure.LOCATION_MODE
+                    );
+                } catch (e: Settings.SettingNotFoundException) {
+                    return false
+                }
+                return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+            } else {
+                val locationProviders = Settings.Secure.getString(
+                    context.getContentResolver(),
+                    Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+                );
+                return !locationProviders.isNullOrEmpty();
             }
-            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
-        } else {
-            val locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-            return !locationProviders.isNullOrEmpty();
         }
-    }
 
     }
 

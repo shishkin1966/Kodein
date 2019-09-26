@@ -108,5 +108,5 @@ interface IActivityUnion : IUnion<IActivity>, IActionListener {
      *
      * @return роутер
      */
-    fun getRouter() : IRouter?
+    fun getRouter(): IRouter?
 }

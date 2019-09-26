@@ -48,29 +48,29 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
 
     private fun showProgressBar() {
         val view = fragment.view?.findViewById<View>(R.id.progressBar)
-        view?.setVisibility(View.VISIBLE)
+        view?.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
         val view = fragment.view?.findViewById<View>(R.id.progressBar)
-        view?.setVisibility(View.INVISIBLE)
+        view?.visibility = View.INVISIBLE
     }
 
     private fun showKeyboard(action: ShowKeyboardAction) {
-        val activity = fragment.getActivity() ?: return
+        val activity = fragment.activity ?: return
 
         KeyboardRunnable(activity, action.getView()).run()
     }
 
     private fun hideKeyboard() {
-        val activity = fragment.getActivity() ?: return
-        if (activity.isFinishing()) return
+        val activity = fragment.activity ?: return
+        if (activity.isFinishing) return
 
         val imm = ApplicationUtils.getSystemService<InputMethodManager>(
             activity,
             Activity.INPUT_METHOD_SERVICE
         )
-        var view = activity.getCurrentFocus()
+        var view = activity.currentFocus
         if (view == null) {
             view = getRootView()
         }
@@ -83,9 +83,7 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
 
     private fun getRootView(): View? {
         val view = fragment.view?.findViewById<View>(R.id.root)
-        return if (view != null) {
-            view
-        } else fragment.getView()
+        return view ?: fragment.view
     }
 
 }

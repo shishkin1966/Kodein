@@ -16,10 +16,10 @@ import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.ui.AbsFragment
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
-class SideMenuFragment : AbsFragment(), View.OnClickListener {
+class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
         const val NAME = "SideMenuFragment"
 

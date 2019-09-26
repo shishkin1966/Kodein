@@ -16,7 +16,6 @@ import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PermissionAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
 class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
@@ -28,7 +27,7 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
 
     private var googleMap: GoogleMap? = null
     private var isInit = false
-    private var data: MapData  = MapData()
+    private var data: MapData = MapData()
 
     override fun isRegister(): Boolean {
         return true
@@ -52,18 +51,13 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
     override fun onMapReady(googleMap: GoogleMap?) {
         this.googleMap = googleMap
 
-        if (ApplicationUtils.checkPermission(
-                ApplicationSpecialist.appContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
+        if (isValid()) {
             this.googleMap?.isTrafficEnabled = true
             this.googleMap?.isMyLocationEnabled = true
             this.googleMap?.uiSettings?.isMyLocationButtonEnabled = true
             this.googleMap?.setOnMyLocationButtonClickListener(this)
-            if (ApplicationSingleton.instance.getLocationUnion()?.getLocation() != null) {
-                setLocation(ApplicationSingleton.instance.getLocationUnion()?.getLocation()!!)
-            }
+
+            ApplicationSingleton.instance.getLocationUnion()?.startLocation()
         }
     }
 

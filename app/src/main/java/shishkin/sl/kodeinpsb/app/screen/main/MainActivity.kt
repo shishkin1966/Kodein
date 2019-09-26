@@ -139,4 +139,10 @@ class MainActivity : AbsContentActivity() {
         );
     }
 
+    fun isMenuShowing(): Boolean {
+        if (menu != null) {
+            return menu!!.isMenuShowing
+        }
+        return false
+    }
 }
