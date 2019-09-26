@@ -14,7 +14,10 @@ import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-
+import shishkin.sl.kodeinpsb.sl.action.Actions
+import shishkin.sl.kodeinpsb.sl.action.DataAction
+import android.widget.TextView
+import shishkin.sl.kodeinpsb.sl.action.PermissionAction
 
 class MapFragment : AbsContentFragment() {
     companion object {
@@ -44,12 +47,34 @@ class MapFragment : AbsContentFragment() {
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
 
+        if (action is DataAction<*>) {
+            when(action.getName()) {
+                Actions.RefreshViews -> {
+                    refreshViews(action.getData() as MapData?)
+                }
+            }
+            return true
+        }
+
+        if (action is PermissionAction) {
+            ApplicationUtils.grantPermisions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), this)
+            return true
+        }
+
         ApplicationSingleton.instance.onError(
             getName(),
             "Unknown action:$action",
             true
         )
         return false
+    }
+
+    override fun onPermissionGranted(permission: String) {
+        when (permission) {
+            Manifest.permission.ACCESS_FINE_LOCATION -> {
+                ApplicationSingleton.instance.getLocationUnion()?.startLocation()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -76,5 +101,12 @@ class MapFragment : AbsContentFragment() {
         ApplicationSingleton.instance.getActivityUnion()?.switchToTopFragment()
         return true
     }
+
+    private fun refreshViews(data: MapData?) {
+        if (data != null) {
+            (findView<TextView>(R.id.name) as TextView).text = data.address
+        }
+    }
+
 
 }

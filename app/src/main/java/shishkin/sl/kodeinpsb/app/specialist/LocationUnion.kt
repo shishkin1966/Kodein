@@ -25,15 +25,6 @@ import android.os.Looper
 import java.util.*
 import shishkin.sl.kodeinpsb.common.Connectivity
 
-
-
-
-
-
-
-
-
-
 class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -149,9 +140,6 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion,
     }
 
     override fun getLocation(): Location? {
-        if (location == null) {
-            startLocation()
-        }
         return location
     }
 

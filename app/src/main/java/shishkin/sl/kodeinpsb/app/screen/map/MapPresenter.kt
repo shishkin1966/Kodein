@@ -10,6 +10,8 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.specialist.ILocationSubscriber
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.action.Actions
+import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PermissionAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
@@ -26,6 +28,7 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
 
     private var googleMap: GoogleMap? = null
     private var isInit = false
+    private var data: MapData  = MapData()
 
     override fun isRegister(): Boolean {
         return true
@@ -89,9 +92,8 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
                         sb.append("\n")
                     }
                 }
-                //data.setAddress(sb.toString())
-                //getModel()!!.getView()
-                //    .addAction(DataAction<Any>(data).setName(Actions.RefreshViews))
+                data.address = sb.toString()
+                getView<MapFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
             }
         }
     }
