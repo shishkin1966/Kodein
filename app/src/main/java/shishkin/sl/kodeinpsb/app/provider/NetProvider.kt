@@ -8,7 +8,7 @@ import shishkin.sl.kodeinpsb.sl.provider.AbsNetProvider
 class NetProvider : AbsNetProvider<NetApi>() {
     companion object {
         const val NAME = "NetProvider"
-        const val URL = "https://api.coinmarketcap.com/"; //Базовый адрес
+        const val URL = "https://api.coinmarketcap.com/" //Базовый адрес
     }
 
     override fun getApiClass(): Class<NetApi> {

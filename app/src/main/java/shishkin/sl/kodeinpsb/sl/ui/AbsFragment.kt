@@ -28,7 +28,7 @@ abstract class AbsFragment : Fragment(), IFragment {
 
     override fun <T : IModel> getModel(): T? {
         if (model == null) {
-            model = createModel();
+            model = createModel()
         }
         return model as T
     }
