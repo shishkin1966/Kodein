@@ -6,7 +6,9 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
+import shishkin.sl.kodeinpsb.app.screen.digital_currencies.DigitalCurrenciesFragment
 import shishkin.sl.kodeinpsb.app.screen.map.MapFragment
+import shishkin.sl.kodeinpsb.app.screen.val_curs.ValCursFragment
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
@@ -114,6 +116,20 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
                     return true
                 }
 
+                ShowExchangeRates -> {
+                    if (!router.isCurrentFragment(ValCursFragment.NAME)) {
+                        router.showFragment(ValCursFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowDigitalRates -> {
+                    if (!router.isCurrentFragment(DigitalCurrenciesFragment.NAME)) {
+                        router.showFragment(DigitalCurrenciesFragment.newInstance())
+                    }
+                    return true
+                }
+
                 /*
                 ShowSetting -> {
                     if (!router.isCurrentFragment(SettingFragment.NAME)) {
@@ -129,23 +145,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
                     return true
                 }
 
-                ShowExchangeRates -> {
-                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), ValCursFragment.NAME)) {
-                        router.showFragment(ValCursFragment.newInstance())
-                    }
-                    return true
-                }
 
-                ShowDigitalsRates -> {
-                    if (!BackStack.isCurrentFragment(
-                            SLUtil.getActivity(),
-                            DigitalCurrenciesFragment.NAME
-                        )
-                    ) {
-                        router.showFragment(DigitalCurrenciesFragment.newInstance())
-                    }
-                    return true
-                }
 
                 ShowContact -> {
                     if (!BackStack.isCurrentFragment(SLUtil.getActivity(), ContactFragment.NAME)) {

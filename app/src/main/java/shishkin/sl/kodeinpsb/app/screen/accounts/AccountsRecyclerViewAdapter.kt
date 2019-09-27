@@ -17,10 +17,10 @@ import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 
 class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAdapter.ViewHolder>() {
 
-    private var _items: ArrayList<Account> = ArrayList()
+    private var items: ArrayList<Account> = ArrayList()
 
     override fun getItemCount(): Int {
-        return _items.size
+        return items.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,12 +34,12 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(_items[position])
+        holder.bind(items[position])
     }
 
     fun setItems(items: List<Account>) {
-        _items.clear()
-        _items.addAll(items)
+        this.items.clear()
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 

@@ -12,11 +12,11 @@ import java.util.*
 
 class EditTextLongObservable(observer: Observer, view: EditText, delay: Long = 500) :
     EditTextObservable(observer, view, delay) {
-    private var _isEditing = false
+    private var isEditing = false
 
     override fun afterTextChanged(s: Editable) {
-        if (_isEditing) return
-        _isEditing = true
+        if (isEditing) return
+        isEditing = true
 
         var str = s.toString().token("\\.", 1)
         str = str.left(10)
@@ -31,6 +31,6 @@ class EditTextLongObservable(observer: Observer, view: EditText, delay: Long = 5
             view.setSelection(ss.length)
         }
         super.afterTextChanged(s)
-        _isEditing = false
+        isEditing = false
     }
 }

@@ -7,7 +7,7 @@ import shishkin.sl.kodeinpsb.sl.state.StateObserver
 
 
 abstract class AbsModel(private val modelView: IModelView) : IModel, IStateListener {
-    private var _presenter: IPresenter? = null
+    private var presenter: IPresenter? = null
     private val lifecycle = StateObserver(this)
 
     init {
@@ -16,8 +16,8 @@ abstract class AbsModel(private val modelView: IModelView) : IModel, IStateListe
 
     override fun addStateObserver() {
         modelView.addStateObserver(this)
-        if (_presenter != null) {
-            modelView.addStateObserver(_presenter as IStateable)
+        if (presenter != null) {
+            modelView.addStateObserver(presenter as IStateable)
         }
     }
 
@@ -26,13 +26,13 @@ abstract class AbsModel(private val modelView: IModelView) : IModel, IStateListe
     }
 
     override fun setPresenter(presenter: IPresenter) {
-        _presenter = presenter
-        addStateObserver(_presenter as IStateable)
+        this.presenter = presenter
+        addStateObserver(this.presenter as IStateable)
     }
 
     override fun <C> getPresenter(): C? {
-        if (_presenter != null) {
-            return _presenter as C
+        if (presenter != null) {
+            return presenter as C
         }
         return null
     }

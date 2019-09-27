@@ -6,38 +6,38 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 
 class ShowSnackbarAction(private val message: String) : IAction {
 
-    private var _action: String? = null
-    private var _duration = Snackbar.LENGTH_SHORT
-    private var _type = ApplicationUtils.MESSAGE_TYPE_INFO
+    private var action: String? = null
+    private var duration = Snackbar.LENGTH_SHORT
+    private var type = ApplicationUtils.MESSAGE_TYPE_INFO
 
     fun getMessage(): String {
         return message
     }
 
     fun getAction(): String? {
-        return _action
+        return action
     }
 
     fun setAction(action: String): ShowSnackbarAction {
-        _action = action
+        this.action = action
         return this
     }
 
     fun getDuration(): Int {
-        return _duration
+        return duration
     }
 
     fun setDuration(duration: Int): ShowSnackbarAction {
-        _duration = duration
+        this.duration = duration
         return this
     }
 
     fun getType(): Int {
-        return _type
+        return type
     }
 
     fun setType(type: Int): ShowSnackbarAction {
-        _type = type
+        this.type = type
         return this
     }
 

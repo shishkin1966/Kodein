@@ -26,7 +26,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.IActivityUnion
 
 
 class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler() {
-    private var _snackbar: Snackbar? = null
+    private var snackbar: Snackbar? = null
 
     override fun onAction(action: IAction): Boolean {
         if (activity is IValidated) {
@@ -120,20 +120,20 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     private fun showSnackbar(action: ShowSnackbarAction) {
         val actionName = action.getAction()
         if (actionName.isNullOrEmpty()) {
-            _snackbar = BaseSnackbar().make(
+            snackbar = BaseSnackbar().make(
                 getRootView(), action.getMessage(), action
                     .getDuration(), action.getType()
             )
-            _snackbar?.show()
+            snackbar?.show()
         } else {
-            _snackbar = BaseSnackbar().make(
+            snackbar = BaseSnackbar().make(
                 getRootView(),
                 action.getMessage(),
                 action.getDuration(),
                 action.getType()
             )
                 .setAction(actionName, this::onSnackbarClick)
-            _snackbar?.show()
+            snackbar?.show()
         }
     }
 
@@ -151,8 +151,8 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun hideSnackbar() {
-        if (_snackbar != null) {
-            _snackbar?.dismiss()
+        if (snackbar != null) {
+            snackbar?.dismiss()
         }
     }
 

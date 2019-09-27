@@ -2,22 +2,22 @@ package shishkin.sl.kodeinpsb.app.screen.map
 
 import android.Manifest
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.SupportMapFragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.action.IAction
-import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import android.view.View
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.DataAction
-import android.widget.TextView
+import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PermissionAction
+import shishkin.sl.kodeinpsb.sl.model.IModel
+import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 class MapFragment : AbsContentFragment() {
     companion object {
@@ -48,7 +48,7 @@ class MapFragment : AbsContentFragment() {
         if (!isValid()) return false
 
         if (action is DataAction<*>) {
-            when(action.getName()) {
+            when (action.getName()) {
                 Actions.RefreshViews -> {
                     refreshViews(action.getData() as MapData?)
                 }
@@ -57,7 +57,10 @@ class MapFragment : AbsContentFragment() {
         }
 
         if (action is PermissionAction) {
-            ApplicationUtils.grantPermisions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), this)
+            ApplicationUtils.grantPermisions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                this
+            )
             return true
         }
 
@@ -72,13 +75,13 @@ class MapFragment : AbsContentFragment() {
     override fun onPermissionGranted(permission: String) {
         when (permission) {
             Manifest.permission.ACCESS_FINE_LOCATION -> {
-                ApplicationSingleton.instance.getLocationUnion()?.startLocation()
+                startMap()
             }
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
 
         startMap()
     }

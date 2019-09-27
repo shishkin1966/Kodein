@@ -15,6 +15,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.*
 
 object ApplicationSingleton {
     val instance = App()
+    const val QuitOnExit = "QuitonExit"
 }
 
 class App : ApplicationSpecialist() {
@@ -85,11 +86,11 @@ class App : ApplicationSpecialist() {
         return get<IObservableUnion>(ObservableUnion.NAME)
     }
 
-    fun getActivityUnion() : IActivityUnion? {
+    fun getActivityUnion(): IActivityUnion? {
         return get<IActivityUnion>(ActivityUnion.NAME)
     }
 
-    fun getLocationUnion() : ILocationUnion? {
+    fun getLocationUnion(): ILocationUnion? {
         return get<ILocationUnion>(LocationUnion.NAME)
     }
 }

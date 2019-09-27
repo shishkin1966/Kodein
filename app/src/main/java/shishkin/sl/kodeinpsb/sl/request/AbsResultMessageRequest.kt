@@ -9,15 +9,14 @@ import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import java.util.*
 
 
-abstract class AbsResultMessageRequest<T>() : AbsRequest(),
+abstract class AbsResultMessageRequest() : AbsRequest(),
     IResultMessageRequest {
 
-    private lateinit var _owner: String
-    private var _copyTo: List<String> = ArrayList<String>()
-    private var _error: ExtError? = null
+    private lateinit var owner: String
+    private var copyTo: List<String> = ArrayList()
 
     constructor(owner: String) : this() {
-        _owner = owner
+        this.owner = owner
     }
 
     override fun isValid(): Boolean {
@@ -25,40 +24,31 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
     }
 
     override fun getOwner(): String {
-        return _owner
+        return owner
     }
 
     override fun getCopyTo(): List<String> {
-        return _copyTo
+        return copyTo
     }
 
     override fun setCopyTo(copyTo: List<String>) {
-        _copyTo = copyTo
-    }
-
-    override fun getError(): ExtError? {
-        return _error
-    }
-
-    override fun setError(error: ExtError?) {
-        _error = error
+        this.copyTo = copyTo
     }
 
     override fun run() {
         if (isValid()) {
-            var result: ExtResult
-            try {
-                result = ExtResult().setName(getName()).setData(getData()).setError(getError())
+            val result: ExtResult = try {
+                ExtResult().setName(getName()).setData(getData())
             } catch (e: Exception) {
-                result = ExtResult().setName(getName()).setError(
+                ExtResult().setName(getName()).setError(
                     ExtError().addError(
                         getName(),
-                        e.getLocalizedMessage()
+                        e.localizedMessage
                     )
                 )
             }
             val union =
-                ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME);
+                ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
             union?.addNotMandatoryMessage(
                 ResultMessage(
                     getOwner(),
@@ -66,9 +56,10 @@ abstract class AbsResultMessageRequest<T>() : AbsRequest(),
                 )
                     .setSubj(getName())
                     .setCopyTo(getCopyTo())
-            );
+            )
         }
     }
 
-    abstract fun getData(): T
+    abstract fun getData(): Any?
+
 }

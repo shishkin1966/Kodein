@@ -24,19 +24,4 @@ interface IResultMessageRequest : IRequest {
      * @param copyTo список получателей запроса
      */
     fun setCopyTo(copyTo: List<String>)
-
-    /**
-     * Получить ошибку запроса
-     *
-     * @return ошибка запроса
-     */
-    fun getError(): ExtError?
-
-    /**
-     * Установить ошибку запроса
-     *
-     * @param error ошибка запроса
-     */
-    fun setError(error: ExtError?)
-
 }

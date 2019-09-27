@@ -43,4 +43,8 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
         return false
     }
 
+    fun isMenuShowing(): Boolean {
+        return (getView<MainActivity>() as MainActivity).isMenuShowing()
+    }
+
 }

@@ -10,7 +10,7 @@ import java.util.*
 
 open class EditTextObservable(observer: Observer, val view: EditText, delay: Long = 500) :
     Observable() {
-    private var _delay: Long = 500
+    private var delay: Long = 500
     private val debounce: Debounce
     private val observer: WeakReference<Observer>
     private val textWatcher = object : TextWatcher {
@@ -28,7 +28,7 @@ open class EditTextObservable(observer: Observer, val view: EditText, delay: Lon
     }
 
     init {
-        _delay = delay
+        this.delay = delay
         this.view.addTextChangedListener(textWatcher)
         this.observer = WeakReference(observer)
         this.debounce = object : Debounce(delay) {

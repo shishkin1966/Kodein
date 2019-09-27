@@ -30,4 +30,6 @@
     <string name="location_error">Ошибка геолокации. Попробуйте еще раз</string>
     <string name="restart_location">Перегрузите устройство. Не работатает служба получения адреса</string>
 
+    <string name="search_hint">Найти</string>
+
 </resources>

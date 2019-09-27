@@ -1,6 +1,7 @@
 package shishkin.sl.kodeinpsb.app
 
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
+import shishkin.sl.kodeinpsb.app.provider.NetProvider
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.sl.AbsServiceLocator
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
@@ -11,6 +12,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.task.DbExecutor
+import shishkin.sl.kodeinpsb.sl.task.NetExecutor
 
 object ServiceLocatorSingleton {
     val instance = ServiceLocator()
@@ -39,7 +41,11 @@ class ServiceLocator : AbsServiceLocator() {
         registerSpecialist(DbExecutor.NAME)
         registerSpecialist(DbProvider.NAME)
 
+        registerSpecialist(NetExecutor.NAME)
+        registerSpecialist(NetProvider.NAME)
+
         registerSpecialist(LocationUnion.NAME)
+
     }
 
     override fun getSpecialistFactory(): ISpecialistFactory {

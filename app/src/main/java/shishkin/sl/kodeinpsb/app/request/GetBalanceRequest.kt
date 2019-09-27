@@ -5,7 +5,7 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.db.Db
 import shishkin.sl.kodeinpsb.sl.request.AbsResultMessageRequest
 
-class GetBalanceRequest(subscriber: String) : AbsResultMessageRequest<List<Balance>>(subscriber) {
+class GetBalanceRequest(subscriber: String) : AbsResultMessageRequest(subscriber) {
     companion object {
         const val NAME = "GetBalanceRequest"
     }

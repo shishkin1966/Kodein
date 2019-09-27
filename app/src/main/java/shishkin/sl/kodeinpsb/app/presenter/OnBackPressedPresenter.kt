@@ -1,8 +1,13 @@
-package shishkin.sl.kodeinpsb.sl.presenter
+package shishkin.sl.kodeinpsb.app.presenter
 
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
+import shishkin.sl.kodeinpsb.app.screen.main.MainPresenter
+import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
+import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import java.util.*
@@ -26,24 +31,31 @@ class OnBackPressedPresenter : AbsPresenter() {
 
     fun onClick(): Boolean {
         if (isValid()) {
+            val presenter =
+                ApplicationSingleton.instance.getPresenter<MainPresenter>(MainPresenter.NAME)
+            if (presenter != null && presenter.isMenuShowing()) {
+                presenter.addAction(HideSideMenuAction())
+                return true
+            }
             if (!doubleBackPressedOnce) {
                 val context = ApplicationSpecialist.appContext
                 doubleBackPressedOnce = true
                 val union =
                     ApplicationSpecialist.serviceLocator?.get<ActivityUnion>(ActivityUnion.NAME)
                 if (union != null) {
-                    val activity = union.getCurrentSubscriber()
-                    if (activity != null) {
-                        activity.addAction(
-                            ShowSnackbarAction(context.getString(R.string.double_back_pressed)).setDuration(
-                                Snackbar.LENGTH_SHORT
-                            ).setAction(ApplicationSpecialist.appContext.getString(R.string.exit))
-                        )
-                    }
+                    union.getCurrentSubscriber()?.addAction(
+                        ShowSnackbarAction(context.getString(R.string.double_back_pressed)).setDuration(
+                            Snackbar.LENGTH_SHORT
+                        ).setAction(ApplicationSpecialist.appContext.getString(R.string.exit))
+                    )
                 }
                 startTimer()
             } else {
-                ApplicationSpecialist.instance.stop()
+                if (PreferencesUtils.getBoolean(ApplicationSpecialist.appContext, ApplicationSingleton.QuitOnExit, false)) {
+                    ApplicationSpecialist.instance.stop()
+                } else {
+                    ApplicationSpecialist.instance.toBackground()
+                }
                 return true
             }
         }

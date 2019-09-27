@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_light">
+
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue_dark"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/message"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:minHeight="@dimen/dimen_40dp"
+                        android:paddingLeft="@dimen/dimen_16dp"
+                        android:paddingTop="@dimen/dimen_8dp"
+                        android:paddingRight="@dimen/dimen_16dp"
+                        android:paddingBottom="@dimen/dimen_8dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_xlarge"/>
+
+                    <ImageView
+                        android:id="@+id/clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:srcCompat="@drawable/ic_clear_selector"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottomBar"
+                android:layout_below="@+id/topBar"
+                android:background="@color/white_light"
+                android:scrollbars="vertical"/>
+
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Повторите запрос"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_size_xlarge"
+                android:visibility="invisible"/>
+
+            <View
+                android:id="@+id/shadow_top"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_below="@+id/topBar"
+                android:background="@drawable/below_shadow"
+                android:visibility="gone">
+            </View>
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="-6dp"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:mpb_indeterminateTint="@color/orange"
+                app:mpb_progressStyle="horizontal"
+                app:mpb_showProgressBackground="false"/>
+
+            <LinearLayout
+                android:id="@+id/bottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/copy"
+                        style="@style/MenuBottomButtonStyle"
+                        android:drawableTop="@drawable/ic_copy_selector"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:text="Copy"/>
+
+                    <TextView
+                        android:id="@+id/rename"
+                        style="@style/MenuBottomButtonStyle"
+                        android:drawableTop="@drawable/ic_rename_selector"
+                        android:enabled="false"
+                        android:text="Rename"/>
+
+                    <TextView
+                        android:id="@+id/cut"
+                        style="@style/MenuBottomButtonStyle"
+                        android:drawableTop="@drawable/ic_cut_selector"
+                        android:enabled="false"
+                        android:text="Cut"/>
+
+                    <TextView
+                        android:id="@+id/delete"
+                        style="@style/MenuBottomButtonStyle"
+                        android:drawableTop="@drawable/ic_delete_selector"
+                        android:text="Delete"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/topShadow"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_below="@+id/topBar"
+                android:background="@drawable/below_shadow"
+                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/bottomShadow"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_above="@+id/bottomBar"
+                android:background="@drawable/above_shadow"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
