@@ -51,7 +51,12 @@ class OnBackPressedPresenter : AbsPresenter() {
                 }
                 startTimer()
             } else {
-                if (PreferencesUtils.getBoolean(ApplicationSpecialist.appContext, ApplicationSingleton.QuitOnExit, false)) {
+                if (PreferencesUtils.getBoolean(
+                        ApplicationSpecialist.appContext,
+                        ApplicationSingleton.QuitOnExit,
+                        false
+                    )
+                ) {
                     ApplicationSpecialist.instance.stop()
                 } else {
                     ApplicationSpecialist.instance.toBackground()

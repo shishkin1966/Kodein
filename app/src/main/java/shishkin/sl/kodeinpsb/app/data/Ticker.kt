@@ -1,9 +1,22 @@
 package microservices.shishkin.example.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 
-class Ticker {
+class Ticker() : Parcelable {
+    companion object CREATOR : Parcelable.Creator<Ticker> {
+
+        override fun createFromParcel(parcel: Parcel): Ticker {
+            return Ticker(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Ticker?> {
+            return arrayOfNulls(size)
+        }
+    }
+
     @SerializedName("id")
     var id: String? = null
 
@@ -51,4 +64,46 @@ class Ticker {
 
     @SerializedName("favorite")
     var favorite: Int = 0
+
+    constructor(parcel: Parcel) : this() {
+        id = parcel.readString()
+        name = parcel.readString()
+        symbol = parcel.readString()
+        rank = parcel.readString()
+        priceUsd = parcel.readString()
+        priceBtc = parcel.readString()
+        volumeUsd = parcel.readString()
+        marketCapUsd = parcel.readString()
+        availableSupply = parcel.readString()
+        totalSupply = parcel.readString()
+        maxSupply = parcel.readString()
+        percentChange1h = parcel.readString()
+        percentChange24h = parcel.readString()
+        percentChange7d = parcel.readString()
+        lastUpdated = parcel.readString()
+        favorite = parcel.readInt()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(name)
+        parcel.writeString(symbol)
+        parcel.writeString(rank)
+        parcel.writeString(priceUsd)
+        parcel.writeString(priceBtc)
+        parcel.writeString(volumeUsd)
+        parcel.writeString(marketCapUsd)
+        parcel.writeString(availableSupply)
+        parcel.writeString(totalSupply)
+        parcel.writeString(maxSupply)
+        parcel.writeString(percentChange1h)
+        parcel.writeString(percentChange24h)
+        parcel.writeString(percentChange7d)
+        parcel.writeString(lastUpdated)
+        parcel.writeInt(favorite)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
 }

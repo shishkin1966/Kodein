@@ -35,6 +35,7 @@ class SpecialistFactory : ISpecialistFactory, INamed {
                 NetExecutor.NAME -> NetExecutor()
                 NetProvider.NAME -> NetProvider()
                 LocationUnion.NAME -> LocationUnion()
+                CacheSpecialist.NAME -> CacheSpecialist()
                 else -> Class.forName(name).newInstance() as ISpecialist
             }
         } catch (e: Exception) {

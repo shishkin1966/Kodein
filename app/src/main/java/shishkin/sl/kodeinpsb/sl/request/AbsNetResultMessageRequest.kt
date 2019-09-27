@@ -16,8 +16,9 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
         val union = ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         if (union == null) return
 
-        (getData() as Single<*>)
-            ?.map({ t: Any -> ExtResult(t) })
+        val single = getData() as Single<*>
+        single
+            ?.map { t: Any -> ExtResult(t) }
             ?.subscribe(
                 { result: ExtResult ->
                     if (isValid() && result.getData() != null) {
@@ -46,6 +47,7 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
                     }
                 }
             )
+
     }
 
 }

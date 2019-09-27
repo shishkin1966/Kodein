@@ -1,15 +1,15 @@
 package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
-import shishkin.sl.kodeinpsb.R
-import android.text.Spannable
-import android.text.style.ForegroundColorSpan
-import android.text.SpannableString
+import androidx.recyclerview.widget.RecyclerView
 import microservices.shishkin.example.data.Ticker
+import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
@@ -49,7 +49,7 @@ class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter
         private val hours: TextView
         private val days: TextView
 
-        init{
+        init {
             symbol = itemView.findViewById(R.id.symbol)
             name = itemView.findViewById(R.id.name)
             money = itemView.findViewById(R.id.money)
@@ -66,14 +66,24 @@ class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter
                 val s24h = SpannableString("24h: " + item.percentChange24h + "%")
                 if (item.percentChange24h?.toFloat()!! > 0) {
                     s24h.setSpan(
-                        ForegroundColorSpan(ApplicationUtils.getColor(ApplicationSpecialist.appContext, R.color.green)),
+                        ForegroundColorSpan(
+                            ApplicationUtils.getColor(
+                                ApplicationSpecialist.appContext,
+                                R.color.green
+                            )
+                        ),
                         5,
                         6 + item.percentChange24h?.length!!,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                 } else {
                     s24h.setSpan(
-                        ForegroundColorSpan(ApplicationUtils.getColor(ApplicationSpecialist.appContext, R.color.red)),
+                        ForegroundColorSpan(
+                            ApplicationUtils.getColor(
+                                ApplicationSpecialist.appContext,
+                                R.color.red
+                            )
+                        ),
                         5,
                         6 + item.percentChange24h?.length!!,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -86,14 +96,24 @@ class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter
                 val s7d = SpannableString("7d: " + item.percentChange7d + "%")
                 if (item.percentChange7d?.toFloat()!! > 0) {
                     s7d.setSpan(
-                        ForegroundColorSpan(ApplicationUtils.getColor(ApplicationSpecialist.appContext, R.color.green)),
+                        ForegroundColorSpan(
+                            ApplicationUtils.getColor(
+                                ApplicationSpecialist.appContext,
+                                R.color.green
+                            )
+                        ),
                         4,
                         5 + item.percentChange7d?.length!!,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                 } else {
                     s7d.setSpan(
-                        ForegroundColorSpan(ApplicationUtils.getColor(ApplicationSpecialist.appContext, R.color.red)),
+                        ForegroundColorSpan(
+                            ApplicationUtils.getColor(
+                                ApplicationSpecialist.appContext,
+                                R.color.red
+                            )
+                        ),
                         4,
                         5 + item.percentChange7d?.length!!,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

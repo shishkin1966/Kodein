@@ -27,7 +27,12 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
 
         if (action is SnackBarAction) {
             if (action.getName() == ApplicationSpecialist.appContext.getString(R.string.exit)) {
-                if (PreferencesUtils.getBoolean(ApplicationSpecialist.appContext, ApplicationSingleton.QuitOnExit, false)) {
+                if (PreferencesUtils.getBoolean(
+                        ApplicationSpecialist.appContext,
+                        ApplicationSingleton.QuitOnExit,
+                        false
+                    )
+                ) {
                     ApplicationSpecialist.instance.stop()
                 } else {
                     ApplicationSpecialist.instance.toBackground()

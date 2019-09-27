@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.request
 
-import shishkin.sl.kodeinpsb.sl.data.ExtError
-
 
 interface IResultMessageRequest : IRequest {
     /**

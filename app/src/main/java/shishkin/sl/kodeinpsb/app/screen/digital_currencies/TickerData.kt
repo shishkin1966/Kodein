@@ -14,7 +14,7 @@ class TickerData {
         if (tickers == null) return ArrayList()
 
         if (filter.isNullOrEmpty()) {
-            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!,true) })
+            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!, true) })
             return tickers!!
         } else {
             val list: ArrayList<Ticker> = ArrayList()

@@ -8,9 +8,11 @@ import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.observe.ScreenBroadcastReceiverObservable
+import shishkin.sl.kodeinpsb.sl.specialist.CacheSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 import shishkin.sl.kodeinpsb.sl.task.DbExecutor
 import shishkin.sl.kodeinpsb.sl.task.NetExecutor
 
@@ -32,6 +34,7 @@ class ServiceLocator : AbsServiceLocator() {
         registerSpecialist(ErrorSpecialistSingleton.instance)
         registerSpecialist(ApplicationSingleton.instance)
 
+        registerSpecialist(CacheSpecialist.NAME)
         registerSpecialist(ObservableUnion.NAME)
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
@@ -43,6 +46,8 @@ class ServiceLocator : AbsServiceLocator() {
 
         registerSpecialist(NetExecutor.NAME)
         registerSpecialist(NetProvider.NAME)
+
+        registerSpecialist(CommonExecutor.NAME)
 
         registerSpecialist(LocationUnion.NAME)
 
