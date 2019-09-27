@@ -10,22 +10,21 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 import microservices.shishkin.example.data.Ticker
-import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
 class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter.ViewHolder>() {
 
-    private var _items: ArrayList<Ticker> = ArrayList()
+    private var items: ArrayList<Ticker> = ArrayList()
 
     override fun getItemCount(): Int {
-        return _items.size
+        return items.size
     }
 
     fun setItems(items: List<Ticker>) {
-        _items.clear()
-        _items.addAll(items)
+        this.items.clear()
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 
@@ -40,7 +39,7 @@ class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(_items[position])
+        holder.bind(items[position])
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

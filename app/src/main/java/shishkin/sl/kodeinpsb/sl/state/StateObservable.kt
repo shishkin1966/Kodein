@@ -7,23 +7,23 @@ import kotlin.collections.ArrayList
 
 class StateObservable(state: Int) : IStateable {
     private val list = Collections.synchronizedList(ArrayList<WeakReference<IStateable>>())
-    private var _state = State.STATE_CREATE
+    private var state = State.STATE_CREATE
 
     init {
         setState(state)
     }
 
     override fun setState(state: Int) {
-        _state = state
+        this.state = state
         for (stateable in list) {
             if (stateable?.get() != null) {
-                stateable.get()!!.setState(_state)
+                stateable.get()!!.setState(this.state)
             }
         }
     }
 
     override fun getState(): Int {
-        return _state
+        return state
     }
 
     /**
@@ -39,7 +39,7 @@ class StateObservable(state: Int) : IStateable {
                 }
             }
 
-            stateable.setState(_state)
+            stateable.setState(state)
             list.add(WeakReference(stateable))
         }
     }

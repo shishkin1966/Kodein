@@ -16,7 +16,7 @@ import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.presenter.OnBackPressedPresenter
+import shishkin.sl.kodeinpsb.app.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
@@ -35,7 +35,8 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     private val balanceAdapter: BalanceRecyclerViewAdapter = BalanceRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
     private var balanceView: RecyclerView? = null
-    private val onBackPressedPresenter = OnBackPressedPresenter()
+    private val onBackPressedPresenter =
+        OnBackPressedPresenter()
 
     override fun createModel(): IModel {
         return AccountsModel(this)

@@ -10,18 +10,18 @@ class DialogResultMessage : AbsMessage {
         const val SUBJ = "DialogResultMessage"
     }
 
-    private lateinit var _action: DialogResultAction
+    private lateinit var action: DialogResultAction
 
     constructor(address: String, action: DialogResultAction) : super(address) {
-        _action = action
+        this.action = action
     }
 
     constructor(message: DialogResultMessage, action: DialogResultAction) : super(message) {
-        _action = action
+        this.action = action
     }
 
     override fun copy(): IMessage {
-        return DialogResultMessage(this, _action)
+        return DialogResultMessage(this, action)
     }
 
     override fun getSubj(): String {
@@ -30,7 +30,7 @@ class DialogResultMessage : AbsMessage {
 
     override fun read(subscriber: IMessengerSubscriber) {
         if (subscriber is IDialogResultListener) {
-            (subscriber as IDialogResultListener).onDialogResult(_action)
+            (subscriber as IDialogResultListener).onDialogResult(action)
         }
     }
 

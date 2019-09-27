@@ -9,11 +9,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
 import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 
 
-abstract class AbsNetResultMessageRequest : AbsResultMessageRequest {
-
-    private constructor() : super()
-
-    constructor(owner: String) : super(owner)
+abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageRequest(owner) {
 
     override fun run() {
         if (!isValid()) return

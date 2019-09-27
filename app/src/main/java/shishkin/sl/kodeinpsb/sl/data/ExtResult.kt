@@ -6,110 +6,110 @@ class ExtResult() {
         const val LAST = -2
     }
 
-    private var _data: Any? = null
-    private var _error: ExtError? = null
-    private var _order = NOT_SEND
-    private var _name: String? = null
-    private var _id = 0
+    private var data: Any? = null
+    private var error: ExtError? = null
+    private var order = NOT_SEND
+    private var name: String? = null
+    private var id = 0
 
     constructor(data: Any?) : this() {
-        _data = data
+        this.data = data
     }
 
     fun getData(): Any? {
-        return _data
+        return data
     }
 
     fun setData(data: Any?): ExtResult {
-        _data = data
+        this.data = data
         return this;
     }
 
     fun getError(): ExtError? {
-        return _error
+        return error
     }
 
     fun setError(error: ExtError?): ExtResult {
-        _error = error;
+        this.error = error;
         return this;
     }
 
     fun setError(sender: String, error: String): ExtResult {
-        if (_error == null) {
-            _error = ExtError()
+        if (this.error == null) {
+            this.error = ExtError()
         }
-        _error?.addError(sender, error)
+        this.error?.addError(sender, error)
         return this
     }
 
     fun setError(sender: String, e: Exception): ExtResult {
-        if (_error == null) {
-            _error = ExtError()
+        if (error == null) {
+            error = ExtError()
         }
-        _error?.addError(sender, e)
+        error?.addError(sender, e)
         return this
     }
 
     fun setError(sender: String, t: Throwable): ExtResult {
-        if (_error == null) {
-            _error = ExtError()
+        if (error == null) {
+            error = ExtError()
         }
-        _error?.addError(sender, t.message)
+        error?.addError(sender, t.message)
         return this
     }
 
     fun getErrorText(): String? {
-        return if (_error != null) {
-            _error?.getErrorText()
+        return if (error != null) {
+            error?.getErrorText()
         } else null
     }
 
     fun getSender(): String? {
-        return if (_error != null) {
-            _error?.getSender()
+        return if (error != null) {
+            error?.getSender()
         } else null
     }
 
     fun validate(): Boolean {
-        return if (_error == null) {
+        return if (error == null) {
             true
-        } else !_error!!.hasError()
+        } else !error!!.hasError()
     }
 
     fun isEmpty(): Boolean {
-        return _data == null
+        return data == null
     }
 
     fun getOrder(): Int {
-        return _order
+        return order
     }
 
     fun setOrder(order: Int): ExtResult {
-        _order = order
+        this.order = order
         return this
     }
 
     fun hasError(): Boolean {
-        return if (_error != null) {
-            _error!!.hasError()
+        return if (error != null) {
+            error!!.hasError()
         } else false
     }
 
     fun getName(): String? {
-        return _name
+        return name
     }
 
     fun setName(name: String): ExtResult {
-        _name = name
+        this.name = name
         return this
     }
 
     fun getId(): Int {
-        return _id
+        return id
     }
 
     fun setId(id: Int): ExtResult {
-        _id = id
+        this.id = id
         return this
     }
 }

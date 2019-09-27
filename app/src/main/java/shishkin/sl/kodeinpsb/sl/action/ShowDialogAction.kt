@@ -5,75 +5,75 @@ import shishkin.sl.kodeinpsb.R
 
 
 class ShowDialogAction() : IAction {
-    private var _id = -1
-    private var _title: String? = null
-    private var _message: String? = null
-    private var _buttonPositive = R.string.ok_upper
-    private var _buttonNegative = MaterialDialogExt.NO_BUTTON
-    private var _cancelable = false
-    private var _listener: String? = null
+    private var id = -1
+    private var title: String? = null
+    private var message: String? = null
+    private var buttonPositive = R.string.ok_upper
+    private var buttonNegative = MaterialDialogExt.NO_BUTTON
+    private var cancelable = false
+    private var listener: String? = null
 
     constructor(id: Int, listener: String) : this() {
-        _id = id
-        _listener = listener
+        this.id = id
+        this.listener = listener
     }
 
     constructor(id: Int, listener: String, title: String?, message: String) : this(id, listener) {
-        _title = title
-        _message = message
+        this.title = title
+        this.message = message
     }
 
     fun getMessage(): String? {
-        return _message
+        return message
     }
 
     fun getTitle(): String? {
-        return _title
+        return title
     }
 
     fun getButtonPositive(): Int {
-        return _buttonPositive
+        return buttonPositive
     }
 
     fun getButtonNegative(): Int {
-        return _buttonNegative
+        return buttonNegative
     }
 
     fun isCancelable(): Boolean {
-        return _cancelable
+        return cancelable
     }
 
     fun getListener(): String? {
-        return _listener
+        return listener
     }
 
     fun setPositiveButton(button: Int): ShowDialogAction {
-        _buttonPositive = button
+        buttonPositive = button
         return this
     }
 
     fun setNegativeButton(button: Int): ShowDialogAction {
-        _buttonNegative = button
+        buttonNegative = button
         return this
     }
 
     fun setCancelable(cancelable: Boolean): ShowDialogAction {
-        _cancelable = cancelable
+        this.cancelable = cancelable
         return this
     }
 
     fun setMessage(message: String): ShowDialogAction {
-        _message = message
+        this.message = message
         return this
     }
 
     fun setTitle(title: String): ShowDialogAction {
-        _title = title
+        this.title = title
         return this
     }
 
     fun getId(): Int {
-        return _id
+        return id
     }
 
 }

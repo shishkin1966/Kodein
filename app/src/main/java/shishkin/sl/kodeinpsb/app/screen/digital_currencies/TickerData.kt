@@ -14,14 +14,14 @@ class TickerData {
         if (tickers == null) return ArrayList()
 
         if (filter.isNullOrEmpty()) {
-            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!) })
+            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!,true) })
             return tickers!!
         } else {
             val list: ArrayList<Ticker> = ArrayList()
             list.addAll(Collections2.filter(tickers!!) { input ->
-                input?.name?.contains(filter!!)!!
+                input?.name?.contains(filter!!, true)!!
             })
-            list.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!) })
+            list.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!, true) })
             return list
         }
     }

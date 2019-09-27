@@ -2,7 +2,7 @@ package shishkin.sl.kodeinpsb.sl.data
 
 class ExtError {
     private val errorText = StringBuilder();
-    private var _sender: String? = null;
+    private var sender: String? = null;
 
     fun getErrorText(): String? {
         return if (errorText.length == 0) {
@@ -11,7 +11,7 @@ class ExtError {
     }
 
     fun addError(sender: String, error: String?): ExtError {
-        _sender = sender;
+        this.sender = sender;
         addError(error);
         return this;
     }
@@ -29,7 +29,7 @@ class ExtError {
 
     fun addError(sender: String, e: Exception?): ExtError {
         if (e != null) {
-            _sender = sender
+            this.sender = sender
             addError(e.message)
         }
         return this
@@ -40,11 +40,11 @@ class ExtError {
     }
 
     fun getSender(): String? {
-        return _sender
+        return sender
     }
 
     fun setSender(sender: String): ExtError {
-        _sender = sender
+        this.sender = sender
         return this
     }
 

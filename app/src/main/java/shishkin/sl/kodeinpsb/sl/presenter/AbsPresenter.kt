@@ -15,12 +15,12 @@ import java.util.*
 
 
 abstract class AbsPresenter() : IPresenter {
-    private var _model: IModel? = null
+    private var model: IModel? = null
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
 
     constructor(model: IModel) : this() {
-        _model = model
+        this.model = model
     }
 
     override fun getState(): Int {
@@ -52,10 +52,10 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun <M : IModel> getModel(): M? {
-        return if (_model == null) {
+        return if (model == null) {
             null
         } else {
-            _model as M
+            model as M
         }
     }
 
@@ -71,8 +71,8 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun <C : IModelView> getView(): C? {
-        return if (_model != null) {
-            _model?.getView()
+        return if (model != null) {
+            model?.getView()
         } else null
     }
 

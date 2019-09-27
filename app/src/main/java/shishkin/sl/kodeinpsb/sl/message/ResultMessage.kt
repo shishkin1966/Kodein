@@ -7,30 +7,30 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
 
 class ResultMessage : AbsMessage {
-    private lateinit var _result: ExtResult
+    private lateinit var result: ExtResult
 
     private constructor(address: String) : super(address)
 
     constructor(address: String, result: ExtResult) : this(address) {
-        _result = result
+        this.result = result
     }
 
     private constructor(message: ResultMessage) : super(message)
 
     constructor(message: ResultMessage, result: ExtResult) : this(message) {
-        _result = result
+        this.result = result
     }
 
     override fun read(subscriber: IMessengerSubscriber) {
         if (subscriber is IResponseListener) {
             ApplicationUtils.runOnUiThread(Runnable {
-                subscriber.response(_result)
+                subscriber.response(result)
             })
         }
     }
 
     override fun copy(): IMessage {
-        return ResultMessage(this, _result)
+        return ResultMessage(this, result)
     }
 
     override fun isCheckDublicate(): Boolean {

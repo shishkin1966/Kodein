@@ -15,6 +15,7 @@ import shishkin.sl.kodeinpsb.sl.specialist.*
 
 object ApplicationSingleton {
     val instance = App()
+    const val QuitOnExit = "QuitonExit"
 }
 
 class App : ApplicationSpecialist() {

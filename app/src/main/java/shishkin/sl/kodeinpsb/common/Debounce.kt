@@ -10,26 +10,26 @@ import android.os.Handler
  */
 open class Debounce(delay: Long, skip: Int = 0) : Runnable {
 
-    private var _delay: Long = 5000 //5 sec
-    private var _skip = 0
+    private var delay: Long = 5000 //5 sec
+    private var skip = 0
     private val handler: Handler = Handler()
 
     init {
-        _delay = delay
-        _skip = skip
+        this.delay = delay
+        this.skip = skip
     }
 
     /**
      * Событие
      */
     fun onEvent() {
-        if (_skip >= 0) {
-            _skip--
+        if (skip >= 0) {
+            skip--
         }
 
-        if (_skip < 0) {
+        if (skip < 0) {
             handler.removeCallbacks(this)
-            handler.postDelayed(this, _delay)
+            handler.postDelayed(this, delay)
         }
     }
 

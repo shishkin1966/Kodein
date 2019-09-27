@@ -23,18 +23,18 @@ abstract class AbsFragment : Fragment(), IFragment {
 
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
-    private var _model: IModel? = null
+    private var model: IModel? = null
     private val actions = LinkedList<IAction>()
 
     override fun <T : IModel> getModel(): T? {
-        if (_model == null) {
-            _model = createModel();
+        if (model == null) {
+            model = createModel();
         }
-        return _model as T
+        return model as T
     }
 
     override fun <T : IModel> setModel(model: T) {
-        _model = model
+        this.model = model
     }
 
     abstract fun createModel(): IModel
