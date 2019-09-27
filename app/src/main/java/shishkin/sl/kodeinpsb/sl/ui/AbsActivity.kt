@@ -146,8 +146,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     }
 
     override fun addAction(action: IAction) {
-        val state = getState()
-        when (state) {
+        when (getState()) {
             State.STATE_DESTROY -> return
 
             State.STATE_CREATE, State.STATE_NOT_READY -> {
