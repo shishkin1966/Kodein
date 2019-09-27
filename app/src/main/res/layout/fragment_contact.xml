@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/HelveticaTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/gray"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/setting_min_high"
+            android:paddingLeft="@dimen/dimen_12dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_12dp"
+            android:paddingBottom="@dimen/dimen_8dp"
+            android:text="Контакты"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_xlarge" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/title"
+            android:layout_alignParentBottom="true"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <shishkin.sl.kodeinpsb.common.RippleTextView
+                    android:id="@+id/web"
+                    style="@style/HelveticaTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_public"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/setting_min_high"
+                    android:paddingStart="@dimen/dimen_12dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:text="Сайт проекта"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/text_size_large" />
+
+                <View style="@style/HorizontalThinDivider" />
+
+                <shishkin.sl.kodeinpsb.common.RippleTextView
+                    android:id="@+id/mail"
+                    style="@style/HelveticaTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_mail"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/setting_min_high"
+                    android:paddingStart="@dimen/dimen_12dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:text="Сообщение об ошибке"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/text_size_large" />
+
+                <View style="@style/HorizontalThinDivider" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,6 +6,7 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
+import shishkin.sl.kodeinpsb.app.screen.contact.ContactFragment
 import shishkin.sl.kodeinpsb.app.screen.digital_currencies.DigitalCurrenciesFragment
 import shishkin.sl.kodeinpsb.app.screen.map.MapFragment
 import shishkin.sl.kodeinpsb.app.screen.val_curs.ValCursFragment
@@ -130,6 +131,13 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
                     return true
                 }
 
+                ShowContact -> {
+                    if (!router.isCurrentFragment(ContactFragment.NAME)) {
+                        router.showFragment(ContactFragment.newInstance())
+                    }
+                    return true
+                }
+
                 /*
                 ShowSetting -> {
                     if (!router.isCurrentFragment(SettingFragment.NAME)) {
@@ -138,21 +146,8 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
                     return true
                 }
 
-                ShowAddress -> {
-                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), MapFragment.NAME)) {
-                        router.showFragment(MapFragment.newInstance())
-                    }
-                    return true
-                }
 
 
-
-                ShowContact -> {
-                    if (!BackStack.isCurrentFragment(SLUtil.getActivity(), ContactFragment.NAME)) {
-                        router.showFragment(ContactFragment.newInstance())
-                    }
-                    return true
-                }
                  */
             }
         }
