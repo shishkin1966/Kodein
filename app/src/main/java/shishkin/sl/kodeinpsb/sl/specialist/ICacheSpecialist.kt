@@ -3,6 +3,8 @@ package shishkin.sl.kodeinpsb.sl.specialist
 import android.os.Parcelable
 
 import shishkin.sl.kodeinpsb.sl.ISpecialist
+import java.io.Serializable
+import java.lang.reflect.Type
 
 
 interface ICacheSpecialist : ISpecialist {
@@ -12,33 +14,31 @@ interface ICacheSpecialist : ISpecialist {
      * @param key   the key
      * @param value the value
      */
-    fun <T : Parcelable> put(key: String, value: T)
+    fun put(key: String, value: Serializable?)
 
     /**
      * Put list to cache.
      *
      * @param key    the key
-     * @param values the value
+     * @param values the list
      */
-    fun <T : Parcelable> put(key: String, values: List<T>)
+    fun putList(key: String, values: List<Serializable>?)
 
     /**
      * Get value from cache.
      *
      * @param key       the key
-     * @param itemClass the value class
-     * @return the Parcelable
+     * @return the Serializable
      */
-    operator fun <T : Parcelable> get(key: String, itemClass: Class<*>): T?
+    operator fun get(key: String): Serializable?
 
     /**
      * Get list from cache.
      *
      * @param key       the key
-     * @param itemClass the value class
      * @return the list
      */
-    fun <T : Parcelable> getList(key: String, itemClass: Class<*>): ArrayList<T>?
+    fun getList(key: String): ArrayList<Serializable>?
 
     /**
      * delete value from cache
@@ -47,4 +47,11 @@ interface ICacheSpecialist : ISpecialist {
      */
     fun clear(key: String)
 
+    fun toJson(obj: Any): Serializable
+
+    fun toJson(obj: Any, type: Type): Serializable
+
+    fun <T> fromJson(json: String, cl: Class<T>): T
+
+    fun <T> fromJson(json: String, type: Type): T
 }

@@ -1,48 +1,53 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
 import com.google.common.cache.LoadingCache
+import com.google.gson.Gson
 import shishkin.sl.kodeinpsb.sl.AbsSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
+import java.io.Serializable
+import java.lang.reflect.Type
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.collections.ArrayList
+
 
 class CacheSpecialist : AbsSpecialist(), ICacheSpecialist {
 
     companion object {
-
-        val NAME = "CacheSpecialist"
-
-        const val PARCELABLE = "PARCELABLE"
-        const val LIST = "LIST"
+        const val NAME = "CacheSpecialist"
         const val MAX_SIZE = 1000L
-        const val DURATION: Long = 1
+        const val DURATION: Long = 5
     }
 
-    private val mLock = ReentrantLock()
-    private var mCache: LoadingCache<String, ByteArray>? = null
-    private var mValue: ByteArray? = null
+    private val lock = ReentrantLock()
+    private var cache: LoadingCache<String, Serializable>? = null
+    private var value: Serializable? = null
+    private val gson: Gson = Gson()
 
     override fun onRegister() {
-        if (mCache == null) {
-            mCache = CacheBuilder.newBuilder()
+        if (cache == null) {
+            cache = CacheBuilder.newBuilder()
                 .maximumSize(MAX_SIZE)
                 .expireAfterWrite(DURATION, TimeUnit.MINUTES)
                 .build(
-                    object : CacheLoader<String, ByteArray>() {
-                        override fun load(key: String): ByteArray? {
-                            return mValue
+                    object : CacheLoader<String, Serializable>() {
+                        override fun load(key: String): Serializable? {
+                            return value
                         }
                     })
         }
     }
 
-    override fun <T : Parcelable> put(key: String, value: T) {
-        if (key.isNullOrEmpty() || mCache == null) {
+    override fun put(key: String, value: Serializable?) {
+        if (key.isEmpty()) {
+            return
+        }
+
+        if (value == null) {
             return
         }
 
@@ -50,26 +55,22 @@ class CacheSpecialist : AbsSpecialist(), ICacheSpecialist {
             return
         }
 
-        var parcel: Parcel? = null
-
-        mLock.lock()
-
+        lock.lock()
         try {
-            parcel = Parcel.obtain()
-            parcel!!.writeString(PARCELABLE)
-            parcel.writeParcelable(value, 0)
-            mValue = parcel.marshall()
-            mCache!!.put(key, mValue!!)
+            cache?.put(key, value)
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            parcel?.recycle()
-            mLock.unlock()
+            lock.unlock()
         }
     }
 
-    override fun <T : Parcelable> put(key: String, values: List<T>) {
-        if (key.isNullOrEmpty()) {
+    override fun putList(key: String, values: List<Serializable>?) {
+        if (key.isEmpty()) {
+            return
+        }
+
+        if (values == null) {
             return
         }
 
@@ -77,80 +78,48 @@ class CacheSpecialist : AbsSpecialist(), ICacheSpecialist {
             return
         }
 
-        var parcel: Parcel? = null
-
-        mLock.lock()
-
+        lock.lock()
         try {
-            parcel = Parcel.obtain()
-            parcel!!.writeString(LIST)
-            parcel.writeList(values)
-            mValue = parcel.marshall()
-            mCache!!.put(key, mValue!!)
+            val s = toSerializable(values)
+            cache?.put(key, s)
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            parcel?.recycle()
-            mLock.unlock()
+            lock.unlock()
         }
     }
 
-    override fun <T : Parcelable> get(key: String, itemClass: Class<*>): T? {
-        if (key.isNullOrEmpty()) {
+    override fun get(key: String): Serializable? {
+        if (key.isEmpty()) {
             return null
         }
 
-        var parcel: Parcel? = null
-
-        mLock.lock()
-
+        lock.lock()
         try {
-            parcel = Parcel.obtain()
-            val value = mCache!!.getIfPresent(key)
-            if (value != null) {
-                parcel!!.unmarshall(value, 0, value.size)
-                parcel.setDataPosition(0)
-                val type = parcel.readString()
-                if (PARCELABLE == type) {
-                    return parcel.readParcelable<Parcelable>(itemClass.classLoader) as T
-                }
-            }
+            return cache?.getIfPresent(key)
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            parcel?.recycle()
-            mLock.unlock()
+            lock.unlock()
         }
         return null
     }
 
-    override fun <T : Parcelable> getList(key: String, itemClass: Class<*>): ArrayList<T>? {
-        if (key.isNullOrEmpty()) {
+    override fun getList(key: String): ArrayList<Serializable>? {
+        if (key.isEmpty()) {
             return null
         }
 
-        var parcel: Parcel? = null
-
-        mLock.lock()
-
+        lock.lock()
         try {
-            parcel = Parcel.obtain()
-            val value = mCache!!.getIfPresent(key)
-            if (value != null) {
-                parcel!!.unmarshall(value, 0, value.size)
-                parcel.setDataPosition(0)
-                val type = parcel.readString()
-                if (LIST == type) {
-                    val res = ArrayList<T>()
-                    parcel.readList(res, itemClass.classLoader)
-                    return res
-                }
+            val s = cache?.getIfPresent(key)
+            if (s != null) {
+                return serializableToList(s)
             }
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            parcel?.recycle()
-            mLock.unlock()
+            lock.unlock()
         }
         return null
     }
@@ -163,32 +132,31 @@ class CacheSpecialist : AbsSpecialist(), ICacheSpecialist {
     }
 
     override fun clear(key: String) {
-        if (key.isNullOrEmpty()) {
+        if (key.isEmpty()) {
             return
         }
 
-        mLock.lock()
-
+        lock.lock()
         try {
-            mCache!!.invalidate(key)
+            cache?.invalidate(key)
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            mLock.unlock()
+            lock.unlock()
         }
     }
 
     override fun stop() {
         super.stop()
 
-        mLock.lock()
+        lock.lock()
 
         try {
-            mCache!!.invalidateAll()
+            cache?.invalidateAll()
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(NAME, e)
         } finally {
-            mLock.unlock()
+            lock.unlock()
         }
     }
 
@@ -198,6 +166,42 @@ class CacheSpecialist : AbsSpecialist(), ICacheSpecialist {
 
     override fun getName(): String {
         return NAME
+    }
+
+    private fun toSerializable(list: List<Serializable>): Serializable {
+        return LinkedList<Serializable>(list)
+    }
+
+    private fun serializableToList(value: Serializable?): ArrayList<Serializable>? {
+        if (value == null) {
+            return null
+        }
+
+        if (value is LinkedList<*>) {
+            val items = value as LinkedList<Serializable>
+            return ArrayList(items)
+        } else if (value is ArrayList<*>) {
+            return value as ArrayList<Serializable>
+        }
+        return null
+    }
+
+    override fun toJson(obj: Any): Serializable {
+        return gson.toJson(obj)
+    }
+
+    override fun toJson(obj: Any, type: Type): Serializable {
+        //use example : type = new com.google.gson.reflect.TypeToken<List<ContactItem>>(){}.getType()
+        return gson.toJson(obj, type)
+    }
+
+    override fun <T> fromJson(json: String, cl: Class<T>): T {
+        return gson.fromJson(json, cl)
+    }
+
+    override fun <T> fromJson(json: String, type: Type): T {
+        // use example : type = new com.google.gson.reflect.TypeToken<List<ContactItem>>(){}.getType()
+        return gson.fromJson<T>(json, type)
     }
 
 }

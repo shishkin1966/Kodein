@@ -18,6 +18,8 @@ open class BaseActionHandler : IActionHandler {
     }
 
     private fun showMessage(action: ShowMessageAction) {
+        if (action.getMessage().isNullOrEmpty()) return
+
         ApplicationUtils.showToast(
             ApplicationSpecialist.appContext,
             action.getMessage(),

@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 
 import com.google.common.collect.Collections2
-import microservices.shishkin.example.data.Ticker
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import java.util.*
 import kotlin.collections.ArrayList
 

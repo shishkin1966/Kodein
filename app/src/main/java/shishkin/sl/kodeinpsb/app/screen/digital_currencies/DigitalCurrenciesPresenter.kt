@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 
-import microservices.shishkin.example.data.Ticker
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.OnEditTextChangedAction
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.request.GetTickersRequest
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -33,7 +33,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
         if (data == null) {
             data = TickerData()
             val temp = ApplicationSingleton.instance.getCache()
-                ?.getList<Ticker>(GetTickersRequest.NAME, Ticker::class.java)
+                ?.getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
                 data!!.tickers = temp
                 getView<DigitalCurrenciesFragment>()
@@ -90,16 +90,15 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
         if (!result.hasError()) {
             data?.tickers = ArrayList(result.getData() as List<Ticker>)
             getView<DigitalCurrenciesFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
-            val req: Request = object : Request() {
+            ApplicationSingleton.instance.getExecutor()?.execute(object : Request() {
                 override fun run() {
                     ApplicationSingleton.instance.getCache()
-                        ?.put(GetTickersRequest.NAME, data?.tickers!!)
+                        ?.put(GetTickersRequest.NAME, data?.tickers)
                 }
-            }
-            ApplicationSingleton.instance.getExecutor()?.execute(req)
+            })
         } else {
             getView<DigitalCurrenciesFragment>()?.addAction(
-                ShowMessageAction(result.getErrorText()!!).setType(
+                ShowMessageAction(result.getErrorText()).setType(
                     ApplicationUtils.MESSAGE_TYPE_ERROR
                 )
             )

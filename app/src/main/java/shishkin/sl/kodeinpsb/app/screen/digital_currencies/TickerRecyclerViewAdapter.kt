@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import microservices.shishkin.example.data.Ticker
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
