@@ -11,6 +11,7 @@ import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.provider.IDbProvider
 import shishkin.sl.kodeinpsb.sl.specialist.*
+import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 
 
 object ApplicationSingleton {
@@ -92,5 +93,13 @@ class App : ApplicationSpecialist() {
 
     fun getLocationUnion(): ILocationUnion? {
         return get<ILocationUnion>(LocationUnion.NAME)
+    }
+
+    fun getCache(): ICacheSpecialist? {
+        return get<ICacheSpecialist>(CacheSpecialist.NAME)
+    }
+
+    fun getExecutor(): CommonExecutor? {
+        return get<CommonExecutor>(CommonExecutor.NAME)
     }
 }

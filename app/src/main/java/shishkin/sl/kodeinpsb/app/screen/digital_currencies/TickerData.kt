@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 
 import com.google.common.collect.Collections2
-import microservices.shishkin.example.data.Ticker
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -14,7 +14,7 @@ class TickerData {
         if (tickers == null) return ArrayList()
 
         if (filter.isNullOrEmpty()) {
-            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!,true) })
+            tickers!!.sortWith(Comparator { o1, o2 -> o1.symbol!!.compareTo(o2.symbol!!, true) })
             return tickers!!
         } else {
             val list: ArrayList<Ticker> = ArrayList()

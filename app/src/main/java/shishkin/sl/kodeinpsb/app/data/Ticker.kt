@@ -1,9 +1,10 @@
-package microservices.shishkin.example.data
+package shishkin.sl.kodeinpsb.app.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class Ticker {
+class Ticker() : Serializable {
     @SerializedName("id")
     var id: String? = null
 

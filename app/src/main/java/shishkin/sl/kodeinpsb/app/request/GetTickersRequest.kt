@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.app.request
 
 import io.reactivex.Single
-import microservices.shishkin.example.data.Ticker
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.app.provider.NetProvider
 import shishkin.sl.kodeinpsb.sl.request.AbsNetResultMessageRequest
 

@@ -4,7 +4,7 @@ import android.widget.Toast
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 
 
-class ShowMessageAction(private val message: String) : IAction {
+class ShowMessageAction(private val message: String?) : IAction {
 
     private var title: String? = null
     private var duration = Toast.LENGTH_SHORT
@@ -18,7 +18,7 @@ class ShowMessageAction(private val message: String) : IAction {
         this.title = title
     }
 
-    fun getMessage(): String {
+    fun getMessage(): String? {
         return message
     }
 

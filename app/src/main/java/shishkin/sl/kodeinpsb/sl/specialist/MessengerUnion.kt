@@ -93,33 +93,28 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
         for (address in list) {
             addresses.addAll(getAddresses(address))
         }
-        ApplicationUtils.runOnUiThread(Runnable {
-            for (address in addresses) {
-                val id = atomicId.incrementAndGet()
-                val newMessage = message.copy()
-                newMessage.setMessageId(id)
-                newMessage.setAddress(address)
-                newMessage.setCopyTo(ArrayList())
+        for (address in addresses) {
+            val id = atomicId.incrementAndGet()
+            val newMessage = message.copy()
+            newMessage.setMessageId(id)
+            newMessage.setAddress(address)
+            newMessage.setCopyTo(ArrayList())
 
-                if (!message.isCheckDublicate()) {
-                    messages[id] = newMessage
-                } else {
-                    removeDublicate(newMessage)
-                    messages[id] = newMessage
-                }
-
-                checkAndReadMessagesSubscriber(address)
+            if (!message.isCheckDublicate()) {
+                messages[id] = newMessage
+            } else {
+                removeDublicate(newMessage)
+                messages[id] = newMessage
             }
-        })
+
+            checkAndReadMessagesSubscriber(address)
+        }
     }
 
     private fun checkAndReadMessagesSubscriber(address: String) {
         val subscriber = getSubscriber(address)
         if (subscriber != null && address == subscriber.getName()) {
-            val state = subscriber.getState()
-            if (state == State.STATE_READY) {
-                readMessages(subscriber)
-            }
+            readMessages(subscriber)
         }
     }
 
@@ -207,12 +202,16 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
 
     override fun readMessages(subscriber: IMessengerSubscriber) {
         val list = getMessage(subscriber)
-        for (message in list) {
-            val state = subscriber.getState()
-            if (state == State.STATE_READY) {
-                message.read(subscriber)
-                removeMessage(message)
-            }
+        if (list.isNotEmpty()) {
+            ApplicationUtils.runOnUiThread(Runnable {
+                for (message in list) {
+                    val state = subscriber.getState()
+                    if (state == State.STATE_READY) {
+                        message.read(subscriber)
+                        removeMessage(message)
+                    }
+                }
+            })
         }
     }
 

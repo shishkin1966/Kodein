@@ -1,17 +1,16 @@
 package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 
-import microservices.shishkin.example.data.Ticker
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.OnEditTextChangedAction
+import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.app.provider.Provider
+import shishkin.sl.kodeinpsb.app.request.GetTickersRequest
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
-import shishkin.sl.kodeinpsb.sl.action.DataAction
-
-
+import shishkin.sl.kodeinpsb.sl.request.Request
 
 
 class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(model),
@@ -33,6 +32,13 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun onStart() {
         if (data == null) {
             data = TickerData()
+            val temp = ApplicationSingleton.instance.getCache()
+                ?.getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
+            if (temp != null) {
+                data!!.tickers = temp
+                getView<DigitalCurrenciesFragment>()
+                    ?.addAction(DataAction(Actions.RefreshViews, data))
+            }
             getData()
         } else {
             getView<DigitalCurrenciesFragment>()
@@ -56,7 +62,12 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
             val arg = action.obj as String
             if (arg != data?.filter) {
                 data?.filter = arg
-                getView<DigitalCurrenciesFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
+                getView<DigitalCurrenciesFragment>()?.addAction(
+                    DataAction(
+                        Actions.RefreshViews,
+                        data
+                    )
+                )
             }
             return true
         }
@@ -77,12 +88,17 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun response(result: ExtResult) {
         getView<DigitalCurrenciesFragment>()?.addAction(HideProgressBarAction())
         if (!result.hasError()) {
-            data?.tickers = ArrayList<Ticker>(result.getData() as List<Ticker>)
-            getView<DigitalCurrenciesFragment>()
-                ?.addAction(DataAction(Actions.RefreshViews, data))
+            data?.tickers = ArrayList(result.getData() as List<Ticker>)
+            getView<DigitalCurrenciesFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
+            ApplicationSingleton.instance.getExecutor()?.execute(object : Request() {
+                override fun run() {
+                    ApplicationSingleton.instance.getCache()
+                        ?.put(GetTickersRequest.NAME, data?.tickers)
+                }
+            })
         } else {
             getView<DigitalCurrenciesFragment>()?.addAction(
-                ShowMessageAction(result.getErrorText()!!).setType(
+                ShowMessageAction(result.getErrorText()).setType(
                     ApplicationUtils.MESSAGE_TYPE_ERROR
                 )
             )

@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Balance
+import shishkin.sl.kodeinpsb.app.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.app.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
@@ -58,7 +58,6 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         balanceView = findView(R.id.balance_list)
         balanceView?.layoutManager = LinearLayoutManager(activity)
         balanceView?.adapter = balanceAdapter
-
     }
 
     override fun onStart() {
