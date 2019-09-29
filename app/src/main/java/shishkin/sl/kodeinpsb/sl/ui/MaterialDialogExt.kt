@@ -17,6 +17,15 @@ import java.util.*
 
 class MaterialDialogExt {
 
+    companion object {
+        const val NO_BUTTON = -1
+        const val ID = "id"
+        const val BUTTON = "button"
+        const val POSITIVE = "positive"
+        const val NEGATIVE = "negative"
+        const val NEUTRAL = "neutral"
+    }
+
     private var id: Int = 0
     private val materialDialog: MaterialDialog
     private val listener: String?
@@ -347,51 +356,41 @@ class MaterialDialogExt {
     fun show() {
         if (materialDialog != null) {
             var size = ApplicationUtils.px2sp(
-                materialDialog!!.getContext(),
+                materialDialog.getContext(),
                 materialDialog!!.getContext().getResources().getDimension(R.dimen.text_size_large)
             )
-            materialDialog!!.getActionButton(DialogAction.POSITIVE).setTextSize(size)
-            materialDialog!!.getActionButton(DialogAction.POSITIVE)
+            materialDialog.getActionButton(DialogAction.POSITIVE).setTextSize(size)
+            materialDialog.getActionButton(DialogAction.POSITIVE)
                 .setTextColor(
                     ApplicationUtils.getColor(
-                        materialDialog!!.getContext(),
+                        materialDialog.getContext(),
                         R.color.blue
                     )
                 )
-            materialDialog!!.getActionButton(DialogAction.NEGATIVE).setTextSize(size)
-            materialDialog!!.getActionButton(DialogAction.NEGATIVE)
+            materialDialog.getActionButton(DialogAction.NEGATIVE).setTextSize(size)
+            materialDialog.getActionButton(DialogAction.NEGATIVE)
                 .setTextColor(
                     ApplicationUtils.getColor(
-                        materialDialog!!.getContext(),
+                        materialDialog.getContext(),
                         R.color.blue
                     )
                 )
-            materialDialog!!.getActionButton(DialogAction.NEUTRAL).setTextSize(size)
-            materialDialog!!.getActionButton(DialogAction.NEUTRAL)
+            materialDialog.getActionButton(DialogAction.NEUTRAL).setTextSize(size)
+            materialDialog.getActionButton(DialogAction.NEUTRAL)
                 .setTextColor(
                     ApplicationUtils.getColor(
-                        materialDialog!!.getContext(),
+                        materialDialog.getContext(),
                         R.color.blue
                     )
                 )
-            materialDialog!!.getContentView()?.setTextSize(size)
+            materialDialog.getContentView()?.setTextSize(size)
             size = ApplicationUtils.px2sp(
-                materialDialog!!.getContext(),
+                materialDialog.getContext(),
                 materialDialog!!.getContext().getResources().getDimension(R.dimen.text_size_xlarge)
             )
-            materialDialog!!.getTitleView().setTextSize(size)
-            materialDialog!!.show()
+            materialDialog.getTitleView().setTextSize(size)
+            materialDialog.show()
         }
-    }
-
-    companion object {
-
-        val NO_BUTTON = -1
-        val ID = "id"
-        val BUTTON = "button"
-        val POSITIVE = "positive"
-        val NEGATIVE = "negative"
-        val NEUTRAL = "neutral"
     }
 
 }

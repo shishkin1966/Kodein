@@ -10,7 +10,7 @@ abstract class AbsContentObservable() : AbsObservable() {
     private val uris = ArrayList<Uri>()
 
     constructor(uri: Uri) : this() {
-        uris.add(uri);
+        uris.add(uri)
     }
 
     constructor(uris: List<Uri>) : this() {
@@ -20,13 +20,13 @@ abstract class AbsContentObservable() : AbsObservable() {
     override fun register() {
         val context = ApplicationSpecialist.appContext
         for (uri in uris) {
-            context.getContentResolver().registerContentObserver(uri, true, observer)
+            context.contentResolver.registerContentObserver(uri, true, observer)
         }
     }
 
     override fun unregister() {
-        val context = ApplicationSpecialist.appContext;
-        context.contentResolver.unregisterContentObserver(observer);
+        val context = ApplicationSpecialist.appContext
+        context.contentResolver.unregisterContentObserver(observer)
     }
 
     override fun stop() {

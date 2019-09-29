@@ -10,7 +10,7 @@ abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<
         if (super.register(subscriber)) {
             if (currentSubscriber != null) {
                 val oldSubscriber = currentSubscriber?.get()
-                if (subscriber.getName().equals(oldSubscriber?.getName())) {
+                if (subscriber.getName() == (oldSubscriber?.getName())) {
                     currentSubscriber = WeakReference(subscriber)
                 }
             }
@@ -24,7 +24,7 @@ abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<
 
         if (currentSubscriber != null) {
             val oldSubscriber = currentSubscriber?.get()
-            if (subscriber.getName().equals(oldSubscriber?.getName())) {
+            if (subscriber.getName() == (oldSubscriber?.getName())) {
                 currentSubscriber?.clear()
                 currentSubscriber = null
             }
@@ -46,9 +46,9 @@ abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<
 
     override fun getCurrentSubscriber(): T? {
         if (currentSubscriber != null) {
-            return currentSubscriber?.get();
+            return currentSubscriber?.get()
         }
-        return null;
+        return null
     }
 
 }

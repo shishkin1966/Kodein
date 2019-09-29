@@ -17,10 +17,8 @@ abstract class AbsServiceLocator : IServiceLocator {
     }
 
     override fun <C : ISpecialist> get(name: String): C? {
-        if (!exists(name)) {
-            if (!registerSpecialist(name)) {
-                return null;
-            }
+        if (!exists(name) && !registerSpecialist(name)) {
+            return null
         }
 
         if (secretary.get(name) != null) {
@@ -64,10 +62,8 @@ abstract class AbsServiceLocator : IServiceLocator {
             if (specialist != null) {
                 // нельзя отменить регистрацию у объединения с подписчиками
                 if (!specialist.isPersistent()) {
-                    if (specialist is ISmallUnion<*>) {
-                        if (specialist.hasSubscribers()) {
-                            return false
-                        }
+                    if (specialist is ISmallUnion<*> && specialist.hasSubscribers()) {
+                        return false
                     }
                     specialist.onUnRegister()
                     secretary.remove(name)
@@ -135,10 +131,7 @@ abstract class AbsServiceLocator : IServiceLocator {
 
     override fun stop() {
         if (ApplicationSpecialist.instance.isExit()) {
-            val union = get<ActivityUnion>(ActivityUnion.NAME)
-            if (union != null) {
-                union.stop()
-            }
+            get<ActivityUnion>(ActivityUnion.NAME)?.stop()
         }
     }
 

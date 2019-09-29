@@ -48,8 +48,8 @@ abstract class AbsNetProvider<T> : INetProvider<T> {
 
     override fun request(request: IRequest) {
         if (isValid()) {
-            val executor = ApplicationSpecialist.serviceLocator?.get<NetExecutor>(NetExecutor.NAME);
-            executor?.execute(request);
+            val executor = ApplicationSpecialist.serviceLocator?.get<NetExecutor>(NetExecutor.NAME)
+            executor?.execute(request)
         }
     }
 

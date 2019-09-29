@@ -14,6 +14,7 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.OnEditTextChangedAction
 import shishkin.sl.kodeinpsb.app.observe.EditTextObservable
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction

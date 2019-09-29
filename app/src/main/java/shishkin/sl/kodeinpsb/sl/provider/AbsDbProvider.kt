@@ -57,7 +57,7 @@ abstract class AbsDbProvider : IDbProvider {
                     .build()
             }
             db.openHelper.readableDatabase.version
-            databases.put(databaseName, db);
+            databases.put(databaseName, db)
 
         } catch (e: Exception) {
             ErrorSpecialistSingleton.instance.onError(getName(), e)
@@ -66,7 +66,7 @@ abstract class AbsDbProvider : IDbProvider {
     }
 
     private fun isConnected(databaseName: String): Boolean {
-        return if (databaseName.isNullOrEmpty()) {
+        return if (databaseName.isEmpty()) {
             false
         } else databases.containsKey(databaseName)
 
@@ -143,8 +143,6 @@ abstract class AbsDbProvider : IDbProvider {
         klass: Class<T>?
     ) {
         val context = ApplicationSpecialist.appContext
-        if (context == null) return
-
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -155,7 +153,7 @@ abstract class AbsDbProvider : IDbProvider {
 
         val db = databases.get(databaseName) ?: return
 
-        val pathDb = db.getOpenHelper().getReadableDatabase().getPath()
+        val pathDb = db.openHelper.readableDatabase.path
         if (pathDb.isNullOrEmpty()) {
             return
         }
@@ -163,7 +161,7 @@ abstract class AbsDbProvider : IDbProvider {
         disconnect(databaseName)
 
         val fileDb = File(pathDb)
-        val nameDb = fileDb.getName()
+        val nameDb = fileDb.name
         val pathBackup = dirBackup + File.separator + nameDb
         try {
             val fileBackup = File(pathBackup)
@@ -205,7 +203,7 @@ abstract class AbsDbProvider : IDbProvider {
             }
 
             if (klass != null) {
-                connect(klass, nameDb, null);
+                connect(klass, nameDb, null)
             }
 
             ApplicationUtils.runOnUiThread(Runnable {
@@ -229,8 +227,6 @@ abstract class AbsDbProvider : IDbProvider {
         klass: Class<T>?
     ) {
         val context = ApplicationSpecialist.appContext
-        if (context == null) return
-
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -241,7 +237,7 @@ abstract class AbsDbProvider : IDbProvider {
 
         val db = databases.get(databaseName) ?: return
 
-        val pathDb = db.getOpenHelper().getReadableDatabase().getPath()
+        val pathDb = db.openHelper.readableDatabase.path
         if (pathDb.isNullOrEmpty()) {
             return
         }
@@ -249,7 +245,7 @@ abstract class AbsDbProvider : IDbProvider {
         disconnect(databaseName)
 
         val fileDb = File(pathDb)
-        val nameDb = fileDb.getName()
+        val nameDb = fileDb.name
         val pathBackup = dirBackup + File.separator + nameDb
         val fileBackup = File(pathBackup)
         if (fileBackup.exists()) {
@@ -259,7 +255,7 @@ abstract class AbsDbProvider : IDbProvider {
                 }
                 if (!fileDb.exists()) {
                     Files.createParentDirs(fileDb)
-                    val dir = File(fileDb.getParent())
+                    val dir = File(fileDb.parent)
                     if (!dir.exists()) {
                         dir.mkdirs()
                     }
@@ -269,7 +265,7 @@ abstract class AbsDbProvider : IDbProvider {
                 }
 
                 if (klass != null) {
-                    connect(klass, nameDb, null);
+                    connect(klass, nameDb, null)
                 }
 
                 ApplicationUtils.runOnUiThread(
@@ -290,8 +286,6 @@ abstract class AbsDbProvider : IDbProvider {
 
     override fun checkCopy(databaseName: String, dirBackup: String): Boolean {
         val context = ApplicationSpecialist.appContext
-        if (context == null) return false
-
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -302,13 +296,13 @@ abstract class AbsDbProvider : IDbProvider {
 
         val db = databases.get(databaseName) ?: return false
 
-        val pathDb = db.getOpenHelper().getReadableDatabase().getPath()
+        val pathDb = db.openHelper.readableDatabase.path
         if (pathDb.isNullOrEmpty()) {
             return false
         }
 
         val fileDb = File(pathDb)
-        val nameDb = fileDb.getName()
+        val nameDb = fileDb.name
         val pathBackup = dirBackup + nameDb
 
         return File(pathBackup).exists()

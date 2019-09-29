@@ -9,10 +9,10 @@ abstract class AbsObservable : IObservable {
     private val secretary = Secretary<IObservableSubscriber>()
 
     override fun addObserver(subscriber: IObservableSubscriber) {
-        secretary.put(subscriber.getName(), subscriber);
+        secretary.put(subscriber.getName(), subscriber)
 
         if (secretary.size() == 1) {
-            register();
+            register()
         }
     }
 

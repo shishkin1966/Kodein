@@ -22,7 +22,7 @@ class PresenterUnion : AbsSmallUnion<IPresenter>(), IPresenterUnion {
         return NAME
     }
 
-    override fun <C> getPresenter(name: String): C? {
+    override fun <C:IPresenter> getPresenter(name: String): C? {
         return getSubscriber(name) as C?
     }
 

@@ -32,8 +32,8 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun onStart() {
         if (data == null) {
             data = TickerData()
-            val temp = ApplicationSingleton.instance.getCache()
-                ?.getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
+            val temp =
+                ApplicationSingleton.instance.getCache().getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
                 data!!.tickers = temp
                 getView<DigitalCurrenciesFragment>()
@@ -59,7 +59,10 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
         }
 
         if (action is OnEditTextChangedAction) {
-            val arg = action.obj as String
+            if (data == null) {
+                data = TickerData()
+            }
+            val arg = action.obj as String?
             if (arg != data?.filter) {
                 data?.filter = arg
                 getView<DigitalCurrenciesFragment>()?.addAction(
@@ -90,10 +93,10 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
         if (!result.hasError()) {
             data?.tickers = ArrayList(result.getData() as List<Ticker>)
             getView<DigitalCurrenciesFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
-            ApplicationSingleton.instance.getExecutor()?.execute(object : Request() {
+            ApplicationSingleton.instance.getExecutor().execute(object : Request() {
                 override fun run() {
                     ApplicationSingleton.instance.getCache()
-                        ?.put(GetTickersRequest.NAME, data?.tickers)
+                        .put(GetTickersRequest.NAME, data?.tickers)
                 }
             })
         } else {

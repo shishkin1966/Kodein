@@ -29,18 +29,18 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
     override fun register(subscriber: IActivity): Boolean {
         if (super.register(subscriber)) {
             for (i in activities.size - 1 downTo 0) {
-                if (activities.get(i) == null) {
+                if (activities[i] == null) {
                     activities.removeAt(i)
                     continue
                 }
-                if (activities.get(i).get() == null) {
+                if (activities[i].get() == null) {
                     activities.removeAt(i)
                     continue
                 }
 
-                if (activities.get(i).get()!!.getName().equals(subscriber.getName())) {
-                    if (!activities.get(i).get()!!.equals(subscriber)) {
-                        activities.get(i).get()!!.stop()
+                if (activities[i].get()!!.getName() == subscriber.getName()) {
+                    if (activities[i].get()!! != subscriber) {
+                        activities[i].get()!!.stop()
                     }
                     activities.removeAt(i)
                 }
@@ -56,16 +56,16 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
         super.unregister(subscriber)
 
         for (i in activities.size - 1 downTo 0) {
-            if (activities.get(i) == null) {
+            if (activities[i] == null) {
                 activities.removeAt(i)
                 continue
             }
-            if (activities.get(i).get() == null) {
+            if (activities[i].get() == null) {
                 activities.removeAt(i)
                 continue
             }
 
-            if (activities.get(i).get()!!.equals(subscriber)) {
+            if (activities[i].get()!! == subscriber) {
                 activities.removeAt(i)
             }
         }
@@ -187,29 +187,27 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
             val subscriber = getCurrentSubscriber()
             if (subscriber != null && subscriber.isValid() && subscriber.getState() == State.STATE_READY) {
                 val activity = subscriber as AppCompatActivity
-                if (activity != null) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            activity,
-                            permission
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        permission
+                    )
+                ) {
+                    addAction(
+                        ShowDialogAction(
+                            R.id.dialog_request_permissions,
+                            listener,
+                            null,
+                            helpMessage
+                        ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
+                            false
                         )
-                    ) {
-                        addAction(
-                            ShowDialogAction(
-                                R.id.dialog_request_permissions,
-                                listener,
-                                null,
-                                helpMessage
-                            ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
-                                false
-                            )
-                        )
-                    } else {
-                        ActivityCompat.requestPermissions(
-                            activity,
-                            arrayOf(permission),
-                            ApplicationUtils.REQUEST_PERMISSIONS
-                        )
-                    }
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(permission),
+                        ApplicationUtils.REQUEST_PERMISSIONS
+                    )
                 }
             }
         }
@@ -220,18 +218,16 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
             val subscriber = getCurrentSubscriber()
             if (subscriber != null && subscriber.isValid() && subscriber.getState() == State.STATE_READY) {
                 val activity = subscriber as AppCompatActivity
-                if (activity != null) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                            activity,
-                            permission
-                        )
-                    ) {
-                        ActivityCompat.requestPermissions(
-                            activity,
-                            arrayOf(permission),
-                            ApplicationUtils.REQUEST_PERMISSIONS
-                        )
-                    }
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        permission
+                    )
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(permission),
+                        ApplicationUtils.REQUEST_PERMISSIONS
+                    )
                 }
             }
         }

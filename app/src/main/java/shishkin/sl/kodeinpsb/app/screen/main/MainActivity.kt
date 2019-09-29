@@ -7,6 +7,7 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
+import shishkin.sl.kodeinpsb.app.presenter.OnBackPressedPresenter
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.sidemenu.SideMenuFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
@@ -21,6 +22,8 @@ import shishkin.sl.kodeinpsb.sl.ui.BackStack
 class MainActivity : AbsContentActivity() {
     private val actionHandler = ActivityActionHandler(this)
     private var menu: SlidingMenu? = null
+    private val onBackPressedPresenter =
+        OnBackPressedPresenter()
 
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
@@ -60,6 +63,7 @@ class MainActivity : AbsContentActivity() {
         onNewIntent(getIntent())
     }
 
+
     override fun getContentResId(): Int {
         return R.id.content
     }
@@ -72,6 +76,8 @@ class MainActivity : AbsContentActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        addStateObserver(onBackPressedPresenter)
 
         ApplicationUtils.grantPermisions(
             permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -144,5 +150,11 @@ class MainActivity : AbsContentActivity() {
             return menu!!.isMenuShowing
         }
         return false
+    }
+
+    override fun onBackPressed() {
+        if (!onBackPressedPresenter.onClick()) {
+            super.onBackPressed()
+        }
     }
 }

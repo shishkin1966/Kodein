@@ -10,6 +10,6 @@ interface IPresenterUnion : ISmallUnion<IPresenter> {
      * @param name имя презентера
      * @return презентер
      */
-    fun <C> getPresenter(name: String): C?
+    fun <C:IPresenter> getPresenter(name: String): C?
 
 }

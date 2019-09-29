@@ -35,7 +35,7 @@ class App : ApplicationSpecialist() {
 
     fun onScreenOn() {
         ApplicationUtils.showToast(
-            ApplicationSpecialist.appContext,
+            appContext,
             "Screen on",
             Toast.LENGTH_SHORT,
             ApplicationUtils.MESSAGE_TYPE_INFO
@@ -61,7 +61,7 @@ class App : ApplicationSpecialist() {
 
     fun <C : IPresenter> getPresenter(name: String): C? {
         val union = serviceLocator?.get<IPresenterUnion>(PresenterUnion.NAME)
-        return union?.getPresenter<C>(name)
+        return union?.getPresenter(name)
     }
 
     fun addMessage(message: IMessage) {
@@ -79,27 +79,27 @@ class App : ApplicationSpecialist() {
         union?.getObservable(observable)?.onChange(obj)
     }
 
-    fun getDbProvider(): IDbProvider? {
-        return get<IDbProvider>(DbProvider.NAME)
+    fun getDbProvider(): IDbProvider {
+        return get(DbProvider.NAME)!!
     }
 
-    fun getObservableUnion(): IObservableUnion? {
-        return get<IObservableUnion>(ObservableUnion.NAME)
+    fun getObservableUnion(): IObservableUnion {
+        return get(ObservableUnion.NAME)!!
     }
 
-    fun getActivityUnion(): IActivityUnion? {
-        return get<IActivityUnion>(ActivityUnion.NAME)
+    fun getActivityUnion(): IActivityUnion {
+        return get(ActivityUnion.NAME)!!
     }
 
-    fun getLocationUnion(): ILocationUnion? {
-        return get<ILocationUnion>(LocationUnion.NAME)
+    fun getLocationUnion(): ILocationUnion {
+        return get(LocationUnion.NAME)!!
     }
 
-    fun getCache(): ICacheSpecialist? {
-        return get<ICacheSpecialist>(CacheSpecialist.NAME)
+    fun getCache(): ICacheSpecialist {
+        return get(CacheSpecialist.NAME)!!
     }
 
-    fun getExecutor(): CommonExecutor? {
-        return get<CommonExecutor>(CommonExecutor.NAME)
+    fun getExecutor(): CommonExecutor {
+        return get(CommonExecutor.NAME)!!
     }
 }

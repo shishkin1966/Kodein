@@ -22,12 +22,12 @@ class CreateAccountRequest(private val account: Account) : AbsRequest() {
 
     override fun run() {
         account.openDate = System.currentTimeMillis()
-        val db = ApplicationSingleton.instance.getDbProvider()!!.getDb<Db>()
+        val db = ApplicationSingleton.instance.getDbProvider().getDb<Db>()
         if (db != null) {
             try {
                 db.getDao().insertAccount(account)
                 val observable =
-                    ApplicationSingleton.instance.getObservableUnion()?.getObservable(
+                    ApplicationSingleton.instance.getObservableUnion().getObservable(
                         ObjectObservable.NAME
                     ) as ObjectObservable?
                 observable?.onChange(Account.TABLE)
