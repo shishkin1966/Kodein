@@ -3,6 +3,7 @@ package shishkin.sl.kodeinpsb.app.screen.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
@@ -60,7 +61,7 @@ class MainActivity : AbsContentActivity() {
 
         setMenu()
 
-        onNewIntent(getIntent())
+        onNewIntent(intent)
     }
 
 
@@ -85,7 +86,7 @@ class MainActivity : AbsContentActivity() {
         )
 
         if (intent != null) {
-            val action = intent.getAction()
+            val action = intent.action
             if ("android.intent.action.MAIN" == action) {
                 showHomeFragment();
             } else {
@@ -124,8 +125,8 @@ class MainActivity : AbsContentActivity() {
     private fun setMenu() {
         if (menu == null) {
             menu = SlidingMenu(this)
-            menu?.setMode(SlidingMenu.LEFT)
-            menu?.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN)
+            menu?.mode = SlidingMenu.LEFT
+            menu?.touchModeAbove = SlidingMenu.TOUCHMODE_MARGIN
             menu?.setShadowWidthRes(R.dimen.dimen_8dp)
             menu?.setBehindOffsetRes(R.dimen.slidingmenu_offset)
             menu?.setShadowDrawable(R.drawable.shadow)
@@ -135,14 +136,14 @@ class MainActivity : AbsContentActivity() {
         }
 
         BackStack.showFragment(
-            this,
-            R.id.menu,
-            SideMenuFragment.newInstance(),
-            false,
-            false,
-            false,
-            true
-        );
+            activity = this,
+            idRes = R.id.menu,
+            fragment = SideMenuFragment.newInstance(),
+            addToBackStack = false,
+            clearBackStack = false,
+            animate = false,
+            allowingStateLoss = true
+        )
     }
 
     fun isMenuShowing(): Boolean {
@@ -153,6 +154,15 @@ class MainActivity : AbsContentActivity() {
     }
 
     override fun onBackPressed() {
+        if (menu != null && menu!!.isMenuShowing) {
+            menu?.showContent()
+            return
+        }
+        val fragment = ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
+        if (fragment !is AccountsFragment) {
+            super.onBackPressed()
+            return
+        }
         if (!onBackPressedPresenter.onClick()) {
             super.onBackPressed()
         }

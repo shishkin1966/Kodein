@@ -32,17 +32,7 @@ class OnBackPressedPresenter : AbsPresenter() {
     }
 
     fun onClick(): Boolean {
-        val fragment = ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
-        if (fragment !is AccountsFragment) {
-            return false
-        }
         if (isValid()) {
-            val presenter =
-                ApplicationSingleton.instance.getPresenter<MainPresenter>(MainPresenter.NAME)
-            if (presenter != null && presenter.isMenuShowing()) {
-                presenter.addAction(HideSideMenuAction())
-                return true
-            }
             if (!doubleBackPressedOnce) {
                 val context = ApplicationSpecialist.appContext
                 doubleBackPressedOnce = true
