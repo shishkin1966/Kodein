@@ -19,6 +19,7 @@ import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
+import shishkin.sl.kodeinpsb.sl.model.IPresenterModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
@@ -97,7 +98,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun hideKeyboard() {
-        if (activity.isFinishing()) return
+        if (activity.isFinishing) return
 
         val imm = ApplicationUtils.getSystemService<InputMethodManager>(
             activity,
@@ -142,11 +143,13 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         if (view is AppCompatButton) {
             action = view.text.toString()
         } else if (view is Button) {
-            action = view.getText().toString()
+            action = view.text.toString()
         }
         if (activity is IModelView && !action.isNullOrBlank()) {
             val model = activity.getModel<IModel>()
-            model?.getPresenter<IPresenter>()?.addAction(SnackBarAction(action))
+            if (model is IPresenterModel) {
+                model.getPresenter<IPresenter>().addAction(SnackBarAction(action))
+            }
         }
     }
 
@@ -172,18 +175,16 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 val union =
                     ApplicationSpecialist.serviceLocator?.get<IActivityUnion>(ActivityUnion.NAME)
-                if (union != null) {
-                    union.addAction(
-                        ShowDialogAction(
-                            R.id.dialog_request_permissions,
-                            listener!!,
-                            null,
-                            helpMessage!!
-                        ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
-                            false
-                        )
+                union?.addAction(
+                    ShowDialogAction(
+                        R.id.dialog_request_permissions,
+                        listener!!,
+                        null,
+                        helpMessage!!
+                    ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
+                        false
                     )
-                }
+                )
             } else {
                 activity.requestPermissions(
                     arrayOf(permission),

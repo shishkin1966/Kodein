@@ -32,4 +32,11 @@
 
     <string name="search_hint">Найти</string>
 
+    <string name="sort">Сортировать по ...</string>
+    <string name="sort_default">По умолчанию</string>
+    <string name="sort_name">По наименованию счета</string>
+    <string name="sort_currency">По валюте счета</string>
+    <string name="select">Выбрать по валюте</string>
+
+
 </resources>

@@ -1,12 +1,8 @@
 package shishkin.sl.kodeinpsb.app.presenter
 
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
-import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
-import shishkin.sl.kodeinpsb.app.screen.main.MainPresenter
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter

@@ -36,7 +36,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
         const val ShowContact = "ShowContact"
     }
 
-    private var data: SideMenuData? = null
+    private lateinit var data: SideMenuData
 
     override fun isRegister(): Boolean {
         return true
@@ -47,7 +47,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
     }
 
     override fun onStart() {
-        if (data == null) {
+        if (!::data.isInitialized) {
             data = SideMenuData()
             getData()
         } else {
@@ -64,7 +64,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
         if (!result.hasError()) {
             when (result.getName()) {
                 GetBalanceRequest.NAME -> {
-                    data?.balance = result.getData() as List<Balance>
+                    data.balance = result.getData() as List<Balance>
                     getView<SideMenuFragment>()
                         ?.addAction(DataAction(Actions.RefreshViews, data))
                 }

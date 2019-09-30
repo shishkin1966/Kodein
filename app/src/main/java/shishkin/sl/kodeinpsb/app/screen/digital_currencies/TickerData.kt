@@ -41,7 +41,7 @@ class TickerData {
         PreferencesUtils.putString(ApplicationSpecialist.appContext, TickerDataFilter, filter)
     }
 
-    private fun loadFilter() :String? {
+    private fun loadFilter(): String? {
         return PreferencesUtils.getString(ApplicationSpecialist.appContext, TickerDataFilter)
     }
 }

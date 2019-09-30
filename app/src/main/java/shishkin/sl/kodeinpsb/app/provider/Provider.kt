@@ -2,10 +2,7 @@ package shishkin.sl.kodeinpsb.app.provider
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
-import shishkin.sl.kodeinpsb.app.request.CreateAccountRequest
-import shishkin.sl.kodeinpsb.app.request.GetAccountsRequest
-import shishkin.sl.kodeinpsb.app.request.GetBalanceRequest
-import shishkin.sl.kodeinpsb.app.request.GetTickersRequest
+import shishkin.sl.kodeinpsb.app.request.*
 
 class Provider {
     companion object {
@@ -22,6 +19,11 @@ class Provider {
         @JvmStatic
         fun createAccount(account: Account) {
             ApplicationSingleton.instance.getDbProvider()?.request(CreateAccountRequest(account))
+        }
+
+        @JvmStatic
+        fun getCurrency(subscriber: String) {
+            ApplicationSingleton.instance.getDbProvider()?.request(GetCurrencyRequest(subscriber))
         }
 
         @JvmStatic

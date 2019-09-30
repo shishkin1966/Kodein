@@ -76,8 +76,8 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
             }
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
 
-            val list = ApplicationSingleton.instance.getLocationUnion()?.getAddress(location)
-            if (list != null && list.isNotEmpty()) {
+            val list = ApplicationSingleton.instance.getLocationUnion().getAddress(location)
+            if (list.isNotEmpty()) {
                 val address = list[0]
                 val sb = StringBuilder()
                 for (i in 0..address.maxAddressLineIndex) {

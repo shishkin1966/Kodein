@@ -1,7 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.specialist
 
-import android.os.Parcelable
-
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import java.io.Serializable
 import java.lang.reflect.Type

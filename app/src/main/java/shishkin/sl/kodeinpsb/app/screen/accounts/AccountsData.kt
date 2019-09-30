@@ -8,11 +8,11 @@ import kotlin.collections.ArrayList
 
 
 class AccountsData {
-    private var sort = 0
+    var sort = 0
     var filter: String? = null
-    var accounts: List<Account> = ArrayList<Account>()
-    var currencies: List<String> = ArrayList<String>()
-    var balance: List<Balance> = ArrayList<Balance>()
+    var accounts: List<Account> = ArrayList()
+    var currencies: List<String> = ArrayList()
+    var balance: List<Balance> = ArrayList()
     var isShowMessage = false
     var message: String? = null
     var messageType: Int = 0

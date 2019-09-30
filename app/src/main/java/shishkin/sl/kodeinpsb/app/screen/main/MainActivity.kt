@@ -158,7 +158,8 @@ class MainActivity : AbsContentActivity() {
             menu?.showContent()
             return
         }
-        val fragment = ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
+        val fragment =
+            ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
         if (fragment !is AccountsFragment) {
             super.onBackPressed()
             return

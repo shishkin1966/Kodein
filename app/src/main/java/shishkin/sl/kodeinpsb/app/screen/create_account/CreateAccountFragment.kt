@@ -113,7 +113,7 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
         account.friendlyName = friendlyNameView?.text.toString().trim()
         account.balance = balanceValueView?.text.toString().toDouble()
         account.currency = spinner?.text.toString()
-        getModel<CreateAccountModel>()?.getPresenter<CreateAccountPresenter>()?.addAction(
+        getModel<CreateAccountModel>().getPresenter<CreateAccountPresenter>().addAction(
             CreateAccountTransaction(account)
         )
     }
