@@ -35,8 +35,6 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
     private val balanceAdapter: BalanceRecyclerViewAdapter = BalanceRecyclerViewAdapter()
     private var accountsView: RecyclerView? = null
     private var balanceView: RecyclerView? = null
-    private val onBackPressedPresenter =
-        OnBackPressedPresenter()
 
     override fun createModel(): IModel {
         return AccountsModel(this)
@@ -58,12 +56,6 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
         balanceView = findView(R.id.balance_list)
         balanceView?.layoutManager = LinearLayoutManager(activity)
         balanceView?.adapter = balanceAdapter
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        addStateObserver(onBackPressedPresenter)
     }
 
     override fun onAction(action: IAction): Boolean {
@@ -125,11 +117,6 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener {
                 presenter?.addAction(ApplicationAction(AccountsPresenter.OnClickCreateAccount))
             }
         }
-    }
-
-    override fun onBackPressed(): Boolean {
-        onBackPressedPresenter.onClick()
-        return true
     }
 
     override fun isTop(): Boolean {

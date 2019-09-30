@@ -28,7 +28,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     override fun <T : IModel> getModel(): T? {
         if (model == null) {
-            model = createModel();
+            model = createModel()
         }
         return model as T
     }
@@ -45,7 +45,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setModel(createModel())
-        (getModel<IModel>() as IModel).addStateObserver();
+        (getModel<IModel>() as IModel).addStateObserver()
 
         stateObservable.setState(State.STATE_CREATE)
     }
@@ -61,7 +61,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
 
-        stateObservable.setState(State.STATE_READY);
+        stateObservable.setState(State.STATE_READY)
     }
 
     override fun onDestroy() {
@@ -90,7 +90,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: kotlin.IntArray
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -110,7 +110,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     override fun setState(state: Int) {}
 
     override fun isValid(): Boolean {
-        return getState() !== State.STATE_DESTROY && !isFinishing
+        return getState() != State.STATE_DESTROY && !isFinishing
     }
 
     override fun stop() {

@@ -14,6 +14,7 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.OnEditTextChangedAction
 import shishkin.sl.kodeinpsb.app.observe.EditTextObservable
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -81,7 +82,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
                 context.theme
             ), null, null, null
         )
-        observable = EditTextObservable(this, searchView!!)
+
+        findView<View>(R.id.clear)?.setOnClickListener {
+            searchView?.setText("")
+        }
     }
 
     override fun onRefresh() {
@@ -101,6 +105,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
                     refreshViews(action.getData() as TickerData?)
                     return true
                 }
+                DigitalCurrenciesPresenter.InitFilter -> {
+                    initFilter(action.getData() as TickerData?)
+                    return true
+                }
             }
         }
 
@@ -117,7 +125,6 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     override fun onDestroyView() {
         super.onDestroyView()
 
-        observable?.finish()
         recyclerView?.adapter = null
     }
 
@@ -130,5 +137,11 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         getModel<DigitalCurrenciesModel>()?.getPresenter<DigitalCurrenciesPresenter>()?.addAction(
             OnEditTextChangedAction(o, arg)
         )
+    }
+
+    private fun initFilter(viewData: TickerData?) {
+        observable?.finish()
+        searchView?.setText(viewData?.filter)
+        observable = EditTextObservable(this, searchView!!)
     }
 }

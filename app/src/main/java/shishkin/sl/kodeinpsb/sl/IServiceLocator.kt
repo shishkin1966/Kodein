@@ -35,7 +35,7 @@ interface IServiceLocator : INamed {
      * @param specialist имя специалиста
      * @return флаг - операция завершена успешно
      */
-    fun registerSpecialist(specialist: String): Boolean
+    fun registerSpecialist(name: String): Boolean
 
     /**
      * Отменить регистрацию специалиста

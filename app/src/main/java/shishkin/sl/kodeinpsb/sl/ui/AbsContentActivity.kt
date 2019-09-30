@@ -21,11 +21,21 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
     }
 
     override fun showFragment(fragment: Fragment) {
-        showFragment(fragment, true, false, true, false)
+        showFragment(fragment,
+            addToBackStack = true,
+            clearBackStack = false,
+            animate = true,
+            allowingStateLoss = false
+        )
     }
 
     override fun showFragment(fragment: Fragment, allowingStateLoss: Boolean) {
-        showFragment(fragment, true, false, true, allowingStateLoss)
+        showFragment(fragment,
+            addToBackStack = true,
+            clearBackStack = false,
+            animate = true,
+            allowingStateLoss = allowingStateLoss
+        )
     }
 
     override fun showFragment(
@@ -147,7 +157,7 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
     }
 
     override fun toBackground() {
-        moveTaskToBack(true);
+        moveTaskToBack(true)
     }
 
 

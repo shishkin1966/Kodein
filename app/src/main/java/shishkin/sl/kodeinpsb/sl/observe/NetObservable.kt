@@ -88,8 +88,8 @@ class NetObservable : AbsObservable() {
         super.stop()
 
         if (broadcastReceiver != null) {
-            val context = ApplicationSpecialist.appContext;
-            context.unregisterReceiver(broadcastReceiver);
+            val context = ApplicationSpecialist.appContext
+            context.unregisterReceiver(broadcastReceiver)
         }
 
         if (callback != null) {

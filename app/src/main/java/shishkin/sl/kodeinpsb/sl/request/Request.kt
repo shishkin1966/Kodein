@@ -1,6 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.request
 
-open class Request() : AbsRequest(), IRequest {
+open class Request() : AbsRequest() {
     override fun isDistinct(): Boolean {
         return false
     }

@@ -50,7 +50,7 @@ abstract class AbsFragment : Fragment(), IFragment {
         super.onCreate(savedInstanceState)
 
         setModel(createModel())
-        (getModel<IModel>() as IModel).addStateObserver();
+        (getModel<IModel>() as IModel).addStateObserver()
 
         stateObservable.setState(State.STATE_CREATE)
     }

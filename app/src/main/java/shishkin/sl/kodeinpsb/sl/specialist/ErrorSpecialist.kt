@@ -95,7 +95,7 @@ class ErrorSpecialist : AbsSpecialist(), IErrorSpecialist {
     override fun onError(source: String, e: Exception) {
         Log.e(source, Log.getStackTraceString(e))
         ApplicationUtils.showToast(
-            ApplicationSpecialist.instance,
+            ApplicationSpecialist.appContext,
             e.message,
             Toast.LENGTH_LONG,
             ApplicationUtils.MESSAGE_TYPE_ERROR
