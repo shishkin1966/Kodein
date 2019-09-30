@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import shishkin.sl.kodeinpsb.sl.INamed
-import shishkin.sl.kodeinpsb.sl.ISubscriber
 
 
 class BackStack {
@@ -21,8 +20,8 @@ class BackStack {
         ) {
             val tag: String?
             val fm = activity.supportFragmentManager
-            if (fragment is ISubscriber) {
-                tag = (fragment as ISubscriber).getName()
+            if (fragment is INamed) {
+                tag = (fragment as INamed).getName()
             } else {
                 tag = fragment::class.simpleName
             }
