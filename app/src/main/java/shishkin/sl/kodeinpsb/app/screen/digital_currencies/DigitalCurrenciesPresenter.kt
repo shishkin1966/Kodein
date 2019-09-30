@@ -17,6 +17,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     IResponseListener {
     companion object {
         const val NAME = "DigitalCurrenciesPresenter"
+        const val InitFilter = "InitFilter"
     }
 
     private var data: TickerData? = null
@@ -32,6 +33,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun onStart() {
         if (data == null) {
             data = TickerData()
+            getView<DigitalCurrenciesFragment>()?.addAction(DataAction(InitFilter, data))
             val temp =
                 ApplicationSingleton.instance.getCache().getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
@@ -108,4 +110,9 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
         }
     }
 
+    override fun onDestroyView() {
+        data?.saveFilter()
+
+        super.onDestroyView()
+    }
 }

@@ -82,7 +82,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
                 context.theme
             ), null, null, null
         )
-        observable = EditTextObservable(this, searchView!!)
+
+        findView<View>(R.id.clear)?.setOnClickListener {
+            searchView?.setText("")
+        }
     }
 
     override fun onRefresh() {
@@ -102,6 +105,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
                     refreshViews(action.getData() as TickerData?)
                     return true
                 }
+                DigitalCurrenciesPresenter.InitFilter -> {
+                    initFilter(action.getData() as TickerData?)
+                    return true
+                }
             }
         }
 
@@ -118,7 +125,6 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     override fun onDestroyView() {
         super.onDestroyView()
 
-        observable?.finish()
         recyclerView?.adapter = null
     }
 
@@ -131,5 +137,11 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         getModel<DigitalCurrenciesModel>()?.getPresenter<DigitalCurrenciesPresenter>()?.addAction(
             OnEditTextChangedAction(o, arg)
         )
+    }
+
+    private fun initFilter(viewData: TickerData?) {
+        observable?.finish()
+        searchView?.setText(viewData?.filter)
+        observable = EditTextObservable(this, searchView!!)
     }
 }

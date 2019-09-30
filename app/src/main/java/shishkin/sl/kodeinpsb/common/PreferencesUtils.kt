@@ -9,7 +9,7 @@ import android.preference.PreferenceManager
 class PreferencesUtils {
     companion object {
         @JvmStatic
-        fun putString(context: Context, key: String, value: String) {
+        fun putString(context: Context, key: String, value: String?) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = preferences.edit()
             editor.putString(key, value).apply()

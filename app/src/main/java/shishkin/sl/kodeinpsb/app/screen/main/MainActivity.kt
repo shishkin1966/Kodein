@@ -127,7 +127,7 @@ class MainActivity : AbsContentActivity() {
             menu = SlidingMenu(this)
             menu?.mode = SlidingMenu.LEFT
             menu?.touchModeAbove = SlidingMenu.TOUCHMODE_MARGIN
-            menu?.setShadowWidthRes(R.dimen.dimen_8dp)
+            menu?.setShadowWidthRes(R.dimen.dimen_4dp)
             menu?.setBehindOffsetRes(R.dimen.slidingmenu_offset)
             menu?.setShadowDrawable(R.drawable.shadow)
             menu?.setFadeDegree(0.35f)
