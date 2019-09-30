@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Интерфейс объекта, который регистрируется у специалистов для получения/предоставления сервиса
  */
-interface ISpecialistSubscriber : ISubscriber, IValidated {
+interface ISpecialistSubscriber : INamed, IValidated {
 
     /**
      * Получить список имен специалистов, у которых должен быть зарегистрирован объект
@@ -12,4 +12,8 @@ interface ISpecialistSubscriber : ISubscriber, IValidated {
      */
     fun getSpecialistSubscription(): List<String>
 
+    /**
+     * Событие - специалист прекратил работу
+     */
+    fun onStopSpecialist(specialist: ISpecialist)
 }

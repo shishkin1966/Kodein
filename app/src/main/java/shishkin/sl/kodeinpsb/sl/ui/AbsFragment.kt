@@ -21,7 +21,6 @@ import java.util.*
 
 abstract class AbsFragment : Fragment(), IFragment {
 
-
     private val stateObservable = StateObservable(State.STATE_CREATE)
     private var model: IModel? = null
     private val actions = LinkedList<IAction>()
@@ -157,9 +156,6 @@ abstract class AbsFragment : Fragment(), IFragment {
         for (event in deleted) {
             actions.remove(event)
         }
-    }
-
-    override fun onStopSpecialist(specialist: ISpecialist) {
     }
 
 }
