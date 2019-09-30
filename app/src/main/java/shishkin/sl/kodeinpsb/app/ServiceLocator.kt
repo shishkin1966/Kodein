@@ -8,10 +8,7 @@ import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.observe.ScreenBroadcastReceiverObservable
-import shishkin.sl.kodeinpsb.sl.specialist.CacheSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 import shishkin.sl.kodeinpsb.sl.task.DbExecutor
 import shishkin.sl.kodeinpsb.sl.task.NetExecutor
@@ -33,6 +30,7 @@ class ServiceLocator : AbsServiceLocator() {
     override fun start() {
         registerSpecialist(ErrorSpecialistSingleton.instance)
         registerSpecialist(ApplicationSingleton.instance)
+        registerSpecialist(CrashSpecialist.NAME)
 
         registerSpecialist(CacheSpecialist.NAME)
         registerSpecialist(ObservableUnion.NAME)
