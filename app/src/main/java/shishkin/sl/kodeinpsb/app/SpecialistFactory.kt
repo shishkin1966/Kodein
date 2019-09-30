@@ -24,6 +24,7 @@ class SpecialistFactory : ISpecialistFactory, INamed {
         return try {
             when (name) {
                 ErrorSpecialist.NAME -> ErrorSpecialistSingleton.instance
+                CrashSpecialist.NAME -> CrashSpecialist()
                 ApplicationSingleton.instance.getName() -> ApplicationSingleton.instance
                 ActivityUnion.NAME -> ActivityUnion()
                 PresenterUnion.NAME -> PresenterUnion()
