@@ -1,6 +1,6 @@
 package shishkin.sl.kodeinpsb.sl.model
 
-import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 
 
 interface IPresenterModel : IModel {
@@ -9,7 +9,7 @@ interface IPresenterModel : IModel {
      *
      * @param presenter презентер
      */
-    fun setPresenter(presenter: IPresenter)
+    fun setPresenter(presenter: IModelPresenter)
 
     /**
      * Получить презентер модели

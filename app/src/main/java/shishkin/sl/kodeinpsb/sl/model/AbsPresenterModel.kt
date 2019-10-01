@@ -1,12 +1,12 @@
 package shishkin.sl.kodeinpsb.sl.model
 
-import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 
 
 abstract class AbsPresenterModel(modelView: IModelView) : AbsModel(modelView), IPresenterModel {
-    private lateinit var presenter: IPresenter
+    private lateinit var presenter: IModelPresenter
 
-    override fun setPresenter(presenter: IPresenter) {
+    override fun setPresenter(presenter: IModelPresenter) {
         this.presenter = presenter
         super.addStateObserver(this.presenter)
     }

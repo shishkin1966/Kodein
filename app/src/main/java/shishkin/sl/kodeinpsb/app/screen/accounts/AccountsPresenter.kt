@@ -17,14 +17,14 @@ import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 
-class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseListener,
+class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IResponseListener,
     IObjectObservableSubscriber {
 
     companion object {
@@ -35,7 +35,6 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
         const val OnClickFilter = "OnClickFilter"
         const val SortDialog = "SortDialog"
         const val FilterDialog = "FilterDialog"
-
     }
 
     private lateinit var data: AccountsData
@@ -54,39 +53,35 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             data = AccountsData()
             getData()
         } else {
-            getView<AccountsFragment>()
-                ?.addAction(DataAction(Actions.RefreshViews, data))
+            getView<AccountsFragment>().addAction(DataAction(Actions.RefreshViews, data))
         }
     }
 
     private fun getData() {
-        getView<AccountsFragment>()?.addAction(ShowProgressBarAction())
+        getView<AccountsFragment>().addAction(ShowProgressBarAction())
         Provider.getAccounts(getName())
         Provider.getBalance(getName())
         Provider.getCurrency(getName())
     }
 
     override fun response(result: ExtResult) {
-        getView<AccountsFragment>()?.addAction(HideProgressBarAction())
+        getView<AccountsFragment>().addAction(HideProgressBarAction())
         if (!result.hasError()) {
             when (result.getName()) {
                 GetAccountsRequest.NAME -> {
                     data.accounts = result.getData() as List<Account>
-                    getView<AccountsFragment>()
-                        ?.addAction(DataAction(Actions.RefreshViews, data))
+                    getView<AccountsFragment>().addAction(DataAction(Actions.RefreshViews, data))
                 }
                 GetBalanceRequest.NAME -> {
                     data.balance = result.getData() as List<Balance>
-                    getView<AccountsFragment>()
-                        ?.addAction(DataAction(Actions.RefreshViews, data))
+                    getView<AccountsFragment>().addAction(DataAction(Actions.RefreshViews, data))
                 }
                 GetCurrencyRequest.NAME -> {
                     data.currencies = result.getData() as List<String>
                 }
             }
         } else {
-            getView<AccountsFragment>()
-                ?.addAction(ShowMessageAction(result.getErrorText()!!).setType(ApplicationUtils.MESSAGE_TYPE_ERROR))
+            getView<AccountsFragment>().addAction(ShowMessageAction(result.getErrorText()!!).setType(ApplicationUtils.MESSAGE_TYPE_ERROR))
         }
     }
 
@@ -133,7 +128,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     private fun createAccount() {
-        val activity = getView<AccountsFragment>()?.activity
+        val activity = getView<AccountsFragment>().activity
         if (activity != null && activity is IRouter && activity.isValid()) {
             activity.showFragment(CreateAccountFragment.newInstance())
         }
@@ -165,7 +160,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
     }
 
     private fun viewAccount(account: Account) {
-        val activity = getView<AccountsFragment>()?.activity
+        val activity = getView<AccountsFragment>().activity
         if (activity != null) {
             (activity as AbsContentActivity).showFragment(
                 ViewAccountFragment.newInstance(account),
@@ -187,11 +182,11 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
                 }
             }
         }
-        getView<AccountsFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
+        getView<AccountsFragment>().addAction(DataAction(Actions.RefreshViews, data))
     }
 
     private fun onClickSort() {
-        getView<AccountsFragment>()?.addAction(ApplicationAction(SortDialog))
+        getView<AccountsFragment>().addAction(ApplicationAction(SortDialog))
     }
 
     private fun onClickFilter() {
@@ -205,7 +200,7 @@ class AccountsPresenter(model: AccountsModel) : AbsPresenter(model), IResponseLi
             val map = HashMap<String, Any>()
             map["Items"] = items
             map["Icons"] = icons
-            getView<AccountsFragment>()?.addAction(MapAction(FilterDialog, map))
+            getView<AccountsFragment>().addAction(MapAction(FilterDialog, map))
         }
     }
 }

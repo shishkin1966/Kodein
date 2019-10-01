@@ -3,7 +3,6 @@ package shishkin.sl.kodeinpsb.app.screen.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
@@ -22,9 +21,8 @@ import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
 class MainActivity : AbsContentActivity() {
     private val actionHandler = ActivityActionHandler(this)
-    private var menu: SlidingMenu? = null
-    private val onBackPressedPresenter =
-        OnBackPressedPresenter()
+    private lateinit var menu: SlidingMenu
+    private val onBackPressedPresenter = OnBackPressedPresenter()
 
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
@@ -32,10 +30,8 @@ class MainActivity : AbsContentActivity() {
         if (actionHandler.onAction(action)) return true
 
         if (action is HideSideMenuAction) {
-            if (menu != null) {
-                if (menu!!.isMenuShowing) {
-                    menu?.showContent();
-                }
+            if (menu.isMenuShowing) {
+                menu.showContent()
             }
             return true
         }
@@ -123,16 +119,16 @@ class MainActivity : AbsContentActivity() {
     }
 
     private fun setMenu() {
-        if (menu == null) {
+        if (!::menu.isInitialized) {
             menu = SlidingMenu(this)
-            menu?.mode = SlidingMenu.LEFT
-            menu?.touchModeAbove = SlidingMenu.TOUCHMODE_MARGIN
-            menu?.setShadowWidthRes(R.dimen.dimen_4dp)
-            menu?.setBehindOffsetRes(R.dimen.slidingmenu_offset)
-            menu?.setShadowDrawable(R.drawable.shadow)
-            menu?.setFadeDegree(0.35f)
-            menu?.attachToActivity(this, SlidingMenu.SLIDING_CONTENT)
-            menu?.setMenu(R.layout.menu_container)
+            menu.mode = SlidingMenu.LEFT
+            menu.touchModeAbove = SlidingMenu.TOUCHMODE_MARGIN
+            menu.setShadowWidthRes(R.dimen.dimen_4dp)
+            menu.setBehindOffsetRes(R.dimen.slidingmenu_offset)
+            menu.setShadowDrawable(R.drawable.shadow)
+            menu.setFadeDegree(0.35f)
+            menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT)
+            menu.setMenu(R.layout.menu_container)
         }
 
         BackStack.showFragment(
@@ -146,22 +142,9 @@ class MainActivity : AbsContentActivity() {
         )
     }
 
-    fun isMenuShowing(): Boolean {
-        if (menu != null) {
-            return menu!!.isMenuShowing
-        }
-        return false
-    }
-
     override fun onBackPressed() {
-        if (menu != null && menu!!.isMenuShowing) {
-            menu?.showContent()
-            return
-        }
-        val fragment =
-            ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
-        if (fragment !is AccountsFragment) {
-            super.onBackPressed()
+        if (menu.isMenuShowing) {
+            menu.showContent()
             return
         }
         if (!onBackPressedPresenter.onClick()) {

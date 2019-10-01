@@ -18,12 +18,12 @@ import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
-class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseListener,
+class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IResponseListener,
     IObjectObservableSubscriber {
 
     companion object {
@@ -51,8 +51,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
             data = SideMenuData()
             getData()
         } else {
-            getView<SideMenuFragment>()
-                ?.addAction(DataAction(Actions.RefreshViews, data))
+            getView<SideMenuFragment>().addAction(DataAction(Actions.RefreshViews, data))
         }
     }
 
@@ -65,8 +64,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
             when (result.getName()) {
                 GetBalanceRequest.NAME -> {
                     data.balance = result.getData() as List<Balance>
-                    getView<SideMenuFragment>()
-                        ?.addAction(DataAction(Actions.RefreshViews, data))
+                    getView<SideMenuFragment>().addAction(DataAction(Actions.RefreshViews, data))
                 }
             }
         }
@@ -101,7 +99,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsPresenter(model), IResponseLi
         if (!isValid()) return false
 
         if (action is ApplicationAction) {
-            val router = getView<SideMenuFragment>()?.activity as IRouter
+            val router = getView<SideMenuFragment>().activity as IRouter
             when (action.getName()) {
                 ShowAccounts -> {
                     if (!router.isCurrentFragment(AccountsFragment.NAME)) {

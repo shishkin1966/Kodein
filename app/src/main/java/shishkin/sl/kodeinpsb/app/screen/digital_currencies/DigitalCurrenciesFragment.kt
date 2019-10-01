@@ -36,12 +36,12 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         }
     }
 
-    private var swipeRefreshLayout: SwipeRefreshLayout? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private val actionHandler = FragmentActionHandler(this)
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
     private val adapter: TickerRecyclerViewAdapter = TickerRecyclerViewAdapter()
     private var observable: EditTextObservable? = null
-    private var searchView: EditText? = null
+    private lateinit var searchView: EditText
 
     override fun createModel(): IModel {
         return DigitalCurrenciesModel(this)
@@ -62,19 +62,19 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeRefreshLayout = findView(R.id.swipeRefreshLayout)
-        swipeRefreshLayout?.setColorSchemeResources(R.color.blue)
-        swipeRefreshLayout?.setProgressBackgroundColorSchemeResource(R.color.gray_light)
-        swipeRefreshLayout?.setOnRefreshListener(this)
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setColorSchemeResources(R.color.blue)
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.gray_light)
+        swipeRefreshLayout.setOnRefreshListener(this)
 
-        recyclerView = findView(R.id.list)
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
-        recyclerView?.itemAnimator = DefaultItemAnimator()
-        recyclerView?.adapter = adapter
+        recyclerView = view.findViewById(R.id.list)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.adapter = adapter
 
-        searchView = findView(R.id.search)
+        searchView = view.findViewById(R.id.search)
         val context = ApplicationSpecialist.appContext
-        searchView?.setCompoundDrawablesWithIntrinsicBounds(
+        searchView.setCompoundDrawablesWithIntrinsicBounds(
             ApplicationUtils.getVectorDrawable(
                 context,
                 R.drawable.magnify,
@@ -82,17 +82,17 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
             ), null, null, null
         )
 
-        findView<View>(R.id.clear)?.setOnClickListener {
-            searchView?.setText("")
+        view.findViewById<View>(R.id.clear).setOnClickListener {
+            searchView.setText("")
         }
     }
 
     override fun onRefresh() {
-        if (swipeRefreshLayout?.isRefreshing == true) {
-            swipeRefreshLayout?.isRefreshing = false
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
         }
-        getModel<DigitalCurrenciesModel>()?.getPresenter<DigitalCurrenciesPresenter>()
-            ?.addAction(ApplicationAction(Actions.OnSwipeRefresh))
+        getModel<DigitalCurrenciesModel>().getPresenter<DigitalCurrenciesPresenter>()
+            .addAction(ApplicationAction(Actions.OnSwipeRefresh))
     }
 
     override fun onAction(action: IAction): Boolean {
@@ -124,7 +124,7 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     override fun onDestroyView() {
         super.onDestroyView()
 
-        recyclerView?.adapter = null
+        recyclerView.adapter = null
     }
 
     private fun refreshViews(viewData: TickerData?) {
@@ -133,14 +133,14 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     }
 
     override fun update(o: Observable?, arg: Any?) {
-        getModel<DigitalCurrenciesModel>()?.getPresenter<DigitalCurrenciesPresenter>()?.addAction(
+        getModel<DigitalCurrenciesModel>().getPresenter<DigitalCurrenciesPresenter>().addAction(
             OnEditTextChangedAction(o, arg)
         )
     }
 
     private fun initFilter(viewData: TickerData?) {
         observable?.finish()
-        searchView?.setText(viewData?.filter)
-        observable = EditTextObservable(this, searchView!!)
+        searchView.setText(viewData?.filter)
+        observable = EditTextObservable(this, searchView)
     }
 }

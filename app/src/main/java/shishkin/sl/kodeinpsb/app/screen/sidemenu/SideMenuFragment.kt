@@ -96,37 +96,37 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
         presenter?.addAction(HideSideMenuAction())
 
         when (v?.id) {
-            R.id.accounts -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.accounts -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowAccounts
                 )
             )
 
-            R.id.setting -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.setting -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowSetting
                 )
             )
 
-            R.id.address -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.address -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowAddress
                 )
             )
 
-            R.id.exchange_rates -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.exchange_rates -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowExchangeRates
                 )
             )
 
-            R.id.exchange_cryptorates -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.exchange_cryptorates -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowDigitalRates
                 )
             )
 
-            R.id.contact -> getModel<SideMenuModel>()?.getPresenter<SideMenuPresenter>()?.addAction(
+            R.id.contact -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowContact
                 )

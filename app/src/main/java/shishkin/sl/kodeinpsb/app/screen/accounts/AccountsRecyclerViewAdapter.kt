@@ -12,16 +12,14 @@ import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.common.double2String
 import shishkin.sl.kodeinpsb.common.trimZero
 import shishkin.sl.kodeinpsb.sl.action.DataAction
-import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 
 
 class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAdapter.ViewHolder>() {
 
-    private var items: ArrayList<Account> = ArrayList()
+    private val items: ArrayList<Account> = ArrayList()
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -59,7 +57,7 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAda
             balanceView?.text = "${item.balance?.double2String()?.trimZero()} ${item.currency}"
             layout?.setOnClickListener {
                 val presenter =
-                    ApplicationSingleton.instance.getPresenter<IPresenter>(AccountsPresenter.NAME)
+                    ApplicationSingleton.instance.getPresenter<AccountsPresenter>(AccountsPresenter.NAME)
                 presenter?.addAction(DataAction(AccountsPresenter.OnClickAccount, item))
             }
         }

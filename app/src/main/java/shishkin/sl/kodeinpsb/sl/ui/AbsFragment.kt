@@ -25,7 +25,7 @@ abstract class AbsFragment : Fragment(), IFragment {
     private val actions = LinkedList<IAction>()
 
     override fun <T : IModel> getModel(): T {
-        if (model == null) {
+        if (!::model.isInitialized) {
             model = createModel()
         }
         return model as T

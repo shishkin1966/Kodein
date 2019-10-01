@@ -6,10 +6,10 @@ import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.sl.action.HideKeyboardAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.StopAction
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 
 
-class CreateAccountPresenter(model: CreateAccountModel) : AbsPresenter(model) {
+class CreateAccountPresenter(model: CreateAccountModel) : AbsModelPresenter(model) {
     companion object {
         const val NAME = "CreateAccountPresenter"
     }
@@ -27,8 +27,8 @@ class CreateAccountPresenter(model: CreateAccountModel) : AbsPresenter(model) {
 
         if (action is CreateAccountTransaction) {
             Provider.createAccount(action.account)
-            getView<CreateAccountFragment>()?.addAction(HideKeyboardAction())
-            getView<CreateAccountFragment>()?.addAction(StopAction())
+            getView<CreateAccountFragment>().addAction(HideKeyboardAction())
+            getView<CreateAccountFragment>().addAction(StopAction())
             return true
         }
 

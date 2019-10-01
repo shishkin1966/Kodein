@@ -8,12 +8,19 @@ import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 import shishkin.sl.kodeinpsb.sl.state.IStateListener
 
 
-interface IPresenter : IStateListener, IActionListener, IActionHandler, IMessengerSubscriber {
+interface IModelPresenter : IPresenter {
     /**
-     * Флаг - регистрировать презентер в объединении презентеров
+     * Получить модель презентера
      *
-     * @return true - регистрировать (презентер - глобальный)
+     * @return the model
      */
-    fun isRegister(): Boolean
+    fun <M : IModel> getModel(): M
+
+    /**
+     * Получить View модели
+     *
+     * @return the view model
+     */
+    fun <V : IModelView> getView(): V
 
 }

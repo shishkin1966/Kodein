@@ -15,13 +15,8 @@ import java.util.*
 
 
 abstract class AbsPresenter() : IPresenter {
-    private var model: IModel? = null
     private val lifecycle = StateObserver(this)
     private val actions = LinkedList<IAction>()
-
-    constructor(model: IModel) : this() {
-        this.model = model
-    }
 
     override fun getState(): Int {
         return lifecycle.getState()
@@ -51,14 +46,6 @@ abstract class AbsPresenter() : IPresenter {
         ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
     }
 
-    override fun <M : IModel> getModel(): M? {
-        return if (model == null) {
-            null
-        } else {
-            model as M
-        }
-    }
-
     override fun isValid(): Boolean {
         return lifecycle.getState() != State.STATE_DESTROY
     }
@@ -68,12 +55,6 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun onStopSpecialist(specialist: ISpecialist) {
-    }
-
-    override fun <C : IModelView> getView(): C? {
-        return if (model != null) {
-            model?.getView()
-        } else null
     }
 
     override fun read(message: IMessage) {}

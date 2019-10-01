@@ -8,12 +8,12 @@ import shishkin.sl.kodeinpsb.app.request.GetTickersRequest
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.request.Request
 
 
-class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(model),
+class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresenter(model),
     IResponseListener {
     companion object {
         const val NAME = "DigitalCurrenciesPresenter"
@@ -33,18 +33,16 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     override fun onStart() {
         if (!::data.isInitialized) {
             data = TickerData()
-            getView<DigitalCurrenciesFragment>()?.addAction(DataAction(InitFilter, data))
+            getView<DigitalCurrenciesFragment>().addAction(DataAction(InitFilter, data))
             val temp =
                 ApplicationSingleton.instance.getCache().getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
                 data.tickers = temp
-                getView<DigitalCurrenciesFragment>()
-                    ?.addAction(DataAction(Actions.RefreshViews, data))
+                getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
             }
             getData()
         } else {
-            getView<DigitalCurrenciesFragment>()
-                ?.addAction(DataAction(Actions.RefreshViews, data))
+            getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
         }
     }
 
@@ -67,7 +65,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
             val arg = action.obj as String?
             if (arg != data.filter) {
                 data.filter = arg
-                getView<DigitalCurrenciesFragment>()?.addAction(
+                getView<DigitalCurrenciesFragment>().addAction(
                     DataAction(
                         Actions.RefreshViews,
                         data
@@ -86,15 +84,15 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
     }
 
     private fun getData() {
-        getView<DigitalCurrenciesFragment>()?.addAction(ShowProgressBarAction())
+        getView<DigitalCurrenciesFragment>().addAction(ShowProgressBarAction())
         Provider.getTickers(getName())
     }
 
     override fun response(result: ExtResult) {
-        getView<DigitalCurrenciesFragment>()?.addAction(HideProgressBarAction())
+        getView<DigitalCurrenciesFragment>().addAction(HideProgressBarAction())
         if (!result.hasError()) {
             data.tickers = ArrayList(result.getData() as List<Ticker>)
-            getView<DigitalCurrenciesFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
+            getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
             ApplicationSingleton.instance.getExecutor().execute(object : Request() {
                 override fun run() {
                     ApplicationSingleton.instance.getCache()
@@ -102,7 +100,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsPresenter(m
                 }
             })
         } else {
-            getView<DigitalCurrenciesFragment>()?.addAction(
+            getView<DigitalCurrenciesFragment>().addAction(
                 ShowMessageAction(result.getErrorText()).setType(
                     ApplicationUtils.MESSAGE_TYPE_ERROR
                 )

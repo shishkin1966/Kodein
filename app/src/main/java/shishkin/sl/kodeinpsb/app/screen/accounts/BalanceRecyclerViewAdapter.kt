@@ -15,15 +15,13 @@ import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 class BalanceRecyclerViewAdapter : RecyclerView.Adapter<BalanceRecyclerViewAdapter.ViewHolder>() {
 
-    private var items: ArrayList<Balance> = ArrayList()
+    private val items: ArrayList<Balance> = ArrayList()
 
     init {
         setHasStableIds(false)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
