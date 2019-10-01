@@ -1,11 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.presenter
 
-import shishkin.sl.kodeinpsb.sl.action.IActionHandler
-import shishkin.sl.kodeinpsb.sl.action.IActionListener
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
-import shishkin.sl.kodeinpsb.sl.state.IStateListener
 
 
 interface IModelPresenter : IPresenter {

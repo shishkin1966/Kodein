@@ -81,7 +81,11 @@ class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IRespo
                 }
             }
         } else {
-            getView<AccountsFragment>().addAction(ShowMessageAction(result.getErrorText()!!).setType(ApplicationUtils.MESSAGE_TYPE_ERROR))
+            getView<AccountsFragment>().addAction(
+                ShowMessageAction(result.getErrorText()!!).setType(
+                    ApplicationUtils.MESSAGE_TYPE_ERROR
+                )
+            )
         }
     }
 

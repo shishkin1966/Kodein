@@ -2,9 +2,11 @@ package shishkin.sl.kodeinpsb.common
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -435,6 +437,7 @@ class ApplicationUtils {
         /**
          * Получить возможность службы геолокации
          */
+        @JvmStatic
         fun isLocationEnabled(context: Context): Boolean {
             if (hasKitKat()) {
                 var locationMode = 0;
@@ -454,6 +457,37 @@ class ApplicationUtils {
                 );
                 return !locationProviders.isNullOrEmpty();
             }
+        }
+
+        @JvmStatic
+        fun showUrl(context: Context, url: String) {
+            if (url.isEmpty()) return
+
+            val intent = Intent(Intent.ACTION_VIEW);
+            intent.data = Uri.parse(url);
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
+            if (canStartActivity(context, intent)) {
+                context.startActivity(intent);
+            }
+        }
+
+        @JvmStatic
+        fun canStartActivity(context: Context, intent: Intent): Boolean {
+            val packageManager = context.packageManager;
+            return (packageManager?.resolveActivity(intent, 0) != null)
+        }
+
+        @JvmStatic
+        fun getEmailIntent(recipient: String, subject: String, body: String): Intent {
+            val intent = Intent();
+            intent.action = Intent.ACTION_SENDTO;
+            intent.type = "plain/text";
+            intent.data = Uri.parse("mailto:$recipient");
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_TEXT, body);
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+            return intent;
         }
 
     }

@@ -3,7 +3,9 @@ package shishkin.sl.kodeinpsb.app
 import android.widget.Toast
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
 import shishkin.sl.kodeinpsb.app.specialist.ILocationUnion
+import shishkin.sl.kodeinpsb.app.specialist.IUseCasesSpecialist
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
+import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.message.IMessage
@@ -101,5 +103,9 @@ class App : ApplicationSpecialist() {
 
     fun getExecutor(): CommonExecutor {
         return get(CommonExecutor.NAME)!!
+    }
+
+    fun getUseCase(): IUseCasesSpecialist {
+        return get(UseCasesSpecialist.NAME)!!
     }
 }

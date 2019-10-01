@@ -12,7 +12,6 @@ import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.common.double2String
 import shishkin.sl.kodeinpsb.common.trimZero
 import shishkin.sl.kodeinpsb.sl.action.DataAction
-import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 
 
 class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAdapter.ViewHolder>() {

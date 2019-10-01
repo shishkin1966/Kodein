@@ -38,7 +38,12 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresen
                 ApplicationSingleton.instance.getCache().getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
                 data.tickers = temp
-                getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
+                getView<DigitalCurrenciesFragment>().addAction(
+                    DataAction(
+                        Actions.RefreshViews,
+                        data
+                    )
+                )
             }
             getData()
         } else {
