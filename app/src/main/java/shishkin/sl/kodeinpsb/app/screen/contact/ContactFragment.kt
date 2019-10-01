@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
-class ContactFragment : AbsContentFragment() {
+class ContactFragment : AbsContentFragment(), View.OnClickListener {
     companion object {
         const val NAME = "ContactFragment"
 
@@ -30,8 +31,30 @@ class ContactFragment : AbsContentFragment() {
         return inflater.inflate(R.layout.fragment_contact, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<View>(R.id.web).setOnClickListener(this)
+        view.findViewById<View>(R.id.mail).setOnClickListener(this)
+    }
+
     override fun getName(): String {
         return NAME
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.web -> {
+                getModel<ContactModel>().getPresenter<ContactPresenter>().addAction(
+                    ApplicationAction(ContactPresenter.WebAction)
+                )
+            }
+            R.id.mail -> {
+                getModel<ContactModel>().getPresenter<ContactPresenter>().addAction(
+                    ApplicationAction(ContactPresenter.MailAction)
+                )
+            }
+        }
     }
 
 }

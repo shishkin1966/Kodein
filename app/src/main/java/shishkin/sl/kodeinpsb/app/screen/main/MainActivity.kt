@@ -3,6 +3,7 @@ package shishkin.sl.kodeinpsb.app.screen.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
@@ -85,12 +86,14 @@ class MainActivity : AbsContentActivity() {
             val action = intent.action
             if ("android.intent.action.MAIN" == action) {
                 showHomeFragment();
-            } else {
-                showHomeFragment();
             }
             intent = null
         } else {
-            showHomeFragment()
+            val fragment =
+                ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
+            if (fragment == null) {
+                showHomeFragment()
+            }
         }
     }
 

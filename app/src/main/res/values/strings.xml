@@ -37,6 +37,7 @@
     <string name="sort_name">По наименованию счета</string>
     <string name="sort_currency">По валюте счета</string>
     <string name="select">Выбрать по валюте</string>
+    <string name="mail_error">Отсутствуют программы, осуществляющие посылку Email</string>
 
 
 </resources>
