@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="44dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/HelveticaTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/gray"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/setting_min_high"
+            android:paddingLeft="@dimen/dimen_12dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_12dp"
+            android:paddingBottom="@dimen/dimen_8dp"
+            android:text="@string/setting"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_xlarge" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginBottom="44dp"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical" />
+
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/title"
+            android:background="@drawable/below_shadow" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:behavior_peekHeight="@dimen/menu_peek_height"
+        app:layout_behavior=".common.LinearLayoutBehavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/db_backup"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/menu_height"
+                    android:background="@drawable/side_menu_panel_corner_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_12dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:text="Сделать резервную копию БД"
+                    android:textColor="@color/white_text_selector"
+                    android:textSize="@dimen/text_size_large" />
+
+                <View style="@style/HorizontalGradientDivider" />
+
+                <TextView
+                    android:id="@+id/db_restore"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/menu_height"
+                    android:background="@drawable/side_menu_panel_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_12dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:text="Восстановить БД из резервной копии"
+                    android:textColor="@color/white_text_selector"
+                    android:textSize="@dimen/text_size_large" />
+
+                <View
+                    style="@style/HorizontalDivider"
+                    android:layout_height="0.5dp"
+                    android:background="@color/white_light" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

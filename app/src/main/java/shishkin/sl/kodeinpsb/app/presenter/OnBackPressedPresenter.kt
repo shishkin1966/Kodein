@@ -5,7 +5,9 @@ import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
+import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
+import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
@@ -47,16 +49,10 @@ class OnBackPressedPresenter : AbsPresenter() {
                 startTimer()
                 return true
             } else {
-                if (PreferencesUtils.getBoolean(
-                        ApplicationSpecialist.appContext,
-                        ApplicationSingleton.QuitOnExit,
-                        false
-                    )
-                ) {
-                    ApplicationSpecialist.instance.stop()
-                } else {
-                    ApplicationSpecialist.instance.toBackground()
-                }
+                ApplicationSingleton.instance.getUseCase().addAction(
+                    ApplicationAction(
+                        UseCasesSpecialist.OnExit)
+                )
                 return true
             }
         }

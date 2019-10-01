@@ -4,6 +4,7 @@ import com.google.common.io.Files
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.setting.Setting
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.AbsSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
@@ -20,6 +21,7 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
 
         const val SendErrorReport = "SendErrorReport"
         const val ShowProjectWeb = "ShowProjectWeb"
+        const val OnExit = "OnExit"
     }
 
     override fun getName(): String {
@@ -62,6 +64,7 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
                             ), true
                         )
                     }
+                    return true
                 }
 
                 ShowProjectWeb -> {
@@ -69,6 +72,21 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
                         ApplicationSpecialist.appContext,
                         ApplicationConstant.APP_URL
                     )
+                    return true
+                }
+
+                OnExit -> {
+                    val setting = Setting.restore(ApplicationSingleton.QuitOnStopSetting)
+                    if (setting == null) {
+                        ApplicationSpecialist.instance.toBackground()
+                        return true
+                    }
+                    if (setting.current?.toBoolean()!!) {
+                        ApplicationSpecialist.instance.stop()
+                    } else {
+                        ApplicationSpecialist.instance.toBackground()
+                    }
+                    return true
                 }
             }
         }

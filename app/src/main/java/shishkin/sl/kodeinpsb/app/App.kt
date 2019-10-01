@@ -18,7 +18,7 @@ import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 
 object ApplicationSingleton {
     val instance = App()
-    const val QuitOnExit = "QuitonExit"
+    const val QuitOnStopSetting = "Setting.QuitOnStop"
 }
 
 class App : ApplicationSpecialist() {

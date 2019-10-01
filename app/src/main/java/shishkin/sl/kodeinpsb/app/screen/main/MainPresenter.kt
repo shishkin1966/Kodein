@@ -3,7 +3,10 @@ package shishkin.sl.kodeinpsb.app.screen.main
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
+import shishkin.sl.kodeinpsb.app.setting.Setting
+import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
+import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.SnackBarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
@@ -27,16 +30,8 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
 
         if (action is SnackBarAction) {
             if (action.getName() == ApplicationSpecialist.appContext.getString(R.string.exit)) {
-                if (PreferencesUtils.getBoolean(
-                        ApplicationSpecialist.appContext,
-                        ApplicationSingleton.QuitOnExit,
-                        false
-                    )
-                ) {
-                    ApplicationSpecialist.instance.stop()
-                } else {
-                    ApplicationSpecialist.instance.toBackground()
-                }
+                ApplicationSingleton.instance.getUseCase().addAction(ApplicationAction(
+                    UseCasesSpecialist.OnExit))
             }
             return true
         }

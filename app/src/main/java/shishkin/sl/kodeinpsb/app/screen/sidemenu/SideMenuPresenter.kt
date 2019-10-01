@@ -9,6 +9,7 @@ import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.contact.ContactFragment
 import shishkin.sl.kodeinpsb.app.screen.digital_currencies.DigitalCurrenciesFragment
 import shishkin.sl.kodeinpsb.app.screen.map.MapFragment
+import shishkin.sl.kodeinpsb.app.screen.setting.SettingFragment
 import shishkin.sl.kodeinpsb.app.screen.val_curs.ValCursFragment
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.Actions
@@ -136,17 +137,12 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
                     return true
                 }
 
-                /*
                 ShowSetting -> {
                     if (!router.isCurrentFragment(SettingFragment.NAME)) {
                         router.showFragment(SettingFragment.newInstance())
                     }
                     return true
                 }
-
-
-
-                 */
             }
         }
 
