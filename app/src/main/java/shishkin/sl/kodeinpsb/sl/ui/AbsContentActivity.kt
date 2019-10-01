@@ -21,7 +21,8 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
     }
 
     override fun showFragment(fragment: Fragment) {
-        showFragment(fragment,
+        showFragment(
+            fragment,
             addToBackStack = true,
             clearBackStack = false,
             animate = true,
@@ -30,7 +31,8 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
     }
 
     override fun showFragment(fragment: Fragment, allowingStateLoss: Boolean) {
-        showFragment(fragment,
+        showFragment(
+            fragment,
             addToBackStack = true,
             clearBackStack = false,
             animate = true,

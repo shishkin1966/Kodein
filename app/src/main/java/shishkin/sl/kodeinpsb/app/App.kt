@@ -8,7 +8,7 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 import shishkin.sl.kodeinpsb.sl.provider.IDbProvider
 import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
@@ -59,7 +59,7 @@ class App : ApplicationSpecialist() {
         union?.onError(source, e)
     }
 
-    fun <C : IPresenter> getPresenter(name: String): C? {
+    fun <C : IModelPresenter> getPresenter(name: String): C? {
         val union = serviceLocator?.get<IPresenterUnion>(PresenterUnion.NAME)
         return union?.getPresenter(name)
     }

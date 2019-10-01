@@ -3,9 +3,9 @@ package shishkin.sl.kodeinpsb.app
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
 import shishkin.sl.kodeinpsb.app.provider.NetProvider
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
+import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
-import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 import shishkin.sl.kodeinpsb.sl.task.DbExecutor

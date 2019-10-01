@@ -34,11 +34,11 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
     }
 
     private val actionHandler = FragmentActionHandler(this)
-    private var spinner: MaterialSpinner? = null
-    private var friendlyNameView: EditText? = null
-    private var balanceValueView: EditText? = null
-    private var openAccountButton: RippleTextView? = null
-    private var friendlyNameObservable: EditTextObservable? = null
+    private lateinit var spinner: MaterialSpinner
+    private lateinit var friendlyNameView: EditText
+    private lateinit var balanceValueView: EditText
+    private lateinit var openAccountButton: RippleTextView
+    private lateinit var friendlyNameObservable: EditTextObservable
     private var balanceDecimalObservable: EditTextDecimalObservable? = null
     private var balanceLongObservable: EditTextLongObservable? = null
 
@@ -50,8 +50,8 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        spinner = findView(R.id.spinner)
-        spinner?.setItems(
+        spinner = view.findViewById(R.id.spinner)
+        spinner.setItems(
             listOf(
                 Currency.RUR,
                 Currency.RUR,
@@ -61,17 +61,17 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
                 Currency.CHF
             )
         )
-        spinner?.selectedIndex = 0
-        spinner?.setOnItemSelectedListener(this)
+        spinner.selectedIndex = 0
+        spinner.setOnItemSelectedListener(this)
 
-        openAccountButton = findView(R.id.openAccountButton)
-        openAccountButton?.setOnClickListener(this)
+        openAccountButton = view.findViewById(R.id.openAccountButton)
+        openAccountButton.setOnClickListener(this)
 
-        friendlyNameView = findView(R.id.friendlyNameView)
-        balanceValueView = findView(R.id.balanceValueView)
+        friendlyNameView = view.findViewById(R.id.friendlyNameView)
+        balanceValueView = view.findViewById(R.id.balanceValueView)
 
-        friendlyNameObservable = EditTextObservable(this, friendlyNameView!!)
-        balanceLongObservable = EditTextLongObservable(this, balanceValueView!!)
+        friendlyNameObservable = EditTextObservable(this, friendlyNameView)
+        balanceLongObservable = EditTextLongObservable(this, balanceValueView)
     }
 
     override fun onAction(action: IAction): Boolean {
@@ -98,22 +98,22 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
     override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: String?) {
         finishObservable()
         if (Currency.RUR == item) {
-            balanceLongObservable = EditTextLongObservable(this, balanceValueView!!)
+            balanceLongObservable = EditTextLongObservable(this, balanceValueView)
         } else {
-            balanceDecimalObservable = EditTextDecimalObservable(this, balanceValueView!!)
+            balanceDecimalObservable = EditTextDecimalObservable(this, balanceValueView)
         }
-        balanceValueView?.setText(balanceValueView?.text.toString())
-        balanceValueView?.setSelection(balanceValueView?.text.toString().length)
+        balanceValueView.setText(balanceValueView.text.toString())
+        balanceValueView.setSelection(balanceValueView.text.toString().length)
     }
 
     override fun onClick(v: View?) {
-        openAccountButton?.isEnabled = false
+        openAccountButton.isEnabled = false
 
         val account = Account()
-        account.friendlyName = friendlyNameView?.text.toString().trim()
-        account.balance = balanceValueView?.text.toString().toDouble()
-        account.currency = spinner?.text.toString()
-        getModel<CreateAccountModel>()?.getPresenter<CreateAccountPresenter>()?.addAction(
+        account.friendlyName = friendlyNameView.text.toString().trim()
+        account.balance = balanceValueView.text.toString().toDouble()
+        account.currency = spinner.text.toString()
+        getModel<CreateAccountModel>().getPresenter<CreateAccountPresenter>().addAction(
             CreateAccountTransaction(account)
         )
     }
@@ -121,7 +121,7 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
     override fun onDestroyView() {
         super.onDestroyView()
 
-        friendlyNameObservable?.finish()
+        friendlyNameObservable.finish()
         finishObservable()
     }
 
@@ -141,10 +141,10 @@ class CreateAccountFragment : AbsContentFragment(), MaterialSpinner.OnItemSelect
     }
 
     private fun refreshViews() {
-        if (!friendlyNameView?.text.isNullOrEmpty() && !balanceValueView?.text.isNullOrEmpty()) {
-            openAccountButton?.isEnabled = balanceValueView?.text.toString().toDouble() > 0
+        if (!friendlyNameView.text.isNullOrEmpty() && !balanceValueView.text.isNullOrEmpty()) {
+            openAccountButton.isEnabled = balanceValueView.text.toString().toDouble() > 0
         } else {
-            openAccountButton?.isEnabled = false
+            openAccountButton.isEnabled = false
         }
     }
 

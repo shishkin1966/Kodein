@@ -6,10 +6,10 @@ import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.SnackBarAction
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
-class MainPresenter(model: MainModel) : AbsPresenter(model) {
+class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
     companion object {
         const val NAME = "MainPresenter"
     }
@@ -41,7 +41,7 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
             return true
         }
         if (action is HideSideMenuAction) {
-            getView<MainActivity>()?.addAction(action)
+            getView<MainActivity>().addAction(action)
             return true
         }
 
@@ -51,10 +51,6 @@ class MainPresenter(model: MainModel) : AbsPresenter(model) {
             true
         )
         return false
-    }
-
-    fun isMenuShowing(): Boolean {
-        return (getView<MainActivity>() as MainActivity).isMenuShowing()
     }
 
 }

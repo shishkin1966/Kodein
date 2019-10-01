@@ -23,11 +23,11 @@ import java.util.*
 abstract class AbsActivity : AppCompatActivity(), IActivity {
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
-    private var model: IModel? = null
+    private lateinit var model: IModel
     private val actions = LinkedList<IAction>()
 
-    override fun <T : IModel> getModel(): T? {
-        if (model == null) {
+    override fun <T : IModel> getModel(): T {
+        if (!::model.isInitialized) {
             model = createModel()
         }
         return model as T
@@ -45,7 +45,6 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setModel(createModel())
-        (getModel<IModel>() as IModel).addStateObserver()
 
         stateObservable.setState(State.STATE_CREATE)
     }

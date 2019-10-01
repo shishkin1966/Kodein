@@ -14,11 +14,11 @@ import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PermissionAction
-import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
+import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
-class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
+class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
     ILocationSubscriber {
     companion object {
@@ -57,7 +57,7 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
             this.googleMap?.uiSettings?.isMyLocationButtonEnabled = true
             this.googleMap?.setOnMyLocationButtonClickListener(this)
 
-            ApplicationSingleton.instance.getLocationUnion()?.startLocation()
+            ApplicationSingleton.instance.getLocationUnion().startLocation()
         }
     }
 
@@ -69,15 +69,15 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
         if (googleMap != null) {
             val latLng = LatLng(location.latitude, location.longitude)
             var zoomLevel = 13f
-            if (isInit && googleMap?.getCameraPosition()?.zoom != null) {
+            if (isInit && googleMap?.cameraPosition?.zoom != null) {
                 zoomLevel = googleMap?.cameraPosition?.zoom!!
             } else {
                 isInit = true
             }
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
 
-            val list = ApplicationSingleton.instance.getLocationUnion()?.getAddress(location)
-            if (list != null && list.isNotEmpty()) {
+            val list = ApplicationSingleton.instance.getLocationUnion().getAddress(location)
+            if (list.isNotEmpty()) {
                 val address = list[0]
                 val sb = StringBuilder()
                 for (i in 0..address.maxAddressLineIndex) {
@@ -87,7 +87,7 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
                     }
                 }
                 data.address = sb.toString()
-                getView<MapFragment>()?.addAction(DataAction(Actions.RefreshViews, data))
+                getView<MapFragment>().addAction(DataAction(Actions.RefreshViews, data))
             }
         }
     }
@@ -98,7 +98,7 @@ class MapPresenter(model: MapModel) : AbsPresenter(model), OnMapReadyCallback,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         ) {
-            getView<MapFragment>()?.addAction(PermissionAction(Manifest.permission.ACCESS_FINE_LOCATION))
+            getView<MapFragment>().addAction(PermissionAction(Manifest.permission.ACCESS_FINE_LOCATION))
         }
     }
 

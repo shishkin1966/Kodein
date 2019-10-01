@@ -29,8 +29,8 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
 
     private var locationProviderClient: FusedLocationProviderClient? = null
     private var location: Location? = null
-    private var locationCallback: LocationCallback? = null
-    private var locationRequest: LocationRequest? = null
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
     private var geocoder: Geocoder? = null
     private var isGetLocation = false
     private var isRuning = false
@@ -48,7 +48,7 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
             override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
                 if (!locationAvailability!!.isLocationAvailable) {
                     val context = ApplicationSpecialist.appContext
-                    ApplicationSingleton.instance.getActivityUnion()?.addAction(
+                    ApplicationSingleton.instance.getActivityUnion().addAction(
                         ShowMessageAction(
                             context.getString(R.string.location_error),
                             ApplicationUtils.MESSAGE_TYPE_WARNING
@@ -63,10 +63,10 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
         }
 
         locationRequest = LocationRequest.create()
-        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        locationRequest?.interval = POLLING_FREQ
-        locationRequest?.fastestInterval = FASTEST_UPDATE_FREQ
-        locationRequest?.smallestDisplacement = SMALLEST_DISPLACEMENT
+        locationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        locationRequest.interval = POLLING_FREQ
+        locationRequest.fastestInterval = FASTEST_UPDATE_FREQ
+        locationRequest.smallestDisplacement = SMALLEST_DISPLACEMENT
     }
 
     override fun onUnRegisterLastSubscriber() {
@@ -88,25 +88,23 @@ class LocationUnion : AbsSmallUnion<ILocationSubscriber>(), ILocationUnion {
 
         ApplicationUtils.runOnUiThread(Runnable {
             val context = ApplicationSpecialist.appContext
-            if (locationRequest != null && locationCallback != null) {
-                isGetLocation = false
-                locationProviderClient =
-                    LocationServices.getFusedLocationProviderClient(context)
-                locationProviderClient?.requestLocationUpdates(
-                    locationRequest,
-                    locationCallback,
-                    Looper.myLooper()
-                )
-                    ?.addOnFailureListener { e ->
-                        ApplicationSingleton.instance.onError(
-                            NAME,
-                            e
-                        )
-                    }
-
-                if (geocoder == null) {
-                    geocoder = Geocoder(context, Locale.getDefault())
+            isGetLocation = false
+            locationProviderClient =
+                LocationServices.getFusedLocationProviderClient(context)
+            locationProviderClient?.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.myLooper()
+            )
+                ?.addOnFailureListener { e ->
+                    ApplicationSingleton.instance.onError(
+                        NAME,
+                        e
+                    )
                 }
+
+            if (geocoder == null) {
+                geocoder = Geocoder(context, Locale.getDefault())
             }
         })
 

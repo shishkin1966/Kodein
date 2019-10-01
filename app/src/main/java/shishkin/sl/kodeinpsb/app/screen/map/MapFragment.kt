@@ -93,7 +93,7 @@ class MapFragment : AbsContentFragment() {
                 .zoomControlsEnabled(false)
                 .mapType(GoogleMap.MAP_TYPE_NORMAL)
             val fragment = SupportMapFragment.newInstance(mapOptions)
-            fragment.getMapAsync(getModel<MapModel>()?.getPresenter())
+            fragment.getMapAsync(getModel<MapModel>().getPresenter())
             val transaction = childFragmentManager.beginTransaction()
             transaction.add(R.id.map, fragment, "map")
             transaction.commit()
@@ -101,7 +101,7 @@ class MapFragment : AbsContentFragment() {
     }
 
     override fun onBackPressed(): Boolean {
-        ApplicationSingleton.instance.getActivityUnion()?.switchToTopFragment()
+        ApplicationSingleton.instance.getActivityUnion().switchToTopFragment()
         return true
     }
 

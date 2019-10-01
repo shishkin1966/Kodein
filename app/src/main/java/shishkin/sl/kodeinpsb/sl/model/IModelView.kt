@@ -41,7 +41,7 @@ interface IModelView : IValidated {
      *
      * @return модель
      */
-    fun <M : IModel> getModel(): M?
+    fun <M : IModel> getModel(): M
 
     /**
      * Установить модель

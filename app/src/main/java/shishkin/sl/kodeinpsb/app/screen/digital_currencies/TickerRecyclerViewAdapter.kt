@@ -16,11 +16,9 @@ import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter.ViewHolder>() {
 
-    private var items: ArrayList<Ticker> = ArrayList()
+    private val items: ArrayList<Ticker> = ArrayList()
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
     fun setItems(items: List<Ticker>) {
         this.items.clear()

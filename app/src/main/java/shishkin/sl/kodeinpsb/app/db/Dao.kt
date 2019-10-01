@@ -16,6 +16,9 @@ interface Dao {
     @Query("SELECT " + Account.CREATOR.COLUMNS.currency + " as currency, sum(" + Account.CREATOR.COLUMNS.balance + ") as balance FROM " + Account.TABLE + " GROUP BY " + Account.CREATOR.COLUMNS.currency)
     fun getBalance(): List<Balance>
 
+    @Query("SELECT DISTINCT " + Account.CREATOR.COLUMNS.currency + " FROM " + Account.TABLE)
+    fun getCurrency(): List<String>
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertAccount(account: Account)
 

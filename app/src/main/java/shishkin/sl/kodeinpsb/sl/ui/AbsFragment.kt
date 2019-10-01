@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
@@ -22,11 +21,11 @@ import java.util.*
 abstract class AbsFragment : Fragment(), IFragment {
 
     private val stateObservable = StateObservable(State.STATE_CREATE)
-    private var model: IModel? = null
+    private lateinit var model: IModel
     private val actions = LinkedList<IAction>()
 
-    override fun <T : IModel> getModel(): T? {
-        if (model == null) {
+    override fun <T : IModel> getModel(): T {
+        if (!::model.isInitialized) {
             model = createModel()
         }
         return model as T
@@ -49,7 +48,6 @@ abstract class AbsFragment : Fragment(), IFragment {
         super.onCreate(savedInstanceState)
 
         setModel(createModel())
-        (getModel<IModel>() as IModel).addStateObserver()
 
         stateObservable.setState(State.STATE_CREATE)
     }
