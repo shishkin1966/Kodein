@@ -1,4 +1,4 @@
-package microservices.shishkin.sl.ui
+package shishkin.sl.kodeinpsb.sl.ui
 
 
 import android.content.Context
@@ -28,12 +28,16 @@ class MaterialDialogExt {
 
     private var id: Int = 0
     private val materialDialog: MaterialDialog
-    private val listener: String?
+    private val listener: String
 
     constructor(
-        context: Context, listener: String?, id: Int,
-        title: String?, message: String?, positiveButton: Int,
-        setCancelable: Boolean
+        context: Context,
+        listener: String,
+        id: Int,
+        title: String? = null,
+        message: String? = null,
+        positiveButton: Int = NO_BUTTON,
+        setCancelable: Boolean = false
     ) : this(
         context,
         listener,
@@ -44,13 +48,17 @@ class MaterialDialogExt {
         NO_BUTTON,
         NO_BUTTON,
         setCancelable
-    ) {
-    }
+    )
 
     constructor(
-        context: Context, listener: String?, id: Int,
-        title: String?, message: String?, positiveButton: Int,
-        negativeButton: Int, setCancelable: Boolean
+        context: Context,
+        listener: String,
+        id: Int,
+        title: String? = null,
+        message: String? = null,
+        positiveButton: Int = NO_BUTTON,
+        negativeButton: Int = NO_BUTTON,
+        setCancelable: Boolean = false
     ) : this(
         context,
         listener,
@@ -61,13 +69,18 @@ class MaterialDialogExt {
         negativeButton,
         NO_BUTTON,
         setCancelable
-    ) {
-    }
+    )
 
     constructor(
-        context: Context, listener: String?, id: Int,
-        title: String?, message: String?, positiveButton: Int,
-        negativeButton: Int, neutralButton: Int, setCancelable: Boolean
+        context: Context,
+        listener: String,
+        id: Int,
+        title: String? = null,
+        message: String? = null,
+        positiveButton: Int = NO_BUTTON,
+        negativeButton: Int = NO_BUTTON,
+        neutralButton: Int = NO_BUTTON,
+        setCancelable: Boolean = false
     ) {
 
         this.id = id
@@ -82,75 +95,63 @@ class MaterialDialogExt {
         }
         if (positiveButton != NO_BUTTON) {
             builder.positiveText(positiveButton)
-            builder.onPositive({ dialog, which ->
+            builder.onPositive { dialog, which ->
                 if (this.id > -1) {
                     val bundle = Bundle()
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, POSITIVE)
-                    if (!this.listener.isNullOrEmpty()) {
-                        val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
-                                MessengerUnion.NAME
+                    if (this.listener.isNotEmpty()) {
+                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                            MessengerUnion.NAME
+                        )?.addNotMandatoryMessage(
+                            DialogResultMessage(
+                                this.listener,
+                                DialogResultAction(bundle, this.id)
                             )
-                        if (union != null) {
-                            union.addNotMandatoryMessage(
-                                DialogResultMessage(
-                                    this.listener,
-                                    DialogResultAction(bundle, this.id)
-                                )
-                            )
-                        }
+                        )
                     }
                 }
-            })
+            }
         }
         if (negativeButton != NO_BUTTON) {
             builder.negativeText(negativeButton)
-            builder.onNegative({ dialog, which ->
+            builder.onNegative { dialog, which ->
                 if (this.id > -1) {
                     val bundle = Bundle()
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEGATIVE)
-                    if (!this.listener.isNullOrEmpty()) {
-                        val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
-                                MessengerUnion.NAME
+                    if (this.listener.isNotEmpty()) {
+                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                            MessengerUnion.NAME
+                        )?.addNotMandatoryMessage(
+                            DialogResultMessage(
+                                this.listener,
+                                DialogResultAction(bundle, this.id)
                             )
-                        if (union != null) {
-                            union.addNotMandatoryMessage(
-                                DialogResultMessage(
-                                    this.listener,
-                                    DialogResultAction(bundle, this.id)
-                                )
-                            )
-                        }
+                        )
                     }
                 }
-            })
+            }
         }
         if (neutralButton != NO_BUTTON) {
             builder.neutralText(neutralButton)
-            builder.onNeutral({ dialog, which ->
+            builder.onNeutral { dialog, which ->
                 if (this.id > -1) {
                     val bundle = Bundle()
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEUTRAL)
-                    if (!this.listener.isNullOrEmpty()) {
-                        val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
-                                MessengerUnion.NAME
+                    if (this.listener.isNotEmpty()) {
+                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                            MessengerUnion.NAME
+                        )?.addNotMandatoryMessage(
+                            DialogResultMessage(
+                                this.listener,
+                                DialogResultAction(bundle, this.id)
                             )
-                        if (union != null) {
-                            union.addNotMandatoryMessage(
-                                DialogResultMessage(
-                                    this.listener,
-                                    DialogResultAction(bundle, this.id)
-                                )
-                            )
-                        }
+                        )
                     }
                 }
-            })
+            }
         }
         builder.cancelable(setCancelable)
 
@@ -159,16 +160,16 @@ class MaterialDialogExt {
 
     constructor(
         context: Context,
-        listener: String?,
+        listener: String,
         id: Int,
-        title: String?,
-        message: String?,
+        title: String? = null,
+        message: String? = null,
         items: List<String>,
-        selected: Array<Int>?,
-        multiselect: Boolean,
-        positiveButton: Int,
-        negativeButton: Int,
-        setCancelable: Boolean
+        selected: Array<Int>? = null,
+        multiSelect: Boolean = false,
+        positiveButton: Int = NO_BUTTON,
+        negativeButton: Int = NO_BUTTON,
+        setCancelable: Boolean = false
     ) {
 
         this.id = id
@@ -182,11 +183,11 @@ class MaterialDialogExt {
             builder.content(message)
         }
         builder.items(items)
-        if (multiselect) {
+        if (multiSelect) {
             builder.itemsCallbackMultiChoice(null, { dialog, which, text -> true })
         } else {
             builder.alwaysCallSingleChoiceCallback()
-            builder.itemsCallbackSingleChoice(-1, { dialog, view, which, text ->
+            builder.itemsCallbackSingleChoice(-1) { dialog, view, which, text ->
                 if (this.id > -1) {
                     val bundle = Bundle()
                     bundle.putInt(ID, this.id)
@@ -194,26 +195,24 @@ class MaterialDialogExt {
                     val list = ArrayList<String>()
                     list.add(text.toString())
                     bundle.putStringArrayList("list", list)
-                    if (!this.listener.isNullOrEmpty()) {
+                    if (this.listener.isNotEmpty()) {
                         val union =
                             ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
                                 MessengerUnion.NAME
                             )
-                        if (union != null) {
-                            union.addNotMandatoryMessage(
-                                DialogResultMessage(
-                                    this.listener,
-                                    DialogResultAction(bundle, this.id)
-                                )
+                        union?.addNotMandatoryMessage(
+                            DialogResultMessage(
+                                this.listener,
+                                DialogResultAction(bundle, this.id)
                             )
-                        }
+                        )
                     }
                 }
                 dialog.dismiss()
                 true
-            })
+            }
         }
-        if (multiselect) {
+        if (multiSelect) {
             if (positiveButton != NO_BUTTON) {
                 builder.positiveText(positiveButton)
             }
@@ -221,46 +220,23 @@ class MaterialDialogExt {
         if (negativeButton != NO_BUTTON) {
             builder.negativeText(negativeButton)
         }
-        if (multiselect) {
-            builder.onPositive({ dialog, which ->
+        if (multiSelect) {
+            builder.onPositive { dialog, which ->
                 if (this.id > -1) {
                     val bundle = Bundle()
                     bundle.putInt("id", this.id)
                     bundle.putString(BUTTON, POSITIVE)
                     val list = ArrayList<String>()
-                    val itemsCharSequence = dialog.getItems()
-                    val selected1 = dialog.getSelectedIndices()
+                    val itemsCharSequence = dialog.items
+                    val selected1 = dialog.selectedIndices
                     for (i in selected1!!) {
-                        list.add(itemsCharSequence!!.get(i!!).toString())
+                        list.add(itemsCharSequence!![i!!].toString())
                     }
                     bundle.putStringArrayList("list", list)
-                    if (!this.listener.isNullOrEmpty()) {
-                        val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
-                                MessengerUnion.NAME
-                            )
-                        if (union != null) {
-                            union.addNotMandatoryMessage(
-                                DialogResultMessage(
-                                    this.listener,
-                                    DialogResultAction(bundle, this.id)
-                                )
-                            )
-                        }
-                    }
-                }
-            })
-        }
-        builder.onNegative({ dialog, which ->
-            if (this.id > -1) {
-                val bundle = Bundle()
-                bundle.putInt(ID, this.id)
-                bundle.putString(BUTTON, NEGATIVE)
-                if (!this.listener.isNullOrEmpty()) {
-                    val union =
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-                    if (union != null) {
-                        union.addNotMandatoryMessage(
+                    if (this.listener.isNotEmpty()) {
+                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                            MessengerUnion.NAME
+                        )?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
@@ -269,7 +245,23 @@ class MaterialDialogExt {
                     }
                 }
             }
-        })
+        }
+        builder.onNegative { dialog, which ->
+            if (this.id > -1) {
+                val bundle = Bundle()
+                bundle.putInt(ID, this.id)
+                bundle.putString(BUTTON, NEGATIVE)
+                if (this.listener.isNotEmpty()) {
+                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                        ?.addNotMandatoryMessage(
+                            DialogResultMessage(
+                                this.listener,
+                                DialogResultAction(bundle, this.id)
+                            )
+                        )
+                }
+            }
+        }
         builder.cancelable(setCancelable)
 
         materialDialog = builder.build()
@@ -278,19 +270,18 @@ class MaterialDialogExt {
         }
     }
 
-
     constructor(
         context: Context,
         listener: String,
         id: Int,
-        title: String,
-        message: String,
+        title: String? = null,
+        message: String? = null,
         edittext: String,
         hint: String,
-        input_type: Int,
+        inputType: Int,
         positiveButton: Int,
         negativeButton: Int,
-        setCancelable: Boolean
+        setCancelable: Boolean = false
     ) {
 
         this.id = id
@@ -307,90 +298,82 @@ class MaterialDialogExt {
         if (negativeButton != NO_BUTTON) {
             builder.negativeText(negativeButton)
         }
-        builder.inputType(input_type)
-        builder.input(hint, edittext, { dialog, input -> })
-        builder.onPositive({ dialog, which ->
+        builder.inputType(inputType)
+        builder.input(hint, edittext) { dialog, input -> }
+        builder.onPositive { dialog, which ->
             if (this.id > -1) {
                 val bundle = Bundle()
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, POSITIVE)
-                bundle.putString("object", dialog.getInputEditText()?.getText().toString())
-                if (!this.listener.isNullOrEmpty()) {
-                    val union =
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-                    if (union != null) {
-                        union.addNotMandatoryMessage(
+                bundle.putString("object", dialog.inputEditText?.text.toString())
+                if (this.listener.isNotEmpty()) {
+                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                        ?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
                             )
                         )
-                    }
                 }
             }
-        })
-        builder.onNegative({ dialog, which ->
+        }
+        builder.onNegative { dialog, which ->
             if (this.id > -1) {
                 val bundle = Bundle()
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, NEGATIVE)
-                if (!this.listener.isNullOrEmpty()) {
-                    val union =
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-                    if (union != null) {
-                        union.addNotMandatoryMessage(
+                if (this.listener.isNotEmpty()) {
+                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                        ?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
                             )
                         )
-                    }
                 }
             }
-        })
+        }
         builder.cancelable(setCancelable)
 
         materialDialog = builder.build()
     }
 
     fun show() {
-        if (materialDialog != null) {
-            var size = ApplicationUtils.px2sp(
-                materialDialog.getContext(),
-                materialDialog!!.getContext().getResources().getDimension(R.dimen.text_size_large)
+        var size = ApplicationUtils.px2sp(
+            materialDialog.context,
+            materialDialog.context.resources.getDimension(R.dimen.text_size_large)
+        )
+        materialDialog.getActionButton(DialogAction.POSITIVE).textSize = size
+        materialDialog.getActionButton(DialogAction.POSITIVE)
+            .setTextColor(
+                ApplicationUtils.getColor(
+                    materialDialog.context,
+                    R.color.blue
+                )
             )
-            materialDialog.getActionButton(DialogAction.POSITIVE).setTextSize(size)
-            materialDialog.getActionButton(DialogAction.POSITIVE)
-                .setTextColor(
-                    ApplicationUtils.getColor(
-                        materialDialog.getContext(),
-                        R.color.blue
-                    )
+        materialDialog.getActionButton(DialogAction.NEGATIVE).textSize = size
+        materialDialog.getActionButton(DialogAction.NEGATIVE)
+            .setTextColor(
+                ApplicationUtils.getColor(
+                    materialDialog.context,
+                    R.color.blue
                 )
-            materialDialog.getActionButton(DialogAction.NEGATIVE).setTextSize(size)
-            materialDialog.getActionButton(DialogAction.NEGATIVE)
-                .setTextColor(
-                    ApplicationUtils.getColor(
-                        materialDialog.getContext(),
-                        R.color.blue
-                    )
-                )
-            materialDialog.getActionButton(DialogAction.NEUTRAL).setTextSize(size)
-            materialDialog.getActionButton(DialogAction.NEUTRAL)
-                .setTextColor(
-                    ApplicationUtils.getColor(
-                        materialDialog.getContext(),
-                        R.color.blue
-                    )
-                )
-            materialDialog.getContentView()?.setTextSize(size)
-            size = ApplicationUtils.px2sp(
-                materialDialog.getContext(),
-                materialDialog!!.getContext().getResources().getDimension(R.dimen.text_size_xlarge)
             )
-            materialDialog.getTitleView().setTextSize(size)
-            materialDialog.show()
-        }
+        materialDialog.getActionButton(DialogAction.NEUTRAL).textSize = size
+        materialDialog.getActionButton(DialogAction.NEUTRAL)
+            .setTextColor(
+                ApplicationUtils.getColor(
+                    materialDialog.context,
+                    R.color.blue
+                )
+            )
+        materialDialog.contentView?.textSize = size
+        size = ApplicationUtils.px2sp(
+            materialDialog.context,
+            materialDialog.context.resources.getDimension(R.dimen.text_size_xlarge)
+        )
+        materialDialog.titleView.textSize = size
+        materialDialog.show()
     }
 
 }

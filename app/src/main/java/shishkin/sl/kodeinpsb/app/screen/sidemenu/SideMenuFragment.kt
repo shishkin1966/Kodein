@@ -28,7 +28,7 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
         }
     }
 
-    private var balanceView: RecyclerView? = null
+    private lateinit var balanceView: RecyclerView
     private val balanceAdapter: BalanceRecyclerViewAdapter = BalanceRecyclerViewAdapter()
 
     override fun createModel(): IModel {
@@ -66,22 +66,22 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        balanceView = findView(R.id.balance_list)
-        balanceView?.layoutManager = LinearLayoutManager(activity)
-        balanceView?.adapter = balanceAdapter
+        balanceView = view.findViewById(R.id.balance_list)
+        balanceView.layoutManager = LinearLayoutManager(activity)
+        balanceView.adapter = balanceAdapter
 
-        findView<View>(R.id.exchange_rates)?.setOnClickListener(this)
-        findView<View>(R.id.exchange_cryptorates)?.setOnClickListener(this)
-        findView<View>(R.id.address)?.setOnClickListener(this)
-        findView<View>(R.id.setting)?.setOnClickListener(this)
-        findView<View>(R.id.accounts)?.setOnClickListener(this)
-        findView<View>(R.id.contact)?.setOnClickListener(this)
+        view.findViewById<View>(R.id.exchange_rates).setOnClickListener(this)
+        view.findViewById<View>(R.id.exchange_cryptorates).setOnClickListener(this)
+        view.findViewById<View>(R.id.address).setOnClickListener(this)
+        view.findViewById<View>(R.id.setting).setOnClickListener(this)
+        view.findViewById<View>(R.id.accounts).setOnClickListener(this)
+        view.findViewById<View>(R.id.contact).setOnClickListener(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
-        balanceView?.adapter = null
+        balanceView.adapter = null
     }
 
     private fun refreshViews(viewData: SideMenuData?) {

@@ -1,19 +1,19 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-import microservices.shishkin.sl.ui.MaterialDialogExt
+import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 
 
-open class ShowDialogAction() : IAction {
+open class ShowDialogAction : IAction {
     private var id = -1
     private var title: String? = null
     private var message: String? = null
     private var buttonPositive = R.string.ok_upper
     private var buttonNegative = MaterialDialogExt.NO_BUTTON
     private var cancelable = false
-    private var listener: String? = null
+    private lateinit var listener: String
 
-    constructor(id: Int, listener: String) : this() {
+    constructor(id: Int, listener: String) {
         this.id = id
         this.listener = listener
     }
@@ -43,7 +43,7 @@ open class ShowDialogAction() : IAction {
         return cancelable
     }
 
-    fun getListener(): String? {
+    fun getListener(): String {
         return listener
     }
 

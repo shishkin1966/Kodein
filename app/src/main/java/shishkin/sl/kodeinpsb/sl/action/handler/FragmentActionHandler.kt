@@ -6,7 +6,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import microservices.shishkin.sl.ui.MaterialDialogExt
+import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.KeyboardRunnable
