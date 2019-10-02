@@ -76,7 +76,7 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
                 }
 
                 OnExit -> {
-                    val setting = Setting.restore(ApplicationSingleton.QuitOnStopSetting)
+                    val setting = Setting.restore(ApplicationConstant.QuitOnStopSetting)
                     if (setting == null) {
                         ApplicationSpecialist.instance.toBackground()
                         return true

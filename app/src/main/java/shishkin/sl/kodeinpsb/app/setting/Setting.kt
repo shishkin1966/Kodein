@@ -7,7 +7,6 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import java.io.Serializable
-import java.util.*
 
 
 class Setting : Serializable {
@@ -34,7 +33,7 @@ class Setting : Serializable {
     }
 
     constructor(
-        values: ArrayList<String>?,
+        values: List<String>?,
         current: String?,
         default: String?,
         name: String,
@@ -54,7 +53,7 @@ class Setting : Serializable {
     }
 
     @SerializedName("values")
-    var values: ArrayList<String>? = null
+    var values: List<String>? = null
 
     @SerializedName("current")
     var current: String? = null

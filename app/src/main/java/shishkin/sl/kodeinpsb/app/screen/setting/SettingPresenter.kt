@@ -1,19 +1,20 @@
 package shishkin.sl.kodeinpsb.app.screen.setting
 
+import microservices.shishkin.sl.ui.MaterialDialogExt
+import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.setting.Setting
-import shishkin.sl.kodeinpsb.sl.action.Actions
-import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
-import shishkin.sl.kodeinpsb.sl.action.DataAction
-import shishkin.sl.kodeinpsb.sl.action.IAction
+import shishkin.sl.kodeinpsb.sl.action.*
+import shishkin.sl.kodeinpsb.sl.message.IDialogResultListener
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
 
 
-class SettingPresenter(model: SettingModel) : AbsModelPresenter(model) {
+class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
+    IDialogResultListener {
     companion object {
         const val NAME = "SettingPresenter"
         const val SettingChangedAction = "SettingChangedAction"
+        const val ShowListSetting = "ShowListSetting"
 
         const val BackupDb = "BackupDb"
         const val RestoreDb = "RestoreDb"
@@ -36,6 +37,18 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model) {
             when (action.getName()) {
                 SettingChangedAction -> {
                     (action.getData() as Setting).backup()
+                    return true
+                }
+                ShowListSetting -> {
+                    val setting = action.getData() as Setting
+                    getView<SettingFragment>().addAction(
+                        ShowListDialogAction(
+                            id = setting.id,
+                            listener = getName(),
+                            title = setting.title,
+                            list = setting.values
+                        )
+                    )
                     return true
                 }
             }
@@ -69,16 +82,32 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model) {
 
     private fun getData() {
         val list = ArrayList<Setting>()
-        var setting = Setting.restore(ApplicationSingleton.QuitOnStopSetting)
+        var setting = Setting.restore(ApplicationConstant.QuitOnStopSetting)
         if (setting == null) {
             setting = Setting(
-                name = ApplicationSingleton.QuitOnStopSetting,
+                name = ApplicationConstant.QuitOnStopSetting,
                 current = "false",
                 default = "false",
                 title = "Закрывать приложение при выходе",
                 values = null,
-                id = -1,
+                id = ApplicationConstant.QuitOnStopSettingId,
                 type = Setting.TYPE_SWITCH,
+                inputType = 0
+            )
+            setting.backup()
+        }
+        list.add(setting)
+
+        setting = Setting.restore(ApplicationConstant.ThemeSetting)
+        if (setting == null) {
+            setting = Setting(
+                name = ApplicationConstant.ThemeSetting,
+                current = "светлая",
+                default = "светлая",
+                title = "Схема приложения",
+                values = listOf("светлая", "темная"),
+                id = ApplicationConstant.ThemeSettingId,
+                type = Setting.TYPE_LIST,
                 inputType = 0
             )
             setting.backup()
@@ -87,4 +116,23 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model) {
 
         data.settings = list
     }
+
+    override fun onDialogResult(action: DialogResultAction) {
+        if (action.getId() == ApplicationConstant.ThemeSettingId) {
+            val bundle = action.getResult()
+            if (MaterialDialogExt.POSITIVE == bundle.getString(MaterialDialogExt.BUTTON)) {
+                val list = bundle.getStringArrayList("list")
+                if (list?.size == 1) {
+                    val currentValue = list[0]
+                    val setting = Setting.restore(ApplicationConstant.ThemeSetting)
+                    setting?.current = currentValue
+                    setting?.backup()
+                    getData()
+                    getView<SettingFragment>().addAction(DataAction(Actions.RefreshViews, data))
+                }
+            }
+        }
+    }
+
+
 }

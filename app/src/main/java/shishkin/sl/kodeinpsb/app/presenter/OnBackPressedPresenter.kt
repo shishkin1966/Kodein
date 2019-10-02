@@ -6,7 +6,6 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
-import shishkin.sl.kodeinpsb.common.PreferencesUtils
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
@@ -51,7 +50,8 @@ class OnBackPressedPresenter : AbsPresenter() {
             } else {
                 ApplicationSingleton.instance.getUseCase().addAction(
                     ApplicationAction(
-                        UseCasesSpecialist.OnExit)
+                        UseCasesSpecialist.OnExit
+                    )
                 )
                 return true
             }

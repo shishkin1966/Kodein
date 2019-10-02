@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import microservices.shishkin.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.KeyboardRunnable
@@ -40,6 +41,14 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
                 val activity = fragment.activity as AppCompatActivity
                 activity.onBackPressed()
             }
+            return true
+        }
+        if (action is ShowListDialogAction) {
+            showListDialog(action)
+            return true
+        }
+        if (action is ShowDialogAction) {
+            showDialog(action)
             return true
         }
 
@@ -86,4 +95,40 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         return view ?: fragment.view
     }
 
+    private fun showDialog(action: ShowDialogAction) {
+        val activity = fragment.activity ?: return
+        if (activity.isFinishing) return
+
+        MaterialDialogExt(
+            activity,
+            action.getListener(),
+            action.getId(),
+            action.getTitle(),
+            action.getMessage(),
+            action.getButtonPositive(),
+            action.getButtonNegative(),
+            action.isCancelable()
+        ).show()
+    }
+
+    private fun showListDialog(action: ShowListDialogAction) {
+        val activity = fragment.activity ?: return
+        if (activity.isFinishing) return
+
+        if (action.getList() == null) return
+
+        MaterialDialogExt(
+            activity,
+            action.getListener(),
+            action.getId(),
+            action.getTitle(),
+            action.getMessage(),
+            action.getList()!!,
+            action.getSelected(),
+            action.isMultiSelect(),
+            action.getButtonPositive(),
+            action.getButtonNegative(),
+            action.isCancelable()
+        ).show()
+    }
 }

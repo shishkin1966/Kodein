@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.setting.Setting
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.LinearLayoutBehavior
 import shishkin.sl.kodeinpsb.sl.action.Actions
@@ -19,12 +23,6 @@ import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
-import shishkin.sl.kodeinpsb.app.observe.EditTextObservable
-import android.text.InputType
-import android.widget.CompoundButton
-import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
-import shishkin.sl.kodeinpsb.app.setting.Setting
 
 
 class SettingFragment : AbsContentFragment(), View.OnClickListener,
@@ -86,6 +84,17 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
             R.id.db_restore -> {
                 getModel<SettingModel>().getPresenter<SettingPresenter>()
                     .addAction(ApplicationAction(SettingPresenter.RestoreDb))
+            }
+            R.id.ll -> {
+                val setting = v.tag as Setting?
+                if (setting != null) {
+                    when (setting.type) {
+                        Setting.TYPE_LIST -> {
+                            getModel<SettingModel>().getPresenter<SettingPresenter>()
+                                .addAction(DataAction(SettingPresenter.ShowListSetting, setting))
+                        }
+                    }
+                }
             }
         }
     }
@@ -149,7 +158,7 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
 
             Setting.TYPE_LIST -> {
                 view = layoutInflater.inflate(R.layout.setting_item_list, parent, false)
-                view.findViewById<View>(R.id.ll).setTag(setting)
+                view.findViewById<View>(R.id.ll).tag = setting
                 view.findViewById<View>(R.id.ll).setOnClickListener(this)
                 titleView = view.findViewById(R.id.item_title)
                 titleView.text = setting.title
@@ -165,7 +174,8 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
         if (setting != null) {
             setting.current = isChecked.toString()
         }
-        getModel<SettingModel>().getPresenter<SettingPresenter>().addAction(DataAction(SettingPresenter.SettingChangedAction, setting))
+        getModel<SettingModel>().getPresenter<SettingPresenter>()
+            .addAction(DataAction(SettingPresenter.SettingChangedAction, setting))
     }
 }
 

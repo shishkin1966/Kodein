@@ -93,7 +93,7 @@ class MaterialDialogExt {
                                 MessengerUnion.NAME
                             )
                         if (union != null) {
-                            union.addMessage(
+                            union.addNotMandatoryMessage(
                                 DialogResultMessage(
                                     this.listener,
                                     DialogResultAction(bundle, this.id)
@@ -117,7 +117,7 @@ class MaterialDialogExt {
                                 MessengerUnion.NAME
                             )
                         if (union != null) {
-                            union.addMessage(
+                            union.addNotMandatoryMessage(
                                 DialogResultMessage(
                                     this.listener,
                                     DialogResultAction(bundle, this.id)
@@ -141,7 +141,7 @@ class MaterialDialogExt {
                                 MessengerUnion.NAME
                             )
                         if (union != null) {
-                            union.addMessage(
+                            union.addNotMandatoryMessage(
                                 DialogResultMessage(
                                     this.listener,
                                     DialogResultAction(bundle, this.id)
@@ -200,7 +200,7 @@ class MaterialDialogExt {
                                 MessengerUnion.NAME
                             )
                         if (union != null) {
-                            union.addMessage(
+                            union.addNotMandatoryMessage(
                                 DialogResultMessage(
                                     this.listener,
                                     DialogResultAction(bundle, this.id)
@@ -240,7 +240,7 @@ class MaterialDialogExt {
                                 MessengerUnion.NAME
                             )
                         if (union != null) {
-                            union.addMessage(
+                            union.addNotMandatoryMessage(
                                 DialogResultMessage(
                                     this.listener,
                                     DialogResultAction(bundle, this.id)
@@ -260,7 +260,7 @@ class MaterialDialogExt {
                     val union =
                         ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
-                        union.addMessage(
+                        union.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
@@ -319,7 +319,7 @@ class MaterialDialogExt {
                     val union =
                         ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
-                        union.addMessage(
+                        union.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
@@ -338,7 +338,7 @@ class MaterialDialogExt {
                     val union =
                         ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
                     if (union != null) {
-                        union.addMessage(
+                        union.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
                                 DialogResultAction(bundle, this.id)
