@@ -489,7 +489,6 @@ class ApplicationUtils {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
             return intent;
         }
-
     }
 
 }

@@ -220,7 +220,6 @@ abstract class AbsDbProvider : IDbProvider {
         }
     }
 
-
     override fun <T : RoomDatabase> restore(
         databaseName: String,
         dirBackup: String,
@@ -303,8 +302,10 @@ abstract class AbsDbProvider : IDbProvider {
 
         val fileDb = File(pathDb)
         val nameDb = fileDb.name
-        val pathBackup = dirBackup + nameDb
+        val pathBackup = dirBackup + File.separator + nameDb
 
         return File(pathBackup).exists()
     }
+
+
 }

@@ -108,6 +108,10 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
                     refreshViews(action.getData() as SettingsData)
                     return true
                 }
+                SettingPresenter.DBCopyEnabledAction -> {
+                    view?.findViewById<View>(R.id.db_restore)?.isEnabled = action.getData() as Boolean
+                    return true
+                }
             }
         }
 

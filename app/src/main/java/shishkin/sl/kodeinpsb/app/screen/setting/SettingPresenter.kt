@@ -3,6 +3,7 @@ package shishkin.sl.kodeinpsb.app.screen.setting
 import microservices.shishkin.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.provider.Provider
 import shishkin.sl.kodeinpsb.app.setting.Setting
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.message.IDialogResultListener
@@ -18,6 +19,8 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
 
         const val BackupDb = "BackupDb"
         const val RestoreDb = "RestoreDb"
+
+        const val DBCopyEnabledAction = "DBCopyEnabledAction"
     }
 
     private lateinit var data: SettingsData
@@ -56,9 +59,11 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
         if (action is ApplicationAction) {
             when (action.getName()) {
                 BackupDb -> {
+                    Provider.backupDb()
                     return true
                 }
                 RestoreDb -> {
+                    Provider.restoreDb()
                     return true
                 }
             }
@@ -78,6 +83,7 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
             getData()
         }
         getView<SettingFragment>().addAction(DataAction(Actions.RefreshViews, data))
+        checkDbCopy();
     }
 
     private fun getData() {
@@ -134,5 +140,13 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
         }
     }
 
+    private fun checkDbCopy() {
+        getView<SettingFragment>().addAction(
+            DataAction(
+                DBCopyEnabledAction,
+                Provider.checkDbCopy()
+            )
+        )
+    }
 
 }
