@@ -1,5 +1,6 @@
 package shishkin.sl.kodeinpsb.common
 
+import java.io.File
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -283,4 +284,13 @@ fun Long.formatDateShortRu(): String {
     val date = Date(this)
     val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     return formatter.format(date)
+}
+
+fun String.getDir() : String {
+    try {
+        val file = File(this)
+        return file.parent
+    } catch (e: Exception) {
+        return ""
+    }
 }

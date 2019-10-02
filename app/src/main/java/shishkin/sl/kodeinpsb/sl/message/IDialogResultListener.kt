@@ -1,5 +1,6 @@
-package shishkin.sl.kodeinpsb.sl
+package shishkin.sl.kodeinpsb.sl.message
 
+import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
 
 

@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/blue_dark"
+            android:background="@color/gray"
             android:minHeight="@dimen/menu_header_height"
             android:orientation="horizontal">
 
@@ -81,7 +81,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible"
         app:behavior_peekHeight="@dimen/menu_peek_height"
         app:layout_behavior=".common.LinearLayoutBehavior">
 

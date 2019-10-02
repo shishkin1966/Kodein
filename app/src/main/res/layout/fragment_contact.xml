@@ -78,6 +78,13 @@
                 <View style="@style/HorizontalThinDivider" />
             </LinearLayout>
         </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/title"
+            android:background="@drawable/below_shadow" />
+
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
