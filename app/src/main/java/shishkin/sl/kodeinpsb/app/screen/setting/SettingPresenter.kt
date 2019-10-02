@@ -1,6 +1,6 @@
 package shishkin.sl.kodeinpsb.app.screen.setting
 
-import microservices.shishkin.sl.ui.MaterialDialogExt
+import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.provider.Provider
