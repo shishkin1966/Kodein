@@ -103,8 +103,7 @@ class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallba
     }
 
     override fun getSpecialistSubscription(): List<String> {
-        val list = ArrayList<String>()
-        list.addAll(super.getSpecialistSubscription())
+        val list = ArrayList<String>(super.getSpecialistSubscription())
         list.add(LocationUnion.NAME)
         return list
     }
