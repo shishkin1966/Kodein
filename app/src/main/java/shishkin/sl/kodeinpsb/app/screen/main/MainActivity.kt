@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
@@ -28,14 +29,14 @@ class MainActivity : AbsContentActivity() {
     override fun onAction(action: IAction): Boolean {
         if (!isValid()) return false
 
-        if (actionHandler.onAction(action)) return true
-
         if (action is HideSideMenuAction) {
             if (menu.isMenuShowing) {
                 menu.showContent()
             }
             return true
         }
+
+        if (actionHandler.onAction(action)) return true
 
         ApplicationSingleton.instance.onError(
             getName(),
@@ -83,9 +84,13 @@ class MainActivity : AbsContentActivity() {
         )
 
         if (intent != null) {
-            val action = intent.action
-            if ("android.intent.action.MAIN" == action) {
-                showHomeFragment();
+            when (intent.action) {
+                "android.intent.action.MAIN" -> {
+                    showHomeFragment()
+                }
+                ApplicationConstant.ACTION_CLICK -> {
+                    showHomeFragment()
+                }
             }
             intent = null
         } else {
@@ -95,6 +100,9 @@ class MainActivity : AbsContentActivity() {
                 showHomeFragment()
             }
         }
+
+        ApplicationSingleton.instance.getNotification()
+            .replaceNotification(message = "Старт приложения")
     }
 
     private fun showHomeFragment() {

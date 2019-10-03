@@ -6,12 +6,14 @@ import shishkin.sl.kodeinpsb.app.specialist.ILocationUnion
 import shishkin.sl.kodeinpsb.app.specialist.IUseCasesSpecialist
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
+import shishkin.sl.kodeinpsb.app.specialist.notification.INotificationSpecialist
+import shishkin.sl.kodeinpsb.app.specialist.notification.NotificationSpecialist
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
 import shishkin.sl.kodeinpsb.sl.provider.IDbProvider
+import shishkin.sl.kodeinpsb.sl.request.IRequest
 import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 
@@ -65,16 +67,6 @@ class App : ApplicationSpecialist() {
         return union?.getPresenter(name)
     }
 
-    fun addMessage(message: IMessage) {
-        val union = serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-        union?.addMessage(message)
-    }
-
-    fun addNotMandatoryMessage(message: IMessage) {
-        val union = serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
-        union?.addNotMandatoryMessage(message)
-    }
-
     fun onChange(observable: String, obj: Any) {
         val union = serviceLocator?.get<IObservableUnion>(ObservableUnion.NAME)
         union?.getObservable(observable)?.onChange(obj)
@@ -100,11 +92,15 @@ class App : ApplicationSpecialist() {
         return get(CacheSpecialist.NAME)!!
     }
 
-    fun getExecutor(): CommonExecutor {
-        return get(CommonExecutor.NAME)!!
+    fun execute(request: IRequest) {
+        get<CommonExecutor>(CommonExecutor.NAME)!!.execute(request)
     }
 
     fun getUseCase(): IUseCasesSpecialist {
         return get(UseCasesSpecialist.NAME)!!
+    }
+
+    fun getNotification(): INotificationSpecialist {
+        return get(NotificationSpecialist.NAME)!!
     }
 }

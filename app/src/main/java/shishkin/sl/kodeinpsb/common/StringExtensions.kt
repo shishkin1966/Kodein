@@ -286,7 +286,7 @@ fun Long.formatDateShortRu(): String {
     return formatter.format(date)
 }
 
-fun String.getDir() : String {
+fun String.getDir(): String {
     try {
         val file = File(this)
         return file.parent

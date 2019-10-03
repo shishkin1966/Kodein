@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.action
 
-import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.R
+import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 
 
 open class ShowDialogAction : IAction {

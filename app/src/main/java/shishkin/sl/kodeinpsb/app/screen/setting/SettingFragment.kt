@@ -109,7 +109,8 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
                     return true
                 }
                 SettingPresenter.DBCopyEnabledAction -> {
-                    view?.findViewById<View>(R.id.db_restore)?.isEnabled = action.getData() as Boolean
+                    view?.findViewById<View>(R.id.db_restore)?.isEnabled =
+                        action.getData() as Boolean
                     return true
                 }
             }
