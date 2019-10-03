@@ -2,7 +2,6 @@ package shishkin.sl.kodeinpsb.app
 
 import shishkin.sl.kodeinpsb.app.provider.DbProvider
 import shishkin.sl.kodeinpsb.app.provider.NetProvider
-import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.sl.AbsServiceLocator
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
@@ -47,8 +46,6 @@ class ServiceLocator : AbsServiceLocator() {
         registerSpecialist(NetProvider.NAME)
 
         registerSpecialist(CommonExecutor.NAME)
-
-        registerSpecialist(LocationUnion.NAME)
         registerSpecialist(UseCasesSpecialist.NAME)
     }
 

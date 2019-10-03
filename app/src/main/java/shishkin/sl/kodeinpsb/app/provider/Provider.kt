@@ -36,19 +36,28 @@ class Provider {
         }
 
         @JvmStatic
-        fun checkDbCopy() : Boolean {
+        fun checkDbCopy(): Boolean {
 
-            return ApplicationSingleton.instance.getDbProvider().checkCopy(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir())
+            return ApplicationSingleton.instance.getDbProvider()
+                .checkCopy(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir())
         }
 
         @JvmStatic
-        fun backupDb()  {
-            return ApplicationSingleton.instance.getDbProvider().backup(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir(), Db::class.java)
+        fun backupDb() {
+            return ApplicationSingleton.instance.getDbProvider().backup(
+                Db.NAME,
+                ErrorSpecialistSingleton.instance.getPath().getDir(),
+                Db::class.java
+            )
         }
 
         @JvmStatic
-        fun restoreDb()  {
-            return ApplicationSingleton.instance.getDbProvider().restore(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir(), Db::class.java)
+        fun restoreDb() {
+            return ApplicationSingleton.instance.getDbProvider().restore(
+                Db.NAME,
+                ErrorSpecialistSingleton.instance.getPath().getDir(),
+                Db::class.java
+            )
         }
     }
 }

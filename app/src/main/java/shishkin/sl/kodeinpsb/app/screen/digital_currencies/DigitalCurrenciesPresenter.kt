@@ -98,7 +98,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresen
         if (!result.hasError()) {
             data.tickers = ArrayList(result.getData() as List<Ticker>)
             getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
-            ApplicationSingleton.instance.getExecutor().execute(object : Request() {
+            ApplicationSingleton.instance.execute(object : Request() {
                 override fun run() {
                     ApplicationSingleton.instance.getCache()
                         .put(GetTickersRequest.NAME, data.tickers)

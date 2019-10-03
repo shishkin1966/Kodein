@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.app.screen.setting
 
-import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.provider.Provider
@@ -8,6 +7,7 @@ import shishkin.sl.kodeinpsb.app.setting.Setting
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.message.IDialogResultListener
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
+import shishkin.sl.kodeinpsb.sl.ui.MaterialDialogExt
 
 
 class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),

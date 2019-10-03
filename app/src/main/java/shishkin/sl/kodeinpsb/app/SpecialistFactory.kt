@@ -4,6 +4,7 @@ import shishkin.sl.kodeinpsb.app.provider.DbProvider
 import shishkin.sl.kodeinpsb.app.provider.NetProvider
 import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
 import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
+import shishkin.sl.kodeinpsb.app.specialist.notification.NotificationSpecialist
 import shishkin.sl.kodeinpsb.sl.INamed
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialistFactory
@@ -39,6 +40,7 @@ class SpecialistFactory : ISpecialistFactory, INamed {
                 LocationUnion.NAME -> LocationUnion()
                 CacheSpecialist.NAME -> CacheSpecialist()
                 UseCasesSpecialist.NAME -> UseCasesSpecialist()
+                NotificationSpecialist.NAME -> NotificationSpecialist()
                 else -> Class.forName(name).newInstance() as ISpecialist
             }
         } catch (e: Exception) {
