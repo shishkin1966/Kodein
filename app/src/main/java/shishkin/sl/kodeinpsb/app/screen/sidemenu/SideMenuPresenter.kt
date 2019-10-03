@@ -90,8 +90,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
     }
 
     override fun getSpecialistSubscription(): List<String> {
-        val list = ArrayList<String>()
-        list.addAll(super.getSpecialistSubscription())
+        val list = ArrayList<String>(super.getSpecialistSubscription())
         list.add(ObservableUnion.NAME)
         return list
     }
