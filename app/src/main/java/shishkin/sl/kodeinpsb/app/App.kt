@@ -9,6 +9,7 @@ import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.app.specialist.notification.INotificationSpecialist
 import shishkin.sl.kodeinpsb.app.specialist.notification.NotificationSpecialist
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
@@ -16,6 +17,7 @@ import shishkin.sl.kodeinpsb.sl.provider.IDbProvider
 import shishkin.sl.kodeinpsb.sl.request.IRequest
 import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
+import shishkin.sl.kodeinpsb.sl.ui.IActivity
 
 
 object ApplicationSingleton {
@@ -102,5 +104,9 @@ class App : ApplicationSpecialist() {
 
     fun getNotification(): INotificationSpecialist {
         return get(NotificationSpecialist.NAME)!!
+    }
+
+    fun getRouter(): IRouter {
+        return getActivityUnion().getActivity<IActivity>() as IRouter
     }
 }
