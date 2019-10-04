@@ -5,6 +5,7 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
+import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -65,12 +66,17 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
     }
 
     private fun parseIntent(intent: Intent) {
+        val router = ApplicationSingleton.instance.getRouter()
         when (intent.action) {
             "android.intent.action.MAIN" -> {
-                getView<MainActivity>().showHomeFragment()
+                router.showRootFragment()
             }
             ApplicationConstant.ACTION_CLICK -> {
-                getView<MainActivity>().showHomeFragment()
+                if (router.hasTopFragment()) {
+                    router.switchToTopFragment()
+                } else {
+                    router.showRootFragment()
+                }
             }
         }
         getView<MainActivity>().clearIntent()

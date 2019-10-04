@@ -115,4 +115,9 @@ interface IRouter : ISpecialistSubscriber {
      */
     fun toBackground()
 
+    /**
+     * Показать корневой фрагмент
+     */
+    fun showRootFragment()
+
 }

@@ -98,7 +98,7 @@ class MainActivity : AbsContentActivity() {
             val fragment =
                 ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
             if (fragment == null) {
-                showHomeFragment()
+                showRootFragment()
             }
         }
 
@@ -106,7 +106,7 @@ class MainActivity : AbsContentActivity() {
             .replaceNotification(message = "Старт приложения")
     }
 
-    fun showHomeFragment() {
+    override fun showRootFragment() {
         clearBackStack()
         showFragment(AccountsFragment.newInstance(), true)
     }
