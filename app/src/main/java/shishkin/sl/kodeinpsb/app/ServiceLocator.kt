@@ -37,6 +37,7 @@ class ServiceLocator : AbsServiceLocator() {
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
         union?.register(ScreenBroadcastReceiverObservable())
+
         union?.register(ObjectObservable())
 
         registerSpecialist(DbExecutor.NAME)

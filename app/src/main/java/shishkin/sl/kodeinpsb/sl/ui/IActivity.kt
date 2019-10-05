@@ -8,8 +8,7 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 
 
 interface IActivity : ISpecialistSubscriber, IStateable, IActionListener, IPermissionListener,
-    IActionHandler,
-    IModelView {
+    IActionHandler, IModelView {
     /**
      * очистить Back Stack
      */

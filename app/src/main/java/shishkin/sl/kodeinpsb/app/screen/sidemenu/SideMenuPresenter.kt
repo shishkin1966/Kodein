@@ -11,7 +11,6 @@ import shishkin.sl.kodeinpsb.app.screen.digital_currencies.DigitalCurrenciesFrag
 import shishkin.sl.kodeinpsb.app.screen.map.MapFragment
 import shishkin.sl.kodeinpsb.app.screen.setting.SettingFragment
 import shishkin.sl.kodeinpsb.app.screen.val_curs.ValCursFragment
-import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -99,7 +98,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
         if (!isValid()) return false
 
         if (action is ApplicationAction) {
-            val router = getView<SideMenuFragment>().activity as IRouter
+            val router = ApplicationSingleton.instance.getRouter()
             when (action.getName()) {
                 ShowAccounts -> {
                     if (!router.isCurrentFragment(AccountsFragment.NAME)) {

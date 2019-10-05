@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.ServiceLocatorSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
@@ -14,6 +13,7 @@ import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
 import shishkin.sl.kodeinpsb.app.screen.sidemenu.SideMenuFragment
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.SlidingMenu
+import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.ActivityActionHandler
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
@@ -62,6 +62,14 @@ class MainActivity : AbsContentActivity() {
         onNewIntent(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (intent != null) {
+            getModel<MainModel>().getPresenter<MainPresenter>()
+                .addAction(DataAction(MainPresenter.IntentAction, intent))
+        }
+    }
 
     override fun getContentResId(): Int {
         return R.id.content
@@ -84,20 +92,13 @@ class MainActivity : AbsContentActivity() {
         )
 
         if (intent != null) {
-            when (intent.action) {
-                "android.intent.action.MAIN" -> {
-                    showHomeFragment()
-                }
-                ApplicationConstant.ACTION_CLICK -> {
-                    showHomeFragment()
-                }
-            }
-            intent = null
+            getModel<MainModel>().getPresenter<MainPresenter>()
+                .addAction(DataAction(MainPresenter.IntentAction, intent))
         } else {
             val fragment =
                 ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
             if (fragment == null) {
-                showHomeFragment()
+                showRootFragment()
             }
         }
 
@@ -105,7 +106,7 @@ class MainActivity : AbsContentActivity() {
             .replaceNotification(message = "Старт приложения")
     }
 
-    private fun showHomeFragment() {
+    override fun showRootFragment() {
         clearBackStack()
         showFragment(AccountsFragment.newInstance(), true)
     }
@@ -161,5 +162,9 @@ class MainActivity : AbsContentActivity() {
         if (!onBackPressedPresenter.onClick()) {
             super.onBackPressed()
         }
+    }
+
+    fun clearIntent() {
+        intent = null
     }
 }
