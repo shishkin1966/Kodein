@@ -2,7 +2,6 @@ package shishkin.sl.kodeinpsb.sl.model
 
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.lifecycle.Lifecycle
 import shishkin.sl.kodeinpsb.sl.IValidated
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 
@@ -49,11 +48,4 @@ interface IModelView : IValidated {
      * @param model модель
      */
     fun <M : IModel> setModel(model: M)
-
-    /**
-     * Получить Lifecycle модели
-     *
-     * @return Lifecycle модели
-     */
-    fun getLifecycle(): Lifecycle
 }
