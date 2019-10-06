@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:background="@color/gray"
             android:gravity="center_vertical"
-            android:minHeight="@dimen/setting_min_high"
+            android:minHeight="@dimen/menu_height"
             android:paddingLeft="@dimen/dimen_12dp"
             android:paddingTop="@dimen/dimen_8dp"
             android:paddingRight="@dimen/dimen_12dp"
