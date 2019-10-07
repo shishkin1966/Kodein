@@ -148,5 +148,4 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
             )
         )
     }
-
 }
