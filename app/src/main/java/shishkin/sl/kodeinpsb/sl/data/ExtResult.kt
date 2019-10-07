@@ -1,5 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.data
 
+import shishkin.sl.kodeinpsb.BuildConfig
+
 class ExtResult() {
     companion object {
         const val NOT_SEND = -1
@@ -11,6 +13,7 @@ class ExtResult() {
     private var order = NOT_SEND
     private var name: String? = null
     private var id = 0
+    private var version: Int = BuildConfig.VERSION_CODE
 
     constructor(data: Any?) : this() {
         this.data = data
@@ -112,4 +115,14 @@ class ExtResult() {
         this.id = id
         return this
     }
+
+    fun getVersion(): Int {
+        return version
+    }
+
+    fun setVersion(version: Int): ExtResult {
+        this.version = version
+        return this
+    }
+
 }

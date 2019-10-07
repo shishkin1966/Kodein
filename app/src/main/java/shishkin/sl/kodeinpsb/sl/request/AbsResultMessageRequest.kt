@@ -38,9 +38,9 @@ abstract class AbsResultMessageRequest() : AbsRequest(),
     override fun run() {
         if (isValid()) {
             val result: ExtResult = try {
-                ExtResult().setName(getName()).setData(getData())
+                ExtResult().setName(getName()).setVersion(getVersion()).setData(getData())
             } catch (e: Exception) {
-                ExtResult().setName(getName()).setError(
+                ExtResult().setName(getName()).setVersion(getVersion()).setError(
                     ExtError().addError(
                         getName(),
                         e.localizedMessage

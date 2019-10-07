@@ -29,13 +29,13 @@ abstract class AbsResultRequest<T> : AbsRequest, IResultRequest {
         if (isValid()) {
             try {
                 getOwner()?.response(
-                    ExtResult().setName(getName()).setData(
+                    ExtResult().setName(getName()).setVersion(getVersion()).setData(
                         getData()
                     )
                 )
             } catch (e: Exception) {
                 getOwner()?.response(
-                    ExtResult().setName(getName()).setError(
+                    ExtResult().setName(getName()).setVersion(getVersion()).setError(
                         ExtError().addError(
                             getName(),
                             e.localizedMessage
