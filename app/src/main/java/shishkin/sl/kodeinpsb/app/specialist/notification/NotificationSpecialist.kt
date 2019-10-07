@@ -1,10 +1,10 @@
 package shishkin.sl.kodeinpsb.app.specialist.notification
 
-import shishkin.sl.kodeinpsb.sl.AbsSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.AbsShortLiveSpecialist
 
 
-class NotificationSpecialist : AbsSpecialist(), INotificationSpecialist {
+class NotificationSpecialist : AbsShortLiveSpecialist(), INotificationSpecialist {
     companion object {
         const val NAME = "NotificationSpecialist"
     }
@@ -20,14 +20,17 @@ class NotificationSpecialist : AbsSpecialist(), INotificationSpecialist {
     }
 
     override fun addNotification(title: String?, message: String) {
+        post()
         specialist.addNotification(title, message)
     }
 
     override fun replaceNotification(title: String?, message: String) {
+        post()
         specialist.replaceNotification(title, message)
     }
 
     override fun clear() {
+        post()
         specialist.clear()
     }
 

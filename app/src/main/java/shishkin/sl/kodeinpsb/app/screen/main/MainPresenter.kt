@@ -81,5 +81,9 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
         getView<MainActivity>().clearIntent()
     }
 
+    override fun onStart() {
+        ApplicationSingleton.instance.getNotification()
+            .replaceNotification(message = "Старт приложения")
+    }
 
 }

@@ -101,9 +101,6 @@ class MainActivity : AbsContentActivity() {
                 showRootFragment()
             }
         }
-
-        ApplicationSingleton.instance.getNotification()
-            .replaceNotification(message = "Старт приложения")
     }
 
     override fun showRootFragment() {

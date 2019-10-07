@@ -97,9 +97,10 @@
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinner"
-                    android:layout_gravity="center_vertical"
                     android:layout_width="80dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_large" />
 
             </LinearLayout>
 
