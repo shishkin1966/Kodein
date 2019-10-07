@@ -67,4 +67,19 @@ interface IRequest : Runnable, INamed, Comparable<IRequest> {
      */
     fun getAction(oldRequest: IRequest): Int
 
+    /**
+     * Получить версию запроса
+     *
+     * @return версия запроса
+     */
+    fun getVersion() : Int
+
+    /**
+     * Установить версию запроса
+     *
+     * @param version версия запроса
+     * @return запрос
+     */
+    fun setVersion(version: Int) : IRequest
+
 }

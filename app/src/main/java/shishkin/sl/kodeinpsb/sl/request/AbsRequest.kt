@@ -1,17 +1,14 @@
 package shishkin.sl.kodeinpsb.sl.request
 
+import shishkin.sl.kodeinpsb.BuildConfig
 import shishkin.sl.kodeinpsb.sl.task.RequestThreadPoolExecutor
 
 
 abstract class AbsRequest() : IRequest {
-
-    private var rank = Rank.MIDDLE_RANK
+    private var rank : Int = Rank.MIDDLE_RANK
     private var isCanceled = false
     private var id = 0
-
-    constructor(rank: Int) : this() {
-        this.rank = rank
-    }
+    private var version : Int = BuildConfig.VERSION_CODE
 
     override fun getRank(): Int {
         return rank
@@ -50,6 +47,15 @@ abstract class AbsRequest() : IRequest {
 
     override fun getAction(oldRequest: IRequest): Int {
         return RequestThreadPoolExecutor.ACTION_DELETE
+    }
+
+    override fun getVersion(): Int {
+        return version
+    }
+
+    override fun setVersion(version: Int): IRequest {
+        this.version = version
+        return this
     }
 
 
