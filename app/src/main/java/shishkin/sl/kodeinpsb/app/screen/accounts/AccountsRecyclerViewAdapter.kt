@@ -10,15 +10,17 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.common.double2String
+import shishkin.sl.kodeinpsb.common.recyclerview.AbsRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.common.trimZero
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 
 
-class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAdapter.ViewHolder>() {
+class AccountsRecyclerViewAdapter :
+    AbsRecyclerViewAdapter<Account, AccountsRecyclerViewAdapter.ViewHolder>() {
 
-    private val items: ArrayList<Account> = ArrayList()
-
-    override fun getItemCount(): Int = items.size
+    init {
+        setHasStableIds(false)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -31,13 +33,7 @@ class AccountsRecyclerViewAdapter : RecyclerView.Adapter<AccountsRecyclerViewAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    fun setItems(items: List<Account>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

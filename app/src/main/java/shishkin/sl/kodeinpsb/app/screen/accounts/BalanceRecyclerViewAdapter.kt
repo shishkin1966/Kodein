@@ -9,19 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.common.double2String
+import shishkin.sl.kodeinpsb.common.recyclerview.AbsRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.common.trimZero
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
-class BalanceRecyclerViewAdapter : RecyclerView.Adapter<BalanceRecyclerViewAdapter.ViewHolder>() {
-
-    private val items: ArrayList<Balance> = ArrayList()
+class BalanceRecyclerViewAdapter : AbsRecyclerViewAdapter<Balance, BalanceRecyclerViewAdapter.ViewHolder>() {
 
     init {
         setHasStableIds(false)
     }
-
-    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -34,13 +31,7 @@ class BalanceRecyclerViewAdapter : RecyclerView.Adapter<BalanceRecyclerViewAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], items.size)
-    }
-
-    fun setItems(items: List<Balance>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
+        holder.bind(getItem(position), itemCount)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

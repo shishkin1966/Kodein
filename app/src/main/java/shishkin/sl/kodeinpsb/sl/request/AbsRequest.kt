@@ -8,7 +8,7 @@ abstract class AbsRequest() : IRequest {
     private var rank : Int = Rank.MIDDLE_RANK
     private var isCanceled = false
     private var id = 0
-    private var version : Int = BuildConfig.VERSION_CODE
+    private var version: String = "Android=" + BuildConfig.VERSION_NAME
 
     override fun getRank(): Int {
         return rank
@@ -49,11 +49,11 @@ abstract class AbsRequest() : IRequest {
         return RequestThreadPoolExecutor.ACTION_DELETE
     }
 
-    override fun getVersion(): Int {
+    override fun getVersion(): String {
         return version
     }
 
-    override fun setVersion(version: Int): IRequest {
+    override fun setVersion(version: String): IRequest {
         this.version = version
         return this
     }
