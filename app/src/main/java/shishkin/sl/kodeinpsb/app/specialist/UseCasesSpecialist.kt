@@ -6,7 +6,7 @@ import shishkin.sl.kodeinpsb.app.ApplicationConstant
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.setting.Setting
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.AbsSpecialist
+import shishkin.sl.kodeinpsb.sl.AbsShortLiveSpecialist
 import shishkin.sl.kodeinpsb.sl.ISpecialist
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
@@ -15,13 +15,13 @@ import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import java.io.File
 
-class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
+class UseCasesSpecialist : AbsShortLiveSpecialist(), IUseCasesSpecialist {
     companion object {
         const val NAME = "UseCasesSpecialist"
 
-        const val SendErrorReport = "SendErrorReport"
-        const val ShowProjectWeb = "ShowProjectWeb"
-        const val OnExit = "OnExit"
+        const val SendErrorReportAction = "SendErrorReportAction"
+        const val ShowProjectWebAction = "ShowProjectWebAction"
+        const val OnExitAction = "OnExitAction"
     }
 
     override fun getName(): String {
@@ -37,9 +37,10 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
     }
 
     private fun onAction(action: IAction): Boolean {
+        post()
         if (action is ApplicationAction) {
             when (action.getName()) {
-                SendErrorReport -> {
+                SendErrorReportAction -> {
                     val rec = ApplicationConstant.MAIL
                     val path = ErrorSpecialistSingleton.instance.getPath()
                     var body = "\n" + ApplicationUtils.getPhoneInfo()
@@ -67,7 +68,7 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
                     return true
                 }
 
-                ShowProjectWeb -> {
+                ShowProjectWebAction -> {
                     ApplicationUtils.showUrl(
                         ApplicationSpecialist.appContext,
                         ApplicationConstant.APP_URL
@@ -75,7 +76,7 @@ class UseCasesSpecialist : AbsSpecialist(), IUseCasesSpecialist {
                     return true
                 }
 
-                OnExit -> {
+                OnExitAction -> {
                     val setting = Setting.restore(ApplicationConstant.QuitOnStopSetting)
                     if (setting == null) {
                         ApplicationSpecialist.instance.toBackground()

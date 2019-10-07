@@ -30,13 +30,13 @@ class ContactPresenter(model: ContactModel) : AbsModelPresenter(model) {
             when (action.getName()) {
                 WebAction -> {
                     ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesSpecialist.ShowProjectWeb))
+                        .addAction(ApplicationAction(UseCasesSpecialist.ShowProjectWebAction))
                     return true
                 }
 
                 MailAction -> {
                     ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesSpecialist.SendErrorReport))
+                        .addAction(ApplicationAction(UseCasesSpecialist.SendErrorReportAction))
                     return true
                 }
             }
