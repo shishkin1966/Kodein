@@ -50,7 +50,7 @@ class OnBackPressedPresenter : AbsPresenter() {
             } else {
                 ApplicationSingleton.instance.getUseCase().addAction(
                     ApplicationAction(
-                        UseCasesSpecialist.OnExit
+                        UseCasesSpecialist.OnExitAction
                     )
                 )
                 return true

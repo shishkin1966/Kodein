@@ -46,7 +46,6 @@ class ServiceLocator : AbsServiceLocator() {
         registerSpecialist(NetProvider.NAME)
 
         registerSpecialist(CommonExecutor.NAME)
-        registerSpecialist(UseCasesSpecialist.NAME)
     }
 
     override fun getSpecialistFactory(): ISpecialistFactory {

@@ -44,7 +44,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
             if (action.getName() == ApplicationSpecialist.appContext.getString(R.string.exit)) {
                 ApplicationSingleton.instance.getUseCase().addAction(
                     ApplicationAction(
-                        UseCasesSpecialist.OnExit
+                        UseCasesSpecialist.OnExitAction
                     )
                 )
             }
