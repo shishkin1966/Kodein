@@ -37,7 +37,6 @@ class Provider {
 
         @JvmStatic
         fun checkDbCopy(): Boolean {
-
             return ApplicationSingleton.instance.getDbProvider()
                 .checkCopy(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir())
         }
