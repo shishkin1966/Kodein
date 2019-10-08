@@ -25,7 +25,7 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
                         union.addNotMandatoryMessage(
                             ResultMessage(
                                 getOwner(),
-                                result.setOrder(ExtResult.LAST).setName(getName()).setVersion(getVersion())
+                                result.setName(getName()).setVersion(getVersion())
                             )
                                 .setSubj(getName())
                                 .setCopyTo(getCopyTo())
@@ -38,7 +38,7 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
                                 getName(),
                                 throwable.getLocalizedMessage()
                             )
-                        ).setOrder(ExtResult.LAST).setName(getName()).setVersion(getVersion())
+                        ).setName(getName()).setVersion(getVersion())
                         union.addNotMandatoryMessage(
                             ResultMessage(getOwner(), result)
                                 .setSubj(getName())

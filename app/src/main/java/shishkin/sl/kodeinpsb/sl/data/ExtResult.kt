@@ -13,7 +13,7 @@ class ExtResult() {
     private var order = NOT_SEND
     private var name: String? = null
     private var id = 0
-    private var version: Int = BuildConfig.VERSION_CODE
+    private var version: String = "Android=" + BuildConfig.VERSION_NAME
 
     constructor(data: Any?) : this() {
         this.data = data
@@ -116,11 +116,11 @@ class ExtResult() {
         return this
     }
 
-    fun getVersion(): Int {
+    fun getVersion(): String {
         return version
     }
 
-    fun setVersion(version: Int): ExtResult {
+    fun setVersion(version: String): ExtResult {
         this.version = version
         return this
     }
