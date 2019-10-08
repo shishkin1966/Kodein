@@ -1,5 +1,5 @@
 package shishkin.sl.kodeinpsb.common.recyclerview
 
-interface PageListener {
+interface IPageListener {
     fun hasData()
 }

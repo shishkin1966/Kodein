@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.common.recyclerview
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class OnScrollListener(private val recyclerViewScrollListener: RecyclerViewScrollListener) :
+class OnScrollListener(private val recyclerViewScrollListener: IRecyclerViewScrollListener) :
     RecyclerView.OnScrollListener() {
 
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

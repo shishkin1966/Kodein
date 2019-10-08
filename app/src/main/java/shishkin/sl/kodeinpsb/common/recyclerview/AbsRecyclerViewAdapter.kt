@@ -2,7 +2,7 @@ package shishkin.sl.kodeinpsb.common.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbsRecyclerViewAdapter<E, VH : RecyclerView.ViewHolder>() : IRecyclerView<E>,
+abstract class AbsRecyclerViewAdapter<E, VH : RecyclerView.ViewHolder>() : IRecyclerViewAdapter<E>,
     RecyclerView.Adapter<VH>() {
     private val items: MutableList<E> = ArrayList()
 

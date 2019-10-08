@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class OnPageScrollListener(
     private val layoutManager: LinearLayoutManager,
-    private val listener: PageListener
+    private val listener: IPageListener
 ) : RecyclerView.OnScrollListener() {
     private val prefetch = 50
 
