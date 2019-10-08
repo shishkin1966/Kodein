@@ -11,20 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.common.recyclerview.AbsRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 
 
-class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter.ViewHolder>() {
-
-    private val items: ArrayList<Ticker> = ArrayList()
-
-    override fun getItemCount(): Int = items.size
-
-    fun setItems(items: List<Ticker>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
+class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -37,23 +28,15 @@ class TickerRecyclerViewAdapter : RecyclerView.Adapter<TickerRecyclerViewAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val symbol: TextView
-        private val name: TextView
-        private val money: TextView
-        private val hours: TextView
-        private val days: TextView
-
-        init {
-            symbol = itemView.findViewById(R.id.symbol)
-            name = itemView.findViewById(R.id.name)
-            money = itemView.findViewById(R.id.money)
-            hours = itemView.findViewById(R.id.hours)
-            days = itemView.findViewById(R.id.days)
-        }
+        private val symbol: TextView = itemView.findViewById(R.id.symbol)
+        private val name: TextView = itemView.findViewById(R.id.name)
+        private val money: TextView = itemView.findViewById(R.id.money)
+        private val hours: TextView = itemView.findViewById(R.id.hours)
+        private val days: TextView = itemView.findViewById(R.id.days)
 
         fun bind(item: Ticker) {
             symbol.text = item.symbol

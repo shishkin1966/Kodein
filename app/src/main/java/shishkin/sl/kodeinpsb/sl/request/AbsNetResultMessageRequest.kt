@@ -18,8 +18,8 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
 
         val single = getData() as Single<*>
         single
-            ?.map { t: Any -> ExtResult(t) }
-            ?.subscribe(
+            .map { t: Any -> ExtResult(t) }
+            .subscribe(
                 { result: ExtResult ->
                     if (isValid() && result.getData() != null) {
                         union.addNotMandatoryMessage(
@@ -47,7 +47,6 @@ abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageReque
                     }
                 }
             )
-
     }
 
 }
