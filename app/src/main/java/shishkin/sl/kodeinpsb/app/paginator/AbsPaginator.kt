@@ -16,7 +16,11 @@ import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
 import java.util.*
 
-
+/**
+ * Класс, обеспечивающий постраничное считывание данных
+ * Размер окна считываемых данных является нарастающим
+ * Объект самостоятельно запускает запросы для получения всех данных
+ */
 abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_SIZE) :
     IResponseListener, IMessengerSubscriber, IStateListener, IPageListener {
 
@@ -26,34 +30,35 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
 
     private var currentPageSize = 0
     private var currentPosition = 0
-    private lateinit var pageSize: MutableList<Int>
+    private var pageSizes: List<Int>
     private var isEof = false
     private val lifecycle = StateObserver(this)
 
     init {
-        setPageSize(pageSize)
+        pageSizes = setPageSizes(pageSize)
     }
 
     private fun getNextPageSize(): Int {
-        if (pageSize.isEmpty()) return PAGE_SIZE
+        if (pageSizes.isEmpty()) return PAGE_SIZE
 
-        for (i in pageSize.indices) {
-            if (pageSize[i] > currentPageSize) {
-                return pageSize[i]
+        for (i in pageSizes.indices) {
+            if (pageSizes[i] > currentPageSize) {
+                return pageSizes[i]
             }
         }
-        return pageSize[pageSize.size - 1]
+        return pageSizes[pageSizes.size - 1]
     }
 
-    private fun setPageSize(initialPageSize: Int) {
+    open fun setPageSizes(initialPageSize: Int) : List<Int> {
         var page = initialPageSize
         if (page <= 0) {
             page = PAGE_SIZE
         }
-        pageSize = ArrayList()
-        pageSize.add(page)
-        pageSize.add(page * 2)
-        pageSize.add(page * 4)
+        val ps = ArrayList<Int>()
+        ps.add(page)
+        ps.add(page * 2)
+        ps.add(page * 4)
+        return ps
     }
 
     override fun hasData() {
@@ -81,10 +86,16 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
                     currentPosition += list.size
                 } else {
                     isEof = true
+                    result.setOrder(ExtResult.LAST)
                 }
             }
             ApplicationSingleton.instance.addNotMandatoryMessage(ResultMessage(listener, result))
+            afterResponse()
         }
+    }
+
+    open fun afterResponse() {
+        hasData()
     }
 
     abstract fun getRequest(name: String, currentPosition: Int, pageSize: Int): Request

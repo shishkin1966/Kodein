@@ -5,13 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class OnPageScrollListener(
     private val layoutManager: LinearLayoutManager,
-    private val listener: IPageListener
+    private val listener: IPageListener,
+    private val prefetch: Int = 50
 ) : RecyclerView.OnScrollListener() {
-    private val prefetch = 50
-
-    init {
-        listener.hasData()
-    }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         val visibleItemCount = layoutManager.childCount
