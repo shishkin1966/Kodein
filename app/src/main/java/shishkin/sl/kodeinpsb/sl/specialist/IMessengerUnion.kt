@@ -13,7 +13,7 @@ interface IMessengerUnion : ISmallUnion<IMessengerSubscriber> {
      * @param subscriber подписчик
      * @return список сообщений
      */
-    fun getMessage(subscriber: IMessengerSubscriber): List<IMessage>
+    fun getMessages(subscriber: IMessengerSubscriber): List<IMessage>
 
     /**
      * Добавить почтовое сообщение

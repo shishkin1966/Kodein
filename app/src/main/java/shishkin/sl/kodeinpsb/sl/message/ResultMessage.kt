@@ -1,6 +1,5 @@
 package shishkin.sl.kodeinpsb.sl.message
 
-import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
@@ -23,9 +22,7 @@ class ResultMessage : AbsMessage {
 
     override fun read(subscriber: IMessengerSubscriber) {
         if (subscriber is IResponseListener) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                subscriber.response(result)
-            })
+            subscriber.response(result)
         }
     }
 
