@@ -15,6 +15,7 @@ import org.michaelbel.bottomsheet.BottomSheet
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.data.Balance
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.LinearLayoutBehavior
 import shishkin.sl.kodeinpsb.sl.action.*
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
@@ -83,17 +84,19 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener,
             when (action.getName()) {
                 AccountsPresenter.FilterDialog -> {
                     if (context != null) {
-                        val builder = BottomSheet.Builder(context!!)
-                        filterDialog = builder
-                            .setDividers(true)
-                            .setTitleTextColorRes(R.color.blue)
-                            .setTitle(R.string.select)
-                            .setItems(
-                                action.map["Items"] as Array<out CharSequence>,
-                                action.map["Icons"] as Array<out Drawable>,
-                                this
-                            )
-                            .show()
+                        ApplicationUtils.runOnUiThread(Runnable {
+                            val builder = BottomSheet.Builder(context!!)
+                            filterDialog = builder
+                                .setDividers(true)
+                                .setTitleTextColorRes(R.color.blue)
+                                .setTitle(R.string.select)
+                                .setItems(
+                                    action.map["Items"] as Array<out CharSequence>,
+                                    action.map["Icons"] as Array<out Drawable>,
+                                    this
+                                )
+                                .show()
+                        })
                     }
                     return true
                 }
@@ -104,13 +107,15 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener,
             when (action.getName()) {
                 AccountsPresenter.SortDialog -> {
                     if (context != null) {
-                        val builder = BottomSheet.Builder(context!!)
-                        sortDialog = builder
-                            .setDividers(true)
-                            .setTitleTextColorRes(R.color.blue)
-                            .setTitle(R.string.sort)
-                            .setMenu(R.menu.sort_menu, this)
-                            .show()
+                        ApplicationUtils.runOnUiThread(Runnable {
+                            val builder = BottomSheet.Builder(context!!)
+                            sortDialog = builder
+                                .setDividers(true)
+                                .setTitleTextColorRes(R.color.blue)
+                                .setTitle(R.string.sort)
+                                .setMenu(R.menu.sort_menu, this)
+                                .show()
+                        })
                     }
                     return true
                 }
@@ -138,9 +143,12 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener,
     private fun refreshViews(viewData: AccountsData?) {
         if (viewData == null) return
 
-        accountsAdapter.setItems(viewData.getData())
-        findView<View>(R.id.sort_accounts)?.isEnabled = viewData.isSortMenuEnabled()
-        findView<View>(R.id.select_accounts)?.isEnabled = viewData.isFilterMenuEnabled()
+        ApplicationUtils.runOnUiThread(Runnable {
+            accountsAdapter.setItems(viewData.getData())
+            findView<View>(R.id.sort_accounts)?.isEnabled = viewData.isSortMenuEnabled()
+            findView<View>(R.id.select_accounts)?.isEnabled = viewData.isFilterMenuEnabled()
+        })
+
         showAccountsBalance(viewData.balance)
     }
 
@@ -191,7 +199,9 @@ class AccountsFragment : AbsContentFragment(), View.OnClickListener,
     private fun showAccountsBalance(list: List<Balance>?) {
         if (list == null) return
 
-        balanceAdapter.setItems(list)
+        ApplicationUtils.runOnUiThread(Runnable {
+            balanceAdapter.setItems(list)
+        })
     }
 
     override fun getName(): String {

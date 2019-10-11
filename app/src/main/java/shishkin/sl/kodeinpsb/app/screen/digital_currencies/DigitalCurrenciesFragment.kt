@@ -129,7 +129,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
 
     private fun refreshViews(viewData: TickerData?) {
         if (viewData == null) return
-        adapter.setItems(viewData.getData())
+
+        ApplicationUtils.runOnUiThread(Runnable {
+            adapter.setItems(viewData.getData())
+        })
     }
 
     override fun update(o: Observable?, arg: Any?) {
@@ -139,8 +142,10 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     }
 
     private fun initFilter(viewData: TickerData?) {
-        observable?.finish()
-        searchView.setText(viewData?.filter)
-        observable = EditTextObservable(this, searchView)
+        ApplicationUtils.runOnUiThread(Runnable {
+            observable?.finish()
+            searchView.setText(viewData?.filter)
+            observable = EditTextObservable(this, searchView)
+        })
     }
 }

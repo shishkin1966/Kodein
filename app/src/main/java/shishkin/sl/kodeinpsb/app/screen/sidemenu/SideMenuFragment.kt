@@ -11,6 +11,7 @@ import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.app.action.HideSideMenuAction
 import shishkin.sl.kodeinpsb.app.screen.accounts.BalanceRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.app.screen.main.MainPresenter
+import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.DataAction
@@ -87,7 +88,9 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
     private fun refreshViews(viewData: SideMenuData?) {
         if (viewData == null) return
 
-        balanceAdapter.setItems(viewData.balance)
+        ApplicationUtils.runOnUiThread(Runnable {
+            balanceAdapter.setItems(viewData.balance)
+        })
     }
 
     override fun onClick(v: View?) {
