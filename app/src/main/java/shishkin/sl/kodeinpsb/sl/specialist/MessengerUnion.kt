@@ -31,7 +31,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
         readMessages(subscriber)
     }
 
-    override fun getMessage(subscriber: IMessengerSubscriber): List<IMessage> {
+    override fun getMessages(subscriber: IMessengerSubscriber): List<IMessage> {
         if (messages.isEmpty()) {
             return ArrayList()
         }
@@ -201,7 +201,7 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     }
 
     override fun readMessages(subscriber: IMessengerSubscriber) {
-        val list = getMessage(subscriber)
+        val list = getMessages(subscriber)
         if (list.isNotEmpty()) {
             ApplicationUtils.runOnUiThread(Runnable {
                 for (message in list) {
