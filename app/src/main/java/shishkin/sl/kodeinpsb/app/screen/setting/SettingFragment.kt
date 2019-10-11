@@ -109,8 +109,10 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
                     return true
                 }
                 SettingPresenter.DBCopyEnabledAction -> {
-                    view?.findViewById<View>(R.id.db_restore)?.isEnabled =
-                        action.getData() as Boolean
+                    ApplicationUtils.runOnUiThread(Runnable {
+                        view?.findViewById<View>(R.id.db_restore)?.isEnabled =
+                            action.getData() as Boolean
+                    })
                     return true
                 }
             }
@@ -127,14 +129,16 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
     }
 
     private fun refreshViews(data: SettingsData) {
-        listView.removeAllViews()
+        ApplicationUtils.runOnUiThread(Runnable {
+            listView.removeAllViews()
 
-        for (setting in data.settings) {
-            val view = getView(listView, setting)
-            if (view != null) {
-                listView.addView(view)
+            for (setting in data.settings) {
+                val view = getView(listView, setting)
+                if (view != null) {
+                    listView.addView(view)
+                }
             }
-        }
+        })
     }
 
     private fun getView(parent: ViewGroup, setting: Setting): View? {

@@ -94,22 +94,26 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun showKeyboard(action: ShowKeyboardAction) {
-        KeyboardRunnable(activity, action.getView()).run()
+        ApplicationUtils.runOnUiThread(Runnable {
+            KeyboardRunnable(activity, action.getView()).run()
+        })
     }
 
     private fun hideKeyboard() {
         if (activity.isFinishing) return
 
-        val imm = ApplicationUtils.getSystemService<InputMethodManager>(
-            activity,
-            Activity.INPUT_METHOD_SERVICE
-        )
-        var view = activity.currentFocus
-        if (view == null) {
-            view = getRootView()
-        }
-        activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        ApplicationUtils.runOnUiThread(Runnable {
+            val imm = ApplicationUtils.getSystemService<InputMethodManager>(
+                activity,
+                Activity.INPUT_METHOD_SERVICE
+            )
+            var view = activity.currentFocus
+            if (view == null) {
+                view = getRootView()
+            }
+            activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        })
     }
 
     private fun getRootView(): View {
@@ -119,78 +123,88 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun showSnackbar(action: ShowSnackbarAction) {
-        val actionName = action.getAction()
-        if (actionName.isNullOrEmpty()) {
-            snackbar = BaseSnackbar().make(
-                getRootView(), action.getMessage(), action
-                    .getDuration(), action.getType()
-            )
-            snackbar?.show()
-        } else {
-            snackbar = BaseSnackbar().make(
-                getRootView(),
-                action.getMessage(),
-                action.getDuration(),
-                action.getType()
-            )
-                .setAction(actionName, this::onSnackbarClick)
-            snackbar?.show()
-        }
+        ApplicationUtils.runOnUiThread(Runnable {
+            val actionName = action.getAction()
+            if (actionName.isNullOrEmpty()) {
+                snackbar = BaseSnackbar().make(
+                    getRootView(), action.getMessage(), action
+                        .getDuration(), action.getType()
+                )
+                snackbar?.show()
+            } else {
+                snackbar = BaseSnackbar().make(
+                    getRootView(),
+                    action.getMessage(),
+                    action.getDuration(),
+                    action.getType()
+                )
+                    .setAction(actionName, this::onSnackbarClick)
+                snackbar?.show()
+            }
+        })
     }
 
     private fun onSnackbarClick(view: View) {
-        var action: String? = null
-        if (view is AppCompatButton) {
-            action = view.text.toString()
-        } else if (view is Button) {
-            action = view.text.toString()
-        }
-        if (activity is IModelView && !action.isNullOrBlank()) {
-            val model = activity.getModel<IModel>()
-            if (model is IPresenterModel) {
-                model.getPresenter<IPresenter>().addAction(SnackBarAction(action))
+        ApplicationUtils.runOnUiThread(Runnable {
+            var action: String? = null
+            if (view is AppCompatButton) {
+                action = view.text.toString()
+            } else if (view is Button) {
+                action = view.text.toString()
             }
-        }
+            if (activity is IModelView && !action.isNullOrBlank()) {
+                val model = activity.getModel<IModel>()
+                if (model is IPresenterModel) {
+                    model.getPresenter<IPresenter>().addAction(SnackBarAction(action))
+                }
+            }
+        })
     }
 
     private fun hideSnackbar() {
-        if (snackbar != null) {
-            snackbar?.dismiss()
-        }
+        ApplicationUtils.runOnUiThread(Runnable {
+            if (snackbar != null) {
+                snackbar?.dismiss()
+            }
+        })
     }
 
     private fun grantPermission(permission: String) {
         if (ApplicationUtils.hasMarshmallow()) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                activity.requestPermissions(
-                    arrayOf(permission),
-                    ApplicationUtils.REQUEST_PERMISSIONS
-                )
-            }
+            ApplicationUtils.runOnUiThread(Runnable {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                    activity.requestPermissions(
+                        arrayOf(permission),
+                        ApplicationUtils.REQUEST_PERMISSIONS
+                    )
+                }
+            })
         }
     }
 
     private fun grantPermission(permission: String, listener: String?, helpMessage: String?) {
         if (ApplicationUtils.hasMarshmallow()) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                val union =
-                    ApplicationSpecialist.serviceLocator?.get<IActivityUnion>(ActivityUnion.NAME)
-                union?.addAction(
-                    ShowDialogAction(
-                        R.id.dialog_request_permissions,
-                        listener!!,
-                        null,
-                        helpMessage!!
-                    ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
-                        false
+            ApplicationUtils.runOnUiThread(Runnable {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                    val union =
+                        ApplicationSpecialist.serviceLocator?.get<IActivityUnion>(ActivityUnion.NAME)
+                    union?.addAction(
+                        ShowDialogAction(
+                            R.id.dialog_request_permissions,
+                            listener!!,
+                            null,
+                            helpMessage!!
+                        ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
+                            false
+                        )
                     )
-                )
-            } else {
-                activity.requestPermissions(
-                    arrayOf(permission),
-                    ApplicationUtils.REQUEST_PERMISSIONS
-                )
-            }
+                } else {
+                    activity.requestPermissions(
+                        arrayOf(permission),
+                        ApplicationUtils.REQUEST_PERMISSIONS
+                    )
+                }
+            })
         }
     }
 

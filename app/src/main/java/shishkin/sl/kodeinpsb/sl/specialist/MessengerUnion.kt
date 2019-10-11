@@ -162,14 +162,12 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
         for (address in list) {
             addresses.addAll(getAddresses(address))
         }
-        ApplicationUtils.runOnUiThread(Runnable {
-            for (address in addresses) {
-                val subscriber = checkSubscriber(address)
-                if (subscriber != null) {
-                    message.read(subscriber)
-                }
+        for (address in addresses) {
+            val subscriber = checkSubscriber(address)
+            if (subscriber != null) {
+                message.read(subscriber)
             }
-        })
+        }
     }
 
     override fun replaceMessage(message: IMessage) {
@@ -203,15 +201,13 @@ class MessengerUnion : AbsSmallUnion<IMessengerSubscriber>(), IMessengerUnion {
     override fun readMessages(subscriber: IMessengerSubscriber) {
         val list = getMessages(subscriber)
         if (list.isNotEmpty()) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                for (message in list) {
-                    val state = subscriber.getState()
-                    if (state == State.STATE_READY) {
-                        message.read(subscriber)
-                        removeMessage(message)
-                    }
+            for (message in list) {
+                val state = subscriber.getState()
+                if (state == State.STATE_READY) {
+                    message.read(subscriber)
+                    removeMessage(message)
                 }
-            })
+            }
         }
     }
 
