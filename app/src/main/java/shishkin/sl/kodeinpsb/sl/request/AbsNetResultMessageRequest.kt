@@ -4,16 +4,18 @@ import io.reactivex.Single
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.message.ResultMessage
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
-import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.MessengerUnion
 
 
 abstract class AbsNetResultMessageRequest(owner: String) : AbsResultMessageRequest(owner) {
 
     override fun run() {
         if (!isValid()) return
-        val union = ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+        val union = ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+            MessengerUnion.NAME
+        )
         if (union == null) return
 
         val single = getData() as Single<*>

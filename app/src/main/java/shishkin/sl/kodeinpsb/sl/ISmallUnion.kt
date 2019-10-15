@@ -4,7 +4,7 @@ package shishkin.sl.kodeinpsb.sl
 /**
  * Интерфейс малого объединения подписчиков
  */
-interface ISmallUnion<T : ISpecialistSubscriber> : ISpecialist {
+interface ISmallUnion<T : IProviderSubscriber> : IProvider {
     /**
      * Получить секретаря (объект учитывающий подписчиков)
      */

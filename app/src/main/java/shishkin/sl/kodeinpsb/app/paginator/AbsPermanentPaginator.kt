@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Класс, обеспечивающий постраничное считывание данных
  * Размер окна считываемых данных является постоянным
- * Объект требут внешнего запуска чтения данных - вызова функции hasData()
+ * Объект требует внешнего запуска чтения данных - вызова функции hasData()
  */
 abstract class AbsPermanentPaginator(private var listener: String, pageSize: Int = PAGE_SIZE) :
     AbsPaginator(listener, pageSize) {

@@ -21,9 +21,9 @@ import shishkin.sl.kodeinpsb.sl.model.IModel
 import shishkin.sl.kodeinpsb.sl.model.IModelView
 import shishkin.sl.kodeinpsb.sl.model.IPresenterModel
 import shishkin.sl.kodeinpsb.sl.presenter.IPresenter
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IActivityUnion
+import shishkin.sl.kodeinpsb.sl.provider.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IActivityUnion
 
 
 class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler() {
@@ -94,26 +94,22 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun showKeyboard(action: ShowKeyboardAction) {
-        ApplicationUtils.runOnUiThread(Runnable {
-            KeyboardRunnable(activity, action.getView()).run()
-        })
+        KeyboardRunnable(activity, action.getView()).run()
     }
 
     private fun hideKeyboard() {
         if (activity.isFinishing) return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            val imm = ApplicationUtils.getSystemService<InputMethodManager>(
-                activity,
-                Activity.INPUT_METHOD_SERVICE
-            )
-            var view = activity.currentFocus
-            if (view == null) {
-                view = getRootView()
-            }
-            activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        })
+        val imm = ApplicationUtils.getSystemService<InputMethodManager>(
+            activity,
+            Activity.INPUT_METHOD_SERVICE
+        )
+        var view = activity.currentFocus
+        if (view == null) {
+            view = getRootView()
+        }
+        activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun getRootView(): View {
@@ -123,88 +119,80 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun showSnackbar(action: ShowSnackbarAction) {
-        ApplicationUtils.runOnUiThread(Runnable {
-            val actionName = action.getAction()
-            if (actionName.isNullOrEmpty()) {
-                snackbar = BaseSnackbar().make(
-                    getRootView(), action.getMessage(), action
-                        .getDuration(), action.getType()
-                )
-                snackbar?.show()
-            } else {
-                snackbar = BaseSnackbar().make(
-                    getRootView(),
-                    action.getMessage(),
-                    action.getDuration(),
-                    action.getType()
-                )
-                    .setAction(actionName, this::onSnackbarClick)
-                snackbar?.show()
-            }
-        })
+        val actionName = action.getAction()
+        if (actionName.isNullOrEmpty()) {
+            snackbar = BaseSnackbar().make(
+                getRootView(), action.getMessage(), action
+                    .getDuration(), action.getType()
+            )
+            snackbar?.show()
+        } else {
+            snackbar = BaseSnackbar().make(
+                getRootView(),
+                action.getMessage(),
+                action.getDuration(),
+                action.getType()
+            )
+                .setAction(actionName, this::onSnackbarClick)
+            snackbar?.show()
+        }
     }
 
     private fun onSnackbarClick(view: View) {
-        ApplicationUtils.runOnUiThread(Runnable {
-            var action: String? = null
-            if (view is AppCompatButton) {
-                action = view.text.toString()
-            } else if (view is Button) {
-                action = view.text.toString()
+        var action: String? = null
+        if (view is AppCompatButton) {
+            action = view.text.toString()
+        } else if (view is Button) {
+            action = view.text.toString()
+        }
+        if (activity is IModelView && !action.isNullOrBlank()) {
+            val model = activity.getModel<IModel>()
+            if (model is IPresenterModel) {
+                model.getPresenter<IPresenter>().addAction(SnackBarAction(action))
             }
-            if (activity is IModelView && !action.isNullOrBlank()) {
-                val model = activity.getModel<IModel>()
-                if (model is IPresenterModel) {
-                    model.getPresenter<IPresenter>().addAction(SnackBarAction(action))
-                }
-            }
-        })
+        }
     }
 
     private fun hideSnackbar() {
-        ApplicationUtils.runOnUiThread(Runnable {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-        })
+        if (snackbar != null) {
+            snackbar?.dismiss()
+        }
     }
 
     private fun grantPermission(permission: String) {
         if (ApplicationUtils.hasMarshmallow()) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                    activity.requestPermissions(
-                        arrayOf(permission),
-                        ApplicationUtils.REQUEST_PERMISSIONS
-                    )
-                }
-            })
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                activity.requestPermissions(
+                    arrayOf(permission),
+                    ApplicationUtils.REQUEST_PERMISSIONS
+                )
+            }
         }
     }
 
     private fun grantPermission(permission: String, listener: String?, helpMessage: String?) {
         if (ApplicationUtils.hasMarshmallow()) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                    val union =
-                        ApplicationSpecialist.serviceLocator?.get<IActivityUnion>(ActivityUnion.NAME)
-                    union?.addAction(
-                        ShowDialogAction(
-                            R.id.dialog_request_permissions,
-                            listener!!,
-                            null,
-                            helpMessage!!
-                        ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
-                            false
-                        )
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                val union =
+                    ApplicationProvider.serviceLocator?.get<IActivityUnion>(
+                        ActivityUnion.NAME
                     )
-                } else {
-                    activity.requestPermissions(
-                        arrayOf(permission),
-                        ApplicationUtils.REQUEST_PERMISSIONS
+                union?.addAction(
+                    ShowDialogAction(
+                        R.id.dialog_request_permissions,
+                        listener!!,
+                        null,
+                        helpMessage!!
+                    ).setPositiveButton(R.string.setting).setNegativeButton(R.string.cancel).setCancelable(
+                        false
                     )
-                }
-            })
+                )
+            } else {
+                activity.requestPermissions(
+                    arrayOf(permission),
+                    ApplicationUtils.REQUEST_PERMISSIONS
+                )
+            }
         }
     }
 

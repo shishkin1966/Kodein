@@ -3,14 +3,14 @@ package shishkin.sl.kodeinpsb.app.paginator
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.common.recyclerview.IPageListener
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.message.ResultMessage
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.MessengerUnion
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
 import shishkin.sl.kodeinpsb.sl.request.Request
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
 import shishkin.sl.kodeinpsb.sl.state.IStateListener
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
@@ -49,7 +49,7 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
         return pageSizes[pageSizes.size - 1]
     }
 
-    open fun setPageSizes(initialPageSize: Int) : List<Int> {
+    open fun setPageSizes(initialPageSize: Int): List<Int> {
         var page = initialPageSize
         if (page <= 0) {
             page = PAGE_SIZE
@@ -107,11 +107,11 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
     override fun read(message: IMessage) {
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         return listOf(MessengerUnion.NAME)
     }
 
-    override fun onStopSpecialist(specialist: ISpecialist) {
+    override fun onStopProvider(provider: IProvider) {
     }
 
     override fun getState(): Int {
@@ -126,17 +126,17 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
     }
 
     override fun onReadyView() {
-        ApplicationSingleton.instance.registerSpecialistSubscriber(this)
+        ApplicationSingleton.instance.registerSubscriber(this)
         hasData()
     }
 
     override fun onDestroyView() {
         cancel()
-        ApplicationSingleton.instance.unregisterSpecialistSubscriber(this)
+        ApplicationSingleton.instance.unregisterSubscriber(this)
     }
 
     private fun cancel() {
-        ApplicationSingleton.instance.getExecutor().cancelRequests(getName())
+        ApplicationSingleton.instance.cancelRequests(getName())
     }
 
 }

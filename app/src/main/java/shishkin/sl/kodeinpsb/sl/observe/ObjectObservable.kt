@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
 import shishkin.sl.kodeinpsb.sl.Secretary
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.IObservableSubscriber
 
 
 class ObjectObservable : AbsObservable() {

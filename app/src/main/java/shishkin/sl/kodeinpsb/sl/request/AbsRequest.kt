@@ -5,7 +5,7 @@ import shishkin.sl.kodeinpsb.sl.task.RequestThreadPoolExecutor
 
 
 abstract class AbsRequest() : IRequest {
-    private var rank : Int = Rank.MIDDLE_RANK
+    private var rank: Int = Rank.MIDDLE_RANK
     private var isCanceled = false
     private var id = 0
     private var version: String = "Android=" + BuildConfig.VERSION_NAME

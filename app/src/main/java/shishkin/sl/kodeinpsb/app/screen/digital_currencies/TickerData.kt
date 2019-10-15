@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.app.screen.digital_currencies
 import com.google.common.collect.Collections2
 import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,10 +38,10 @@ class TickerData {
     }
 
     fun saveFilter() {
-        PreferencesUtils.putString(ApplicationSpecialist.appContext, TickerDataFilter, filter)
+        PreferencesUtils.putString(ApplicationProvider.appContext, TickerDataFilter, filter)
     }
 
     private fun loadFilter(): String? {
-        return PreferencesUtils.getString(ApplicationSpecialist.appContext, TickerDataFilter)
+        return PreferencesUtils.getString(ApplicationProvider.appContext, TickerDataFilter)
     }
 }

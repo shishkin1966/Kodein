@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.message
 
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerSubscriber
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
 
 
 class ResultMessage : AbsMessage {

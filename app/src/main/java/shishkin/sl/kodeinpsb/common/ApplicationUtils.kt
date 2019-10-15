@@ -26,7 +26,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoast.StyleableToast
 import shishkin.sl.kodeinpsb.R
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
 class ApplicationUtils {
@@ -191,7 +191,7 @@ class ApplicationUtils {
 
                     for (permission in permissions) {
                         if (ActivityCompat.checkSelfPermission(
-                                ApplicationSpecialist.appContext,
+                                ApplicationProvider.appContext,
                                 permission
                             ) != PackageManager.PERMISSION_GRANTED
                         ) {

@@ -4,7 +4,7 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.IActionHandler
 import shishkin.sl.kodeinpsb.sl.action.ShowMessageAction
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
 open class BaseActionHandler : IActionHandler {
@@ -21,7 +21,7 @@ open class BaseActionHandler : IActionHandler {
         if (action.getMessage().isNullOrEmpty()) return
 
         ApplicationUtils.showToast(
-            ApplicationSpecialist.appContext,
+            ApplicationProvider.appContext,
             action.getMessage(),
             action.getDuration(),
             action.getType()

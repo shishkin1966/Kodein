@@ -18,7 +18,7 @@ abstract class AbsMessage() : IAction, IMessage {
     constructor(message: IMessage) : this() {
         address = message.getAddress()
         copyTo.addAll(message.getCopyTo())
-        id  = message.getMessageId()
+        id = message.getMessageId()
         keepAliveTime = message.getEndTime()
     }
 

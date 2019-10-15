@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.app.screen.contact
 
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
+import shishkin.sl.kodeinpsb.app.provider.UseCasesProvider
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
@@ -30,13 +30,13 @@ class ContactPresenter(model: ContactModel) : AbsModelPresenter(model) {
             when (action.getName()) {
                 WebAction -> {
                     ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesSpecialist.ShowProjectWebAction))
+                        .addAction(ApplicationAction(UseCasesProvider.ShowProjectWebAction))
                     return true
                 }
 
                 MailAction -> {
                     ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesSpecialist.SendErrorReportAction))
+                        .addAction(ApplicationAction(UseCasesProvider.SendErrorReportAction))
                     return true
                 }
             }

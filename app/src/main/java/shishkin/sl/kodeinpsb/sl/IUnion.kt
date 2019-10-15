@@ -5,7 +5,7 @@ package shishkin.sl.kodeinpsb.sl
  *
  * @param <T> the type parameter
  */
-interface IUnion<T : ISpecialistSubscriber> : ISmallUnion<T> {
+interface IUnion<T : IProviderSubscriber> : ISmallUnion<T> {
 
     fun setCurrentSubscriber(subscriber: T): Boolean
 

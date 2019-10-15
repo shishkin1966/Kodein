@@ -18,9 +18,9 @@ import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 
 
@@ -38,7 +38,7 @@ class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IRespo
     }
 
     private lateinit var data: AccountsData
-    private val ALL = ApplicationSpecialist.appContext.getString(R.string.all)
+    private val ALL = ApplicationProvider.appContext.getString(R.string.all)
 
     override fun isRegister(): Boolean {
         return true
@@ -156,8 +156,8 @@ class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IRespo
         }
     }
 
-    override fun getSpecialistSubscription(): List<String> {
-        val list = ArrayList<String>(super.getSpecialistSubscription())
+    override fun getProviderSubscription(): List<String> {
+        val list = ArrayList<String>(super.getProviderSubscription())
         list.add(ObservableUnion.NAME)
         return list
     }

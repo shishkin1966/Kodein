@@ -12,10 +12,11 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.data.Ticker
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.recyclerview.AbsRecyclerViewAdapter
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
-class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerViewAdapter.ViewHolder>() {
+class TickerRecyclerViewAdapter :
+    AbsRecyclerViewAdapter<Ticker, TickerRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -49,7 +50,7 @@ class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerV
                     s24h.setSpan(
                         ForegroundColorSpan(
                             ApplicationUtils.getColor(
-                                ApplicationSpecialist.appContext,
+                                ApplicationProvider.appContext,
                                 R.color.green
                             )
                         ),
@@ -61,7 +62,7 @@ class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerV
                     s24h.setSpan(
                         ForegroundColorSpan(
                             ApplicationUtils.getColor(
-                                ApplicationSpecialist.appContext,
+                                ApplicationProvider.appContext,
                                 R.color.red
                             )
                         ),
@@ -79,7 +80,7 @@ class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerV
                     s7d.setSpan(
                         ForegroundColorSpan(
                             ApplicationUtils.getColor(
-                                ApplicationSpecialist.appContext,
+                                ApplicationProvider.appContext,
                                 R.color.green
                             )
                         ),
@@ -91,7 +92,7 @@ class TickerRecyclerViewAdapter : AbsRecyclerViewAdapter<Ticker, TickerRecyclerV
                     s7d.setSpan(
                         ForegroundColorSpan(
                             ApplicationUtils.getColor(
-                                ApplicationSpecialist.appContext,
+                                ApplicationProvider.appContext,
                                 R.color.red
                             )
                         ),

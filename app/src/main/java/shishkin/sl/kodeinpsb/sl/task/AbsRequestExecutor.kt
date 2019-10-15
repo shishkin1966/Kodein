@@ -1,10 +1,10 @@
 package shishkin.sl.kodeinpsb.sl.task
 
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.request.IRequest
 
 
-abstract class AbsRequestExecutor : IRequestExecutor, ISpecialist {
+abstract class AbsRequestExecutor : IRequestExecutor, IProvider {
 
     abstract fun getExecutor(): RequestThreadPoolExecutor
 
@@ -50,7 +50,7 @@ abstract class AbsRequestExecutor : IRequestExecutor, ISpecialist {
         return false
     }
 
-    override operator fun compareTo(other: ISpecialist): Int {
+    override operator fun compareTo(other: IProvider): Int {
         return if (other is IExecutor) 0 else 1
     }
 

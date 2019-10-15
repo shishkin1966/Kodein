@@ -3,10 +3,9 @@ package shishkin.sl.kodeinpsb.sl.provider
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import shishkin.sl.kodeinpsb.sl.IValidated
 
 
-interface IDbProvider : IProvider, IValidated {
+interface IDbProvider : IRequestProvider {
     /**
      * Создать/открыть БД
      *

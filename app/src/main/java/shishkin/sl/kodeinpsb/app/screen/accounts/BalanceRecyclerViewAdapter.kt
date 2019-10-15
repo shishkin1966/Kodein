@@ -11,10 +11,11 @@ import shishkin.sl.kodeinpsb.app.data.Balance
 import shishkin.sl.kodeinpsb.common.double2String
 import shishkin.sl.kodeinpsb.common.recyclerview.AbsRecyclerViewAdapter
 import shishkin.sl.kodeinpsb.common.trimZero
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
-class BalanceRecyclerViewAdapter : AbsRecyclerViewAdapter<Balance, BalanceRecyclerViewAdapter.ViewHolder>() {
+class BalanceRecyclerViewAdapter :
+    AbsRecyclerViewAdapter<Balance, BalanceRecyclerViewAdapter.ViewHolder>() {
 
     init {
         setHasStableIds(false)
@@ -46,12 +47,12 @@ class BalanceRecyclerViewAdapter : AbsRecyclerViewAdapter<Balance, BalanceRecycl
             if (cnt == 1) {
                 balance?.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    ApplicationSpecialist.appContext.resources.getDimension(R.dimen.text_size_xlarge)
+                    ApplicationProvider.appContext.resources.getDimension(R.dimen.text_size_xlarge)
                 )
             } else {
                 balance?.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    ApplicationSpecialist.appContext.resources.getDimension(R.dimen.text_size)
+                    ApplicationProvider.appContext.resources.getDimension(R.dimen.text_size)
                 )
             }
         }

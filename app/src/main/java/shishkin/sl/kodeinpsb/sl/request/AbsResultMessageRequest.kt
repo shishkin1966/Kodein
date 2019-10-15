@@ -3,9 +3,9 @@ package shishkin.sl.kodeinpsb.sl.request
 import shishkin.sl.kodeinpsb.sl.data.ExtError
 import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.message.ResultMessage
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
-import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.MessengerUnion
 import java.util.*
 
 
@@ -48,7 +48,9 @@ abstract class AbsResultMessageRequest() : AbsRequest(),
                 )
             }
             val union =
-                ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+                    MessengerUnion.NAME
+                )
             union?.addNotMandatoryMessage(
                 ResultMessage(
                     getOwner(),

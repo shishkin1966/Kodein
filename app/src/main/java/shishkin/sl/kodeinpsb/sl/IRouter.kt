@@ -2,7 +2,7 @@ package shishkin.sl.kodeinpsb.sl
 
 import androidx.fragment.app.Fragment
 
-interface IRouter : ISpecialistSubscriber {
+interface IRouter : IProviderSubscriber {
     /**
      * Переключиться на фрагмент
      *

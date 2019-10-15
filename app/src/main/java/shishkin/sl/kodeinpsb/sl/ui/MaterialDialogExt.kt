@@ -9,9 +9,9 @@ import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
 import shishkin.sl.kodeinpsb.sl.message.DialogResultMessage
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
-import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.MessengerUnion
 import java.util.*
 
 
@@ -101,7 +101,7 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, POSITIVE)
                     if (this.listener.isNotEmpty()) {
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                        ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
                             MessengerUnion.NAME
                         )?.addNotMandatoryMessage(
                             DialogResultMessage(
@@ -121,7 +121,7 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEGATIVE)
                     if (this.listener.isNotEmpty()) {
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                        ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
                             MessengerUnion.NAME
                         )?.addNotMandatoryMessage(
                             DialogResultMessage(
@@ -141,7 +141,7 @@ class MaterialDialogExt {
                     bundle.putInt(ID, this.id)
                     bundle.putString(BUTTON, NEUTRAL)
                     if (this.listener.isNotEmpty()) {
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                        ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
                             MessengerUnion.NAME
                         )?.addNotMandatoryMessage(
                             DialogResultMessage(
@@ -197,7 +197,7 @@ class MaterialDialogExt {
                     bundle.putStringArrayList("list", list)
                     if (this.listener.isNotEmpty()) {
                         val union =
-                            ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                            ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
                                 MessengerUnion.NAME
                             )
                         union?.addNotMandatoryMessage(
@@ -234,7 +234,7 @@ class MaterialDialogExt {
                     }
                     bundle.putStringArrayList("list", list)
                     if (this.listener.isNotEmpty()) {
-                        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(
+                        ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
                             MessengerUnion.NAME
                         )?.addNotMandatoryMessage(
                             DialogResultMessage(
@@ -252,7 +252,9 @@ class MaterialDialogExt {
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, NEGATIVE)
                 if (this.listener.isNotEmpty()) {
-                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                    ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+                        MessengerUnion.NAME
+                    )
                         ?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
@@ -307,7 +309,9 @@ class MaterialDialogExt {
                 bundle.putString(BUTTON, POSITIVE)
                 bundle.putString("object", dialog.inputEditText?.text.toString())
                 if (this.listener.isNotEmpty()) {
-                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                    ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+                        MessengerUnion.NAME
+                    )
                         ?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,
@@ -323,7 +327,9 @@ class MaterialDialogExt {
                 bundle.putInt(ID, this.id)
                 bundle.putString(BUTTON, NEGATIVE)
                 if (this.listener.isNotEmpty()) {
-                    ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+                    ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+                        MessengerUnion.NAME
+                    )
                         ?.addNotMandatoryMessage(
                             DialogResultMessage(
                                 this.listener,

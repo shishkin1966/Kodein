@@ -1,6 +1,6 @@
 package shishkin.sl.kodeinpsb.common.recyclerview
 
-interface IRecyclerViewAdapter<E>  {
+interface IRecyclerViewAdapter<E> {
     fun getItemCount(): Int
 
     fun setItems(items: List<E>)

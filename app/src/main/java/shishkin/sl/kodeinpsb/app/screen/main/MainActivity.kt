@@ -16,8 +16,8 @@ import shishkin.sl.kodeinpsb.common.SlidingMenu
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.ActivityActionHandler
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IErrorSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ErrorProvider
+import shishkin.sl.kodeinpsb.sl.provider.IErrorProvider
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentActivity
 import shishkin.sl.kodeinpsb.sl.ui.BackStack
 
@@ -120,7 +120,9 @@ class MainActivity : AbsContentActivity() {
             for (permission in permissions) {
                 if (permission == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
                     val union =
-                        ServiceLocatorSingleton.instance.get<IErrorSpecialist>(ErrorSpecialist.NAME)
+                        ServiceLocatorSingleton.instance.get<IErrorProvider>(
+                            ErrorProvider.NAME
+                        )
                     union?.checkLog(applicationContext)
                 }
             }

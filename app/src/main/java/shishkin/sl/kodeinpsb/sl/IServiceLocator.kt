@@ -5,61 +5,61 @@ package shishkin.sl.kodeinpsb.sl
  */
 interface IServiceLocator : INamed {
     /**
-     * Проверить существование специалиста
+     * Проверить существование провайдера
      *
-     * @param name имя специалиста
-     * @return true - специалист существует
+     * @param name имя провайдера
+     * @return true - провайдер существует
      */
     fun exists(name: String): Boolean
 
     /**
-     * Получить специалиста
+     * Получить провайдера
      *
-     * @param <C>  тип специалиста
-     * @param name имя специалиста
-     * @return специалист
+     * @param <C>  тип провайдера
+     * @param name имя провайдера
+     * @return провайдер
     </ */
-    fun <C : ISpecialist> get(name: String): C?
+    fun <C : IProvider> get(name: String): C?
 
     /**
-     * Зарегистрировать специалиста
+     * Зарегистрировать провайдера
      *
-     * @param specialist специалист
+     * @param provider провайдер
      * @return флаг - операция завершена успешно
      */
-    fun registerSpecialist(specialist: ISpecialist): Boolean
+    fun registerProvider(provider: IProvider): Boolean
 
     /**
-     * Зарегистрировать специалиста
+     * Зарегистрировать провайдера
      *
-     * @param specialist имя специалиста
+     * @param name имя провайдера
      * @return флаг - операция завершена успешно
      */
-    fun registerSpecialist(name: String): Boolean
+    fun registerProvider(name: String): Boolean
 
     /**
-     * Отменить регистрацию специалиста
+     * Отменить регистрацию провайдера
      *
-     * @param name имя специалиста
+     * @param name имя провайдера
      * @return флаг - операция завершена успешно
      */
-    fun unregisterSpecialist(name: String): Boolean
+    fun unregisterProvider(name: String): Boolean
 
     /**
-     * Зарегистрировать подписчика специалиста
+     * Зарегистрировать подписчика провайдера
      *
-     * @param subscriber подписчик специалиста
+     * @param subscriber подписчик провайдера
      * @return флаг - операция завершена успешно
      */
-    fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean
+    fun registerSubscriber(subscriber: IProviderSubscriber): Boolean
 
     /**
-     * Отменить регистрацию подписчика специалиста
+     * Отменить регистрацию подписчика провайдера
      *
-     * @param subscriber подписчик специалиста
+     * @param subscriber подписчик провайдера
      * @return флаг - операция завершена успешно
      */
-    fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean
+    fun unregisterSubscriber(subscriber: IProviderSubscriber): Boolean
 
     /**
      * Установить подписчика текущим
@@ -67,7 +67,7 @@ interface IServiceLocator : INamed {
      * @param subscriber подписчик
      * @return флаг - операция завершена успешно
      */
-    fun setCurrentSubscriber(subscriber: ISpecialistSubscriber): Boolean
+    fun setCurrentSubscriber(subscriber: IProviderSubscriber): Boolean
 
     /**
      * Остановитить работу service locator
@@ -80,17 +80,17 @@ interface IServiceLocator : INamed {
     fun start()
 
     /**
-     * Получить список специалистов
+     * Получить список провайдеров
      *
-     * @return список специалистов
+     * @return список провайдеров
      */
-    fun getSpecialists(): List<ISpecialist>
+    fun getProviders(): List<IProvider>
 
     /**
-     * Получить фабрику специалистов
+     * Получить фабрику провайдеров
      *
-     * @return фабрика специалистов
+     * @return фабрика провайдеров
      */
-    fun getSpecialistFactory(): ISpecialistFactory
+    fun getProviderFactory(): IProviderFactory
 
 }

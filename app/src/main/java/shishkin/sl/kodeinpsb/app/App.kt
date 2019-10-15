@@ -1,23 +1,18 @@
 package shishkin.sl.kodeinpsb.app
 
 import android.widget.Toast
-import shishkin.sl.kodeinpsb.app.provider.DbProvider
-import shishkin.sl.kodeinpsb.app.specialist.ILocationUnion
-import shishkin.sl.kodeinpsb.app.specialist.IUseCasesSpecialist
-import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
-import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
-import shishkin.sl.kodeinpsb.app.specialist.notification.INotificationSpecialist
-import shishkin.sl.kodeinpsb.app.specialist.notification.NotificationSpecialist
+import shishkin.sl.kodeinpsb.app.provider.*
+import shishkin.sl.kodeinpsb.app.provider.notification.INotificationProvider
+import shishkin.sl.kodeinpsb.app.provider.notification.NotificationProvider
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
+import shishkin.sl.kodeinpsb.sl.IProvider
+import shishkin.sl.kodeinpsb.sl.IProviderSubscriber
 import shishkin.sl.kodeinpsb.sl.IRouter
-import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
 import shishkin.sl.kodeinpsb.sl.message.IMessage
 import shishkin.sl.kodeinpsb.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.presenter.IModelPresenter
-import shishkin.sl.kodeinpsb.sl.provider.IDbProvider
+import shishkin.sl.kodeinpsb.sl.provider.*
 import shishkin.sl.kodeinpsb.sl.request.IRequest
-import shishkin.sl.kodeinpsb.sl.specialist.*
 import shishkin.sl.kodeinpsb.sl.task.CommonExecutor
 import shishkin.sl.kodeinpsb.sl.ui.IActivity
 
@@ -26,7 +21,7 @@ object ApplicationSingleton {
     val instance = App()
 }
 
-class App : ApplicationSpecialist() {
+class App : ApplicationProvider() {
 
     private val screenObservableSubscriber = ScreenObservableSubscriber()
 
@@ -37,7 +32,7 @@ class App : ApplicationSpecialist() {
 
         serviceLocator = ServiceLocatorSingleton.instance
 
-        ServiceLocatorSingleton.instance.registerSpecialistSubscriber(screenObservableSubscriber)
+        ServiceLocatorSingleton.instance.registerSubscriber(screenObservableSubscriber)
     }
 
     fun onScreenOn() {
@@ -52,17 +47,17 @@ class App : ApplicationSpecialist() {
     fun onScreenOff() {
     }
 
-    fun <C : ISpecialist> get(name: String): C? {
+    fun <C : IProvider> get(name: String): C? {
         return serviceLocator?.get(name)
     }
 
     fun onError(source: String, message: String?, isDisplay: Boolean) {
-        val union = serviceLocator?.get<IErrorSpecialist>(ErrorSpecialist.NAME)
+        val union = serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
         union?.onError(source, message, isDisplay)
     }
 
     fun onError(source: String, e: Exception) {
-        val union = serviceLocator?.get<IErrorSpecialist>(ErrorSpecialist.NAME)
+        val union = serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
         union?.onError(source, e)
     }
 
@@ -92,43 +87,39 @@ class App : ApplicationSpecialist() {
         return get(LocationUnion.NAME)!!
     }
 
-    fun getCache(): ICacheSpecialist {
-        return get(CacheSpecialist.NAME)!!
+    fun getCache(): ICacheProvider {
+        return get(CacheProvider.NAME)!!
     }
 
-    fun getExecutor() : CommonExecutor {
-        return get(CommonExecutor.NAME)!!
+    fun cancelRequests(name: String) {
+        get<CommonExecutor>(CommonExecutor.NAME)!!.cancelRequests(name)
     }
 
     fun execute(request: IRequest) {
         get<CommonExecutor>(CommonExecutor.NAME)!!.execute(request)
     }
 
-    fun getUseCase(): IUseCasesSpecialist {
-        return get(UseCasesSpecialist.NAME)!!
+    fun getUseCase(): IUseCasesProvider {
+        return get(UseCasesProvider.NAME)!!
     }
 
-    fun getNotification(): INotificationSpecialist {
-        return get(NotificationSpecialist.NAME)!!
+    fun getNotification(): INotificationProvider {
+        return get(NotificationProvider.NAME)!!
     }
 
     fun getRouter(): IRouter {
         return getActivityUnion().getActivity<IActivity>() as IRouter
     }
 
-    fun addMessage(message: IMessage) {
-        get<IMessengerUnion>(MessengerUnion.NAME)!!.addMessage(message)
-    }
-
     fun addNotMandatoryMessage(message: IMessage) {
         get<IMessengerUnion>(MessengerUnion.NAME)!!.addNotMandatoryMessage(message)
     }
 
-    fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
-        return serviceLocator!!.registerSpecialistSubscriber(subscriber)
+    fun registerSubscriber(subscriber: IProviderSubscriber): Boolean {
+        return serviceLocator!!.registerSubscriber(subscriber)
     }
 
-    fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
-        return serviceLocator!!.unregisterSpecialistSubscriber(subscriber)
+    fun unregisterSubscriber(subscriber: IProviderSubscriber): Boolean {
+        return serviceLocator!!.unregisterSubscriber(subscriber)
     }
 }

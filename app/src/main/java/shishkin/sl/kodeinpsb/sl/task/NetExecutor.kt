@@ -4,12 +4,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.telephony.TelephonyManager
 import shishkin.sl.kodeinpsb.common.Connectivity
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.request.IRequest
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.state.State
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.PriorityBlockingQueue
@@ -60,15 +60,15 @@ class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     override fun setState(state: Int) {
     }
 
-    override fun onStopSpecialist(specialist: ISpecialist) {
+    override fun onStopProvider(provider: IProvider) {
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         return listOf(ObservableUnion.NAME)
     }
 
     private fun setThreadCount() {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         setThreadCount(Connectivity.getActiveNetworkInfo(context))
     }
 

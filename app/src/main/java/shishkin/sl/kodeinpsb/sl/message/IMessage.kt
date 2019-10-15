@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.message
 
 import shishkin.sl.kodeinpsb.sl.action.IAction
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerSubscriber
 
 interface IMessage : IAction {
     /**

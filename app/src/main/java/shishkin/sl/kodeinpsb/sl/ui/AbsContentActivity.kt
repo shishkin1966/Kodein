@@ -7,11 +7,12 @@ import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.IRouter
 import shishkin.sl.kodeinpsb.sl.action.HideKeyboardAction
 import shishkin.sl.kodeinpsb.sl.observe.NetObservable
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.provider.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.ObservableUnion
 
 
-abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscriber {
+abstract class AbsContentActivity : AbsActivity(), IRouter,
+    IObservableSubscriber {
     private var snackbar: Snackbar? = null
 
     override fun onPause() {
@@ -109,9 +110,9 @@ abstract class AbsContentActivity : AbsActivity(), IRouter, IObservableSubscribe
         fragment?.onPermissionDenied(permission)
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         val list = ArrayList<String>()
-        list.addAll(super.getSpecialistSubscription())
+        list.addAll(super.getProviderSubscription())
         list.add(ObservableUnion.NAME)
         return list
     }

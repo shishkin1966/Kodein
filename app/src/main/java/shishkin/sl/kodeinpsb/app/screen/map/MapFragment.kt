@@ -57,12 +57,10 @@ class MapFragment : AbsContentFragment() {
         }
 
         if (action is PermissionAction) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                ApplicationUtils.grantPermisions(
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    this
-                )
-            })
+            ApplicationUtils.grantPermisions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                this
+            )
             return true
         }
 
@@ -109,9 +107,7 @@ class MapFragment : AbsContentFragment() {
 
     private fun refreshViews(data: MapData?) {
         if (data != null) {
-            ApplicationUtils.runOnUiThread(Runnable {
-                (findView<TextView>(R.id.name) as TextView).text = data.address
-            })
+            (findView<TextView>(R.id.name) as TextView).text = data.address
         }
     }
 

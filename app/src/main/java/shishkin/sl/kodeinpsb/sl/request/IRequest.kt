@@ -72,7 +72,7 @@ interface IRequest : Runnable, INamed, Comparable<IRequest> {
      *
      * @return версия запроса
      */
-    fun getVersion() : String
+    fun getVersion(): String
 
     /**
      * Установить версию запроса
@@ -80,6 +80,6 @@ interface IRequest : Runnable, INamed, Comparable<IRequest> {
      * @param version версия запроса
      * @return запрос
      */
-    fun setVersion(version: String) : IRequest
+    fun setVersion(version: String): IRequest
 
 }
