@@ -96,8 +96,8 @@ class App : ApplicationSpecialist() {
         return get(CacheSpecialist.NAME)!!
     }
 
-    fun getExecutor() : CommonExecutor {
-        return get(CommonExecutor.NAME)!!
+    fun cancelRequests(name: String) {
+        get<CommonExecutor>(CommonExecutor.NAME)!!.cancelRequests(name)
     }
 
     fun execute(request: IRequest) {
@@ -116,19 +116,15 @@ class App : ApplicationSpecialist() {
         return getActivityUnion().getActivity<IActivity>() as IRouter
     }
 
-    fun addMessage(message: IMessage) {
-        get<IMessengerUnion>(MessengerUnion.NAME)!!.addMessage(message)
-    }
-
     fun addNotMandatoryMessage(message: IMessage) {
         get<IMessengerUnion>(MessengerUnion.NAME)!!.addNotMandatoryMessage(message)
     }
 
-    fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
+    fun registerSubscriber(subscriber: ISpecialistSubscriber): Boolean {
         return serviceLocator!!.registerSpecialistSubscriber(subscriber)
     }
 
-    fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
+    fun unregisterSubscriber(subscriber: ISpecialistSubscriber): Boolean {
         return serviceLocator!!.unregisterSpecialistSubscriber(subscriber)
     }
 }

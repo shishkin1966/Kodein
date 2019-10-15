@@ -126,17 +126,17 @@ abstract class AbsPaginator(private var listener: String, pageSize: Int = PAGE_S
     }
 
     override fun onReadyView() {
-        ApplicationSingleton.instance.registerSpecialistSubscriber(this)
+        ApplicationSingleton.instance.registerSubscriber(this)
         hasData()
     }
 
     override fun onDestroyView() {
         cancel()
-        ApplicationSingleton.instance.unregisterSpecialistSubscriber(this)
+        ApplicationSingleton.instance.unregisterSubscriber(this)
     }
 
     private fun cancel() {
-        ApplicationSingleton.instance.getExecutor().cancelRequests(getName())
+        ApplicationSingleton.instance.cancelRequests(getName())
     }
 
 }
