@@ -4,7 +4,7 @@ import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 
 
-abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmallUnion<T> {
+abstract class AbsSmallUnion<T : IProviderSubscriber> : AbsProvider(), ISmallUnion<T> {
     private val secretary = createSecretary()
 
     override fun createSecretary(): ISecretary<T> {
@@ -91,7 +91,7 @@ abstract class AbsSmallUnion<T : ISpecialistSubscriber> : AbsSpecialist(), ISmal
     override fun stop() {
         for (subscriber in getSubscribers()) {
             unregister(subscriber)
-            subscriber.onStopSpecialist(this)
+            subscriber.onStopProvider(this)
         }
         secretary.clear()
     }

@@ -19,8 +19,8 @@ import shishkin.sl.kodeinpsb.sl.data.ExtResult
 import shishkin.sl.kodeinpsb.sl.observe.IObjectObservableSubscriber
 import shishkin.sl.kodeinpsb.sl.observe.ObjectObservable
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
+import shishkin.sl.kodeinpsb.sl.provider.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.request.IResponseListener
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
 
 
 class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IResponseListener,
@@ -88,8 +88,8 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
         }
     }
 
-    override fun getSpecialistSubscription(): List<String> {
-        val list = ArrayList<String>(super.getSpecialistSubscription())
+    override fun getProviderSubscription(): List<String> {
+        val list = ArrayList<String>(super.getProviderSubscription())
         list.add(ObservableUnion.NAME)
         return list
     }

@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Converter
 
 
-interface INetProvider<T> : IProvider {
+interface INetProvider<T> : IRequestProvider {
     fun getOkHttpClient(): OkHttpClient
 
     fun getApiClass(): Class<T>

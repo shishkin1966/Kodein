@@ -1,12 +1,12 @@
 package shishkin.sl.kodeinpsb.sl.presenter
 
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.message.IMessage
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerUnion
-import shishkin.sl.kodeinpsb.sl.specialist.MessengerUnion
-import shishkin.sl.kodeinpsb.sl.specialist.PresenterUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.MessengerUnion
+import shishkin.sl.kodeinpsb.sl.provider.PresenterUnion
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObserver
 import java.util.*
@@ -27,11 +27,13 @@ abstract class AbsPresenter() : IPresenter {
     override fun onCreateView() {}
 
     override fun onReadyView() {
-        ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
+        ApplicationProvider.serviceLocator?.registerSubscriber(this)
 
         doActions()
 
-        ApplicationSpecialist.serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
+        ApplicationProvider.serviceLocator?.get<IMessengerUnion>(
+            MessengerUnion.NAME
+        )
             ?.readMessages(this)
 
         onStart()
@@ -41,18 +43,18 @@ abstract class AbsPresenter() : IPresenter {
     }
 
     override fun onDestroyView() {
-        ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
+        ApplicationProvider.serviceLocator?.unregisterSubscriber(this)
     }
 
     override fun isValid(): Boolean {
         return lifecycle.getState() != State.STATE_DESTROY
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         return listOf(PresenterUnion.NAME, MessengerUnion.NAME)
     }
 
-    override fun onStopSpecialist(specialist: ISpecialist) {
+    override fun onStopProvider(provider: IProvider) {
     }
 
     override fun read(message: IMessage) {}

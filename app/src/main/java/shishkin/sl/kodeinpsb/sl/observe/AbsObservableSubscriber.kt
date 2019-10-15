@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
-import shishkin.sl.kodeinpsb.sl.ISpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
-import shishkin.sl.kodeinpsb.sl.specialist.ObservableUnion
+import shishkin.sl.kodeinpsb.sl.IProvider
+import shishkin.sl.kodeinpsb.sl.provider.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.ObservableUnion
 import shishkin.sl.kodeinpsb.sl.state.State
 
 abstract class AbsObservableSubscriber : IObservableSubscriber {
@@ -13,7 +13,7 @@ abstract class AbsObservableSubscriber : IObservableSubscriber {
     override fun setState(state: Int) {
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         return listOf(ObservableUnion.NAME)
     }
 
@@ -21,6 +21,6 @@ abstract class AbsObservableSubscriber : IObservableSubscriber {
         return true
     }
 
-    override fun onStopSpecialist(specialist: ISpecialist) {
+    override fun onStopProvider(provider: IProvider) {
     }
 }

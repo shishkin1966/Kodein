@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -58,7 +58,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
 
         doActions()
 
-        ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
+        ApplicationProvider.serviceLocator?.registerSubscriber(this)
 
         stateObservable.setState(State.STATE_READY)
     }
@@ -69,16 +69,16 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         stateObservable.setState(State.STATE_DESTROY)
         stateObservable.clear()
 
-        ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
+        ApplicationProvider.serviceLocator?.unregisterSubscriber(this)
     }
 
     override fun onResume() {
         super.onResume()
 
-        ApplicationSpecialist.serviceLocator?.setCurrentSubscriber(this)
+        ApplicationProvider.serviceLocator?.setCurrentSubscriber(this)
     }
 
-    override fun getSpecialistSubscription(): List<String> {
+    override fun getProviderSubscription(): List<String> {
         return listOf(ActivityUnion.NAME)
     }
 
@@ -145,19 +145,18 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
     }
 
     override fun addAction(action: IAction) {
-        when (getState()) {
-            State.STATE_DESTROY -> return
+        ApplicationUtils.runOnUiThread(Runnable {
+            when (getState()) {
+                State.STATE_READY -> {
+                    actions.add(action)
+                    doActions()
+                }
 
-            State.STATE_CREATE, State.STATE_NOT_READY -> {
-                actions.add(action)
-                return
+                State.STATE_CREATE, State.STATE_NOT_READY -> {
+                    actions.add(action)
+                }
             }
-
-            else -> {
-                actions.add(action)
-                doActions()
-            }
-        }
+        })
     }
 
     private fun doActions() {
@@ -174,7 +173,7 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         }
     }
 
-    override fun onStopSpecialist(specialist: ISpecialist) {
+    override fun onStopProvider(provider: IProvider) {
     }
 
     override fun getName(): String {

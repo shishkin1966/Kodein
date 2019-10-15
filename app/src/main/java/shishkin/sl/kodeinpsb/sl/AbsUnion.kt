@@ -3,7 +3,7 @@ package shishkin.sl.kodeinpsb.sl
 import java.lang.ref.WeakReference
 
 
-abstract class AbsUnion<T : ISpecialistSubscriber> : AbsSmallUnion<T>(), IUnion<T> {
+abstract class AbsUnion<T : IProviderSubscriber> : AbsSmallUnion<T>(), IUnion<T> {
     private var currentSubscriber: WeakReference<T>? = null
 
     override fun register(subscriber: T): Boolean {

@@ -56,46 +56,38 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
     }
 
     private fun showProgressBar() {
-        ApplicationUtils.runOnUiThread(Runnable {
-            val view = fragment.view?.findViewById<View>(R.id.progressBar)
-            view?.visibility = View.VISIBLE
-        })
+        val view = fragment.view?.findViewById<View>(R.id.progressBar)
+        view?.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        ApplicationUtils.runOnUiThread(Runnable {
-            val view = fragment.view?.findViewById<View>(R.id.progressBar)
-            view?.visibility = View.INVISIBLE
-        })
+        val view = fragment.view?.findViewById<View>(R.id.progressBar)
+        view?.visibility = View.INVISIBLE
     }
 
     private fun showKeyboard(action: ShowKeyboardAction) {
         val activity = fragment.activity ?: return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            KeyboardRunnable(activity, action.getView()).run()
-        })
+        KeyboardRunnable(activity, action.getView()).run()
     }
 
     private fun hideKeyboard() {
         val activity = fragment.activity ?: return
         if (activity.isFinishing) return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            val imm = ApplicationUtils.getSystemService<InputMethodManager>(
-                activity,
-                Activity.INPUT_METHOD_SERVICE
-            )
-            var view = activity.currentFocus
-            if (view == null) {
-                view = getRootView()
-            }
-            if (view != null) {
-                activity.window
-                    .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
-            }
-        })
+        val imm = ApplicationUtils.getSystemService<InputMethodManager>(
+            activity,
+            Activity.INPUT_METHOD_SERVICE
+        )
+        var view = activity.currentFocus
+        if (view == null) {
+            view = getRootView()
+        }
+        if (view != null) {
+            activity.window
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     private fun getRootView(): View? {
@@ -107,18 +99,16 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         val activity = fragment.activity ?: return
         if (activity.isFinishing) return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            MaterialDialogExt(
-                activity,
-                action.getListener(),
-                action.getId(),
-                action.getTitle(),
-                action.getMessage(),
-                action.getButtonPositive(),
-                action.getButtonNegative(),
-                action.isCancelable()
-            ).show()
-        })
+        MaterialDialogExt(
+            activity,
+            action.getListener(),
+            action.getId(),
+            action.getTitle(),
+            action.getMessage(),
+            action.getButtonPositive(),
+            action.getButtonNegative(),
+            action.isCancelable()
+        ).show()
     }
 
     private fun showListDialog(action: ShowListDialogAction) {
@@ -127,20 +117,18 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
 
         if (action.getList() == null) return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            MaterialDialogExt(
-                activity,
-                action.getListener(),
-                action.getId(),
-                action.getTitle(),
-                action.getMessage(),
-                action.getList()!!,
-                action.getSelected(),
-                action.isMultiSelect(),
-                action.getButtonPositive(),
-                action.getButtonNegative(),
-                action.isCancelable()
-            ).show()
-        })
+        MaterialDialogExt(
+            activity,
+            action.getListener(),
+            action.getId(),
+            action.getTitle(),
+            action.getMessage(),
+            action.getList()!!,
+            action.getSelected(),
+            action.isMultiSelect(),
+            action.getButtonPositive(),
+            action.getButtonNegative(),
+            action.isCancelable()
+        ).show()
     }
 }

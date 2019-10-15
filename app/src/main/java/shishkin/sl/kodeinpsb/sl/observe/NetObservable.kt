@@ -10,8 +10,8 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.common.Connectivity
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.IObservableSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.IObservableSubscriber
 
 
 class NetObservable : AbsObservable() {
@@ -23,7 +23,7 @@ class NetObservable : AbsObservable() {
     private var callback: ConnectivityManager.NetworkCallback? = null
 
     init {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         if (ApplicationUtils.hasLollipop()) {
             val builder = NetworkRequest.Builder()
             builder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -76,7 +76,7 @@ class NetObservable : AbsObservable() {
     override fun addObserver(subscriber: IObservableSubscriber) {
         super.addObserver(subscriber)
 
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         if (Connectivity.isNetworkConnected(context)) {
             onChange(true)
         } else {
@@ -88,12 +88,12 @@ class NetObservable : AbsObservable() {
         super.stop()
 
         if (broadcastReceiver != null) {
-            val context = ApplicationSpecialist.appContext
+            val context = ApplicationProvider.appContext
             context.unregisterReceiver(broadcastReceiver)
         }
 
         if (callback != null) {
-            val context = ApplicationSpecialist.appContext
+            val context = ApplicationProvider.appContext
             val connectivityManager =
                 ApplicationUtils.getSystemService<ConnectivityManager>(
                     context,

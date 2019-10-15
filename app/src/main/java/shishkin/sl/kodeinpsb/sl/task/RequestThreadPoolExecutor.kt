@@ -1,9 +1,9 @@
 package shishkin.sl.kodeinpsb.sl.task
 
 import shishkin.sl.kodeinpsb.sl.RefSecretary
+import shishkin.sl.kodeinpsb.sl.provider.ErrorSingleton
 import shishkin.sl.kodeinpsb.sl.request.IRequest
 import shishkin.sl.kodeinpsb.sl.request.IResultMessageRequest
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
@@ -52,7 +52,7 @@ class RequestThreadPoolExecutor(
         super.afterExecute(r, t)
 
         if (t != null) {
-            ErrorSpecialistSingleton.instance.onError(javaClass.name, t)
+            ErrorSingleton.instance.onError(javaClass.name, t)
         }
     }
 

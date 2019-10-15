@@ -7,15 +7,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
-import shishkin.sl.kodeinpsb.app.specialist.ILocationSubscriber
-import shishkin.sl.kodeinpsb.app.specialist.LocationUnion
+import shishkin.sl.kodeinpsb.app.provider.ILocationSubscriber
+import shishkin.sl.kodeinpsb.app.provider.LocationUnion
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
 import shishkin.sl.kodeinpsb.sl.action.Actions
 import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.PermissionAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsModelPresenter
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
 class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallback,
@@ -94,7 +94,7 @@ class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallba
 
     override fun onStart() {
         if (!ApplicationUtils.checkPermission(
-                ApplicationSpecialist.appContext,
+                ApplicationProvider.appContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         ) {
@@ -102,8 +102,8 @@ class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallba
         }
     }
 
-    override fun getSpecialistSubscription(): List<String> {
-        val list = ArrayList<String>(super.getSpecialistSubscription())
+    override fun getProviderSubscription(): List<String> {
+        val list = ArrayList<String>(super.getProviderSubscription())
         list.add(LocationUnion.NAME)
         return list
     }

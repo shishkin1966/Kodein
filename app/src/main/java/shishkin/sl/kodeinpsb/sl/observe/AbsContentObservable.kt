@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.observe
 
 import android.net.Uri
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
 abstract class AbsContentObservable() : AbsObservable() {
@@ -18,14 +18,14 @@ abstract class AbsContentObservable() : AbsObservable() {
     }
 
     override fun register() {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         for (uri in uris) {
             context.contentResolver.registerContentObserver(uri, true, observer)
         }
     }
 
     override fun unregister() {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         context.contentResolver.unregisterContentObserver(observer)
     }
 

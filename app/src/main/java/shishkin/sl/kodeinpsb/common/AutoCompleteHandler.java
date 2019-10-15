@@ -7,7 +7,6 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 
-
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 

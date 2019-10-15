@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.app.provider
 
 import microservices.shishkin.example.net.NetApi
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.provider.AbsNetProvider
 
 
@@ -23,7 +23,7 @@ class NetProvider : AbsNetProvider<NetApi>() {
         return NAME
     }
 
-    override fun compareTo(other: ISpecialist): Int {
+    override fun compareTo(other: IProvider): Int {
         return if (other is NetProvider) 0 else 1
     }
 

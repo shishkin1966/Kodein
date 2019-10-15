@@ -5,7 +5,7 @@ import shishkin.sl.kodeinpsb.app.data.Account
 import shishkin.sl.kodeinpsb.app.db.Db
 import shishkin.sl.kodeinpsb.app.request.*
 import shishkin.sl.kodeinpsb.common.getDir
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
+import shishkin.sl.kodeinpsb.sl.provider.ErrorSingleton
 
 class Provider {
     companion object {
@@ -38,14 +38,14 @@ class Provider {
         @JvmStatic
         fun checkDbCopy(): Boolean {
             return ApplicationSingleton.instance.getDbProvider()
-                .checkCopy(Db.NAME, ErrorSpecialistSingleton.instance.getPath().getDir())
+                .checkCopy(Db.NAME, ErrorSingleton.instance.getPath().getDir())
         }
 
         @JvmStatic
         fun backupDb() {
             return ApplicationSingleton.instance.getDbProvider().backup(
                 Db.NAME,
-                ErrorSpecialistSingleton.instance.getPath().getDir(),
+                ErrorSingleton.instance.getPath().getDir(),
                 Db::class.java
             )
         }
@@ -54,7 +54,7 @@ class Provider {
         fun restoreDb() {
             return ApplicationSingleton.instance.getDbProvider().restore(
                 Db.NAME,
-                ErrorSpecialistSingleton.instance.getPath().getDir(),
+                ErrorSingleton.instance.getPath().getDir(),
                 Db::class.java
             )
         }

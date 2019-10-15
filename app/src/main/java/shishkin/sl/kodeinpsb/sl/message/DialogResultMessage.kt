@@ -1,7 +1,7 @@
 package shishkin.sl.kodeinpsb.sl.message
 
 import shishkin.sl.kodeinpsb.sl.action.DialogResultAction
-import shishkin.sl.kodeinpsb.sl.specialist.IMessengerSubscriber
+import shishkin.sl.kodeinpsb.sl.provider.IMessengerSubscriber
 
 
 class DialogResultMessage : AbsMessage {

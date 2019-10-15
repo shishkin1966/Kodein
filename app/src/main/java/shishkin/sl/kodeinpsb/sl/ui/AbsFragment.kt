@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.ISpecialistSubscriber
+import shishkin.sl.kodeinpsb.sl.IProviderSubscriber
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import shishkin.sl.kodeinpsb.sl.state.IStateable
 import shishkin.sl.kodeinpsb.sl.state.State
 import shishkin.sl.kodeinpsb.sl.state.StateObservable
@@ -57,8 +57,8 @@ abstract class AbsFragment : Fragment(), IFragment {
 
         doActions()
 
-        if (this is ISpecialistSubscriber) {
-            ApplicationSpecialist.serviceLocator?.registerSpecialistSubscriber(this)
+        if (this is IProviderSubscriber) {
+            ApplicationProvider.serviceLocator?.registerSubscriber(this)
         }
 
         stateObservable.setState(State.STATE_READY)
@@ -70,8 +70,8 @@ abstract class AbsFragment : Fragment(), IFragment {
         stateObservable.setState(State.STATE_DESTROY)
         stateObservable.clear()
 
-        if (this is ISpecialistSubscriber) {
-            ApplicationSpecialist.serviceLocator?.unregisterSpecialistSubscriber(this)
+        if (this is IProviderSubscriber) {
+            ApplicationProvider.serviceLocator?.unregisterSubscriber(this)
         }
     }
 
@@ -127,19 +127,18 @@ abstract class AbsFragment : Fragment(), IFragment {
     override fun onPermissionDenied(permission: String) {}
 
     override fun addAction(action: IAction) {
-        when (getState()) {
-            State.STATE_DESTROY -> return
+        ApplicationUtils.runOnUiThread(Runnable {
+            when (getState()) {
+                State.STATE_READY -> {
+                    actions.add(action)
+                    doActions()
+                }
 
-            State.STATE_CREATE, State.STATE_NOT_READY -> {
-                actions.add(action)
-                return
+                State.STATE_CREATE, State.STATE_NOT_READY -> {
+                    actions.add(action)
+                }
             }
-
-            else -> {
-                actions.add(action)
-                doActions()
-            }
-        }
+        })
     }
 
     private fun doActions() {
@@ -151,8 +150,8 @@ abstract class AbsFragment : Fragment(), IFragment {
             onAction(actions[i])
             deleted.add(actions[i])
         }
-        for (event in deleted) {
-            actions.remove(event)
+        for (action in deleted) {
+            actions.remove(action)
         }
     }
 

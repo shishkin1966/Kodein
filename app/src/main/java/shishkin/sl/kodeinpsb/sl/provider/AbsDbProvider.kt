@@ -9,10 +9,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.common.io.Files
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.common.ApplicationUtils
-import shishkin.sl.kodeinpsb.sl.ISpecialist
+import shishkin.sl.kodeinpsb.sl.IProvider
 import shishkin.sl.kodeinpsb.sl.Secretary
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
 import java.io.File
 
 
@@ -42,7 +40,7 @@ abstract class AbsDbProvider : IDbProvider {
         databaseName: String,
         migration: Migration?
     ): Boolean {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
 
         try {
             val db: T
@@ -60,7 +58,7 @@ abstract class AbsDbProvider : IDbProvider {
             databases.put(databaseName, db)
 
         } catch (e: Exception) {
-            ErrorSpecialistSingleton.instance.onError(getName(), e)
+            ErrorSingleton.instance.onError(getName(), e)
         }
         return isConnected(databaseName)
     }
@@ -79,7 +77,7 @@ abstract class AbsDbProvider : IDbProvider {
                 db?.close()
                 databases.remove(databaseName)
             } catch (e: Exception) {
-                ErrorSpecialistSingleton.instance.onError(getName(), e)
+                ErrorSingleton.instance.onError(getName(), e)
             }
         }
         return !isConnected(databaseName)
@@ -133,7 +131,7 @@ abstract class AbsDbProvider : IDbProvider {
         }
     }
 
-    override fun compareTo(other: ISpecialist): Int {
+    override fun compareTo(other: IProvider): Int {
         return if (other is IDbProvider) 0 else 1
     }
 
@@ -142,7 +140,7 @@ abstract class AbsDbProvider : IDbProvider {
         dirBackup: String,
         klass: Class<T>?
     ) {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -206,17 +204,14 @@ abstract class AbsDbProvider : IDbProvider {
                 connect(klass, nameDb, null)
             }
 
-            ApplicationUtils.runOnUiThread(Runnable {
-                ApplicationUtils.showToast(
-                    context,
-                    context.getString(R.string.db_backuped),
-                    Toast.LENGTH_LONG,
-                    ApplicationUtils.MESSAGE_TYPE_INFO
-                )
-
-            })
+            ApplicationUtils.showToast(
+                context,
+                context.getString(R.string.db_backuped),
+                Toast.LENGTH_LONG,
+                ApplicationUtils.MESSAGE_TYPE_INFO
+            )
         } catch (e: Exception) {
-            ErrorSpecialistSingleton.instance.onError(getName(), e)
+            ErrorSingleton.instance.onError(getName(), e)
         }
     }
 
@@ -225,7 +220,7 @@ abstract class AbsDbProvider : IDbProvider {
         dirBackup: String,
         klass: Class<T>?
     ) {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -267,24 +262,20 @@ abstract class AbsDbProvider : IDbProvider {
                     connect(klass, nameDb, null)
                 }
 
-                ApplicationUtils.runOnUiThread(
-                    Runnable
-                    {
-                        ApplicationUtils.showToast(
-                            context,
-                            context.getString(R.string.db_restored),
-                            Toast.LENGTH_LONG,
-                            ApplicationUtils.MESSAGE_TYPE_INFO
-                        )
-                    })
+                ApplicationUtils.showToast(
+                    context,
+                    context.getString(R.string.db_restored),
+                    Toast.LENGTH_LONG,
+                    ApplicationUtils.MESSAGE_TYPE_INFO
+                )
             } catch (e: Exception) {
-                ErrorSpecialistSingleton.instance.onError(getName(), e)
+                ErrorSingleton.instance.onError(getName(), e)
             }
         }
     }
 
     override fun checkCopy(databaseName: String, dirBackup: String): Boolean {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         if (!ApplicationUtils.checkPermission(
                 context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE

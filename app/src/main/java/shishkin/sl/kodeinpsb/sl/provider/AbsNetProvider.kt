@@ -6,7 +6,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import shishkin.sl.kodeinpsb.sl.request.IRequest
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
 import shishkin.sl.kodeinpsb.sl.task.NetExecutor
 import java.util.concurrent.TimeUnit
 
@@ -48,7 +47,7 @@ abstract class AbsNetProvider<T> : INetProvider<T> {
 
     override fun request(request: IRequest) {
         if (isValid()) {
-            val executor = ApplicationSpecialist.serviceLocator?.get<NetExecutor>(NetExecutor.NAME)
+            val executor = ApplicationProvider.serviceLocator?.get<NetExecutor>(NetExecutor.NAME)
             executor?.execute(request)
         }
     }

@@ -21,7 +21,7 @@ import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 
 
@@ -59,7 +59,7 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
         listView = view.findViewById(R.id.list)
 
         if (!ApplicationUtils.checkPermission(
-                ApplicationSpecialist.appContext,
+                ApplicationProvider.appContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         ) {
@@ -109,10 +109,8 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
                     return true
                 }
                 SettingPresenter.DBCopyEnabledAction -> {
-                    ApplicationUtils.runOnUiThread(Runnable {
-                        view?.findViewById<View>(R.id.db_restore)?.isEnabled =
-                            action.getData() as Boolean
-                    })
+                    view?.findViewById<View>(R.id.db_restore)?.isEnabled =
+                        action.getData() as Boolean
                     return true
                 }
             }
@@ -129,16 +127,14 @@ class SettingFragment : AbsContentFragment(), View.OnClickListener,
     }
 
     private fun refreshViews(data: SettingsData) {
-        ApplicationUtils.runOnUiThread(Runnable {
-            listView.removeAllViews()
+        listView.removeAllViews()
 
-            for (setting in data.settings) {
-                val view = getView(listView, setting)
-                if (view != null) {
-                    listView.addView(view)
-                }
+        for (setting in data.settings) {
+            val view = getView(listView, setting)
+            if (view != null) {
+                listView.addView(view)
             }
-        })
+        }
     }
 
     private fun getView(parent: ViewGroup, setting: Setting): View? {

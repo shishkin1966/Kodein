@@ -4,13 +4,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kodeinpsb.R
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
+import shishkin.sl.kodeinpsb.app.provider.UseCasesProvider
 import shishkin.sl.kodeinpsb.app.screen.accounts.AccountsFragment
-import shishkin.sl.kodeinpsb.app.specialist.UseCasesSpecialist
 import shishkin.sl.kodeinpsb.sl.action.ApplicationAction
 import shishkin.sl.kodeinpsb.sl.action.ShowSnackbarAction
 import shishkin.sl.kodeinpsb.sl.presenter.AbsPresenter
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import java.util.*
 
 
@@ -34,15 +34,17 @@ class OnBackPressedPresenter : AbsPresenter() {
         }
         if (isValid()) {
             if (!doubleBackPressedOnce) {
-                val context = ApplicationSpecialist.appContext
+                val context = ApplicationProvider.appContext
                 doubleBackPressedOnce = true
                 val union =
-                    ApplicationSpecialist.serviceLocator?.get<ActivityUnion>(ActivityUnion.NAME)
+                    ApplicationProvider.serviceLocator?.get<ActivityUnion>(
+                        ActivityUnion.NAME
+                    )
                 if (union != null) {
                     union.getCurrentSubscriber()?.addAction(
                         ShowSnackbarAction(context.getString(R.string.double_back_pressed)).setDuration(
                             Snackbar.LENGTH_SHORT
-                        ).setAction(ApplicationSpecialist.appContext.getString(R.string.exit))
+                        ).setAction(ApplicationProvider.appContext.getString(R.string.exit))
                     )
                 }
                 startTimer()
@@ -50,7 +52,7 @@ class OnBackPressedPresenter : AbsPresenter() {
             } else {
                 ApplicationSingleton.instance.getUseCase().addAction(
                     ApplicationAction(
-                        UseCasesSpecialist.OnExitAction
+                        UseCasesProvider.OnExitAction
                     )
                 )
                 return true

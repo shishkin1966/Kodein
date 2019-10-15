@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 
 
 abstract class AbsBroadcastReceiverObservable : AbsObservable() {
@@ -14,7 +14,7 @@ abstract class AbsBroadcastReceiverObservable : AbsObservable() {
     abstract fun getIntentFilter(): IntentFilter
 
     override fun register() {
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 onChange(intent)
@@ -25,7 +25,7 @@ abstract class AbsBroadcastReceiverObservable : AbsObservable() {
 
     override fun unregister() {
         if (broadcastReceiver != null) {
-            val context = ApplicationSpecialist.appContext
+            val context = ApplicationProvider.appContext
             context.unregisterReceiver(broadcastReceiver)
             broadcastReceiver = null
         }

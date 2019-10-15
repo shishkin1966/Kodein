@@ -5,7 +5,7 @@ import android.text.InputType
 import com.google.gson.annotations.SerializedName
 import shishkin.sl.kodeinpsb.app.ApplicationSingleton
 import shishkin.sl.kodeinpsb.common.PreferencesUtils
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import java.io.Serializable
 
 
@@ -20,7 +20,7 @@ class Setting : Serializable {
 
         @JvmStatic
         fun restore(name: String): Setting? {
-            val json = PreferencesUtils.getString(ApplicationSpecialist.appContext, name, null)
+            val json = PreferencesUtils.getString(ApplicationProvider.appContext, name, null)
             if (json == null) {
                 return null
             }
@@ -79,7 +79,7 @@ class Setting : Serializable {
 
     fun backup() {
         PreferencesUtils.putString(
-            ApplicationSpecialist.appContext,
+            ApplicationProvider.appContext,
             name,
             ApplicationSingleton.instance.getCache().toJson(this).toString()
         )

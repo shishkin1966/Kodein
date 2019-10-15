@@ -1,8 +1,8 @@
 package shishkin.sl.kodeinpsb.sl
 
-import shishkin.sl.kodeinpsb.sl.specialist.ActivityUnion
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
-import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
+import shishkin.sl.kodeinpsb.sl.provider.ActivityUnion
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
+import shishkin.sl.kodeinpsb.sl.provider.ErrorSingleton
 
 
 /**
@@ -10,14 +10,14 @@ import shishkin.sl.kodeinpsb.sl.specialist.ErrorSpecialistSingleton
  */
 @Suppress("UNCHECKED_CAST")
 abstract class AbsServiceLocator : IServiceLocator {
-    private val secretary = Secretary<ISpecialist>()
+    private val secretary = Secretary<IProvider>()
 
     companion object {
         const val NAME = "AbsServiceLocator"
     }
 
-    override fun <C : ISpecialist> get(name: String): C? {
-        if (!exists(name) && !registerSpecialist(name)) {
+    override fun <C : IProvider> get(name: String): C? {
+        if (!exists(name) && !registerProvider(name)) {
             return null
         }
 
@@ -33,39 +33,39 @@ abstract class AbsServiceLocator : IServiceLocator {
         return secretary.containsKey(name)
     }
 
-    override fun registerSpecialist(specialist: ISpecialist): Boolean {
-        if (secretary.containsKey(specialist.getName())) {
-            val oldSpecialist = get<ISpecialist>(specialist.getName())
-            if (oldSpecialist != null && oldSpecialist.compareTo(specialist) != 0) {
+    override fun registerProvider(provider: IProvider): Boolean {
+        if (secretary.containsKey(provider.getName())) {
+            val oldprovider = get<IProvider>(provider.getName())
+            if (oldprovider != null && oldprovider.compareTo(provider) != 0) {
                 return false
             }
-            if (!unregisterSpecialist(specialist.getName())) {
+            if (!unregisterProvider(provider.getName())) {
                 return false
             }
         }
 
-        secretary.put(specialist.getName(), specialist)
-        specialist.onRegister()
+        secretary.put(provider.getName(), provider)
+        provider.onRegister()
         return true
     }
 
-    override fun registerSpecialist(name: String): Boolean {
-        val specialist = getSpecialistFactory().create(name)
-        return if (specialist != null) {
-            registerSpecialist(specialist)
+    override fun registerProvider(name: String): Boolean {
+        val provider = getProviderFactory().create(name)
+        return if (provider != null) {
+            registerProvider(provider)
         } else false
     }
 
-    override fun unregisterSpecialist(name: String): Boolean {
+    override fun unregisterProvider(name: String): Boolean {
         if (secretary.containsKey(name)) {
-            val specialist = secretary.get(name)
-            if (specialist != null) {
+            val provider = secretary.get(name)
+            if (provider != null) {
                 // нельзя отменить регистрацию у объединения с подписчиками
-                if (!specialist.isPersistent()) {
-                    if (specialist is ISmallUnion<*> && specialist.hasSubscribers()) {
+                if (!provider.isPersistent()) {
+                    if (provider is ISmallUnion<*> && provider.hasSubscribers()) {
                         return false
                     }
-                    specialist.onUnRegister()
+                    provider.onUnRegister()
                     secretary.remove(name)
                 }
             } else {
@@ -75,21 +75,21 @@ abstract class AbsServiceLocator : IServiceLocator {
         return true
     }
 
-    override fun registerSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
-        val types = subscriber.getSpecialistSubscription()
-        // регистрируемся subscriber у специалистов
+    override fun registerSubscriber(subscriber: IProviderSubscriber): Boolean {
+        val types = subscriber.getProviderSubscription()
+        // регистрируемся subscriber у провайдеров
         for (type in types) {
             if (secretary.containsKey(type)) {
-                val specialist = secretary.get(type)
-                if (specialist is ISmallUnion<*>) {
-                    (specialist as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
+                val provider = secretary.get(type)
+                if (provider is ISmallUnion<*>) {
+                    (provider as ISmallUnion<IProviderSubscriber>).register(subscriber)
                 }
             } else {
-                registerSpecialist(type)
+                registerProvider(type)
                 if (secretary.containsKey(type)) {
-                    (secretary.get(type) as ISmallUnion<ISpecialistSubscriber>).register(subscriber)
+                    (secretary.get(type) as ISmallUnion<IProviderSubscriber>).register(subscriber)
                 } else {
-                    ErrorSpecialistSingleton.instance
+                    ErrorSingleton.instance
                         .onError(NAME, "Not found subscriber type: $type", false)
                     return false
                 }
@@ -99,38 +99,38 @@ abstract class AbsServiceLocator : IServiceLocator {
         return true
     }
 
-    override fun unregisterSpecialistSubscriber(subscriber: ISpecialistSubscriber): Boolean {
-        val types = subscriber.getSpecialistSubscription()
+    override fun unregisterSubscriber(subscriber: IProviderSubscriber): Boolean {
+        val types = subscriber.getProviderSubscription()
         for (type in types) {
             if (secretary.containsKey(type)) {
-                val specialist = secretary.get(type)
-                if (specialist is ISmallUnion<*>) {
-                    (specialist as ISmallUnion<ISpecialistSubscriber>).unregister(subscriber)
+                val provider = secretary.get(type)
+                if (provider is ISmallUnion<*>) {
+                    (provider as ISmallUnion<IProviderSubscriber>).unregister(subscriber)
                 }
             }
         }
         return true
     }
 
-    override fun setCurrentSubscriber(subscriber: ISpecialistSubscriber): Boolean {
-        val types = subscriber.getSpecialistSubscription()
+    override fun setCurrentSubscriber(subscriber: IProviderSubscriber): Boolean {
+        val types = subscriber.getProviderSubscription()
         for (type in types) {
             if (secretary.containsKey(type)) {
-                val specialist = secretary.get(type)
-                if (specialist is IUnion<*>) {
-                    (specialist as IUnion<ISpecialistSubscriber>).setCurrentSubscriber(subscriber)
+                val provider = secretary.get(type)
+                if (provider is IUnion<*>) {
+                    (provider as IUnion<IProviderSubscriber>).setCurrentSubscriber(subscriber)
                 }
             }
         }
         return true
     }
 
-    override fun getSpecialists(): List<ISpecialist> {
+    override fun getProviders(): List<IProvider> {
         return secretary.values()
     }
 
     override fun stop() {
-        if (ApplicationSpecialist.instance.isExit()) {
+        if (ApplicationProvider.instance.isExit()) {
             get<ActivityUnion>(ActivityUnion.NAME)?.stop()
         }
     }

@@ -20,7 +20,7 @@ import shishkin.sl.kodeinpsb.sl.action.DataAction
 import shishkin.sl.kodeinpsb.sl.action.IAction
 import shishkin.sl.kodeinpsb.sl.action.handler.FragmentActionHandler
 import shishkin.sl.kodeinpsb.sl.model.IModel
-import shishkin.sl.kodeinpsb.sl.specialist.ApplicationSpecialist
+import shishkin.sl.kodeinpsb.sl.provider.ApplicationProvider
 import shishkin.sl.kodeinpsb.sl.ui.AbsContentFragment
 import java.util.*
 
@@ -73,7 +73,7 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
         recyclerView.adapter = adapter
 
         searchView = view.findViewById(R.id.search)
-        val context = ApplicationSpecialist.appContext
+        val context = ApplicationProvider.appContext
         searchView.setCompoundDrawablesWithIntrinsicBounds(
             ApplicationUtils.getVectorDrawable(
                 context,
@@ -130,9 +130,7 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     private fun refreshViews(viewData: TickerData?) {
         if (viewData == null) return
 
-        ApplicationUtils.runOnUiThread(Runnable {
-            adapter.setItems(viewData.getData())
-        })
+        adapter.setItems(viewData.getData())
     }
 
     override fun update(o: Observable?, arg: Any?) {
@@ -142,10 +140,8 @@ class DigitalCurrenciesFragment : AbsContentFragment(), SwipeRefreshLayout.OnRef
     }
 
     private fun initFilter(viewData: TickerData?) {
-        ApplicationUtils.runOnUiThread(Runnable {
-            observable?.finish()
-            searchView.setText(viewData?.filter)
-            observable = EditTextObservable(this, searchView)
-        })
+        observable?.finish()
+        searchView.setText(viewData?.filter)
+        observable = EditTextObservable(this, searchView)
     }
 }
