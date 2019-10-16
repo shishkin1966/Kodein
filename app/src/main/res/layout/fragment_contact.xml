@@ -41,7 +41,7 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <shishkin.sl.kodeinpsb.common.RippleTextView
+                <shishkin.sl.kotlin.common.RippleTextView
                     android:id="@+id/web"
                     style="@style/HelveticaTextStyle"
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
 
                 <View style="@style/HorizontalThinDivider" />
 
-                <shishkin.sl.kodeinpsb.common.RippleTextView
+                <shishkin.sl.kotlin.common.RippleTextView
                     android:id="@+id/mail"
                     style="@style/HelveticaTextStyle"
                     android:layout_width="match_parent"
