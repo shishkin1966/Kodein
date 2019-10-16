@@ -90,7 +90,9 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
             if (serviceLocator != null) {
                 for (provider in serviceLocator.getProviders()) {
                     if (provider !is IActivityUnion && provider !is IApplicationProvider) {
-                        provider.stop()
+                        if (!provider.isPersistent()) {
+                            provider.stop()
+                        }
                     }
                 }
             }
