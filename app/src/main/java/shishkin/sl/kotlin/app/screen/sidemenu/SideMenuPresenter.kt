@@ -3,7 +3,7 @@ package shishkin.sl.kotlin.app.screen.sidemenu
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.data.Account
 import shishkin.sl.kotlin.app.data.Balance
-import shishkin.sl.kotlin.app.provider.Provider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.request.GetBalanceRequest
 import shishkin.sl.kotlin.app.screen.accounts.AccountsFragment
 import shishkin.sl.kotlin.app.screen.contact.ContactFragment
@@ -56,7 +56,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
     }
 
     private fun getData() {
-        Provider.getBalance(NAME)
+        Providers.getBalance(NAME)
     }
 
     override fun response(result: ExtResult) {
@@ -98,7 +98,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
         if (!isValid()) return false
 
         if (action is ApplicationAction) {
-            val router = ApplicationSingleton.instance.getRouter()
+            val router = ApplicationSingleton.instance.routerProvider
             when (action.getName()) {
                 ShowAccounts -> {
                     if (!router.isCurrentFragment(AccountsFragment.NAME)) {

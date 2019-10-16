@@ -4,9 +4,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kotlin.R
 import shishkin.sl.kotlin.app.ApplicationSingleton
-import shishkin.sl.kotlin.app.provider.UseCasesProvider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.screen.accounts.AccountsFragment
-import shishkin.sl.kotlin.sl.action.ApplicationAction
 import shishkin.sl.kotlin.sl.action.ShowSnackbarAction
 import shishkin.sl.kotlin.sl.presenter.AbsPresenter
 import shishkin.sl.kotlin.sl.provider.ActivityUnion
@@ -28,7 +27,7 @@ class OnBackPressedPresenter : AbsPresenter() {
 
     fun onClick(): Boolean {
         val fragment =
-            ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
+            ApplicationSingleton.instance.activityProvider.getCurrentFragment<Fragment>()
         if (fragment !is AccountsFragment) {
             return false
         }
@@ -50,11 +49,7 @@ class OnBackPressedPresenter : AbsPresenter() {
                 startTimer()
                 return true
             } else {
-                ApplicationSingleton.instance.getUseCase().addAction(
-                    ApplicationAction(
-                        UseCasesProvider.OnExitAction
-                    )
-                )
+                Providers.exitApplication()
                 return true
             }
         }

@@ -11,7 +11,7 @@ open class ShowDialogAction : IAction {
     private var buttonPositive = R.string.ok_upper
     private var buttonNegative = MaterialDialogExt.NO_BUTTON
     private var cancelable = false
-    private lateinit var listener: String
+    private var listener: String
 
     constructor(id: Int, listener: String) {
         this.id = id

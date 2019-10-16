@@ -1,14 +1,21 @@
 package shishkin.sl.kotlin.app
 
 import android.widget.Toast
-import shishkin.sl.kotlin.app.provider.*
+import microservices.shishkin.example.net.NetApi
+import shishkin.sl.kotlin.app.db.Dao
+import shishkin.sl.kotlin.app.db.Db
+import shishkin.sl.kotlin.app.provider.DbProvider
+import shishkin.sl.kotlin.app.provider.ILocationUnion
+import shishkin.sl.kotlin.app.provider.LocationUnion
+import shishkin.sl.kotlin.app.provider.NetProvider
 import shishkin.sl.kotlin.app.provider.notification.INotificationProvider
 import shishkin.sl.kotlin.app.provider.notification.NotificationProvider
 import shishkin.sl.kotlin.common.ApplicationUtils
 import shishkin.sl.kotlin.sl.IProvider
 import shishkin.sl.kotlin.sl.IProviderSubscriber
-import shishkin.sl.kotlin.sl.IRouter
+import shishkin.sl.kotlin.sl.IRouterProvider
 import shishkin.sl.kotlin.sl.message.IMessage
+import shishkin.sl.kotlin.sl.observe.ObjectObservable
 import shishkin.sl.kotlin.sl.observe.ScreenObservableSubscriber
 import shishkin.sl.kotlin.sl.presenter.IModelPresenter
 import shishkin.sl.kotlin.sl.provider.*
@@ -66,30 +73,25 @@ class App : ApplicationProvider() {
         return union?.getPresenter(name)
     }
 
-    fun onChange(observable: String, obj: Any) {
-        val union = serviceLocator?.get<IObservableUnion>(ObservableUnion.NAME)
-        union?.getObservable(observable)?.onChange(obj)
-    }
+    var dbProvider: IDbProvider = get(DbProvider.NAME)!!
+        get() = get(DbProvider.NAME)!!
+        private set
 
-    fun getDbProvider(): IDbProvider {
-        return get(DbProvider.NAME)!!
-    }
+    var observableProvider: IObservableUnion = get(ObservableUnion.NAME)!!
+        get() = get(ObservableUnion.NAME)!!
+        private set
 
-    fun getObservableUnion(): IObservableUnion {
-        return get(ObservableUnion.NAME)!!
-    }
+    var activityProvider: IActivityUnion = get(ActivityUnion.NAME)!!
+        get() = get(ActivityUnion.NAME)!!
+        private set
 
-    fun getActivityUnion(): IActivityUnion {
-        return get(ActivityUnion.NAME)!!
-    }
+    var locationProvider: ILocationUnion = get(LocationUnion.NAME)!!
+        get() = get(LocationUnion.NAME)!!
+        private set
 
-    fun getLocationUnion(): ILocationUnion {
-        return get(LocationUnion.NAME)!!
-    }
-
-    fun getCache(): ICacheProvider {
-        return get(CacheProvider.NAME)!!
-    }
+    var cacheProvider: ICacheProvider = get(CacheProvider.NAME)!!
+        get() = get(CacheProvider.NAME)!!
+        private set
 
     fun cancelRequests(name: String) {
         get<CommonExecutor>(CommonExecutor.NAME)!!.cancelRequests(name)
@@ -99,17 +101,14 @@ class App : ApplicationProvider() {
         get<CommonExecutor>(CommonExecutor.NAME)!!.execute(request)
     }
 
-    fun getUseCase(): IUseCasesProvider {
-        return get(UseCasesProvider.NAME)!!
-    }
+    var notificationProvider: INotificationProvider = get(NotificationProvider.NAME)!!
+        get() = get(NotificationProvider.NAME)!!
+        private set
 
-    fun getNotification(): INotificationProvider {
-        return get(NotificationProvider.NAME)!!
-    }
-
-    fun getRouter(): IRouter {
-        return getActivityUnion().getActivity<IActivity>() as IRouter
-    }
+    var routerProvider: IRouterProvider =
+        activityProvider.getActivity<IActivity>() as IRouterProvider
+        get() = activityProvider.getActivity<IActivity>() as IRouterProvider
+        private set
 
     fun addNotMandatoryMessage(message: IMessage) {
         get<IMessengerUnion>(MessengerUnion.NAME)!!.addNotMandatoryMessage(message)
@@ -121,5 +120,22 @@ class App : ApplicationProvider() {
 
     fun unregisterSubscriber(subscriber: IProviderSubscriber): Boolean {
         return serviceLocator!!.unregisterSubscriber(subscriber)
+    }
+
+    fun onChange(observable: String, obj: Any) {
+        observableProvider.getObservable(observable)?.onChange(obj)
+    }
+
+    fun onChange(name: String) {
+        ApplicationSingleton.instance.observableProvider.getObservable(ObjectObservable.NAME)
+            ?.onChange(name)
+    }
+
+    fun getDao(): Dao {
+        return dbProvider.getDb<Db>()!!.getDao()
+    }
+
+    fun getApi() : NetApi {
+        return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
 }

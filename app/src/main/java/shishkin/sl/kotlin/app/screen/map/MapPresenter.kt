@@ -57,7 +57,7 @@ class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallba
             this.googleMap?.uiSettings?.isMyLocationButtonEnabled = true
             this.googleMap?.setOnMyLocationButtonClickListener(this)
 
-            ApplicationSingleton.instance.getLocationUnion().startLocation()
+            ApplicationSingleton.instance.locationProvider.startLocation()
         }
     }
 
@@ -76,7 +76,7 @@ class MapPresenter(model: MapModel) : AbsModelPresenter(model), OnMapReadyCallba
             }
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
 
-            val list = ApplicationSingleton.instance.getLocationUnion().getAddress(location)
+            val list = ApplicationSingleton.instance.locationProvider.getAddress(location)
             if (list.isNotEmpty()) {
                 val address = list[0]
                 val sb = StringBuilder()

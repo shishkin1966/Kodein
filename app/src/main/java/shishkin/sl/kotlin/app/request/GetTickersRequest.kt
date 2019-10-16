@@ -12,8 +12,7 @@ class GetTickersRequest(subscribe: String) : AbsNetResultMessageRequest(subscrib
     }
 
     override fun getData(): Single<List<Ticker>>? {
-        val provider = ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)
-        return provider?.getApi()?.tickers
+        return ApplicationSingleton.instance.getApi().tickers
     }
 
     override fun isDistinct(): Boolean {

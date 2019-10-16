@@ -86,7 +86,7 @@ class MainActivity : AbsContentActivity() {
 
         addStateObserver(onBackPressedPresenter)
 
-        ApplicationUtils.grantPermisions(
+        ApplicationUtils.grantPermissions(
             permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
             activity = this
         )
@@ -96,7 +96,7 @@ class MainActivity : AbsContentActivity() {
                 .addAction(DataAction(MainPresenter.IntentAction, intent))
         } else {
             val fragment =
-                ApplicationSingleton.instance.getActivityUnion().getCurrentFragment<Fragment>()
+                ApplicationSingleton.instance.activityProvider.getCurrentFragment<Fragment>()
             if (fragment == null) {
                 showRootFragment()
             }

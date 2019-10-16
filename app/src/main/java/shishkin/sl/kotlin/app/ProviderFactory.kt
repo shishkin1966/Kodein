@@ -3,7 +3,6 @@ package shishkin.sl.kotlin.app
 import shishkin.sl.kotlin.app.provider.DbProvider
 import shishkin.sl.kotlin.app.provider.LocationUnion
 import shishkin.sl.kotlin.app.provider.NetProvider
-import shishkin.sl.kotlin.app.provider.UseCasesProvider
 import shishkin.sl.kotlin.app.provider.notification.NotificationProvider
 import shishkin.sl.kotlin.sl.INamed
 import shishkin.sl.kotlin.sl.IProvider
@@ -39,7 +38,6 @@ class ProviderFactory : IProviderFactory, INamed {
                 NetProvider.NAME -> NetProvider()
                 LocationUnion.NAME -> LocationUnion()
                 CacheProvider.NAME -> CacheProvider()
-                UseCasesProvider.NAME -> UseCasesProvider()
                 NotificationProvider.NAME -> NotificationProvider()
                 else -> Class.forName(name).newInstance() as IProvider
             }

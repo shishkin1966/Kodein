@@ -5,14 +5,14 @@ import shishkin.sl.kotlin.R
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.data.Account
 import shishkin.sl.kotlin.app.data.Balance
-import shishkin.sl.kotlin.app.provider.Provider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.request.GetAccountsRequest
 import shishkin.sl.kotlin.app.request.GetBalanceRequest
 import shishkin.sl.kotlin.app.request.GetCurrencyRequest
 import shishkin.sl.kotlin.app.screen.create_account.CreateAccountFragment
 import shishkin.sl.kotlin.app.screen.view_account.ViewAccountFragment
 import shishkin.sl.kotlin.common.ApplicationUtils
-import shishkin.sl.kotlin.sl.IRouter
+import shishkin.sl.kotlin.sl.IRouterProvider
 import shishkin.sl.kotlin.sl.action.*
 import shishkin.sl.kotlin.sl.data.ExtResult
 import shishkin.sl.kotlin.sl.observe.IObjectObservableSubscriber
@@ -59,9 +59,9 @@ class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IRespo
 
     private fun getData() {
         getView<AccountsFragment>().addAction(ShowProgressBarAction())
-        Provider.getAccounts(getName())
-        Provider.getBalance(getName())
-        Provider.getCurrency(getName())
+        Providers.getAccounts(getName())
+        Providers.getBalance(getName())
+        Providers.getCurrency(getName())
     }
 
     override fun response(result: ExtResult) {
@@ -133,7 +133,7 @@ class AccountsPresenter(model: AccountsModel) : AbsModelPresenter(model), IRespo
 
     private fun createAccount() {
         val activity = getView<AccountsFragment>().activity
-        if (activity != null && activity is IRouter && activity.isValid()) {
+        if (activity != null && activity is IRouterProvider && activity.isValid()) {
             activity.showFragment(CreateAccountFragment.newInstance())
         }
     }

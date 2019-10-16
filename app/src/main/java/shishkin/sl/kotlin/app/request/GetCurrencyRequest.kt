@@ -10,7 +10,7 @@ class GetCurrencyRequest(subscriber: String) : AbsResultMessageRequest(subscribe
     }
 
     override fun getData(): List<String> {
-        return ApplicationSingleton.instance.getDbProvider().getDb<Db>()?.getDao()!!.getCurrency()
+        return ApplicationSingleton.instance.getDao().getCurrency()
     }
 
     override fun isDistinct(): Boolean {

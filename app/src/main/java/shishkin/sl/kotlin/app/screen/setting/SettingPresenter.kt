@@ -2,7 +2,7 @@ package shishkin.sl.kotlin.app.screen.setting
 
 import shishkin.sl.kotlin.app.ApplicationConstant
 import shishkin.sl.kotlin.app.ApplicationSingleton
-import shishkin.sl.kotlin.app.provider.Provider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.setting.Setting
 import shishkin.sl.kotlin.sl.action.*
 import shishkin.sl.kotlin.sl.message.IDialogResultListener
@@ -59,11 +59,11 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
         if (action is ApplicationAction) {
             when (action.getName()) {
                 BackupDb -> {
-                    Provider.backupDb()
+                    Providers.backupDb()
                     return true
                 }
                 RestoreDb -> {
-                    Provider.restoreDb()
+                    Providers.restoreDb()
                     return true
                 }
             }
@@ -144,7 +144,7 @@ class SettingPresenter(model: SettingModel) : AbsModelPresenter(model),
         getView<SettingFragment>().addAction(
             DataAction(
                 DBCopyEnabledAction,
-                Provider.checkDbCopy()
+                Providers.checkDbCopy()
             )
         )
     }

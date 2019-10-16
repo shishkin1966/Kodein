@@ -5,8 +5,7 @@ import shishkin.sl.kotlin.R
 import shishkin.sl.kotlin.app.ApplicationConstant
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.action.HideSideMenuAction
-import shishkin.sl.kotlin.app.provider.UseCasesProvider
-import shishkin.sl.kotlin.sl.action.ApplicationAction
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.sl.action.DataAction
 import shishkin.sl.kotlin.sl.action.IAction
 import shishkin.sl.kotlin.sl.action.SnackBarAction
@@ -42,11 +41,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
 
         if (action is SnackBarAction) {
             if (action.getName() == ApplicationProvider.appContext.getString(R.string.exit)) {
-                ApplicationSingleton.instance.getUseCase().addAction(
-                    ApplicationAction(
-                        UseCasesProvider.OnExitAction
-                    )
-                )
+                Providers.exitApplication()
             }
             return true
         }
@@ -65,7 +60,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
     }
 
     private fun parseIntent(intent: Intent) {
-        val router = ApplicationSingleton.instance.getRouter()
+        val router = ApplicationSingleton.instance.routerProvider
         when (intent.action) {
             "android.intent.action.MAIN" -> {
                 router.showRootFragment()
@@ -82,7 +77,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model) {
     }
 
     override fun onStart() {
-        ApplicationSingleton.instance.getNotification()
+        ApplicationSingleton.instance.notificationProvider
             .replaceNotification(message = "Старт приложения")
     }
 
