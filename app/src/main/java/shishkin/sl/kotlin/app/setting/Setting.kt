@@ -24,7 +24,7 @@ class Setting : Serializable {
             if (json == null) {
                 return null
             }
-            return ApplicationSingleton.instance.getCache().fromJson(json, Setting::class.java)
+            return ApplicationSingleton.instance.cacheProvider.fromJson(json, Setting::class.java)
         }
     }
 
@@ -81,7 +81,7 @@ class Setting : Serializable {
         PreferencesUtils.putString(
             ApplicationProvider.appContext,
             name,
-            ApplicationSingleton.instance.getCache().toJson(this).toString()
+            ApplicationSingleton.instance.cacheProvider.toJson(this).toString()
         )
     }
 }

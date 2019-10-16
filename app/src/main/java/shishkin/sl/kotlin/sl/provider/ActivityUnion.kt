@@ -6,7 +6,7 @@ import shishkin.sl.kotlin.R
 import shishkin.sl.kotlin.common.ApplicationUtils
 import shishkin.sl.kotlin.sl.AbsUnion
 import shishkin.sl.kotlin.sl.IProvider
-import shishkin.sl.kotlin.sl.IRouter
+import shishkin.sl.kotlin.sl.IRouterProvider
 import shishkin.sl.kotlin.sl.action.IAction
 import shishkin.sl.kotlin.sl.action.ShowDialogAction
 import shishkin.sl.kotlin.sl.state.State
@@ -245,13 +245,13 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
         }
     }
 
-    override fun getRouter(): IRouter? {
+    override fun getRouter(): IRouterProvider? {
         val subscriber = getCurrentSubscriber()
-        if (subscriber is IRouter) {
+        if (subscriber is IRouterProvider) {
             return subscriber
         }
         for (activity in getSubscribers()) {
-            if (activity is IRouter) {
+            if (activity is IRouterProvider) {
                 return activity
             }
         }

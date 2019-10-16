@@ -2,7 +2,7 @@ package shishkin.sl.kotlin.sl
 
 import androidx.fragment.app.Fragment
 
-interface IRouter : IProviderSubscriber {
+interface IRouterProvider : IProviderSubscriber {
     /**
      * Переключиться на фрагмент
      *

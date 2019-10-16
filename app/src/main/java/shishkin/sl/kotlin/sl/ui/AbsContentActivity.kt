@@ -4,14 +4,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import shishkin.sl.kotlin.R
 import shishkin.sl.kotlin.common.ApplicationUtils
-import shishkin.sl.kotlin.sl.IRouter
+import shishkin.sl.kotlin.sl.IRouterProvider
 import shishkin.sl.kotlin.sl.action.HideKeyboardAction
 import shishkin.sl.kotlin.sl.observe.NetObservable
 import shishkin.sl.kotlin.sl.provider.IObservableSubscriber
 import shishkin.sl.kotlin.sl.provider.ObservableUnion
 
 
-abstract class AbsContentActivity : AbsActivity(), IRouter,
+abstract class AbsContentActivity : AbsActivity(), IRouterProvider,
     IObservableSubscriber {
     private var snackbar: Snackbar? = null
 

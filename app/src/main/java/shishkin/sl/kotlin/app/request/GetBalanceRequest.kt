@@ -11,7 +11,7 @@ class GetBalanceRequest(subscriber: String) : AbsResultMessageRequest(subscriber
     }
 
     override fun getData(): List<Balance> {
-        return ApplicationSingleton.instance.getDbProvider()?.getDb<Db>()!!.getDao().getBalance()
+        return ApplicationSingleton.instance.getDao().getBalance()
     }
 
     override fun isDistinct(): Boolean {

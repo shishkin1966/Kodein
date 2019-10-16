@@ -2,7 +2,7 @@ package shishkin.sl.kotlin.app.screen.create_account
 
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.action.CreateAccountTransaction
-import shishkin.sl.kotlin.app.provider.Provider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.sl.action.HideKeyboardAction
 import shishkin.sl.kotlin.sl.action.IAction
 import shishkin.sl.kotlin.sl.action.StopAction
@@ -26,7 +26,7 @@ class CreateAccountPresenter(model: CreateAccountModel) : AbsModelPresenter(mode
         if (!isValid()) return false
 
         if (action is CreateAccountTransaction) {
-            Provider.createAccount(action.account)
+            Providers.createAccount(action.account)
             getView<CreateAccountFragment>().addAction(HideKeyboardAction())
             getView<CreateAccountFragment>().addAction(StopAction())
             return true

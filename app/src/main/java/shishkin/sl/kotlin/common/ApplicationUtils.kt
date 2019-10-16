@@ -150,7 +150,7 @@ class ApplicationUtils {
         }
 
         @JvmStatic
-        fun grantPermisions(permissions: Array<String>?, activity: Activity?): Boolean {
+        fun grantPermissions(permissions: Array<String>?, activity: Activity?): Boolean {
             if (activity != null && permissions != null) {
                 if (hasMarshmallow()) {
                     val listPermissionsNeeded = ArrayList<String>()
@@ -184,8 +184,8 @@ class ApplicationUtils {
         }
 
         @JvmStatic
-        fun grantPermisions(permissions: Array<String>?, fragment: Fragment): Boolean {
-            if (fragment != null && permissions != null) {
+        fun grantPermissions(permissions: Array<String>?, fragment: Fragment): Boolean {
+            if (permissions != null) {
                 if (hasMarshmallow()) {
                     val listPermissionsNeeded = ArrayList<String>()
 

@@ -57,7 +57,7 @@ class MapFragment : AbsContentFragment() {
         }
 
         if (action is PermissionAction) {
-            ApplicationUtils.grantPermisions(
+            ApplicationUtils.grantPermissions(
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 this
             )
@@ -101,7 +101,7 @@ class MapFragment : AbsContentFragment() {
     }
 
     override fun onBackPressed(): Boolean {
-        ApplicationSingleton.instance.getActivityUnion().switchToTopFragment()
+        ApplicationSingleton.instance.activityProvider.switchToTopFragment()
         return true
     }
 

@@ -1,7 +1,7 @@
 package shishkin.sl.kotlin.app.screen.contact
 
 import shishkin.sl.kotlin.app.ApplicationSingleton
-import shishkin.sl.kotlin.app.provider.UseCasesProvider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.sl.action.ApplicationAction
 import shishkin.sl.kotlin.sl.action.IAction
 import shishkin.sl.kotlin.sl.presenter.AbsModelPresenter
@@ -29,14 +29,12 @@ class ContactPresenter(model: ContactModel) : AbsModelPresenter(model) {
         if (action is ApplicationAction) {
             when (action.getName()) {
                 WebAction -> {
-                    ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesProvider.ShowProjectWebAction))
+                    Providers.showProjectWeb()
                     return true
                 }
 
                 MailAction -> {
-                    ApplicationSingleton.instance.getUseCase()
-                        .addAction(ApplicationAction(UseCasesProvider.SendErrorReportAction))
+                    Providers.sendErrorReport()
                     return true
                 }
             }

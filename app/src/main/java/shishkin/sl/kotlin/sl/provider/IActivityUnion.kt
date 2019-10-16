@@ -1,6 +1,6 @@
 package shishkin.sl.kotlin.sl.provider
 
-import shishkin.sl.kotlin.sl.IRouter
+import shishkin.sl.kotlin.sl.IRouterProvider
 import shishkin.sl.kotlin.sl.IUnion
 import shishkin.sl.kotlin.sl.action.IActionListener
 import shishkin.sl.kotlin.sl.ui.IActivity
@@ -108,5 +108,5 @@ interface IActivityUnion : IUnion<IActivity>, IActionListener {
      *
      * @return роутер
      */
-    fun getRouter(): IRouter?
+    fun getRouter(): IRouterProvider?
 }

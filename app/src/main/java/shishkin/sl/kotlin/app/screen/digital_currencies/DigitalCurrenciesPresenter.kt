@@ -3,7 +3,7 @@ package shishkin.sl.kotlin.app.screen.digital_currencies
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.action.OnEditTextChangedAction
 import shishkin.sl.kotlin.app.data.Ticker
-import shishkin.sl.kotlin.app.provider.Provider
+import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.request.GetTickersRequest
 import shishkin.sl.kotlin.common.ApplicationUtils
 import shishkin.sl.kotlin.sl.action.*
@@ -35,7 +35,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresen
             data = TickerData()
             getView<DigitalCurrenciesFragment>().addAction(DataAction(InitFilter, data))
             val temp =
-                ApplicationSingleton.instance.getCache().getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
+                ApplicationSingleton.instance.cacheProvider.getList(GetTickersRequest.NAME) as ArrayList<Ticker>?
             if (temp != null) {
                 data.tickers = temp
                 getView<DigitalCurrenciesFragment>().addAction(
@@ -90,7 +90,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresen
 
     private fun getData() {
         getView<DigitalCurrenciesFragment>().addAction(ShowProgressBarAction())
-        Provider.getTickers(getName())
+        Providers.getTickers(getName())
     }
 
     override fun response(result: ExtResult) {
@@ -100,7 +100,7 @@ class DigitalCurrenciesPresenter(model: DigitalCurrenciesModel) : AbsModelPresen
             getView<DigitalCurrenciesFragment>().addAction(DataAction(Actions.RefreshViews, data))
             ApplicationSingleton.instance.execute(object : Request() {
                 override fun run() {
-                    ApplicationSingleton.instance.getCache()
+                    ApplicationSingleton.instance.cacheProvider
                         .put(GetTickersRequest.NAME, data.tickers)
                 }
             })

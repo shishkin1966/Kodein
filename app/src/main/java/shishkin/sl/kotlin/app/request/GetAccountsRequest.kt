@@ -11,7 +11,7 @@ class GetAccountsRequest(subscriber: String) : AbsResultMessageRequest(subscribe
     }
 
     override fun getData(): List<Account> {
-        return ApplicationSingleton.instance.getDbProvider().getDb<Db>()!!.getDao().getAccounts()
+        return ApplicationSingleton.instance.getDao().getAccounts()
     }
 
     override fun isDistinct(): Boolean {
