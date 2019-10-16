@@ -113,7 +113,7 @@
 
     </LinearLayout>
 
-    <shishkin.sl.kodeinpsb.common.RippleTextView
+    <shishkin.sl.kotlin.common.RippleTextView
         android:id="@+id/openAccountButton"
         style="@style/FlatOrangeButtonStyle"
         android:layout_width="match_parent"
