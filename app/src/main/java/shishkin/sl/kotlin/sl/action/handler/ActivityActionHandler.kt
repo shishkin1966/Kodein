@@ -24,6 +24,8 @@ import shishkin.sl.kotlin.sl.presenter.IPresenter
 import shishkin.sl.kotlin.sl.provider.ActivityUnion
 import shishkin.sl.kotlin.sl.provider.ApplicationProvider
 import shishkin.sl.kotlin.sl.provider.IActivityUnion
+import shishkin.sl.kotlin.sl.ui.AbsContentActivity
+import shishkin.sl.kotlin.sl.ui.AbsFragment
 
 
 class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler() {
@@ -119,16 +121,23 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
     }
 
     private fun showSnackbar(action: ShowSnackbarAction) {
+        var view: View? = null
+        if (activity is AbsContentActivity) {
+            view = activity.getContentFragment(AbsFragment::class.java)?.getRootView()
+        }
+        if (view == null) {
+            view = getRootView()
+        }
         val actionName = action.getAction()
         if (actionName.isNullOrEmpty()) {
             snackbar = BaseSnackbar().make(
-                getRootView(), action.getMessage(), action
+                view, action.getMessage(), action
                     .getDuration(), action.getType()
             )
             snackbar?.show()
         } else {
             snackbar = BaseSnackbar().make(
-                getRootView(),
+                view,
                 action.getMessage(),
                 action.getDuration(),
                 action.getType()

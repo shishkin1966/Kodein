@@ -28,10 +28,6 @@ class Setting : Serializable {
         }
     }
 
-    constructor(name: String) {
-        this.name = name
-    }
-
     constructor(
         values: List<String>?,
         current: String?,

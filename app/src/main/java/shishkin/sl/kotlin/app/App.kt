@@ -21,6 +21,8 @@ import shishkin.sl.kotlin.sl.presenter.IModelPresenter
 import shishkin.sl.kotlin.sl.provider.*
 import shishkin.sl.kotlin.sl.request.IRequest
 import shishkin.sl.kotlin.sl.task.CommonExecutor
+import shishkin.sl.kotlin.sl.task.DbExecutor
+import shishkin.sl.kotlin.sl.task.NetExecutor
 import shishkin.sl.kotlin.sl.ui.IActivity
 
 
@@ -99,6 +101,10 @@ class App : ApplicationProvider() {
 
     fun execute(request: IRequest) {
         get<CommonExecutor>(CommonExecutor.NAME)!!.execute(request)
+    }
+
+    fun executeDb(request: IRequest) {
+        get<DbExecutor>(DbExecutor.NAME)!!.execute(request)
     }
 
     var notificationProvider: INotificationProvider
