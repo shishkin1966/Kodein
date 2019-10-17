@@ -22,7 +22,7 @@
                 android:minHeight="@dimen/menu_height"
                 android:paddingLeft="@dimen/dimen_12dp"
                 android:paddingRight="@dimen/dimen_8dp"
-                android:textColor="@color/hint"
+                android:textColor="@color/text"
                 android:textSize="@dimen/text_size_large"/>
 
             <androidx.appcompat.widget.SwitchCompat

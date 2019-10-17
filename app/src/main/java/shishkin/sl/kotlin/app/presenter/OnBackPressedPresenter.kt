@@ -8,7 +8,6 @@ import shishkin.sl.kotlin.app.provider.Providers
 import shishkin.sl.kotlin.app.screen.accounts.AccountsFragment
 import shishkin.sl.kotlin.sl.action.ShowSnackbarAction
 import shishkin.sl.kotlin.sl.presenter.AbsPresenter
-import shishkin.sl.kotlin.sl.provider.ActivityUnion
 import shishkin.sl.kotlin.sl.provider.ApplicationProvider
 import java.util.*
 
@@ -33,19 +32,12 @@ class OnBackPressedPresenter : AbsPresenter() {
         }
         if (isValid()) {
             if (!doubleBackPressedOnce) {
-                val context = ApplicationProvider.appContext
                 doubleBackPressedOnce = true
-                val union =
-                    ApplicationProvider.serviceLocator?.get<ActivityUnion>(
-                        ActivityUnion.NAME
-                    )
-                if (union != null) {
-                    union.getCurrentSubscriber()?.addAction(
-                        ShowSnackbarAction(context.getString(R.string.double_back_pressed)).setDuration(
-                            Snackbar.LENGTH_SHORT
-                        ).setAction(ApplicationProvider.appContext.getString(R.string.exit))
-                    )
-                }
+                ApplicationSingleton.instance.activityProvider.getCurrentSubscriber()?.addAction(
+                    ShowSnackbarAction(ApplicationProvider.appContext.getString(R.string.double_back_pressed)).setDuration(
+                        Snackbar.LENGTH_SHORT
+                    ).setAction(ApplicationProvider.appContext.getString(R.string.exit))
+                )
                 startTimer()
                 return true
             } else {
