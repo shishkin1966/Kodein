@@ -24,23 +24,19 @@ class CacheProvider : AbsProvider(), ICacheProvider {
     }
 
     private val lock = ReentrantLock()
-    private var cache: LoadingCache<String, Serializable>? = null
+    private val cache: LoadingCache<String, Serializable> by lazy {
+        CacheBuilder.newBuilder()
+            .maximumSize(MAX_SIZE)
+            .expireAfterWrite(DURATION, TimeUnit.MINUTES)
+            .build(
+                object : CacheLoader<String, Serializable>() {
+                    override fun load(key: String): Serializable? {
+                        return value
+                    }
+                })
+    }
     private var value: Serializable? = null
     private val gson: Gson = Gson()
-
-    override fun onRegister() {
-        if (cache == null) {
-            cache = CacheBuilder.newBuilder()
-                .maximumSize(MAX_SIZE)
-                .expireAfterWrite(DURATION, TimeUnit.MINUTES)
-                .build(
-                    object : CacheLoader<String, Serializable>() {
-                        override fun load(key: String): Serializable? {
-                            return value
-                        }
-                    })
-        }
-    }
 
     override fun put(key: String, value: Serializable?) {
         if (key.isEmpty()) {
@@ -57,7 +53,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
 
         lock.lock()
         try {
-            cache?.put(key, value)
+            cache.put(key, value)
         } catch (e: Exception) {
             ErrorSingleton.instance.onError(NAME, e)
         } finally {
@@ -81,7 +77,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
         lock.lock()
         try {
             val s = toSerializable(values)
-            cache?.put(key, s)
+            cache.put(key, s)
         } catch (e: Exception) {
             ErrorSingleton.instance.onError(NAME, e)
         } finally {
@@ -96,7 +92,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
 
         lock.lock()
         try {
-            return cache?.getIfPresent(key)
+            return cache.getIfPresent(key)
         } catch (e: Exception) {
             ErrorSingleton.instance.onError(NAME, e)
         } finally {
@@ -112,7 +108,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
 
         lock.lock()
         try {
-            val s = cache?.getIfPresent(key)
+            val s = cache.getIfPresent(key)
             if (s != null) {
                 return serializableToList(s)
             }
@@ -138,7 +134,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
 
         lock.lock()
         try {
-            cache?.invalidate(key)
+            cache.invalidate(key)
         } catch (e: Exception) {
             ErrorSingleton.instance.onError(NAME, e)
         } finally {
@@ -152,7 +148,7 @@ class CacheProvider : AbsProvider(), ICacheProvider {
         lock.lock()
 
         try {
-            cache?.invalidateAll()
+            cache.invalidateAll()
         } catch (e: Exception) {
             ErrorSingleton.instance.onError(NAME, e)
         } finally {
