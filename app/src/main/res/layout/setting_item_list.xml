@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:minHeight="@dimen/menu_height"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/menu_height"
+    android:orientation="vertical">
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:id="@+id/ripple"
@@ -40,7 +40,7 @@
                     android:paddingRight="@dimen/dimen_8dp"
                     android:paddingTop="@dimen/dimen_8dp"
                     android:textColor="@color/text"
-                    android:textSize="@dimen/text_size_large"/>
+                    android:textSize="@dimen/text_size_large" />
 
                 <TextView
                     android:id="@+id/item_value"
@@ -51,7 +51,7 @@
                     android:paddingLeft="@dimen/dimen_12dp"
                     android:paddingRight="@dimen/dimen_8dp"
                     android:textColor="@color/gray_text"
-                    android:textSize="@dimen/text_size_large"/>
+                    android:textSize="@dimen/text_size_large" />
 
             </LinearLayout>
 
@@ -60,10 +60,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingRight="@dimen/dimen_8dp"
-                app:srcCompat="@drawable/chevron_right_dark"/>
+                app:srcCompat="@drawable/chevron_right_dark" />
         </LinearLayout>
 
     </com.balysv.materialripple.MaterialRippleLayout>
 
-    <View style="@style/HorizontalThinDivider"/>
+    <View style="@style/HorizontalThinDivider" />
 </LinearLayout>

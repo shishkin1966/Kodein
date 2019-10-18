@@ -22,7 +22,6 @@ import shishkin.sl.kotlin.sl.provider.*
 import shishkin.sl.kotlin.sl.request.IRequest
 import shishkin.sl.kotlin.sl.task.CommonExecutor
 import shishkin.sl.kotlin.sl.task.DbExecutor
-import shishkin.sl.kotlin.sl.task.NetExecutor
 import shishkin.sl.kotlin.sl.ui.IActivity
 
 
@@ -77,23 +76,23 @@ class App : ApplicationProvider() {
 
     var dbProvider: IDbProvider
         get() = get(DbProvider.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     var observableProvider: IObservableUnion
         get() = get(ObservableUnion.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     var activityProvider: IActivityUnion
         get() = get(ActivityUnion.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     var locationProvider: ILocationUnion
         get() = get(LocationUnion.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     var cacheProvider: ICacheProvider
         get() = get(CacheProvider.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     fun cancelRequests(name: String) {
         get<CommonExecutor>(CommonExecutor.NAME)!!.cancelRequests(name)
@@ -109,11 +108,11 @@ class App : ApplicationProvider() {
 
     var notificationProvider: INotificationProvider
         get() = get(NotificationProvider.NAME)!!
-        private set(value){}
+        private set(value) {}
 
     var routerProvider: IRouterProvider
         get() = activityProvider.getActivity<IActivity>() as IRouterProvider
-        private set(value){}
+        private set(value) {}
 
     fun addNotMandatoryMessage(message: IMessage) {
         get<IMessengerUnion>(MessengerUnion.NAME)!!.addNotMandatoryMessage(message)
@@ -140,7 +139,7 @@ class App : ApplicationProvider() {
         return dbProvider.getDb<Db>()!!.getDao()
     }
 
-    fun getApi() : NetApi {
+    fun getApi(): NetApi {
         return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
 }

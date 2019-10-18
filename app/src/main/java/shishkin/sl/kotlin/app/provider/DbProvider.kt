@@ -4,7 +4,6 @@ import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.db.Db
 import shishkin.sl.kotlin.sl.provider.AbsDbProvider
 import shishkin.sl.kotlin.sl.request.IRequest
-import shishkin.sl.kotlin.sl.task.DbExecutor
 
 
 class DbProvider : AbsDbProvider() {
