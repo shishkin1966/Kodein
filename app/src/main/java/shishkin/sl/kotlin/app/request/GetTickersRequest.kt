@@ -3,7 +3,6 @@ package shishkin.sl.kotlin.app.request
 import io.reactivex.Single
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.data.Ticker
-import shishkin.sl.kotlin.app.provider.NetProvider
 import shishkin.sl.kotlin.sl.request.AbsNetResultMessageRequest
 
 class GetTickersRequest(subscribe: String) : AbsNetResultMessageRequest(subscribe) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.balysv.materialripple.MaterialRippleLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -36,7 +35,7 @@
                         android:layout_marginRight="@dimen/dimen_8dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_large"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/name"
@@ -45,11 +44,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size"/>
+                        android:textSize="@dimen/text_size" />
 
                 </LinearLayout>
 
-                <View style="@style/VerticalDivider"/>
+                <View style="@style/VerticalDivider" />
 
                 <TextView
                     android:id="@+id/money"
@@ -61,7 +60,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -80,9 +79,9 @@
                     android:layout_marginRight="@dimen/dimen_8dp"
                     android:layout_weight="1"
                     android:textColor="@color/gray_text"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
-                <View style="@style/VerticalDivider"/>
+                <View style="@style/VerticalDivider" />
 
                 <TextView
                     android:id="@+id/days"
@@ -93,11 +92,11 @@
                     android:layout_marginRight="@dimen/dimen_8dp"
                     android:layout_weight="1"
                     android:textColor="@color/gray_text"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-            <View style="@style/HorizontalDivider"/>
+            <View style="@style/HorizontalDivider" />
         </LinearLayout>
     </RelativeLayout>
 </com.balysv.materialripple.MaterialRippleLayout>

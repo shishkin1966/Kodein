@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.balysv.materialripple.MaterialRippleLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/menu_item_height">
@@ -29,7 +28,7 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:textColor="@color/text"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_large" />
 
             <TextView
                 android:id="@+id/balanceView"
@@ -40,11 +39,10 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:textColor="@color/text"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_large" />
 
         </LinearLayout>
 
-        <View
-            style="@style/HorizontalThinDivider"/>
+        <View style="@style/HorizontalThinDivider" />
     </LinearLayout>
 </com.balysv.materialripple.MaterialRippleLayout>

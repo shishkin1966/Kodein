@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
@@ -57,14 +56,14 @@
 
                 </LinearLayout>
 
-                <View style="@style/HorizontalDivider"/>
+                <View style="@style/HorizontalDivider" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:scrollbars="vertical"/>
+                    android:scrollbars="vertical" />
 
             </LinearLayout>
 
@@ -79,7 +78,7 @@
                 android:visibility="invisible"
                 app:mpb_indeterminateTint="@color/orange"
                 app:mpb_progressStyle="horizontal"
-                app:mpb_showProgressBackground="false"/>
+                app:mpb_showProgressBackground="false" />
 
         </RelativeLayout>
 

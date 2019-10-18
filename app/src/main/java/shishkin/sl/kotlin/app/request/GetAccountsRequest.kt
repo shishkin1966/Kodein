@@ -2,7 +2,6 @@ package shishkin.sl.kotlin.app.request
 
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.app.data.Account
-import shishkin.sl.kotlin.app.db.Db
 import shishkin.sl.kotlin.sl.request.AbsResultMessageRequest
 
 class GetAccountsRequest(subscriber: String) : AbsResultMessageRequest(subscriber) {

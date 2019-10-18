@@ -1,16 +1,14 @@
 package shishkin.sl.kotlin.app
 
-import shishkin.sl.kotlin.app.provider.DbProvider
-import shishkin.sl.kotlin.app.provider.NetProvider
 import shishkin.sl.kotlin.sl.AbsServiceLocator
 import shishkin.sl.kotlin.sl.IProviderFactory
 import shishkin.sl.kotlin.sl.observe.NetObservable
 import shishkin.sl.kotlin.sl.observe.ObjectObservable
 import shishkin.sl.kotlin.sl.observe.ScreenBroadcastReceiverObservable
-import shishkin.sl.kotlin.sl.provider.*
-import shishkin.sl.kotlin.sl.task.CommonExecutor
-import shishkin.sl.kotlin.sl.task.DbExecutor
-import shishkin.sl.kotlin.sl.task.NetExecutor
+import shishkin.sl.kotlin.sl.provider.CrashProvider
+import shishkin.sl.kotlin.sl.provider.ErrorSingleton
+import shishkin.sl.kotlin.sl.provider.IObservableUnion
+import shishkin.sl.kotlin.sl.provider.ObservableUnion
 
 object ServiceLocatorSingleton {
     val instance = ServiceLocator()
