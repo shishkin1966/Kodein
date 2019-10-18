@@ -31,20 +31,11 @@ class ServiceLocator : AbsServiceLocator() {
         registerProvider(ApplicationSingleton.instance)
         registerProvider(CrashProvider.NAME)
 
-        registerProvider(CacheProvider.NAME)
         registerProvider(ObservableUnion.NAME)
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
         union?.register(ScreenBroadcastReceiverObservable())
         union?.register(ObjectObservable())
-
-        registerProvider(DbExecutor.NAME)
-        registerProvider(DbProvider.NAME)
-
-        registerProvider(NetExecutor.NAME)
-        registerProvider(NetProvider.NAME)
-
-        registerProvider(CommonExecutor.NAME)
     }
 
     override fun getProviderFactory(): IProviderFactory {
