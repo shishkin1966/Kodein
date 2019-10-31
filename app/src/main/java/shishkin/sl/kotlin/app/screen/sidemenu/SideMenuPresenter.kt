@@ -9,6 +9,7 @@ import shishkin.sl.kotlin.app.screen.accounts.AccountsFragment
 import shishkin.sl.kotlin.app.screen.contact.ContactFragment
 import shishkin.sl.kotlin.app.screen.digital_currencies.DigitalCurrenciesFragment
 import shishkin.sl.kotlin.app.screen.map.MapFragment
+import shishkin.sl.kotlin.app.screen.scanner.ScannerFragment
 import shishkin.sl.kotlin.app.screen.setting.SettingFragment
 import shishkin.sl.kotlin.app.screen.val_curs.ValCursFragment
 import shishkin.sl.kotlin.sl.action.Actions
@@ -30,6 +31,7 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
         const val NAME = "SideMenuPresenter"
         const val ShowAccounts = "ShowAccounts"
         const val ShowSetting = "ShowSetting"
+        const val ShowScanner = "ShowScanner"
         const val ShowAddress = "ShowAddress"
         const val ShowExchangeRates = "ShowExchangeRates"
         const val ShowDigitalRates = "ShowDigitalRates"
@@ -138,6 +140,13 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
                 ShowSetting -> {
                     if (!router.isCurrentFragment(SettingFragment.NAME)) {
                         router.showFragment(SettingFragment.newInstance())
+                    }
+                    return true
+                }
+
+                ShowScanner -> {
+                    if (!router.isCurrentFragment(ScannerFragment.NAME)) {
+                        router.showFragment(ScannerFragment.newInstance())
                     }
                     return true
                 }

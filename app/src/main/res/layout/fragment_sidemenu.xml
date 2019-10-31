@@ -17,6 +17,28 @@
             android:background="@color/white_light" />
 
         <TextView
+            android:id="@+id/scanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/menu_height"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/side_menu_panel_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_12dp"
+            android:paddingRight="@dimen/dimen_12dp"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:text="Сканер"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large" />
+
+        <View
+            style="@style/HorizontalDivider"
+            android:layout_height="0.5dp"
+            android:background="@color/white_light" />
+
+        <TextView
             android:id="@+id/setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
