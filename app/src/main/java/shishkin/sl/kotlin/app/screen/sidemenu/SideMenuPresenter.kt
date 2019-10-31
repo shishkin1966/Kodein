@@ -9,7 +9,7 @@ import shishkin.sl.kotlin.app.screen.accounts.AccountsFragment
 import shishkin.sl.kotlin.app.screen.contact.ContactFragment
 import shishkin.sl.kotlin.app.screen.digital_currencies.DigitalCurrenciesFragment
 import shishkin.sl.kotlin.app.screen.map.MapFragment
-import shishkin.sl.kotlin.app.screen.scanner.ScannerFragment
+import shishkin.sl.kotlin.app.screen.scanner2.Scanner2Fragment
 import shishkin.sl.kotlin.app.screen.setting.SettingFragment
 import shishkin.sl.kotlin.app.screen.val_curs.ValCursFragment
 import shishkin.sl.kotlin.sl.action.Actions
@@ -145,8 +145,8 @@ class SideMenuPresenter(model: SideMenuModel) : AbsModelPresenter(model), IRespo
                 }
 
                 ShowScanner -> {
-                    if (!router.isCurrentFragment(ScannerFragment.NAME)) {
-                        router.showFragment(ScannerFragment.newInstance())
+                    if (!router.isCurrentFragment(Scanner2Fragment.NAME)) {
+                        router.showFragment(Scanner2Fragment.newInstance())
                     }
                     return true
                 }

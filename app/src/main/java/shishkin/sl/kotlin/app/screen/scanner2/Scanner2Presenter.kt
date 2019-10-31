@@ -1,8 +1,6 @@
-package shishkin.sl.kotlin.app.screen.scanner
+package shishkin.sl.kotlin.app.screen.scanner2
 
 import android.Manifest
-import android.util.SparseArray
-import androidx.core.util.forEach
 import com.google.android.gms.vision.barcode.Barcode
 import shishkin.sl.kotlin.app.ApplicationSingleton
 import shishkin.sl.kotlin.common.ApplicationUtils
@@ -13,10 +11,10 @@ import shishkin.sl.kotlin.sl.presenter.AbsModelPresenter
 import shishkin.sl.kotlin.sl.provider.ApplicationProvider
 
 
-class ScannerPresenter(model: ScannerModel) : AbsModelPresenter(model) {
+class Scanner2Presenter(model: Scanner2Model) : AbsModelPresenter(model) {
 
     companion object {
-        const val NAME = "ScannerPresenter"
+        const val NAME = "Scanner2Presenter"
         const val OnDetections = "OnDetections"
     }
 
@@ -34,14 +32,12 @@ class ScannerPresenter(model: ScannerModel) : AbsModelPresenter(model) {
         if (action is DataAction<*>) {
             when (action.getName()) {
                 OnDetections -> {
-                    val barcodes = action.getData() as SparseArray<Barcode>
-                    barcodes.forEach { _, barcode ->
-                        if (!barcode.displayValue.isNullOrEmpty()) {
-                            ApplicationUtils.showToast(
-                                ApplicationProvider.appContext,
-                                barcode.displayValue
-                            )
-                        }
+                    val barcode = action.getData() as Barcode
+                    if (!barcode.displayValue.isNullOrEmpty()) {
+                        ApplicationUtils.showToast(
+                            ApplicationProvider.appContext,
+                            barcode.displayValue
+                        )
                     }
                     return true
                 }
@@ -62,7 +58,7 @@ class ScannerPresenter(model: ScannerModel) : AbsModelPresenter(model) {
                 Manifest.permission.CAMERA
             )
         ) {
-            getView<ScannerFragment>().addAction(PermissionAction(Manifest.permission.CAMERA))
+            getView<Scanner2Fragment>().addAction(PermissionAction(Manifest.permission.CAMERA))
         }
     }
 
