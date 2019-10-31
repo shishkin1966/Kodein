@@ -106,4 +106,7 @@ dependencies {
     //BottomSheetDialog
     implementation 'org.michaelbel:bottomsheet:1.2.3'
 
+    // Camera barcode scanner
+    implementation 'com.google.android.gms:play-services-vision:19.0.0'
+
 }
