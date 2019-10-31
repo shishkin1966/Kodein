@@ -74,6 +74,7 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
         view.findViewById<View>(R.id.exchange_cryptorates).setOnClickListener(this)
         view.findViewById<View>(R.id.address).setOnClickListener(this)
         view.findViewById<View>(R.id.setting).setOnClickListener(this)
+        view.findViewById<View>(R.id.scanner).setOnClickListener(this)
         view.findViewById<View>(R.id.accounts).setOnClickListener(this)
         view.findViewById<View>(R.id.contact).setOnClickListener(this)
     }
@@ -105,6 +106,12 @@ class SideMenuFragment : AbsContentFragment(), View.OnClickListener {
             R.id.setting -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
                 ApplicationAction(
                     SideMenuPresenter.ShowSetting
+                )
+            )
+
+            R.id.scanner -> getModel<SideMenuModel>().getPresenter<SideMenuPresenter>().addAction(
+                ApplicationAction(
+                    SideMenuPresenter.ShowScanner
                 )
             )
 

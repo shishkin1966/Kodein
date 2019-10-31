@@ -14,6 +14,7 @@ import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
@@ -259,7 +260,12 @@ class ApplicationUtils {
         }
 
         @JvmStatic
-        fun showToast(context: Context, text: String?, duration: Int, type: Int) {
+        fun showToast(
+            context: Context,
+            text: String?,
+            duration: Int = Toast.LENGTH_SHORT,
+            type: Int = MESSAGE_TYPE_INFO
+        ) {
             if (text.isNullOrBlank()) return
 
             runOnUiThread(Runnable {

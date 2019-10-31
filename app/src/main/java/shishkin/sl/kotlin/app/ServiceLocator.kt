@@ -5,7 +5,10 @@ import shishkin.sl.kotlin.sl.IProviderFactory
 import shishkin.sl.kotlin.sl.observe.NetObservable
 import shishkin.sl.kotlin.sl.observe.ObjectObservable
 import shishkin.sl.kotlin.sl.observe.ScreenBroadcastReceiverObservable
-import shishkin.sl.kotlin.sl.provider.*
+import shishkin.sl.kotlin.sl.provider.CrashProvider
+import shishkin.sl.kotlin.sl.provider.ErrorSingleton
+import shishkin.sl.kotlin.sl.provider.IObservableUnion
+import shishkin.sl.kotlin.sl.provider.ObservableUnion
 
 object ServiceLocatorSingleton {
     val instance = ServiceLocator()
