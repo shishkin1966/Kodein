@@ -67,7 +67,10 @@ class Scanner2Fragment : AbsContentFragment(), BarcodeGraphicTracker.BarcodeList
     }
 
     private fun createCameraSource() {
-        val barcodeDetector = BarcodeDetector.Builder(ApplicationProvider.appContext).build()
+        val barcodeDetector = BarcodeDetector.Builder(ApplicationProvider.appContext)
+            .setBarcodeFormats(Barcode.AZTEC or Barcode.QR_CODE)
+            //.setBarcodeFormats(Barcode.ALL_FORMATS)
+            .build()
         val barcodeFactory = BarcodeTrackerFactory(graphicOverlay, this)
         barcodeDetector.setProcessor(
             MultiProcessor.Builder<Barcode>(barcodeFactory).build()
@@ -82,8 +85,8 @@ class Scanner2Fragment : AbsContentFragment(), BarcodeGraphicTracker.BarcodeList
             .setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)
             .setAutoFocusEnabled(true)
             .setFacing(CameraSource.CAMERA_FACING_BACK)
-            .setRequestedPreviewSize(1600, 1024)
-            .setRequestedFps(15.0f)
+            .setRequestedPreviewSize(1600, 1600)
+            .setRequestedFps(7.0f)
             .build()
     }
 
