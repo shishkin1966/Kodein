@@ -108,6 +108,7 @@ public class CameraSourcePreview extends ViewGroup {
         @Override
         public void surfaceDestroyed(SurfaceHolder surface) {
             mSurfaceAvailable = false;
+            stop();
         }
 
         @Override
@@ -117,8 +118,8 @@ public class CameraSourcePreview extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+        int width = 320; // 520
+        int height = 320; // 520
         if (mCameraSource != null) {
             Size size = mCameraSource.getPreviewSize();
             if (size != null) {
