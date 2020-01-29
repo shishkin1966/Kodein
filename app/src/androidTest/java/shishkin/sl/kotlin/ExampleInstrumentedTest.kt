@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("shishkin.sl.kodeinpsb", appContext.packageName)
+        assertEquals("shishkin.sl.kotlin", appContext.packageName)
     }
 }
