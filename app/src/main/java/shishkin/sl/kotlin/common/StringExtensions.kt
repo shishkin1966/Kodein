@@ -8,30 +8,26 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun CharSequence.isNullOrEmpty(): Boolean {
+fun CharSequence?.isNullOrEmpty(): Boolean {
     return this == null || this.toString().trim { it <= ' ' }.length < 1
 }
 
-fun String.isNullOrEmpty(): Boolean {
+fun String?.isNullOrEmpty(): Boolean {
     return this == null || trim { it <= ' ' }.length < 1
 }
 
-fun String.pos(which: String?, start: Int): Int {
+fun String?.pos(which: String?, start: Int): Int {
     if (this == null || which == null) {
         return -1;
     }
     return if (start >= this.length) -1 else this.indexOf(which, start);
 }
 
-fun String.pos(initialString: String?, which: String?): Int {
-    return if (initialString == null || which == null) -1 else initialString.indexOf(which);
-}
-
-fun String.token(
-    delimiters: String?,
+fun String?.token(
+    delims: String?,
     tokenNumber: Int
 ): String {
-    var delimiters = delimiters
+    var delimiters = delims
     if (this == null) {
         return ""
     }
@@ -65,7 +61,7 @@ fun String.token(
     return ""
 }
 
-fun String.left(length: Int): String {
+fun String?.left(length: Int): String {
     if (this == null) {
         return ""
     }
@@ -74,19 +70,19 @@ fun String.left(length: Int): String {
     } else this.substring(0, length)
 }
 
-fun String.getDigits(): String? {
+fun String?.getDigits(): String? {
     return if (this.isNullOrEmpty()) {
         this
-    } else this.replace("\\D+".toRegex(), "")
+    } else this!!.replace("\\D+".toRegex(), "")
 }
 
-fun String.getNumbers(): String? {
+fun String?.getNumbers(): String? {
     return if (this.isNullOrEmpty()) {
         this
-    } else this.replace("[^\\.0123456789\\+]".toRegex(), "")
+    } else this!!.replace("[^\\.0123456789\\+]".toRegex(), "")
 }
 
-fun String.toLong(): Long {
+fun String?.toLong(): Long {
     var l: Long = 0
     if (!this.isNullOrEmpty()) {
         try {
@@ -99,7 +95,7 @@ fun String.toLong(): Long {
     return l
 }
 
-fun String.toInt(): Int {
+fun String?.toInt(): Int {
     var i = 0
     if (!this.isNullOrEmpty()) {
         try {
@@ -112,37 +108,35 @@ fun String.toInt(): Int {
     return i
 }
 
-fun String.toDouble(): Double {
+fun String?.toDouble(): Double {
     var s: String? = this
     var d = 0.0
     if (!s.isNullOrEmpty()) {
-        s = s.replace(",", ".")
+        s = s!!.replace(",", ".")
         s = s.getNumbers()
         try {
             d = java.lang.Double.parseDouble(s!!)
         } catch (e: Exception) {
         }
-
     }
     return d
 }
 
-fun String.toFloat(): Float {
+fun String?.toFloat(): Float {
     var s: String? = this
     var f = 0f
     if (!s.isNullOrEmpty()) {
-        s = s.replace(",", ".")
+        s = s!!.replace(",", ".")
         s = s.getNumbers()
         try {
             f = java.lang.Float.parseFloat(s!!)
         } catch (e: Exception) {
         }
-
     }
     return f
 }
 
-fun String.replace(
+fun String?.replace(
     replaceString: String?, replaceWith: String?
 ): String {
     // Verify parameters
@@ -186,7 +180,7 @@ fun String.replace(
     return temp
 }
 
-fun String.mid(first: Int, lenString: Int): String {
+fun String?.mid(first: Int, lenString: Int): String {
     var len = lenString
     if (this == null) {
         return ""
@@ -203,7 +197,7 @@ fun String.mid(first: Int, lenString: Int): String {
     return this.substring(first, first + len)
 }
 
-fun String.mid(first: Int): String {
+fun String?.mid(first: Int): String {
     if (this == null) {
         return ""
     }
@@ -215,7 +209,7 @@ fun String.mid(first: Int): String {
     } else this.substring(first, this.length)
 }
 
-fun Double.double2String(): String {
+fun Double?.double2String(): String {
     if (this == null) return ""
     val format = DecimalFormat("###,##0.00")
     val customSymbol = DecimalFormatSymbols()
@@ -225,7 +219,7 @@ fun Double.double2String(): String {
     return format.format(this)
 }
 
-fun BigDecimal.decimal2String(): String {
+fun BigDecimal?.decimal2String(): String {
     if (this == null) return ""
     val format = DecimalFormat("###,##0.00")
     val customSymbol = DecimalFormatSymbols()
@@ -235,7 +229,7 @@ fun BigDecimal.decimal2String(): String {
     return format.format(this)
 }
 
-fun String.trimZero(): String? {
+fun String?.trimZero(): String? {
     if (this == null) return null
     if (!this.contains(".")) return this
     if (this == ".") return this
@@ -258,7 +252,7 @@ fun String.trimZero(): String? {
     } else this.mid(0, length)
 }
 
-fun String.trimAllZero(): String? {
+fun String?.trimAllZero(): String? {
     if (this == null) return null
     if (!this.contains(".")) return this
     if (this == ".") return this
@@ -274,10 +268,10 @@ fun String.trimAllZero(): String? {
     return sb.toString().allTrim()
 }
 
-fun String.allTrim(): String {
+fun String?.allTrim(): String {
     return if (this.isNullOrEmpty()) {
         ""
-    } else this.trim()
+    } else this!!.trim()
 }
 
 fun Long.formatDateShortRu(): String {
